@@ -1,6 +1,6 @@
 import 'package:flutter/material.dart';
-import 'package:flutter_ecoapp/views/style/colors.dart';
 import 'package:flutter_ecoapp/views/style/text_style.dart';
+import 'package:flutter_ecoapp/views/widgets/bottom_bar.dart';
 
 import 'package:flutter_ecoapp/views/widgets/home/featured_product.dart';
 import 'package:flutter_ecoapp/views/widgets/search_bar.dart';
@@ -12,30 +12,7 @@ class HomeView extends StatelessWidget {
   Widget build(BuildContext context) {
     return Scaffold(
       body: getContent(context),
-      bottomNavigationBar: BottomNavigationBar(
-        backgroundColor: EcoAppColors.MAIN_COLOR,
-        selectedItemColor: EcoAppColors.ACCENT_COLOR,
-        unselectedItemColor: Colors.white,
-        type: BottomNavigationBarType.fixed,
-        items: [
-          BottomNavigationBarItem(
-            icon: Icon(Icons.home),
-            label: 'Home'
-          ),
-          BottomNavigationBarItem(
-            icon: Icon(Icons.shopping_cart),
-            label: 'Cart'
-          ),
-          BottomNavigationBarItem(
-            icon: Icon(Icons.history),
-            label: 'History'
-          ),
-          BottomNavigationBarItem(
-            icon: Icon(Icons.account_circle_outlined),
-            label: 'Profile'
-          )
-        ],
-      ),
+      bottomNavigationBar: EcoAppBottomBar()
     );
   }
 

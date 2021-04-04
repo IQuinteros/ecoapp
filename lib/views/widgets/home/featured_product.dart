@@ -1,4 +1,7 @@
 import 'package:flutter/material.dart';
+import 'package:flutter_ecoapp/views/style/colors.dart';
+import 'package:flutter_ecoapp/views/style/text_style.dart';
+import 'package:google_fonts/google_fonts.dart';
 
 class FeaturedProduct extends StatefulWidget {
 
@@ -42,29 +45,33 @@ class _FeaturedProductState extends State<FeaturedProduct> {
 
     final priceText = Text(
       '\$ ' + widget.price.toString(), 
-      style: TextStyle(
-        fontSize: 20,
-        fontWeight: FontWeight.bold
+      style: GoogleFonts.montserrat(
+        fontSize: 25,
+        fontWeight: FontWeight.w600
       ),
     );
 
     final percentText = Text(
       widget.percent.toString() + '%',
-      style: TextStyle(
-        fontSize: 16,
-        fontWeight: FontWeight.bold
+      style: GoogleFonts.montserrat(
+        fontSize: 20,
+        fontWeight: FontWeight.w600
       ),
     );
 
     final titleText = Text(
       widget.title,
-      style: TextStyle(
-        fontSize: 15,
+      style: GoogleFonts.montserrat(
+        fontSize: 18,
+        fontWeight: FontWeight.normal
       ),
     );
 
     final card = Card(
       elevation: 5.0,
+      shape: RoundedRectangleBorder(
+        borderRadius: BorderRadius.circular(15.0)
+      ),
       child: Container(
         padding: EdgeInsets.symmetric(
           horizontal: 20.0,
