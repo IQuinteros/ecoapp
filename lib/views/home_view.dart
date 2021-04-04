@@ -1,8 +1,10 @@
 import 'package:flutter/material.dart';
+import 'package:flutter_ecoapp/views/style/colors.dart';
 import 'package:flutter_ecoapp/views/style/text_style.dart';
 import 'package:flutter_ecoapp/views/widgets/bottom_bar.dart';
 
 import 'package:flutter_ecoapp/views/widgets/home/featured_product.dart';
+import 'package:flutter_ecoapp/views/widgets/mini_button.dart';
 import 'package:flutter_ecoapp/views/widgets/search_bar.dart';
 
 
@@ -17,18 +19,6 @@ class HomeView extends StatelessWidget {
   }
 
   Widget getContent(BuildContext context){
-    final title = Container(
-      margin: EdgeInsets.only(
-        left: 30.0,
-        top: 20.0
-      ),
-      child: Text(
-        'Productos destacados',
-        style: EcoAppTextStyle.TITLE_STYLE,
-        textAlign: TextAlign.start,
-      ),
-    );
-
     final featuredProducts = Row(
       children: [
         FeaturedProduct(
@@ -60,8 +50,29 @@ class HomeView extends StatelessWidget {
       crossAxisAlignment: CrossAxisAlignment.start,
       children: [
         SearchBar(),
-        title,
-        scrollable
+        EcoAppTextStyle.getTitle('Productos Destacados'),
+        scrollable,
+        EcoAppTextStyle.getTitle(
+          'Categorías',
+          rightButton: MiniButton(
+            text: 'Ver mas',
+            action: (){},
+          )
+        ),
+        EcoAppTextStyle.getTitle(
+          'Favoritos',
+          rightButton: MiniButton(
+            text: 'Ver mas',
+            action: (){},
+          )
+        ),
+        EcoAppTextStyle.getTitle(
+          'Historial',
+          rightButton: MiniButton(
+            text: 'Ver mas',
+            action: (){},
+          )
+        ),
       ],
     );
   }

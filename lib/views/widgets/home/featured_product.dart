@@ -1,6 +1,4 @@
 import 'package:flutter/material.dart';
-import 'package:flutter_ecoapp/views/style/colors.dart';
-import 'package:flutter_ecoapp/views/style/text_style.dart';
 import 'package:google_fonts/google_fonts.dart';
 
 class FeaturedProduct extends StatefulWidget {
