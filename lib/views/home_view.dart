@@ -1,6 +1,7 @@
 import 'package:flutter/material.dart';
 import 'package:flutter_ecoapp/views/style/colors.dart';
 import 'package:flutter_ecoapp/views/style/text_style.dart';
+import 'package:flutter_ecoapp/views/widgets/articles/article_card.dart';
 import 'package:flutter_ecoapp/views/widgets/bottom_bar.dart';
 import 'package:flutter_ecoapp/views/widgets/categories/category_box.dart';
 
@@ -92,6 +93,8 @@ class HomeView extends StatelessWidget {
             action: (){},
           )
         ),
+        ArticleCard(),
+        ArticleCard(),
         EcoAppTextStyle.getTitle(
           'Historial',
           rightButton: MiniButton(
