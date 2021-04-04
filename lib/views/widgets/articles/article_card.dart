@@ -1,7 +1,28 @@
 import 'package:flutter/material.dart';
+import 'package:flutter_ecoapp/views/style/colors.dart';
 import 'package:google_fonts/google_fonts.dart';
 
-class ArticleCard extends StatelessWidget {
+class ArticleCard extends StatefulWidget {
+  final String title;
+  final int price;
+  final int percent;
+
+  final bool favorite;
+
+  const ArticleCard({Key key, @required this.title, @required this.price, @required this.percent, this.favorite = false}) : super(key: key);
+
+  @override
+  _ArticleCardState createState() => _ArticleCardState(favorite);
+}
+
+class _ArticleCardState extends State<ArticleCard> {
+
+  bool isFavorite = false;
+
+  _ArticleCardState(bool favorite){
+    this.isFavorite = favorite;
+  }
+
   @override
   Widget build(BuildContext context) {
     final image = Image(
@@ -25,8 +46,9 @@ class ArticleCard extends StatelessWidget {
     );
 
     final favorite = IconButton(
-      icon: Icon(Icons.favorite_outline), 
-      onPressed: (){}
+      icon: Icon(isFavorite? Icons.favorite : Icons.favorite_outline), 
+      color: isFavorite? EcoAppColors.RED_COLOR : Colors.black54,
+      onPressed: toggleFavorite
     );
 
     final firstRow = Row(
@@ -35,7 +57,7 @@ class ArticleCard extends StatelessWidget {
       children: [
         Flexible(
           child: Text(
-            'Título largo sdfsdf sdf sdf sdf  sdfs df',
+            widget.title,
             style: GoogleFonts.montserrat(),
             textAlign: TextAlign.left,
             maxLines: 3,
@@ -50,25 +72,34 @@ class ArticleCard extends StatelessWidget {
       mainAxisSize: MainAxisSize.max,
       children: [
         Text(
-          '\$ 30.000'
+          '\$ ' + widget.price.toString(),
+          style: GoogleFonts.montserrat(
+            fontSize: 20,
+            fontWeight: FontWeight.bold
+          ),
         ),
         Text(
-          '80%'
+          widget.percent.toString() + '%',
+          style: GoogleFonts.montserrat(
+            color: EcoAppColors.MAIN_COLOR,
+            fontSize: 16,
+            fontWeight: FontWeight.bold
+          ),
         )
       ],
     );
 
-    var expanded = Expanded(
+    var column = Expanded(
       child: Column(
         mainAxisAlignment: MainAxisAlignment.spaceBetween,
         mainAxisSize: MainAxisSize.max,
         children: [
           firstRow,
+          SizedBox(height: 30,),
           secondRow
         ],
       ),
     );
-    final column = expanded;
 
     final card = Card(
       clipBehavior: Clip.antiAlias,
@@ -76,11 +107,13 @@ class ArticleCard extends StatelessWidget {
         borderRadius: BorderRadius.circular(20.0)
       ),
       child: Row(
-        crossAxisAlignment: CrossAxisAlignment.start,
+        crossAxisAlignment: CrossAxisAlignment.center,
         mainAxisSize: MainAxisSize.max,
         children: [
           imageContainer,
-          column
+          SizedBox(width: 10.0),
+          column,
+          SizedBox(width: 10.0)
         ],
       ),
     );
@@ -89,7 +122,14 @@ class ArticleCard extends StatelessWidget {
       margin: EdgeInsets.symmetric(
         horizontal: 10.0
       ),
-      child: card,
+      child: InkWell(
+        child: card,
+        onTap: (){},
+      ),
     );
+  }
+
+  void toggleFavorite(){
+    setState(() => isFavorite = !isFavorite);
   }
 }

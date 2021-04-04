@@ -72,6 +72,35 @@ class HomeView extends StatelessWidget {
       ),
     );
 
+    final favoriteList = Column(
+      children: [
+        ArticleCard(
+          title: 'Título largo',
+          percent: 80,
+          price: 20000,
+          favorite: true,
+        ),
+        ArticleCard(
+          title: 'Título largo xd sdjhfhsj dfsd',
+          percent: 40,
+          price: 35000,
+          favorite: false,
+        ),
+        ArticleCard(
+          title: 'Título largo',
+          percent: 80,
+          price: 20000,
+          favorite: true,
+        ),
+        ArticleCard(
+          title: 'Título largo xd sdjhfhsj dfsd',
+          percent: 40,
+          price: 35000,
+          favorite: false,
+        ),
+      ],
+    );
+
     final column = Column(
       crossAxisAlignment: CrossAxisAlignment.start,
       children: [
@@ -93,8 +122,7 @@ class HomeView extends StatelessWidget {
             action: (){},
           )
         ),
-        ArticleCard(),
-        ArticleCard(),
+        favoriteList,
         EcoAppTextStyle.getTitle(
           'Historial',
           rightButton: MiniButton(
@@ -102,6 +130,7 @@ class HomeView extends StatelessWidget {
             action: (){},
           )
         ),
+        favoriteList
       ],
     );
 
