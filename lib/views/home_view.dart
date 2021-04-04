@@ -1,29 +1,12 @@
 import 'package:flutter/material.dart';
-import 'package:flutter_ecoapp/config/colors.dart';
+import 'package:flutter_ecoapp/views/style/colors.dart';
+import 'package:flutter_ecoapp/views/style/text_style.dart';
 
 import 'package:flutter_ecoapp/views/widgets/home/featured_product.dart';
 import 'package:flutter_ecoapp/views/widgets/search_bar.dart';
 
 
 class HomeView extends StatelessWidget {
-
-  final List<FeaturedProduct> items = [
-    FeaturedProduct(
-      price: 45000,
-      percent: 85,
-      title: 'Título del anuncio',
-    ),
-    FeaturedProduct(
-      price: 40000,
-      percent: 85,
-      title: 'Título del anuncio',
-    ),
-    FeaturedProduct(
-      price: 80000,
-      percent: 85,
-      title: 'Título del anuncio',
-    )
-  ];
 
   @override
   Widget build(BuildContext context) {
@@ -64,10 +47,7 @@ class HomeView extends StatelessWidget {
       ),
       child: Text(
         'Productos destacados',
-        style: TextStyle(
-          fontSize: 25.0,
-          fontWeight: FontWeight.bold 
-        ),
+        style: EcoAppTextStyle.TITLE_STYLE,
         textAlign: TextAlign.start,
       ),
     );
