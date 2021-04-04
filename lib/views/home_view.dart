@@ -2,6 +2,7 @@ import 'package:flutter/material.dart';
 import 'package:flutter_ecoapp/views/style/colors.dart';
 import 'package:flutter_ecoapp/views/style/text_style.dart';
 import 'package:flutter_ecoapp/views/widgets/bottom_bar.dart';
+import 'package:flutter_ecoapp/views/widgets/categories/category_box.dart';
 
 import 'package:flutter_ecoapp/views/widgets/home/featured_product.dart';
 import 'package:flutter_ecoapp/views/widgets/mini_button.dart';
@@ -46,7 +47,22 @@ class HomeView extends StatelessWidget {
       ),
     );
 
-    return Column(
+    final categoryRow = Container(
+      margin: EdgeInsets.only(
+        top: 10.0,
+        bottom: 10.0
+      ),
+      child: Row(
+        children: [
+          CategoryBox(),
+          CategoryBox(),
+          CategoryBox()
+        ],
+        mainAxisAlignment: MainAxisAlignment.spaceAround,
+      ),
+    );
+
+    final column = Column(
       crossAxisAlignment: CrossAxisAlignment.start,
       children: [
         SearchBar(),
@@ -59,6 +75,7 @@ class HomeView extends StatelessWidget {
             action: (){},
           )
         ),
+        categoryRow,
         EcoAppTextStyle.getTitle(
           'Favoritos',
           rightButton: MiniButton(
@@ -74,6 +91,11 @@ class HomeView extends StatelessWidget {
           )
         ),
       ],
+    );
+
+    return SingleChildScrollView(
+      child: column,
+      scrollDirection: Axis.vertical,
     );
   }
 }

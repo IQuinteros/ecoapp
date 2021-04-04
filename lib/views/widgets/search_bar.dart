@@ -27,7 +27,7 @@ class SearchBar extends StatelessWidget {
 
     return Container(
       margin: EdgeInsets.only(
-        top: 30.0,
+        top: 35.0,
         left: 10.0,
         right: 10.0,
         bottom: 10.0
