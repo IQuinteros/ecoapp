@@ -1,4 +1,5 @@
 import 'package:flutter/material.dart';
+import 'package:flutter_ecoapp/utils/currency_util.dart';
 import 'package:google_fonts/google_fonts.dart';
 
 class FeaturedProduct extends StatefulWidget {
@@ -42,7 +43,7 @@ class _FeaturedProductState extends State<FeaturedProduct> {
     );
 
     final priceText = Text(
-      '\$ ' + widget.price.toString(), 
+      '\$ ' + CurrencyUtil.formatToCurrencyString(widget.price), 
       style: GoogleFonts.montserrat(
         fontSize: 25,
         fontWeight: FontWeight.w600
@@ -113,11 +114,14 @@ class _FeaturedProductState extends State<FeaturedProduct> {
         bottom: 10.0,
         right: 20.0
       ),
-      child: Stack(
-        children: [
-          image,
-          locateCard
-        ],
+      child: InkWell(
+        onTap: () {},
+        child: Stack(
+          children: [
+            image,
+            locateCard
+          ],
+        ),
       ),
     );
   }

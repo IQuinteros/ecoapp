@@ -1,4 +1,5 @@
 import 'package:flutter/material.dart';
+import 'package:flutter_ecoapp/utils/currency_util.dart';
 import 'package:flutter_ecoapp/views/style/colors.dart';
 import 'package:google_fonts/google_fonts.dart';
 
@@ -28,7 +29,7 @@ class _ArticleCardState extends State<ArticleCard> {
     final image = Image(
       image: NetworkImage('https://picsum.photos/500/300'),
       height: 120,
-      width: 140,
+      width: 120,
       fit: BoxFit.cover,
     );
 
@@ -72,10 +73,10 @@ class _ArticleCardState extends State<ArticleCard> {
       mainAxisSize: MainAxisSize.max,
       children: [
         Text(
-          '\$ ' + widget.price.toString(),
+          '\$ ' + CurrencyUtil.formatToCurrencyString(widget.price),
           style: GoogleFonts.montserrat(
             fontSize: 20,
-            fontWeight: FontWeight.bold
+            fontWeight: FontWeight.w500
           ),
         ),
         Text(
@@ -94,9 +95,11 @@ class _ArticleCardState extends State<ArticleCard> {
         mainAxisAlignment: MainAxisAlignment.spaceBetween,
         mainAxisSize: MainAxisSize.max,
         children: [
+          SizedBox(width: 10.0),
           firstRow,
-          SizedBox(height: 30,),
-          secondRow
+          SizedBox(height: 30),
+          secondRow,
+          SizedBox(width: 10.0)
         ],
       ),
     );
@@ -124,6 +127,7 @@ class _ArticleCardState extends State<ArticleCard> {
       ),
       child: InkWell(
         child: card,
+        borderRadius: BorderRadius.circular(20.0),
         onTap: (){},
       ),
     );
