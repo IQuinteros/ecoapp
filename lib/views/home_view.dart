@@ -53,22 +53,25 @@ class HomeView extends StatelessWidget {
         top: 10.0,
         bottom: 10.0
       ),
-      child: Row(
-        children: [
-          CategoryBox(
-            iconData: Icons.ac_unit,
-            text: 'A granel',
-          ),
-          CategoryBox(
-            iconData: Icons.badge,
-            text: 'Bolsas',
-          ),
-          CategoryBox(
-            iconData: Icons.clean_hands,
-            text: 'Limpieza'
-          )
-        ],
-        mainAxisAlignment: MainAxisAlignment.spaceAround,
+      child: SingleChildScrollView(
+        scrollDirection: Axis.horizontal,
+        child: Row(
+          children: [
+            CategoryBox(
+              iconData: Icons.ac_unit,
+              text: 'A granel',
+            ),
+            CategoryBox(
+              iconData: Icons.badge,
+              text: 'Bolsas',
+            ),
+            CategoryBox(
+              iconData: Icons.clean_hands,
+              text: 'Limpieza'
+            )
+          ],
+          mainAxisAlignment: MainAxisAlignment.spaceAround,
+        ),
       ),
     );
 
