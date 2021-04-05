@@ -20,7 +20,7 @@ class _MainViewState extends State<MainView> {
   Widget build(BuildContext context) {
     return Scaffold(
       body: getContent(context),
-      bottomNavigationBar: getBottomNavigationBar()
+      bottomNavigationBar: getBottomNavigationBar(),
     );
   }
 

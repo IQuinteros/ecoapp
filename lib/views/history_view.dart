@@ -1,4 +1,7 @@
 import 'package:flutter/material.dart';
+import 'package:flutter_ecoapp/views/debug/debug.dart';
+import 'package:flutter_ecoapp/views/style/text_style.dart';
+import 'package:flutter_ecoapp/views/widgets/search_bar.dart';
 
 class HistoryView extends StatelessWidget {
   @override
@@ -7,8 +10,18 @@ class HistoryView extends StatelessWidget {
   }
 
   Widget getContent(BuildContext context){
+    final content = Column(
+      children: [
+        SearchBar(),
+        EcoAppTextStyle.getTitle(
+          'Mi Historial',
+        ),
+        EcoAppDebug.getArticleItems()
+      ],
+    );
+
     return SingleChildScrollView(
-      child: Column(children: [],),
+      child: content,
       scrollDirection: Axis.vertical,
     );
   }

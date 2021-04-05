@@ -1,4 +1,5 @@
 import 'package:flutter/material.dart';
+import 'package:flutter_ecoapp/views/debug/debug.dart';
 import 'package:flutter_ecoapp/views/style/text_style.dart';
 import 'package:flutter_ecoapp/views/widgets/articles/article_card.dart';
 import 'package:flutter_ecoapp/views/widgets/categories/category_box.dart';
@@ -17,20 +18,7 @@ class HomeView extends StatelessWidget {
 
   Widget getContent(BuildContext context){
     final featuredProducts = Row(
-      children: [
-        FeaturedProduct(
-          imageUrl: 'https://picsum.photos/500/300',
-          price: 45000,
-          percent: 85,
-          title: 'Título del anuncio',
-        ),
-        FeaturedProduct(
-          imageUrl: 'https://picsum.photos/500/300',
-          price: 45000,
-          percent: 85,
-          title: 'Título del anuncio',
-        ),
-      ],
+      children: EcoAppDebug.getFeaturedProducts()
     );
 
     final scrollable = Container(
@@ -70,34 +58,7 @@ class HomeView extends StatelessWidget {
       ),
     );
 
-    final favoriteList = Column(
-      children: [
-        ArticleCard(
-          title: 'Título largo',
-          percent: 80,
-          price: 20000,
-          favorite: true,
-        ),
-        ArticleCard(
-          title: 'Título largo xd sdjhfhsj dfsd',
-          percent: 40,
-          price: 35000,
-          favorite: false,
-        ),
-        ArticleCard(
-          title: 'Título largo',
-          percent: 80,
-          price: 20000,
-          favorite: true,
-        ),
-        ArticleCard(
-          title: 'Título largo xd sdjhfhsj dfsd',
-          percent: 40,
-          price: 35000,
-          favorite: false,
-        ),
-      ],
-    );
+    final favoriteList = EcoAppDebug.getArticleItems();
 
     final column = Column(
       crossAxisAlignment: CrossAxisAlignment.start,
