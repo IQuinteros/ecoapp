@@ -1,6 +1,6 @@
 import 'package:flutter/material.dart';
-import 'package:flutter_ecoapp/views/home_view.dart';
-import 'package:flutter_ecoapp/views/style/colors.dart';
+import 'package:flutter_ecoapp/routes/routes.dart';
+import 'package:flutter_ecoapp/views/main_view.dart';
 
 void main() {
   runApp(MyApp());
@@ -15,7 +15,7 @@ class MyApp extends StatelessWidget {
       theme: ThemeData(
         primarySwatch: Colors.lightGreen,
       ),
-      home: HomeView()
+      home: MainView()
     );
   }
 }

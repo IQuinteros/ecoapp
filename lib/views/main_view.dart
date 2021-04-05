@@ -1,15 +1,38 @@
 import 'package:flutter/material.dart';
-import 'package:google_fonts/google_fonts.dart';
+import 'package:flutter_ecoapp/views/history_view.dart';
+import 'package:flutter_ecoapp/views/home_view.dart';
 import 'package:flutter_ecoapp/views/style/colors.dart';
+import 'package:google_fonts/google_fonts.dart';
 
-class EcoAppBottomBar extends StatefulWidget {
+
+
+class MainView extends StatefulWidget {
+
   @override
-  _EcoAppBottomBarState createState() => _EcoAppBottomBarState();
+  _MainViewState createState() => _MainViewState();
 }
 
-class _EcoAppBottomBarState extends State<EcoAppBottomBar> {
+class _MainViewState extends State<MainView> {
+
+  int currentIndex = 0;
+
   @override
   Widget build(BuildContext context) {
+    return Scaffold(
+      body: getContent(context),
+      bottomNavigationBar: getBottomNavigationBar()
+    );
+  }
+
+  Widget getContent(BuildContext context){
+    switch (currentIndex) {
+      case 0: return HomeView();
+      case 2: return HistoryView();
+      default: return HomeView();
+    }
+  }
+
+  Widget getBottomNavigationBar(){
     return BottomNavigationBar(
       backgroundColor: EcoAppColors.MAIN_COLOR,
       selectedItemColor: EcoAppColors.ACCENT_COLOR,
@@ -21,11 +44,17 @@ class _EcoAppBottomBarState extends State<EcoAppBottomBar> {
       showUnselectedLabels: false,
       selectedLabelStyle: GoogleFonts.montserrat(),
       unselectedLabelStyle: GoogleFonts.montserrat(),
+      currentIndex: currentIndex,
+      onTap: (value){
+        setState(() {
+          currentIndex = value;
+        });
+      },
       items: [
         BottomNavigationBarItem(
           activeIcon: Icon(Icons.home),
           icon: Icon(Icons.home_outlined),
-          label: 'Home'
+          label: 'Home',
         ),
         BottomNavigationBarItem(
           activeIcon: Icon(Icons.shopping_cart),
@@ -45,4 +74,5 @@ class _EcoAppBottomBarState extends State<EcoAppBottomBar> {
       ],
     );
   }
+  
 }

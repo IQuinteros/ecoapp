@@ -1,8 +1,6 @@
 import 'package:flutter/material.dart';
-import 'package:flutter_ecoapp/views/style/colors.dart';
 import 'package:flutter_ecoapp/views/style/text_style.dart';
 import 'package:flutter_ecoapp/views/widgets/articles/article_card.dart';
-import 'package:flutter_ecoapp/views/widgets/bottom_bar.dart';
 import 'package:flutter_ecoapp/views/widgets/categories/category_box.dart';
 
 import 'package:flutter_ecoapp/views/widgets/home/featured_product.dart';
@@ -14,10 +12,7 @@ class HomeView extends StatelessWidget {
 
   @override
   Widget build(BuildContext context) {
-    return Scaffold(
-      body: getContent(context),
-      bottomNavigationBar: EcoAppBottomBar()
-    );
+    return getContent(context);
   }
 
   Widget getContent(BuildContext context){
