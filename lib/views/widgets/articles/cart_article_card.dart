@@ -121,16 +121,21 @@ class _CartArticleCardState extends State<CartArticleCard> {
       onPressed: () {},
     );
 
-    final quantitySelector = DropdownButton(
-      onChanged: (value){},
-      style: GoogleFonts.montserrat(),
-      value: 0,
-      items: [
-        DropdownMenuItem(
-          child: Text('0'),
-          value: 0,
-        )
-      ],
+    final quantitySelector = DropdownButtonHideUnderline(
+      child: DropdownButton(
+        onChanged: (value){},
+        style: GoogleFonts.montserrat(
+          color: Colors.black
+        ),
+        value: 0,
+        isExpanded: true,
+        items: [
+          DropdownMenuItem(
+            child: Text('999'),
+            value: 0,
+          )
+        ],
+      )
     );
 
     final rowSecond = Row(
