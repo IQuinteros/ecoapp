@@ -1,4 +1,5 @@
 import 'package:flutter/material.dart';
+import 'package:flutter_ecoapp/views/cart_view.dart';
 import 'package:flutter_ecoapp/views/history_view.dart';
 import 'package:flutter_ecoapp/views/home_view.dart';
 import 'package:flutter_ecoapp/views/style/colors.dart';
@@ -28,6 +29,7 @@ class _MainViewState extends State<MainView> {
     switch (currentIndex) {
       case 0: return HomeView();
       case 2: return HistoryView();
+      case 3: return CartView();
       default: return HomeView();
     }
   }
