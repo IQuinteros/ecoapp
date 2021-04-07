@@ -28,8 +28,8 @@ class _MainViewState extends State<MainView> {
   Widget getContent(BuildContext context){
     switch (currentIndex) {
       case 0: return HomeView();
+      case 1: return CartView();
       case 2: return HistoryView();
-      case 3: return CartView();
       default: return HomeView();
     }
   }

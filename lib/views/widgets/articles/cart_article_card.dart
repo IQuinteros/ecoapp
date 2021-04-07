@@ -61,20 +61,20 @@ class _CartArticleCardState extends State<CartArticleCard> {
       mainAxisSize: MainAxisSize.max,
       children: [
         Text(
+          widget.percent.toString() + '%',
+          style: GoogleFonts.montserrat(
+            color: EcoAppColors.MAIN_COLOR,
+            fontSize: 16,
+            fontWeight: FontWeight.w500
+          ),
+        ),
+        Text(
           '\$ ' + CurrencyUtil.formatToCurrencyString(widget.price),
           style: GoogleFonts.montserrat(
             fontSize: 20,
             fontWeight: FontWeight.w500
           ),
         ),
-        Text(
-          widget.percent.toString() + '%',
-          style: GoogleFonts.montserrat(
-            color: EcoAppColors.MAIN_COLOR,
-            fontSize: 16,
-            fontWeight: FontWeight.bold
-          ),
-        )
       ],
     );
 
@@ -92,21 +92,73 @@ class _CartArticleCardState extends State<CartArticleCard> {
       ),
     );
 
+    final rowFirst = Row(
+      crossAxisAlignment: CrossAxisAlignment.center,
+      mainAxisSize: MainAxisSize.max,
+      children: [
+        imageContainer,
+        SizedBox(width: 20.0),
+        column,
+        SizedBox(width: 10.0)
+      ],
+    );
+
+    final deleteButton = TextButton(
+      child: Text('Eliminar'),
+      style: ButtonStyle(
+        foregroundColor: MaterialStateProperty.all(Colors.black54),
+        textStyle: MaterialStateProperty.all(GoogleFonts.montserrat())
+      ),
+      onPressed: () {},
+    );
+
+    final goStore = TextButton(
+      child: Text('Ver tienda'),
+      style: ButtonStyle(
+        foregroundColor: MaterialStateProperty.all(Colors.black54),
+        textStyle: MaterialStateProperty.all(GoogleFonts.montserrat())
+      ),
+      onPressed: () {},
+    );
+
+    final quantitySelector = DropdownButton(
+      onChanged: (value){},
+      style: GoogleFonts.montserrat(),
+      value: 0,
+      items: [
+        DropdownMenuItem(
+          child: Text('0'),
+          value: 0,
+        )
+      ],
+    );
+
+    final rowSecond = Row(
+      crossAxisAlignment: CrossAxisAlignment.center,
+      mainAxisSize: MainAxisSize.max,
+      children: [
+        SizedBox(width: 20.0,),
+        deleteButton,
+        SizedBox(width: 10.0,),
+        goStore,
+        Expanded(child: SizedBox(), flex: 2,),
+        Expanded(child: quantitySelector, flex: 1,),
+        SizedBox(width: 20.0,),
+      ],
+    );
+
     final card = Card(
       clipBehavior: Clip.antiAlias,
       shape: RoundedRectangleBorder(
         borderRadius: BorderRadius.circular(20.0)
       ),
-      child: Row(
-        crossAxisAlignment: CrossAxisAlignment.center,
-        mainAxisSize: MainAxisSize.max,
+      child: Column(
         children: [
-          imageContainer,
-          SizedBox(width: 10.0),
-          column,
-          SizedBox(width: 10.0)
+          rowFirst,
+          Divider(height: 0, thickness: 1, color: Colors.black12,),
+          rowSecond,
         ],
-      ),
+      )
     );
 
     return Container(
