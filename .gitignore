@@ -50,3 +50,6 @@ app.*.map.json
 
 # Project Mockup
 /mockup
+
+# Project UseCase
+/usecase
