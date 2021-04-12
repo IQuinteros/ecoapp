@@ -52,10 +52,10 @@
 <logicalDatatype>LOGDT015</logicalDatatype>
 <ownDataTypeParameters>,,</ownDataTypeParameters>
 </Attribute>
-<Attribute name="id1" id="BBE76310-DAE7-3814-0503-6074728DEFC7">
-<createdBy>iquinteros</createdBy>
-<createdTime>2021-04-10 22:00:24 UTC</createdTime>
-<generatorID>B3EFE16F-EDDB-AE2B-079A-81947CDE7D05</generatorID>
+<Attribute name="id1" id="66B0506A-EEC6-FC6A-179E-20E37C03722D">
+<createdBy>root</createdBy>
+<createdTime>2021-04-12 20:40:29 UTC</createdTime>
+<generatorID>2A6ACB1A-6E51-8461-E1BE-DD36EC5E831B</generatorID>
 <ownerDesignName>ecoapp_modeler</ownerDesignName>
 <engineerTo>
 <item key="361F45A6-1E26-C41D-C2C3-E97F73AEBE07" value="true"/>
@@ -67,31 +67,30 @@
 <logicalDatatype>LOGDT011</logicalDatatype>
 <ownDataTypeParameters>,,</ownDataTypeParameters>
 </Attribute>
-<Attribute name="id2" id="606DFC90-0F2E-F1A9-77B2-7AE7C6A84138">
-<createdBy>iquinteros</createdBy>
-<createdTime>2021-04-10 22:15:23 UTC</createdTime>
-<generatorID>054F00CF-512B-1A15-8FE4-CBBEA3875625</generatorID>
+<Attribute name="id2" id="BA0B062B-5FF5-5E9D-1D0F-119F2673CFEE">
+<createdBy>root</createdBy>
+<createdTime>2021-04-12 20:41:48 UTC</createdTime>
+<generatorID>9299B17B-4FFA-D8E8-D642-004FDE05B441</generatorID>
 <ownerDesignName>ecoapp_modeler</ownerDesignName>
 <engineerTo>
 <item key="361F45A6-1E26-C41D-C2C3-E97F73AEBE07" value="true"/>
 </engineerTo>
 <nullsAllowed>true</nullsAllowed>
-<referedAttribute>03073DE2-8C30-3325-DF8B-6CAAC722865B</referedAttribute>
+<referedAttribute>36559FF6-683B-F718-4BA1-7ADAAFB72B7E</referedAttribute>
 <useDomainConstraints>false</useDomainConstraints>
 <use>1</use>
 <logicalDatatype>LOGDT011</logicalDatatype>
 <ownDataTypeParameters>,,</ownDataTypeParameters>
 </Attribute>
-<Attribute name="id3" id="6D2EE942-8F55-2BCF-C12E-AAD172B32930">
-<createdBy>iquinteros</createdBy>
-<createdTime>2021-04-10 22:22:12 UTC</createdTime>
-<generatorID>D9E18008-7ACB-B1FF-E9DE-45DDEDF6DA9F</generatorID>
+<Attribute name="id3" id="74D0704B-5004-7643-3B88-88151A69EF6B">
+<createdBy>root</createdBy>
+<createdTime>2021-04-12 21:17:56 UTC</createdTime>
+<generatorID>44C66B75-5013-2502-74C0-5326D3F48983</generatorID>
 <ownerDesignName>ecoapp_modeler</ownerDesignName>
 <engineerTo>
 <item key="361F45A6-1E26-C41D-C2C3-E97F73AEBE07" value="true"/>
 </engineerTo>
-<nullsAllowed>true</nullsAllowed>
-<referedAttribute>5A8E0D70-B277-D349-CA34-7AC7BEAB2234</referedAttribute>
+<referedAttribute>CCB9AAEC-C1C1-E6BA-F17B-0126ACEB6D34</referedAttribute>
 <useDomainConstraints>false</useDomainConstraints>
 <use>1</use>
 <logicalDatatype>LOGDT011</logicalDatatype>

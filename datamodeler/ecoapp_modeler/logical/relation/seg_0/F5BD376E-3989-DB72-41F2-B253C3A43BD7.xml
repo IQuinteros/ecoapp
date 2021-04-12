@@ -1,18 +1,18 @@
 <?xml version = '1.0' encoding = 'UTF-8'?>
-<Relation class="oracle.dbtools.crest.model.design.logical.Relation" name="profile-comuna" directorySegmentName="seg_0" id="8D6F8EBB-4ADB-FD19-8D9F-88DAB3EE9E94">
-<createdBy>iquinteros</createdBy>
-<createdTime>2021-04-10 20:54:35 UTC</createdTime>
+<Relation class="oracle.dbtools.crest.model.design.logical.Relation" name="shop-comuna" directorySegmentName="seg_0" id="F5BD376E-3989-DB72-41F2-B253C3A43BD7">
+<createdBy>root</createdBy>
+<createdTime>2021-04-12 20:53:03 UTC</createdTime>
 <ownerDesignName>ecoapp_modeler</ownerDesignName>
 <engineerTo>
 <item key="361F45A6-1E26-C41D-C2C3-E97F73AEBE07" value="true"/>
 </engineerTo>
-<sourcePk>DCE972F0-7E2E-725F-2CE2-B6E0FDC58CB6</sourcePk>
+<sourcePk>8F85660F-8122-6BF6-5935-A8C48317BF0E</sourcePk>
 <targetPk>C8752B39-4BE0-D082-5F90-4FAE2FAE584C</targetPk>
 <identifying>false</identifying>
 <optionalSource>true</optionalSource>
 <optionalTarget>false</optionalTarget>
 <sourceCardinality>*</sourceCardinality>
-<sourceEntity>03409701-5014-73CC-5227-97ED01F17B1D</sourceEntity>
+<sourceEntity>46C1141F-0D46-FFF9-328B-0EDC9585D655</sourceEntity>
 <targetCardinalityString>1</targetCardinalityString>
 <targetEntity>183B8B8A-D241-0396-4371-DC5D7797EB95</targetEntity>
 <transferable>true</transferable>

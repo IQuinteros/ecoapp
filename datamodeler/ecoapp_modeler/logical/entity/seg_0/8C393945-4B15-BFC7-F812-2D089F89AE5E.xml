@@ -80,19 +80,16 @@
 <logicalDatatype>LOGDT011</logicalDatatype>
 <ownDataTypeParameters>,,</ownDataTypeParameters>
 </Attribute>
-<Attribute name="id2" id="B09D128E-FBCA-B5A0-71CF-5F58ACC7ACBD">
-<createdBy>iquinteros</createdBy>
-<createdTime>2021-04-10 22:40:29 UTC</createdTime>
-<generatorID>B6B956B8-AFEB-FE81-591F-CEB4C6E501AD</generatorID>
+<Attribute name="comuna" id="CD81DB70-586B-F720-AE56-9900CC0A7E61">
+<createdBy>root</createdBy>
+<createdTime>2021-04-12 20:51:37 UTC</createdTime>
 <ownerDesignName>ecoapp_modeler</ownerDesignName>
 <engineerTo>
 <item key="361F45A6-1E26-C41D-C2C3-E97F73AEBE07" value="true"/>
 </engineerTo>
-<nullsAllowed>true</nullsAllowed>
-<referedAttribute>5F24A333-8519-9A7D-D6ED-410CD66836A4</referedAttribute>
 <useDomainConstraints>false</useDomainConstraints>
 <use>1</use>
-<logicalDatatype>LOGDT011</logicalDatatype>
+<logicalDatatype>LOGDT024</logicalDatatype>
 <ownDataTypeParameters>,,</ownDataTypeParameters>
 </Attribute>
 </attributes>

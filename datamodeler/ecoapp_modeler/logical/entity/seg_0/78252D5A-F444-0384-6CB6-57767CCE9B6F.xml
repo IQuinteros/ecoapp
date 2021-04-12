@@ -114,21 +114,6 @@
 <dataTypeSize>1</dataTypeSize>
 <ownDataTypeParameters>1,,</ownDataTypeParameters>
 </Attribute>
-<Attribute name="id1" id="6E7FBADF-E65B-21BB-709B-0644E1B545F6">
-<createdBy>iquinteros</createdBy>
-<createdTime>2021-04-10 21:19:17 UTC</createdTime>
-<generatorID>0B485883-63B9-95C6-2D27-F587A448886C</generatorID>
-<ownerDesignName>ecoapp_modeler</ownerDesignName>
-<engineerTo>
-<item key="361F45A6-1E26-C41D-C2C3-E97F73AEBE07" value="true"/>
-</engineerTo>
-<nullsAllowed>true</nullsAllowed>
-<referedAttribute>44B959B0-299E-0105-65A2-C718D3E1FBB5</referedAttribute>
-<useDomainConstraints>false</useDomainConstraints>
-<use>1</use>
-<logicalDatatype>LOGDT011</logicalDatatype>
-<ownDataTypeParameters>,,</ownDataTypeParameters>
-</Attribute>
 <Attribute name="id2" id="E3795F3F-BC98-D4C3-5201-C211E6F301B0">
 <createdBy>iquinteros</createdBy>
 <createdTime>2021-04-10 21:38:52 UTC</createdTime>
@@ -153,6 +138,21 @@
 </engineerTo>
 <nullsAllowed>true</nullsAllowed>
 <referedAttribute>2907BD09-C039-D4F0-16E4-588A89024FF6</referedAttribute>
+<useDomainConstraints>false</useDomainConstraints>
+<use>1</use>
+<logicalDatatype>LOGDT011</logicalDatatype>
+<ownDataTypeParameters>,,</ownDataTypeParameters>
+</Attribute>
+<Attribute name="id1" id="50EA5E6E-3B73-20E0-99F3-D4F8E1B0C79A">
+<createdBy>root</createdBy>
+<createdTime>2021-04-12 20:57:06 UTC</createdTime>
+<generatorID>180B5181-B047-779F-00A6-4AFC43A31C28</generatorID>
+<ownerDesignName>ecoapp_modeler</ownerDesignName>
+<engineerTo>
+<item key="361F45A6-1E26-C41D-C2C3-E97F73AEBE07" value="true"/>
+</engineerTo>
+<nullsAllowed>true</nullsAllowed>
+<referedAttribute>36559FF6-683B-F718-4BA1-7ADAAFB72B7E</referedAttribute>
 <useDomainConstraints>false</useDomainConstraints>
 <use>1</use>
 <logicalDatatype>LOGDT011</logicalDatatype>
