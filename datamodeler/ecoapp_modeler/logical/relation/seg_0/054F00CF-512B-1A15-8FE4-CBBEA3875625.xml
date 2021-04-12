@@ -1,0 +1,19 @@
+<?xml version = '1.0' encoding = 'UTF-8'?>
+<Relation class="oracle.dbtools.crest.model.design.logical.Relation" name="profile-receptor-message" directorySegmentName="seg_0" id="054F00CF-512B-1A15-8FE4-CBBEA3875625">
+<createdBy>iquinteros</createdBy>
+<createdTime>2021-04-10 22:15:23 UTC</createdTime>
+<ownerDesignName>ecoapp_modeler</ownerDesignName>
+<engineerTo>
+<item key="361F45A6-1E26-C41D-C2C3-E97F73AEBE07" value="true"/>
+</engineerTo>
+<sourcePk>DCE972F0-7E2E-725F-2CE2-B6E0FDC58CB6</sourcePk>
+<identifying>false</identifying>
+<optionalSource>false</optionalSource>
+<optionalTarget>true</optionalTarget>
+<sourceCardinality>1</sourceCardinality>
+<sourceEntity>03409701-5014-73CC-5227-97ED01F17B1D</sourceEntity>
+<targetCardinalityString>*</targetCardinalityString>
+<targetEntity>BEEFFD75-5999-0843-773E-05734F47E31B</targetEntity>
+<transferable>true</transferable>
+<deleteRule>NO ACTION</deleteRule>
+</Relation>

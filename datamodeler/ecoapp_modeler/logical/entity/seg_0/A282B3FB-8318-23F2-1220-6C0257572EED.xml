@@ -1,0 +1,72 @@
+<?xml version = '1.0' encoding = 'UTF-8'?>
+<Entity class="oracle.dbtools.crest.model.design.logical.Entity" directorySegmentName="seg_0" id="A282B3FB-8318-23F2-1220-6C0257572EED" name="history-detail">
+<createdBy>iquinteros</createdBy>
+<createdTime>2021-04-10 22:45:41 UTC</createdTime>
+<ownerDesignName>ecoapp_modeler</ownerDesignName>
+<engineerTo>
+<item key="361F45A6-1E26-C41D-C2C3-E97F73AEBE07" value="true"/>
+</engineerTo>
+<adequatelyNormalized>NO</adequatelyNormalized>
+<expectedVolumes>0</expectedVolumes>
+<fwdEngineeringStrategyName>Single Table</fwdEngineeringStrategyName>
+<growthPercent>0</growthPercent>
+<growthType>Year</growthType>
+<maxVolumes>9999999</maxVolumes>
+<minVolumes>0</minVolumes>
+<normalForm>Third</normalForm>
+<attributes itemClass="oracle.dbtools.crest.model.design.logical.Attribute">
+<Attribute name="id" id="3290F675-42F8-4D5A-73F4-7FE9E8F7C0CA">
+<createdBy>iquinteros</createdBy>
+<createdTime>2021-04-10 22:45:51 UTC</createdTime>
+<ownerDesignName>ecoapp_modeler</ownerDesignName>
+<engineerTo>
+<item key="361F45A6-1E26-C41D-C2C3-E97F73AEBE07" value="true"/>
+</engineerTo>
+<useDomainConstraints>false</useDomainConstraints>
+<use>1</use>
+<logicalDatatype>LOGDT011</logicalDatatype>
+<ownDataTypeParameters>,,</ownDataTypeParameters>
+</Attribute>
+<Attribute name="date" id="3AC217EC-FCBA-AE78-7553-2F9CCB1A7493">
+<createdBy>iquinteros</createdBy>
+<createdTime>2021-04-10 22:45:59 UTC</createdTime>
+<ownerDesignName>ecoapp_modeler</ownerDesignName>
+<engineerTo>
+<item key="361F45A6-1E26-C41D-C2C3-E97F73AEBE07" value="true"/>
+</engineerTo>
+<useDomainConstraints>false</useDomainConstraints>
+<use>1</use>
+<logicalDatatype>LOGDT015</logicalDatatype>
+<ownDataTypeParameters>,,</ownDataTypeParameters>
+</Attribute>
+<Attribute name="id1" id="55FA8466-9D8F-4C7D-40F2-5C9B17402A46">
+<createdBy>iquinteros</createdBy>
+<createdTime>2021-04-10 22:46:37 UTC</createdTime>
+<generatorID>85F46406-E995-E4B8-5FFF-F2CB04EBC5F6</generatorID>
+<ownerDesignName>ecoapp_modeler</ownerDesignName>
+<engineerTo>
+<item key="361F45A6-1E26-C41D-C2C3-E97F73AEBE07" value="true"/>
+</engineerTo>
+<referedAttribute>BA1C5B07-8561-05CF-D41E-DC7A5C325E7D</referedAttribute>
+<useDomainConstraints>false</useDomainConstraints>
+<use>1</use>
+<logicalDatatype>LOGDT011</logicalDatatype>
+<ownDataTypeParameters>,,</ownDataTypeParameters>
+</Attribute>
+</attributes>
+<identifiers itemClass="oracle.dbtools.crest.model.design.logical.CandidateKey">
+<identifier id="9484685E-3166-37A8-FF33-12FC6BB7AF55" name="history-detail PK">
+<createdBy>iquinteros</createdBy>
+<createdTime>2021-04-10 22:45:56 UTC</createdTime>
+<ownerDesignName>ecoapp_modeler</ownerDesignName>
+<engineerTo>
+<item key="361F45A6-1E26-C41D-C2C3-E97F73AEBE07" value="true"/>
+</engineerTo>
+<pk>true</pk>
+<usedAttributes>
+<attributeRef>3290F675-42F8-4D5A-73F4-7FE9E8F7C0CA</attributeRef>
+<attributeRef>55FA8466-9D8F-4C7D-40F2-5C9B17402A46</attributeRef>
+</usedAttributes>
+</identifier>
+</identifiers>
+</Entity>

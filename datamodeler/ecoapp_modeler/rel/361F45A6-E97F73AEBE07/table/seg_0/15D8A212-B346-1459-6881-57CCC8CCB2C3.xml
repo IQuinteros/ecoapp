@@ -1,0 +1,61 @@
+<?xml version = '1.0' encoding = 'UTF-8'?>
+<Table class="oracle.dbtools.crest.model.design.relational.Table" directorySegmentName="seg_0" id="15D8A212-B346-1459-6881-57CCC8CCB2C3" name="category">
+<createdBy>root</createdBy>
+<createdTime>2021-04-12 03:46:46 UTC</createdTime>
+<generatorID>460345E6-803D-1774-2129-1974F6BFCDE0</generatorID>
+<ownerDesignName>ecoapp_modeler</ownerDesignName>
+<allowColumnReorder>false</allowColumnReorder>
+<existDependencyGenerateInDDl>true</existDependencyGenerateInDDl>
+<parsed>true</parsed>
+<columns itemClass="oracle.dbtools.crest.model.design.relational.Column">
+<Column name="id" id="097411AB-5B90-9B79-1EAC-AA87710D2956">
+<createdBy>root</createdBy>
+<createdTime>2021-04-12 03:46:46 UTC</createdTime>
+<generatorID>2907BD09-C039-D4F0-16E4-588A89024FF6</generatorID>
+<ownerDesignName>ecoapp_modeler</ownerDesignName>
+<useDomainConstraints>false</useDomainConstraints>
+<use>1</use>
+<logicalDatatype>LOGDT011</logicalDatatype>
+<ownDataTypeParameters>,,</ownDataTypeParameters>
+<autoIncrementCycle>false</autoIncrementCycle>
+</Column>
+<Column name="title" id="8486CC42-C2F9-0CEB-F2F6-E66892198D2B">
+<createdBy>root</createdBy>
+<createdTime>2021-04-12 03:46:46 UTC</createdTime>
+<generatorID>332C63CE-3FD5-B837-7D39-0090707C53D6</generatorID>
+<ownerDesignName>ecoapp_modeler</ownerDesignName>
+<useDomainConstraints>false</useDomainConstraints>
+<use>1</use>
+<logicalDatatype>LOGDT024</logicalDatatype>
+<dataTypeSize>50</dataTypeSize>
+<ownDataTypeParameters>50,,</ownDataTypeParameters>
+<autoIncrementCycle>false</autoIncrementCycle>
+</Column>
+<Column name="created_date" id="BA8EC775-6900-C0FC-28F5-3AF843BF9223">
+<createdBy>root</createdBy>
+<createdTime>2021-04-12 03:46:46 UTC</createdTime>
+<generatorID>87E8D4BD-0521-AFE2-E827-0FC4514654AB</generatorID>
+<ownerDesignName>ecoapp_modeler</ownerDesignName>
+<nullsAllowed>true</nullsAllowed>
+<useDomainConstraints>false</useDomainConstraints>
+<use>1</use>
+<logicalDatatype>LOGDT015</logicalDatatype>
+<ownDataTypeParameters>,,</ownDataTypeParameters>
+<autoIncrementCycle>false</autoIncrementCycle>
+</Column>
+</columns>
+<indexes itemClass="oracle.dbtools.crest.model.design.relational.Index">
+<ind_PK_UK id="02BC1584-20EA-CD6B-8903-688A58DE7D5E" name="category_PK">
+<createdBy>root</createdBy>
+<createdTime>2021-04-12 03:46:46 UTC</createdTime>
+<generatorID>D613A58B-7C73-BD7F-B412-97695D1D6F10</generatorID>
+<ownerDesignName>ecoapp_modeler</ownerDesignName>
+<pk>true</pk>
+<indexState>Primary Constraint</indexState>
+<isSurrogateKey>false</isSurrogateKey>
+<indexColumnUsage>
+<colUsage columnID="097411AB-5B90-9B79-1EAC-AA87710D2956"/>
+</indexColumnUsage>
+</ind_PK_UK>
+</indexes>
+</Table>

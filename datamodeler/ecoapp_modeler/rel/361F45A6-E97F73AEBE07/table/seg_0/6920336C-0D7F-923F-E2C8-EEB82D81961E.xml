@@ -1,0 +1,75 @@
+<?xml version = '1.0' encoding = 'UTF-8'?>
+<Table class="oracle.dbtools.crest.model.design.relational.Table" directorySegmentName="seg_0" id="6920336C-0D7F-923F-E2C8-EEB82D81961E" name="history-detail">
+<createdBy>root</createdBy>
+<createdTime>2021-04-12 03:46:46 UTC</createdTime>
+<generatorID>A282B3FB-8318-23F2-1220-6C0257572EED</generatorID>
+<ownerDesignName>ecoapp_modeler</ownerDesignName>
+<allowColumnReorder>false</allowColumnReorder>
+<existDependencyGenerateInDDl>true</existDependencyGenerateInDDl>
+<parsed>true</parsed>
+<columns itemClass="oracle.dbtools.crest.model.design.relational.Column">
+<Column name="id" id="5970EAFA-6999-46EE-DF8B-91EEA51E08B6">
+<createdBy>root</createdBy>
+<createdTime>2021-04-12 03:46:46 UTC</createdTime>
+<generatorID>3290F675-42F8-4D5A-73F4-7FE9E8F7C0CA</generatorID>
+<ownerDesignName>ecoapp_modeler</ownerDesignName>
+<useDomainConstraints>false</useDomainConstraints>
+<use>1</use>
+<logicalDatatype>LOGDT011</logicalDatatype>
+<ownDataTypeParameters>,,</ownDataTypeParameters>
+<autoIncrementCycle>false</autoIncrementCycle>
+</Column>
+<Column name="date" id="1C4A407D-D7D8-EBE2-775E-D4E9DB76A0EC">
+<createdBy>root</createdBy>
+<createdTime>2021-04-12 03:46:46 UTC</createdTime>
+<generatorID>3AC217EC-FCBA-AE78-7553-2F9CCB1A7493</generatorID>
+<ownerDesignName>ecoapp_modeler</ownerDesignName>
+<useDomainConstraints>false</useDomainConstraints>
+<use>1</use>
+<logicalDatatype>LOGDT015</logicalDatatype>
+<ownDataTypeParameters>,,</ownDataTypeParameters>
+<autoIncrementCycle>false</autoIncrementCycle>
+</Column>
+<Column name="history_id" id="03E62FF3-AE96-C1B5-E7BA-CD966C06AC3D">
+<createdBy>root</createdBy>
+<createdTime>2021-04-12 03:46:46 UTC</createdTime>
+<generatorID>55FA8466-9D8F-4C7D-40F2-5C9B17402A46</generatorID>
+<ownerDesignName>ecoapp_modeler</ownerDesignName>
+<useDomainConstraints>false</useDomainConstraints>
+<use>1</use>
+<logicalDatatype>LOGDT011</logicalDatatype>
+<ownDataTypeParameters>,,</ownDataTypeParameters>
+<previousColumn>false</previousColumn>
+<autoIncrementCycle>false</autoIncrementCycle>
+<associations>
+<colAssociation fkAssociation="25E7698E-0452-47BC-F87D-276CBD901831" referredColumn="0ABDC136-FB93-D7C5-5878-B66797FA9C30"/>
+</associations>
+</Column>
+</columns>
+<indexes itemClass="oracle.dbtools.crest.model.design.relational.Index">
+<ind_PK_UK id="48FE8129-375C-FEC9-2830-D31033CD2FC0" name="history-detail_PK">
+<createdBy>root</createdBy>
+<createdTime>2021-04-12 03:46:46 UTC</createdTime>
+<generatorID>9484685E-3166-37A8-FF33-12FC6BB7AF55</generatorID>
+<ownerDesignName>ecoapp_modeler</ownerDesignName>
+<pk>true</pk>
+<indexState>Primary Constraint</indexState>
+<isSurrogateKey>false</isSurrogateKey>
+<indexColumnUsage>
+<colUsage columnID="5970EAFA-6999-46EE-DF8B-91EEA51E08B6"/>
+<colUsage columnID="03E62FF3-AE96-C1B5-E7BA-CD966C06AC3D"/>
+</indexColumnUsage>
+</ind_PK_UK>
+<ind_PK_UK id="20A8568E-A48B-E65B-95E8-55A2CC2A1563" name="history-detail_history_FK">
+<createdBy>root</createdBy>
+<createdTime>2021-04-12 03:46:46 UTC</createdTime>
+<generatorID>85F46406-E995-E4B8-5FFF-F2CB04EBC5F6</generatorID>
+<ownerDesignName>ecoapp_modeler</ownerDesignName>
+<indexState>Foreign Key</indexState>
+<isSurrogateKey>false</isSurrogateKey>
+<indexColumnUsage>
+<colUsage columnID="03E62FF3-AE96-C1B5-E7BA-CD966C06AC3D"/>
+</indexColumnUsage>
+</ind_PK_UK>
+</indexes>
+</Table>

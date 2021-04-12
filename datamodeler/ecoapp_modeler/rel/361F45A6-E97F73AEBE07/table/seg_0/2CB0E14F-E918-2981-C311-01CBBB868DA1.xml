@@ -1,0 +1,137 @@
+<?xml version = '1.0' encoding = 'UTF-8'?>
+<Table class="oracle.dbtools.crest.model.design.relational.Table" directorySegmentName="seg_0" id="2CB0E14F-E918-2981-C311-01CBBB868DA1" name="info-purchase">
+<createdBy>root</createdBy>
+<createdTime>2021-04-12 03:46:46 UTC</createdTime>
+<generatorID>8C393945-4B15-BFC7-F812-2D089F89AE5E</generatorID>
+<ownerDesignName>ecoapp_modeler</ownerDesignName>
+<allowColumnReorder>false</allowColumnReorder>
+<existDependencyGenerateInDDl>true</existDependencyGenerateInDDl>
+<parsed>true</parsed>
+<columns itemClass="oracle.dbtools.crest.model.design.relational.Column">
+<Column name="id" id="7E9BA134-862F-C8D8-E889-3F9BEC9EA6C2">
+<createdBy>root</createdBy>
+<createdTime>2021-04-12 03:46:46 UTC</createdTime>
+<generatorID>0D28EE6B-A397-8B04-887C-850F9B871026</generatorID>
+<ownerDesignName>ecoapp_modeler</ownerDesignName>
+<useDomainConstraints>false</useDomainConstraints>
+<use>1</use>
+<logicalDatatype>LOGDT011</logicalDatatype>
+<ownDataTypeParameters>,,</ownDataTypeParameters>
+<autoIncrementCycle>false</autoIncrementCycle>
+</Column>
+<Column name="names" id="29AD0804-B9B8-988D-8F81-D8D0E31AA7EB">
+<createdBy>root</createdBy>
+<createdTime>2021-04-12 03:46:46 UTC</createdTime>
+<commentInRDBMS><![CDATA[Name or social reason for shipping]]></commentInRDBMS>
+<generatorID>11DF8A15-DF93-E7BD-0734-E021750AFCF1</generatorID>
+<ownerDesignName>ecoapp_modeler</ownerDesignName>
+<useDomainConstraints>false</useDomainConstraints>
+<use>1</use>
+<logicalDatatype>LOGDT024</logicalDatatype>
+<dataTypeSize>150</dataTypeSize>
+<ownDataTypeParameters>150,,</ownDataTypeParameters>
+<autoIncrementCycle>false</autoIncrementCycle>
+</Column>
+<Column name="location" id="36810B4A-A34D-F1C4-B96C-7EBDAA84AC88">
+<createdBy>root</createdBy>
+<createdTime>2021-04-12 03:46:46 UTC</createdTime>
+<generatorID>23436B4C-CD3D-4F43-224A-ACD328D0E3E2</generatorID>
+<ownerDesignName>ecoapp_modeler</ownerDesignName>
+<useDomainConstraints>false</useDomainConstraints>
+<use>1</use>
+<logicalDatatype>LOGDT024</logicalDatatype>
+<dataTypeSize>255</dataTypeSize>
+<ownDataTypeParameters>255,,</ownDataTypeParameters>
+<autoIncrementCycle>false</autoIncrementCycle>
+</Column>
+<Column name="contact_number" id="FFBDE3D7-9CAF-8702-8292-A32C5EFACC3B">
+<createdBy>root</createdBy>
+<createdTime>2021-04-12 03:46:46 UTC</createdTime>
+<generatorID>B4304196-7575-5F0C-18BE-5AF5E5A0634D</generatorID>
+<ownerDesignName>ecoapp_modeler</ownerDesignName>
+<useDomainConstraints>false</useDomainConstraints>
+<use>1</use>
+<logicalDatatype>LOGDT011</logicalDatatype>
+<ownDataTypeParameters>,,</ownDataTypeParameters>
+<autoIncrementCycle>false</autoIncrementCycle>
+</Column>
+<Column name="purchase_id" id="DA1667A6-C6FA-DE23-1459-68ABB11377E0">
+<createdBy>root</createdBy>
+<createdTime>2021-04-12 03:46:46 UTC</createdTime>
+<generatorID>9030DC1A-EE61-42B9-F802-1C90C1B09FF8</generatorID>
+<ownerDesignName>ecoapp_modeler</ownerDesignName>
+<useDomainConstraints>false</useDomainConstraints>
+<use>1</use>
+<logicalDatatype>LOGDT011</logicalDatatype>
+<ownDataTypeParameters>,,</ownDataTypeParameters>
+<previousColumn>false</previousColumn>
+<autoIncrementCycle>false</autoIncrementCycle>
+<associations>
+<colAssociation fkAssociation="0630A3E6-4A18-A541-0E78-4612E1739D0E" referredColumn="AF62F20A-175B-B2AA-25C0-210C9A39FCD3"/>
+</associations>
+</Column>
+<Column name="comuna_id" id="F554147A-EEA2-1D7B-EF75-BCF3127B85A2">
+<createdBy>root</createdBy>
+<createdTime>2021-04-12 03:46:46 UTC</createdTime>
+<generatorID>B09D128E-FBCA-B5A0-71CF-5F58ACC7ACBD</generatorID>
+<ownerDesignName>ecoapp_modeler</ownerDesignName>
+<nullsAllowed>true</nullsAllowed>
+<useDomainConstraints>false</useDomainConstraints>
+<use>1</use>
+<logicalDatatype>LOGDT011</logicalDatatype>
+<ownDataTypeParameters>,,</ownDataTypeParameters>
+<previousColumn>false</previousColumn>
+<autoIncrementCycle>false</autoIncrementCycle>
+<associations>
+<colAssociation fkAssociation="92D78243-B53D-F5A1-983F-B6A40E3D0255" referredColumn="F14B95F4-7740-A8F7-C94A-9D4307FA0665"/>
+</associations>
+</Column>
+</columns>
+<indexes itemClass="oracle.dbtools.crest.model.design.relational.Index">
+<ind_PK_UK id="185934D6-9CDF-915A-0620-1666EF2D2E42" name="info-purchase_PK">
+<createdBy>root</createdBy>
+<createdTime>2021-04-12 03:46:46 UTC</createdTime>
+<generatorID>096A23B5-D82A-AA6D-359F-1E039D809000</generatorID>
+<ownerDesignName>ecoapp_modeler</ownerDesignName>
+<pk>true</pk>
+<indexState>Primary Constraint</indexState>
+<isSurrogateKey>false</isSurrogateKey>
+<indexColumnUsage>
+<colUsage columnID="7E9BA134-862F-C8D8-E889-3F9BEC9EA6C2"/>
+</indexColumnUsage>
+</ind_PK_UK>
+<ind_PK_UK id="FE40621D-A551-64F6-A4E0-A70D4FFAC320" name="info-purchase__IDX">
+<createdBy>root</createdBy>
+<createdTime>2021-04-12 03:46:47 UTC</createdTime>
+<ownerDesignName>ecoapp_modeler</ownerDesignName>
+<indexState>Unique Plain Index</indexState>
+<isSurrogateKey>false</isSurrogateKey>
+<relationGeneratorID>F77A95F5-9F72-64D5-A160-B51488C7B153</relationGeneratorID>
+<indexColumnUsage>
+<colUsage columnID="DA1667A6-C6FA-DE23-1459-68ABB11377E0"/>
+</indexColumnUsage>
+</ind_PK_UK>
+<ind_PK_UK id="08BC5B02-4C8B-29E5-5128-41F2A67E790F" name="info-purchase_comuna_FK">
+<createdBy>root</createdBy>
+<createdTime>2021-04-12 03:46:47 UTC</createdTime>
+<generatorID>B6B956B8-AFEB-FE81-591F-CEB4C6E501AD</generatorID>
+<ownerDesignName>ecoapp_modeler</ownerDesignName>
+<indexState>Foreign Key</indexState>
+<isSurrogateKey>false</isSurrogateKey>
+<indexColumnUsage>
+<colUsage columnID="F554147A-EEA2-1D7B-EF75-BCF3127B85A2"/>
+</indexColumnUsage>
+</ind_PK_UK>
+<ind_PK_UK id="AC950EAF-F8BF-A688-D1B3-5FA43BEC944B" name="info-purchase_purchase_FK">
+<createdBy>root</createdBy>
+<createdTime>2021-04-12 03:55:00 UTC</createdTime>
+<generatorID>F77A95F5-9F72-64D5-A160-B51488C7B153</generatorID>
+<ownerDesignName>ecoapp_modeler</ownerDesignName>
+<indexState>Foreign Key</indexState>
+<isSurrogateKey>false</isSurrogateKey>
+<indexColumnUsage>
+<colUsage columnID="DA1667A6-C6FA-DE23-1459-68ABB11377E0"/>
+</indexColumnUsage>
+</ind_PK_UK>
+</indexes>
+</Table>
