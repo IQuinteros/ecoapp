@@ -1,0 +1,174 @@
+<?xml version = '1.0' encoding = 'UTF-8'?>
+<Entity class="oracle.dbtools.crest.model.design.logical.Entity" directorySegmentName="seg_0" id="A2FC3DFE-519B-7F58-8B44-E8F64BCA8A36" name="article-form">
+<createdBy>iquinteros</createdBy>
+<createdTime>2021-04-10 21:36:37 UTC</createdTime>
+<ownerDesignName>ecoapp_modeler</ownerDesignName>
+<engineerTo>
+<item key="361F45A6-1E26-C41D-C2C3-E97F73AEBE07" value="true"/>
+</engineerTo>
+<adequatelyNormalized>NO</adequatelyNormalized>
+<expectedVolumes>0</expectedVolumes>
+<fwdEngineeringStrategyName>Single Table</fwdEngineeringStrategyName>
+<growthPercent>0</growthPercent>
+<growthType>Year</growthType>
+<maxVolumes>9999999</maxVolumes>
+<minVolumes>0</minVolumes>
+<normalForm>Third</normalForm>
+<attributes itemClass="oracle.dbtools.crest.model.design.logical.Attribute">
+<Attribute name="id" id="F3BE3DDB-14F2-CE1F-759B-2795990B33BE">
+<createdBy>iquinteros</createdBy>
+<createdTime>2021-04-10 21:37:04 UTC</createdTime>
+<ownerDesignName>ecoapp_modeler</ownerDesignName>
+<engineerTo>
+<item key="361F45A6-1E26-C41D-C2C3-E97F73AEBE07" value="true"/>
+</engineerTo>
+<useDomainConstraints>false</useDomainConstraints>
+<use>1</use>
+<logicalDatatype>LOGDT011</logicalDatatype>
+<ownDataTypeParameters>,,</ownDataTypeParameters>
+</Attribute>
+<Attribute name="created_date" id="5D802ED8-0482-127C-6342-AF5BA2A500D6">
+<createdBy>iquinteros</createdBy>
+<createdTime>2021-04-10 21:37:16 UTC</createdTime>
+<ownerDesignName>ecoapp_modeler</ownerDesignName>
+<engineerTo>
+<item key="361F45A6-1E26-C41D-C2C3-E97F73AEBE07" value="true"/>
+</engineerTo>
+<useDomainConstraints>false</useDomainConstraints>
+<use>1</use>
+<logicalDatatype>LOGDT015</logicalDatatype>
+<ownDataTypeParameters>,,</ownDataTypeParameters>
+</Attribute>
+<Attribute name="last_update_date" id="ED67AA52-76DF-AA2D-28C3-2F55AAC94213">
+<createdBy>iquinteros</createdBy>
+<createdTime>2021-04-10 21:37:30 UTC</createdTime>
+<ownerDesignName>ecoapp_modeler</ownerDesignName>
+<engineerTo>
+<item key="361F45A6-1E26-C41D-C2C3-E97F73AEBE07" value="true"/>
+</engineerTo>
+<useDomainConstraints>false</useDomainConstraints>
+<use>1</use>
+<logicalDatatype>LOGDT015</logicalDatatype>
+<ownDataTypeParameters>,,</ownDataTypeParameters>
+</Attribute>
+<Attribute name="id1" id="70393AC5-8BE9-FDE2-6D35-436514153051">
+<createdBy>iquinteros</createdBy>
+<createdTime>2021-04-10 21:38:30 UTC</createdTime>
+<generatorID>C6DAF504-E2FB-DE47-1407-89A52AE39B7F</generatorID>
+<ownerDesignName>ecoapp_modeler</ownerDesignName>
+<engineerTo>
+<item key="361F45A6-1E26-C41D-C2C3-E97F73AEBE07" value="true"/>
+</engineerTo>
+<referedAttribute>5A8E0D70-B277-D349-CA34-7AC7BEAB2234</referedAttribute>
+<useDomainConstraints>false</useDomainConstraints>
+<use>1</use>
+<logicalDatatype>LOGDT011</logicalDatatype>
+<ownDataTypeParameters>,,</ownDataTypeParameters>
+</Attribute>
+<Attribute name="recycled_mat_p" id="8BD03344-A2E8-8A44-4754-1C671BDDC036">
+<createdBy>root</createdBy>
+<createdTime>2021-04-12 21:25:51 UTC</createdTime>
+<commentInRDBMS><![CDATA[Product recycled materials]]></commentInRDBMS>
+<ownerDesignName>ecoapp_modeler</ownerDesignName>
+<engineerTo>
+<item key="361F45A6-1E26-C41D-C2C3-E97F73AEBE07" value="true"/>
+</engineerTo>
+<useDomainConstraints>false</useDomainConstraints>
+<use>1</use>
+<logicalDatatype>LOGDT024</logicalDatatype>
+<ownDataTypeParameters>,,</ownDataTypeParameters>
+</Attribute>
+<Attribute name="reused_mat_p" id="7968D9A9-4F47-3B62-93EF-F7E2CB690A94">
+<createdBy>root</createdBy>
+<createdTime>2021-04-12 21:31:29 UTC</createdTime>
+<commentInRDBMS><![CDATA[Product reused materials]]></commentInRDBMS>
+<ownerDesignName>ecoapp_modeler</ownerDesignName>
+<engineerTo>
+<item key="361F45A6-1E26-C41D-C2C3-E97F73AEBE07" value="true"/>
+</engineerTo>
+<useDomainConstraints>false</useDomainConstraints>
+<use>1</use>
+<logicalDatatype>LOGDT024</logicalDatatype>
+<ownDataTypeParameters>,,</ownDataTypeParameters>
+</Attribute>
+<Attribute name="not_recycled_mat_p" id="D0AE0981-33F6-3519-2673-66DB4729C2FF">
+<createdBy>root</createdBy>
+<createdTime>2021-04-12 21:32:11 UTC</createdTime>
+<commentInRDBMS><![CDATA[Product not recycled materials]]></commentInRDBMS>
+<ownerDesignName>ecoapp_modeler</ownerDesignName>
+<engineerTo>
+<item key="361F45A6-1E26-C41D-C2C3-E97F73AEBE07" value="true"/>
+</engineerTo>
+<useDomainConstraints>false</useDomainConstraints>
+<use>1</use>
+<logicalDatatype>LOGDT024</logicalDatatype>
+<ownDataTypeParameters>,,</ownDataTypeParameters>
+</Attribute>
+<Attribute name="recycled_mat_b" id="586074B5-4C28-3E43-9661-C6B4BD649988">
+<createdBy>root</createdBy>
+<createdTime>2021-04-12 21:32:46 UTC</createdTime>
+<commentInRDBMS><![CDATA[Bundle recycled materials]]></commentInRDBMS>
+<ownerDesignName>ecoapp_modeler</ownerDesignName>
+<engineerTo>
+<item key="361F45A6-1E26-C41D-C2C3-E97F73AEBE07" value="true"/>
+</engineerTo>
+<useDomainConstraints>false</useDomainConstraints>
+<use>1</use>
+<logicalDatatype>LOGDT024</logicalDatatype>
+<ownDataTypeParameters>,,</ownDataTypeParameters>
+</Attribute>
+<Attribute name="reused_mat_b" id="512E13D2-8B58-E2D1-9BCF-A332A9A886B8">
+<createdBy>root</createdBy>
+<createdTime>2021-04-12 21:34:52 UTC</createdTime>
+<commentInRDBMS><![CDATA[Bundle reused materials]]></commentInRDBMS>
+<ownerDesignName>ecoapp_modeler</ownerDesignName>
+<engineerTo>
+<item key="361F45A6-1E26-C41D-C2C3-E97F73AEBE07" value="true"/>
+</engineerTo>
+<useDomainConstraints>false</useDomainConstraints>
+<use>1</use>
+<logicalDatatype>LOGDT024</logicalDatatype>
+<ownDataTypeParameters>,,</ownDataTypeParameters>
+</Attribute>
+<Attribute name="not_recycled_mat_b" id="C0C98156-41E4-44C7-ADE3-A611D84D6159">
+<createdBy>root</createdBy>
+<createdTime>2021-04-12 21:35:07 UTC</createdTime>
+<commentInRDBMS><![CDATA[Bundle not recycled materials]]></commentInRDBMS>
+<ownerDesignName>ecoapp_modeler</ownerDesignName>
+<engineerTo>
+<item key="361F45A6-1E26-C41D-C2C3-E97F73AEBE07" value="true"/>
+</engineerTo>
+<useDomainConstraints>false</useDomainConstraints>
+<use>1</use>
+<logicalDatatype>LOGDT024</logicalDatatype>
+<ownDataTypeParameters>,,</ownDataTypeParameters>
+</Attribute>
+<Attribute name="elijo_reciclar" id="CCDEC583-C5BA-1DEA-A958-6F11A2C2DC4A">
+<createdBy>root</createdBy>
+<createdTime>2021-04-12 21:44:22 UTC</createdTime>
+<ownerDesignName>ecoapp_modeler</ownerDesignName>
+<engineerTo>
+<item key="361F45A6-1E26-C41D-C2C3-E97F73AEBE07" value="true"/>
+</engineerTo>
+<useDomainConstraints>false</useDomainConstraints>
+<use>1</use>
+<logicalDatatype>LOGDT006</logicalDatatype>
+<dataTypeSize>1</dataTypeSize>
+<ownDataTypeParameters>1,,</ownDataTypeParameters>
+</Attribute>
+</attributes>
+<identifiers itemClass="oracle.dbtools.crest.model.design.logical.CandidateKey">
+<identifier id="77C3005F-09FC-70BE-9CEC-91566876D08A" name="article_form PK">
+<createdBy>iquinteros</createdBy>
+<createdTime>2021-04-10 21:37:10 UTC</createdTime>
+<ownerDesignName>ecoapp_modeler</ownerDesignName>
+<engineerTo>
+<item key="361F45A6-1E26-C41D-C2C3-E97F73AEBE07" value="true"/>
+</engineerTo>
+<pk>true</pk>
+<usedAttributes>
+<attributeRef>F3BE3DDB-14F2-CE1F-759B-2795990B33BE</attributeRef>
+</usedAttributes>
+</identifier>
+</identifiers>
+</Entity>

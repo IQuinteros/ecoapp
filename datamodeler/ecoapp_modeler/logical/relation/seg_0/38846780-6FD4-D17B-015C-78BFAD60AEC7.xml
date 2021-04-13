@@ -1,0 +1,82 @@
+<?xml version = '1.0' encoding = 'UTF-8'?>
+<Relation class="oracle.dbtools.crest.model.design.logical.Relation" name="article-to-compra" directorySegmentName="seg_0" id="38846780-6FD4-D17B-015C-78BFAD60AEC7">
+<createdBy>iquinteros</createdBy>
+<createdTime>2021-04-10 22:26:51 UTC</createdTime>
+<ownerDesignName>ecoapp_modeler</ownerDesignName>
+<engineerTo>
+<item key="361F45A6-1E26-C41D-C2C3-E97F73AEBE07" value="true"/>
+</engineerTo>
+<identifying>false</identifying>
+<optionalSource>true</optionalSource>
+<optionalTarget>false</optionalTarget>
+<sourceCardinality>*</sourceCardinality>
+<sourceEntity>5DA4531D-8D4B-2982-F91B-DDB62BAFEA98</sourceEntity>
+<targetCardinalityString>*</targetCardinalityString>
+<targetEntity>78252D5A-F444-0384-6CB6-57767CCE9B6F</targetEntity>
+<transferable>true</transferable>
+<deleteRule>NO ACTION</deleteRule>
+<attributes itemClass="oracle.dbtools.crest.model.design.logical.Attribute">
+<attribute name="title" id="40FFDBC6-A864-17AF-686C-D047EC1B0EC0">
+<createdBy>iquinteros</createdBy>
+<createdTime>2021-04-10 22:29:50 UTC</createdTime>
+<ownerDesignName>ecoapp_modeler</ownerDesignName>
+<engineerTo>
+<item key="361F45A6-1E26-C41D-C2C3-E97F73AEBE07" value="true"/>
+</engineerTo>
+<useDomainConstraints>false</useDomainConstraints>
+<use>1</use>
+<logicalDatatype>LOGDT024</logicalDatatype>
+<ownDataTypeParameters>,,</ownDataTypeParameters>
+</attribute>
+<attribute name="eco_art_rat" id="9C27E75A-C683-AD43-8178-A3C250A5FCDF">
+<createdBy>iquinteros</createdBy>
+<createdTime>2021-04-10 22:30:07 UTC</createdTime>
+<comment><![CDATA[EcoArticle rating]]></comment>
+<ownerDesignName>ecoapp_modeler</ownerDesignName>
+<engineerTo>
+<item key="361F45A6-1E26-C41D-C2C3-E97F73AEBE07" value="true"/>
+</engineerTo>
+<useDomainConstraints>false</useDomainConstraints>
+<use>1</use>
+<logicalDatatype>LOGDT011</logicalDatatype>
+<ownDataTypeParameters>,,</ownDataTypeParameters>
+</attribute>
+<attribute name="eco_pro_rat" id="E3AE1E9D-D835-5A36-4372-3903A8D603E6">
+<createdBy>iquinteros</createdBy>
+<createdTime>2021-04-10 22:32:30 UTC</createdTime>
+<comment><![CDATA[EcoProcess rating]]></comment>
+<ownerDesignName>ecoapp_modeler</ownerDesignName>
+<engineerTo>
+<item key="361F45A6-1E26-C41D-C2C3-E97F73AEBE07" value="true"/>
+</engineerTo>
+<useDomainConstraints>false</useDomainConstraints>
+<use>1</use>
+<logicalDatatype>LOGDT011</logicalDatatype>
+<ownDataTypeParameters>,,</ownDataTypeParameters>
+</attribute>
+<attribute name="unit_price" id="9780D6D8-300C-0613-AA41-8C6706DD399D">
+<createdBy>iquinteros</createdBy>
+<createdTime>2021-04-10 22:34:01 UTC</createdTime>
+<ownerDesignName>ecoapp_modeler</ownerDesignName>
+<engineerTo>
+<item key="361F45A6-1E26-C41D-C2C3-E97F73AEBE07" value="true"/>
+</engineerTo>
+<useDomainConstraints>false</useDomainConstraints>
+<use>1</use>
+<logicalDatatype>LOGDT011</logicalDatatype>
+<ownDataTypeParameters>,,</ownDataTypeParameters>
+</attribute>
+<attribute name="quantity" id="24C952AB-AD97-2985-7F14-4EA8235AD14D">
+<createdBy>iquinteros</createdBy>
+<createdTime>2021-04-10 22:34:13 UTC</createdTime>
+<ownerDesignName>ecoapp_modeler</ownerDesignName>
+<engineerTo>
+<item key="361F45A6-1E26-C41D-C2C3-E97F73AEBE07" value="true"/>
+</engineerTo>
+<useDomainConstraints>false</useDomainConstraints>
+<use>1</use>
+<logicalDatatype>LOGDT011</logicalDatatype>
+<ownDataTypeParameters>,,</ownDataTypeParameters>
+</attribute>
+</attributes>
+</Relation>

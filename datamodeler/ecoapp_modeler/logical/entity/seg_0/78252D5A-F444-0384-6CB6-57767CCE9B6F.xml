@@ -1,0 +1,177 @@
+<?xml version = '1.0' encoding = 'UTF-8'?>
+<Entity class="oracle.dbtools.crest.model.design.logical.Entity" directorySegmentName="seg_0" id="78252D5A-F444-0384-6CB6-57767CCE9B6F" name="article">
+<createdBy>iquinteros</createdBy>
+<createdTime>2021-04-10 21:13:45 UTC</createdTime>
+<ownerDesignName>ecoapp_modeler</ownerDesignName>
+<engineerTo>
+<item key="361F45A6-1E26-C41D-C2C3-E97F73AEBE07" value="true"/>
+</engineerTo>
+<adequatelyNormalized>NO</adequatelyNormalized>
+<expectedVolumes>0</expectedVolumes>
+<fwdEngineeringStrategyName>Single Table</fwdEngineeringStrategyName>
+<growthPercent>0</growthPercent>
+<growthType>Year</growthType>
+<maxVolumes>9999999</maxVolumes>
+<minVolumes>0</minVolumes>
+<normalForm>Third</normalForm>
+<attributes itemClass="oracle.dbtools.crest.model.design.logical.Attribute">
+<Attribute name="id" id="5A8E0D70-B277-D349-CA34-7AC7BEAB2234">
+<createdBy>iquinteros</createdBy>
+<createdTime>2021-04-10 21:13:57 UTC</createdTime>
+<ownerDesignName>ecoapp_modeler</ownerDesignName>
+<engineerTo>
+<item key="361F45A6-1E26-C41D-C2C3-E97F73AEBE07" value="true"/>
+</engineerTo>
+<useDomainConstraints>false</useDomainConstraints>
+<use>1</use>
+<logicalDatatype>LOGDT011</logicalDatatype>
+<ownDataTypeParameters>,,</ownDataTypeParameters>
+</Attribute>
+<Attribute name="title" id="3342CCED-8065-DCDB-F18D-10A873935399">
+<createdBy>iquinteros</createdBy>
+<createdTime>2021-04-10 21:14:13 UTC</createdTime>
+<ownerDesignName>ecoapp_modeler</ownerDesignName>
+<engineerTo>
+<item key="361F45A6-1E26-C41D-C2C3-E97F73AEBE07" value="true"/>
+</engineerTo>
+<useDomainConstraints>false</useDomainConstraints>
+<use>1</use>
+<logicalDatatype>LOGDT024</logicalDatatype>
+<dataTypeSize>150</dataTypeSize>
+<ownDataTypeParameters>150,,</ownDataTypeParameters>
+</Attribute>
+<Attribute name="description" id="EF1F5168-0EB5-3A8F-5CAF-D12B917CD60E">
+<createdBy>iquinteros</createdBy>
+<createdTime>2021-04-10 21:14:26 UTC</createdTime>
+<ownerDesignName>ecoapp_modeler</ownerDesignName>
+<engineerTo>
+<item key="361F45A6-1E26-C41D-C2C3-E97F73AEBE07" value="true"/>
+</engineerTo>
+<useDomainConstraints>false</useDomainConstraints>
+<use>1</use>
+<logicalDatatype>LOGDT040</logicalDatatype>
+<ownDataTypeParameters>,,</ownDataTypeParameters>
+</Attribute>
+<Attribute name="price" id="E098BF8E-8A25-58DF-D493-E6A61366EBC1">
+<createdBy>iquinteros</createdBy>
+<createdTime>2021-04-10 21:14:47 UTC</createdTime>
+<ownerDesignName>ecoapp_modeler</ownerDesignName>
+<engineerTo>
+<item key="361F45A6-1E26-C41D-C2C3-E97F73AEBE07" value="true"/>
+</engineerTo>
+<useDomainConstraints>false</useDomainConstraints>
+<use>1</use>
+<logicalDatatype>LOGDT011</logicalDatatype>
+<ownDataTypeParameters>,,</ownDataTypeParameters>
+</Attribute>
+<Attribute name="stock" id="D64E15B3-B4B4-C422-C93A-FBA3554EDC90">
+<createdBy>root</createdBy>
+<createdTime>2021-04-12 03:54:24 UTC</createdTime>
+<ownerDesignName>ecoapp_modeler</ownerDesignName>
+<engineerTo>
+<item key="361F45A6-1E26-C41D-C2C3-E97F73AEBE07" value="true"/>
+</engineerTo>
+<nullsAllowed>true</nullsAllowed>
+<useDomainConstraints>false</useDomainConstraints>
+<use>1</use>
+<logicalDatatype>LOGDT011</logicalDatatype>
+<ownDataTypeParameters>,,</ownDataTypeParameters>
+</Attribute>
+<Attribute name="created_date" id="5B049C95-E3E1-C082-F875-4D16A95337C1">
+<createdBy>iquinteros</createdBy>
+<createdTime>2021-04-10 21:15:02 UTC</createdTime>
+<ownerDesignName>ecoapp_modeler</ownerDesignName>
+<engineerTo>
+<item key="361F45A6-1E26-C41D-C2C3-E97F73AEBE07" value="true"/>
+</engineerTo>
+<useDomainConstraints>false</useDomainConstraints>
+<use>1</use>
+<logicalDatatype>LOGDT015</logicalDatatype>
+<ownDataTypeParameters>,,</ownDataTypeParameters>
+</Attribute>
+<Attribute name="last_update_date" id="4BFDD347-3BE0-5654-1CBB-812AAED628B8">
+<createdBy>iquinteros</createdBy>
+<createdTime>2021-04-10 21:15:17 UTC</createdTime>
+<ownerDesignName>ecoapp_modeler</ownerDesignName>
+<engineerTo>
+<item key="361F45A6-1E26-C41D-C2C3-E97F73AEBE07" value="true"/>
+</engineerTo>
+<useDomainConstraints>false</useDomainConstraints>
+<use>1</use>
+<logicalDatatype>LOGDT015</logicalDatatype>
+<ownDataTypeParameters>,,</ownDataTypeParameters>
+</Attribute>
+<Attribute name="enabled" id="B353699D-F572-7955-DA17-3C4A0F9D8AFB">
+<createdBy>iquinteros</createdBy>
+<createdTime>2021-04-10 21:20:31 UTC</createdTime>
+<ownerDesignName>ecoapp_modeler</ownerDesignName>
+<engineerTo>
+<item key="361F45A6-1E26-C41D-C2C3-E97F73AEBE07" value="true"/>
+</engineerTo>
+<useDomainConstraints>false</useDomainConstraints>
+<use>1</use>
+<logicalDatatype>LOGDT006</logicalDatatype>
+<dataTypeSize>1</dataTypeSize>
+<ownDataTypeParameters>1,,</ownDataTypeParameters>
+</Attribute>
+<Attribute name="id2" id="E3795F3F-BC98-D4C3-5201-C211E6F301B0">
+<createdBy>iquinteros</createdBy>
+<createdTime>2021-04-10 21:38:52 UTC</createdTime>
+<generatorID>C6DAF504-E2FB-DE47-1407-89A52AE39B7F</generatorID>
+<ownerDesignName>ecoapp_modeler</ownerDesignName>
+<engineerTo>
+<item key="361F45A6-1E26-C41D-C2C3-E97F73AEBE07" value="true"/>
+</engineerTo>
+<referedAttribute>F3BE3DDB-14F2-CE1F-759B-2795990B33BE</referedAttribute>
+<useDomainConstraints>false</useDomainConstraints>
+<use>1</use>
+<logicalDatatype>LOGDT011</logicalDatatype>
+<ownDataTypeParameters>,,</ownDataTypeParameters>
+</Attribute>
+<Attribute name="id3" id="924A23C9-B009-6659-A85A-CC26074C4237">
+<createdBy>iquinteros</createdBy>
+<createdTime>2021-04-10 21:55:23 UTC</createdTime>
+<generatorID>783D0092-0B6E-56BF-A425-39294EC64ED0</generatorID>
+<ownerDesignName>ecoapp_modeler</ownerDesignName>
+<engineerTo>
+<item key="361F45A6-1E26-C41D-C2C3-E97F73AEBE07" value="true"/>
+</engineerTo>
+<nullsAllowed>true</nullsAllowed>
+<referedAttribute>2907BD09-C039-D4F0-16E4-588A89024FF6</referedAttribute>
+<useDomainConstraints>false</useDomainConstraints>
+<use>1</use>
+<logicalDatatype>LOGDT011</logicalDatatype>
+<ownDataTypeParameters>,,</ownDataTypeParameters>
+</Attribute>
+<Attribute name="id1" id="50EA5E6E-3B73-20E0-99F3-D4F8E1B0C79A">
+<createdBy>root</createdBy>
+<createdTime>2021-04-12 20:57:06 UTC</createdTime>
+<generatorID>180B5181-B047-779F-00A6-4AFC43A31C28</generatorID>
+<ownerDesignName>ecoapp_modeler</ownerDesignName>
+<engineerTo>
+<item key="361F45A6-1E26-C41D-C2C3-E97F73AEBE07" value="true"/>
+</engineerTo>
+<nullsAllowed>true</nullsAllowed>
+<referedAttribute>36559FF6-683B-F718-4BA1-7ADAAFB72B7E</referedAttribute>
+<useDomainConstraints>false</useDomainConstraints>
+<use>1</use>
+<logicalDatatype>LOGDT011</logicalDatatype>
+<ownDataTypeParameters>,,</ownDataTypeParameters>
+</Attribute>
+</attributes>
+<identifiers itemClass="oracle.dbtools.crest.model.design.logical.CandidateKey">
+<identifier id="0286C518-9C17-1BF4-81B0-2ED3023F2AF7" name="article PK">
+<createdBy>iquinteros</createdBy>
+<createdTime>2021-04-10 21:14:00 UTC</createdTime>
+<ownerDesignName>ecoapp_modeler</ownerDesignName>
+<shouldEngineer>false</shouldEngineer>
+<engineerTo>
+<item key="361F45A6-1E26-C41D-C2C3-E97F73AEBE07" value="false"/>
+</engineerTo>
+<pk>true</pk>
+<usedAttributes>
+<attributeRef>5A8E0D70-B277-D349-CA34-7AC7BEAB2234</attributeRef>
+</usedAttributes>
+</identifier>
+</identifiers>
+</Entity>

@@ -1,0 +1,8 @@
+<?xml version = '1.0' encoding = 'UTF-8'?>
+<OSDM_Design class="oracle.dbtools.crest.model.design.Design" name="ecoapp_modeler" id="F441125F-D078-50BF-9EE9-415E04B5092D" version="3.5">
+<createdBy>iquinteros</createdBy>
+<createdTime>2021-04-10 19:19:53 UTC</createdTime>
+<ownerDesignName>ecoapp_modeler</ownerDesignName>
+<capitalNames>false</capitalNames>
+<designId>F441125F-D078-50BF-9EE9-415E04B5092D</designId>
+</OSDM_Design>
