@@ -1,0 +1,20 @@
+<?xml version = '1.0' encoding = 'UTF-8'?>
+<Relation class="oracle.dbtools.crest.model.design.logical.Relation" name="Relation_28" directorySegmentName="seg_0" id="F77A95F5-9F72-64D5-A160-B51488C7B153">
+<createdBy>iquinteros</createdBy>
+<createdTime>2021-04-10 22:39:04 UTC</createdTime>
+<ownerDesignName>ecoapp_modeler</ownerDesignName>
+<engineerTo>
+<item key="361F45A6-1E26-C41D-C2C3-E97F73AEBE07" value="true"/>
+</engineerTo>
+<sourcePk>096A23B5-D82A-AA6D-359F-1E039D809000</sourcePk>
+<targetPk>148C6C82-BA6F-B964-62A9-36CEE4C41D5B</targetPk>
+<identifying>false</identifying>
+<optionalSource>false</optionalSource>
+<optionalTarget>false</optionalTarget>
+<sourceCardinality>1</sourceCardinality>
+<sourceEntity>8C393945-4B15-BFC7-F812-2D089F89AE5E</sourceEntity>
+<targetCardinalityString>1</targetCardinalityString>
+<targetEntity>5DA4531D-8D4B-2982-F91B-DDB62BAFEA98</targetEntity>
+<transferable>true</transferable>
+<deleteRule>NO ACTION</deleteRule>
+</Relation>

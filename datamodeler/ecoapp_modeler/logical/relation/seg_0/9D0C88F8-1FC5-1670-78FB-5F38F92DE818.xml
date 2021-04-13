@@ -1,0 +1,19 @@
+<?xml version = '1.0' encoding = 'UTF-8'?>
+<Relation class="oracle.dbtools.crest.model.design.logical.Relation" name="profile_compras" directorySegmentName="seg_0" id="9D0C88F8-1FC5-1670-78FB-5F38F92DE818">
+<createdBy>iquinteros</createdBy>
+<createdTime>2021-04-10 22:26:18 UTC</createdTime>
+<ownerDesignName>ecoapp_modeler</ownerDesignName>
+<engineerTo>
+<item key="361F45A6-1E26-C41D-C2C3-E97F73AEBE07" value="true"/>
+</engineerTo>
+<sourcePk>DCE972F0-7E2E-725F-2CE2-B6E0FDC58CB6</sourcePk>
+<identifying>false</identifying>
+<optionalSource>false</optionalSource>
+<optionalTarget>true</optionalTarget>
+<sourceCardinality>1</sourceCardinality>
+<sourceEntity>03409701-5014-73CC-5227-97ED01F17B1D</sourceEntity>
+<targetCardinalityString>*</targetCardinalityString>
+<targetEntity>5DA4531D-8D4B-2982-F91B-DDB62BAFEA98</targetEntity>
+<transferable>true</transferable>
+<deleteRule>NO ACTION</deleteRule>
+</Relation>

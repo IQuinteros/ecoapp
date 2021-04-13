@@ -1,0 +1,19 @@
+<?xml version = '1.0' encoding = 'UTF-8'?>
+<Relation class="oracle.dbtools.crest.model.design.logical.Relation" name="article-photos" directorySegmentName="seg_0" id="D8FD3511-66E8-B0E2-BF37-7B214B49972D">
+<createdBy>root</createdBy>
+<createdTime>2021-04-12 03:53:52 UTC</createdTime>
+<ownerDesignName>ecoapp_modeler</ownerDesignName>
+<engineerTo>
+<item key="361F45A6-1E26-C41D-C2C3-E97F73AEBE07" value="true"/>
+</engineerTo>
+<sourcePk>0286C518-9C17-1BF4-81B0-2ED3023F2AF7</sourcePk>
+<identifying>false</identifying>
+<optionalSource>false</optionalSource>
+<optionalTarget>false</optionalTarget>
+<sourceCardinality>1</sourceCardinality>
+<sourceEntity>78252D5A-F444-0384-6CB6-57767CCE9B6F</sourceEntity>
+<targetCardinalityString>*</targetCardinalityString>
+<targetEntity>C9FDEF80-B420-A2E8-1255-B467822511C7</targetEntity>
+<transferable>true</transferable>
+<deleteRule>NO ACTION</deleteRule>
+</Relation>
