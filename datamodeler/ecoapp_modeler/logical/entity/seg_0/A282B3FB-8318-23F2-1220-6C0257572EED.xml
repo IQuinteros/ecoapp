@@ -39,6 +39,20 @@
 <logicalDatatype>LOGDT015</logicalDatatype>
 <ownDataTypeParameters>,,</ownDataTypeParameters>
 </Attribute>
+<Attribute name="deleted" id="863111CD-ADCF-75FB-6E20-823024297D02">
+<createdBy>root</createdBy>
+<createdTime>2021-04-12 22:33:40 UTC</createdTime>
+<commentInRDBMS><![CDATA[If is deleted, user won't see this history item in the list. However, the client can see if this user saw his product..]]></commentInRDBMS>
+<ownerDesignName>ecoapp_modeler</ownerDesignName>
+<engineerTo>
+<item key="361F45A6-1E26-C41D-C2C3-E97F73AEBE07" value="true"/>
+</engineerTo>
+<useDomainConstraints>false</useDomainConstraints>
+<use>1</use>
+<logicalDatatype>LOGDT006</logicalDatatype>
+<dataTypeSize>1</dataTypeSize>
+<ownDataTypeParameters>1,,</ownDataTypeParameters>
+</Attribute>
 <Attribute name="id1" id="55FA8466-9D8F-4C7D-40F2-5C9B17402A46">
 <createdBy>iquinteros</createdBy>
 <createdTime>2021-04-10 22:46:37 UTC</createdTime>
@@ -59,8 +73,9 @@
 <createdBy>iquinteros</createdBy>
 <createdTime>2021-04-10 22:45:56 UTC</createdTime>
 <ownerDesignName>ecoapp_modeler</ownerDesignName>
+<shouldEngineer>false</shouldEngineer>
 <engineerTo>
-<item key="361F45A6-1E26-C41D-C2C3-E97F73AEBE07" value="true"/>
+<item key="361F45A6-1E26-C41D-C2C3-E97F73AEBE07" value="false"/>
 </engineerTo>
 <pk>true</pk>
 <usedAttributes>

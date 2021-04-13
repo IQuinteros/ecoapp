@@ -1,0 +1,121 @@
+<?xml version = '1.0' encoding = 'UTF-8'?>
+<Table class="oracle.dbtools.crest.model.design.relational.Table" directorySegmentName="seg_0" id="682D78E1-7E0A-6C27-EF79-C9202E32D5C9" name="info-purchase">
+<createdBy>root</createdBy>
+<createdTime>2021-04-12 22:39:12 UTC</createdTime>
+<generatorID>8C393945-4B15-BFC7-F812-2D089F89AE5E</generatorID>
+<ownerDesignName>ecoapp_modeler</ownerDesignName>
+<allowColumnReorder>false</allowColumnReorder>
+<existDependencyGenerateInDDl>true</existDependencyGenerateInDDl>
+<parsed>true</parsed>
+<columns itemClass="oracle.dbtools.crest.model.design.relational.Column">
+<Column name="id" id="D4472C99-3494-0D39-6C7B-B7E61AE95204">
+<createdBy>root</createdBy>
+<createdTime>2021-04-12 22:39:12 UTC</createdTime>
+<generatorID>0D28EE6B-A397-8B04-887C-850F9B871026</generatorID>
+<ownerDesignName>ecoapp_modeler</ownerDesignName>
+<useDomainConstraints>false</useDomainConstraints>
+<use>1</use>
+<logicalDatatype>LOGDT011</logicalDatatype>
+<ownDataTypeParameters>,,</ownDataTypeParameters>
+<autoIncrementCycle>false</autoIncrementCycle>
+</Column>
+<Column name="names" id="57101FFB-FF8F-043F-F300-F74648E6130A">
+<createdBy>root</createdBy>
+<createdTime>2021-04-12 22:39:12 UTC</createdTime>
+<commentInRDBMS><![CDATA[Name or social reason for shipping]]></commentInRDBMS>
+<generatorID>11DF8A15-DF93-E7BD-0734-E021750AFCF1</generatorID>
+<ownerDesignName>ecoapp_modeler</ownerDesignName>
+<useDomainConstraints>false</useDomainConstraints>
+<use>1</use>
+<logicalDatatype>LOGDT024</logicalDatatype>
+<dataTypeSize>150</dataTypeSize>
+<ownDataTypeParameters>150,,</ownDataTypeParameters>
+<autoIncrementCycle>false</autoIncrementCycle>
+</Column>
+<Column name="location" id="46E08F52-7F96-F591-C21B-2F0BBC906D4D">
+<createdBy>root</createdBy>
+<createdTime>2021-04-12 22:39:12 UTC</createdTime>
+<generatorID>23436B4C-CD3D-4F43-224A-ACD328D0E3E2</generatorID>
+<ownerDesignName>ecoapp_modeler</ownerDesignName>
+<useDomainConstraints>false</useDomainConstraints>
+<use>1</use>
+<logicalDatatype>LOGDT024</logicalDatatype>
+<dataTypeSize>255</dataTypeSize>
+<ownDataTypeParameters>255,,</ownDataTypeParameters>
+<autoIncrementCycle>false</autoIncrementCycle>
+</Column>
+<Column name="contact_number" id="3F987E9F-5130-C7CD-E303-7CF4411AA952">
+<createdBy>root</createdBy>
+<createdTime>2021-04-12 22:39:12 UTC</createdTime>
+<generatorID>B4304196-7575-5F0C-18BE-5AF5E5A0634D</generatorID>
+<ownerDesignName>ecoapp_modeler</ownerDesignName>
+<useDomainConstraints>false</useDomainConstraints>
+<use>1</use>
+<logicalDatatype>LOGDT011</logicalDatatype>
+<ownDataTypeParameters>,,</ownDataTypeParameters>
+<autoIncrementCycle>false</autoIncrementCycle>
+</Column>
+<Column name="purchase_id" id="8BC3634E-7F30-2051-C6ED-B3659D803AE6">
+<createdBy>root</createdBy>
+<createdTime>2021-04-12 22:39:12 UTC</createdTime>
+<generatorID>9030DC1A-EE61-42B9-F802-1C90C1B09FF8</generatorID>
+<ownerDesignName>ecoapp_modeler</ownerDesignName>
+<useDomainConstraints>false</useDomainConstraints>
+<use>1</use>
+<logicalDatatype>LOGDT011</logicalDatatype>
+<ownDataTypeParameters>,,</ownDataTypeParameters>
+<previousColumn>false</previousColumn>
+<autoIncrementCycle>false</autoIncrementCycle>
+<associations>
+<colAssociation fkAssociation="217D7703-7CBF-C525-F41B-A525B54CFA57" referredColumn="37A22CA3-23E1-B350-79C9-CBB6B40A29FD"/>
+</associations>
+</Column>
+<Column name="comuna" id="8E9F7665-1B08-D012-8650-F85E620D903B">
+<createdBy>root</createdBy>
+<createdTime>2021-04-12 22:39:12 UTC</createdTime>
+<generatorID>CD81DB70-586B-F720-AE56-9900CC0A7E61</generatorID>
+<ownerDesignName>ecoapp_modeler</ownerDesignName>
+<useDomainConstraints>false</useDomainConstraints>
+<use>1</use>
+<logicalDatatype>LOGDT024</logicalDatatype>
+<ownDataTypeParameters>,,</ownDataTypeParameters>
+<autoIncrementCycle>false</autoIncrementCycle>
+</Column>
+</columns>
+<indexes itemClass="oracle.dbtools.crest.model.design.relational.Index">
+<ind_PK_UK id="34C4311F-C24D-A726-EE59-C53F684612CD" name="info-purchase_PK">
+<createdBy>root</createdBy>
+<createdTime>2021-04-12 22:39:12 UTC</createdTime>
+<generatorID>096A23B5-D82A-AA6D-359F-1E039D809000</generatorID>
+<ownerDesignName>ecoapp_modeler</ownerDesignName>
+<pk>true</pk>
+<indexState>Primary Constraint</indexState>
+<isSurrogateKey>false</isSurrogateKey>
+<indexColumnUsage>
+<colUsage columnID="D4472C99-3494-0D39-6C7B-B7E61AE95204"/>
+</indexColumnUsage>
+</ind_PK_UK>
+<ind_PK_UK id="86B7FB07-83D5-33D4-BAE3-721EA780A757" name="info-purchase__IDX">
+<createdBy>root</createdBy>
+<createdTime>2021-04-12 22:39:13 UTC</createdTime>
+<ownerDesignName>ecoapp_modeler</ownerDesignName>
+<indexState>Unique Plain Index</indexState>
+<isSurrogateKey>false</isSurrogateKey>
+<relationGeneratorID>F77A95F5-9F72-64D5-A160-B51488C7B153</relationGeneratorID>
+<indexColumnUsage>
+<colUsage columnID="8BC3634E-7F30-2051-C6ED-B3659D803AE6"/>
+</indexColumnUsage>
+</ind_PK_UK>
+<ind_PK_UK id="934F5FDB-36B5-AC36-97BC-10C06B98722E" name="info-purchase_purchase_FK">
+<createdBy>root</createdBy>
+<createdTime>2021-04-12 22:39:13 UTC</createdTime>
+<generatorID>F77A95F5-9F72-64D5-A160-B51488C7B153</generatorID>
+<ownerDesignName>ecoapp_modeler</ownerDesignName>
+<indexState>Foreign Key</indexState>
+<isSurrogateKey>false</isSurrogateKey>
+<indexColumnUsage>
+<colUsage columnID="8BC3634E-7F30-2051-C6ED-B3659D803AE6"/>
+</indexColumnUsage>
+</ind_PK_UK>
+</indexes>
+</Table>

@@ -142,6 +142,19 @@
 <logicalDatatype>LOGDT025</logicalDatatype>
 <ownDataTypeParameters>,,</ownDataTypeParameters>
 </Attribute>
+<Attribute name="enabled" id="FA764722-BF3C-C47C-1A66-70AAE0491EA1">
+<createdBy>root</createdBy>
+<createdTime>2021-04-12 22:31:57 UTC</createdTime>
+<ownerDesignName>ecoapp_modeler</ownerDesignName>
+<engineerTo>
+<item key="361F45A6-1E26-C41D-C2C3-E97F73AEBE07" value="true"/>
+</engineerTo>
+<useDomainConstraints>false</useDomainConstraints>
+<use>1</use>
+<logicalDatatype>LOGDT006</logicalDatatype>
+<dataTypeSize>1</dataTypeSize>
+<ownDataTypeParameters>1,,</ownDataTypeParameters>
+</Attribute>
 <Attribute name="creation_date" id="B27890C5-E38D-C24C-5B0A-95C51CDD8D86">
 <createdBy>root</createdBy>
 <createdTime>2021-04-12 20:36:24 UTC</createdTime>
