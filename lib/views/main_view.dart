@@ -20,7 +20,7 @@ class _MainViewState extends State<MainView> {
   @override
   Widget build(BuildContext context) {
     return Scaffold(
-      body: getContent(context),
+      body: SafeArea(child: getContent(context)),
       bottomNavigationBar: getBottomNavigationBar(),
     );
   }
