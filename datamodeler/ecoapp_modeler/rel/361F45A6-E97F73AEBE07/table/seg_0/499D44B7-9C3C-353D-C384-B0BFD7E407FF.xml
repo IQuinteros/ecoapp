@@ -1,0 +1,180 @@
+<?xml version = '1.0' encoding = 'UTF-8'?>
+<Table class="oracle.dbtools.crest.model.design.relational.Table" directorySegmentName="seg_0" id="499D44B7-9C3C-353D-C384-B0BFD7E407FF" name="article-form">
+<createdBy>root</createdBy>
+<createdTime>2021-04-12 22:39:12 UTC</createdTime>
+<generatorID>A2FC3DFE-519B-7F58-8B44-E8F64BCA8A36</generatorID>
+<ownerDesignName>ecoapp_modeler</ownerDesignName>
+<allowColumnReorder>false</allowColumnReorder>
+<existDependencyGenerateInDDl>true</existDependencyGenerateInDDl>
+<parsed>true</parsed>
+<columns itemClass="oracle.dbtools.crest.model.design.relational.Column">
+<Column name="id" id="3EACE234-4120-4B6F-388B-FD199B89F278">
+<createdBy>root</createdBy>
+<createdTime>2021-04-12 22:39:12 UTC</createdTime>
+<generatorID>F3BE3DDB-14F2-CE1F-759B-2795990B33BE</generatorID>
+<ownerDesignName>ecoapp_modeler</ownerDesignName>
+<useDomainConstraints>false</useDomainConstraints>
+<use>1</use>
+<logicalDatatype>LOGDT011</logicalDatatype>
+<ownDataTypeParameters>,,</ownDataTypeParameters>
+<autoIncrementCycle>false</autoIncrementCycle>
+</Column>
+<Column name="created_date" id="8083E9F8-DC53-FED9-9006-785F7F3CCACC">
+<createdBy>root</createdBy>
+<createdTime>2021-04-12 22:39:12 UTC</createdTime>
+<generatorID>5D802ED8-0482-127C-6342-AF5BA2A500D6</generatorID>
+<ownerDesignName>ecoapp_modeler</ownerDesignName>
+<useDomainConstraints>false</useDomainConstraints>
+<use>1</use>
+<logicalDatatype>LOGDT015</logicalDatatype>
+<ownDataTypeParameters>,,</ownDataTypeParameters>
+<autoIncrementCycle>false</autoIncrementCycle>
+</Column>
+<Column name="last_update_date" id="004D1AAA-F558-3A90-AE5F-A3FAF6EFE430">
+<createdBy>root</createdBy>
+<createdTime>2021-04-12 22:39:12 UTC</createdTime>
+<generatorID>ED67AA52-76DF-AA2D-28C3-2F55AAC94213</generatorID>
+<ownerDesignName>ecoapp_modeler</ownerDesignName>
+<useDomainConstraints>false</useDomainConstraints>
+<use>1</use>
+<logicalDatatype>LOGDT015</logicalDatatype>
+<ownDataTypeParameters>,,</ownDataTypeParameters>
+<autoIncrementCycle>false</autoIncrementCycle>
+</Column>
+<Column name="article_id" id="2752F2FE-6567-0BDF-D1FE-9A9BE9F0A46A">
+<createdBy>root</createdBy>
+<createdTime>2021-04-12 22:39:12 UTC</createdTime>
+<generatorID>70393AC5-8BE9-FDE2-6D35-436514153051</generatorID>
+<ownerDesignName>ecoapp_modeler</ownerDesignName>
+<useDomainConstraints>false</useDomainConstraints>
+<use>1</use>
+<logicalDatatype>LOGDT011</logicalDatatype>
+<ownDataTypeParameters>,,</ownDataTypeParameters>
+<previousColumn>false</previousColumn>
+<autoIncrementCycle>false</autoIncrementCycle>
+<associations>
+<colAssociation fkAssociation="99D3028A-C0C9-EA0D-93F5-2726F74E96B2" referredColumn="F203E247-D197-0D06-F0E4-75013784F730"/>
+</associations>
+</Column>
+<Column name="recycled_mat_p" id="7E256634-A463-6B0C-E259-D377264A15A9">
+<createdBy>root</createdBy>
+<createdTime>2021-04-12 22:39:12 UTC</createdTime>
+<commentInRDBMS><![CDATA[Product recycled materials]]></commentInRDBMS>
+<generatorID>8BD03344-A2E8-8A44-4754-1C671BDDC036</generatorID>
+<ownerDesignName>ecoapp_modeler</ownerDesignName>
+<useDomainConstraints>false</useDomainConstraints>
+<use>1</use>
+<logicalDatatype>LOGDT024</logicalDatatype>
+<ownDataTypeParameters>,,</ownDataTypeParameters>
+<autoIncrementCycle>false</autoIncrementCycle>
+</Column>
+<Column name="reused_mat_p" id="DEA50536-E9A6-B206-F4F5-519C4D369BCE">
+<createdBy>root</createdBy>
+<createdTime>2021-04-12 22:39:12 UTC</createdTime>
+<commentInRDBMS><![CDATA[Product reused materials]]></commentInRDBMS>
+<generatorID>7968D9A9-4F47-3B62-93EF-F7E2CB690A94</generatorID>
+<ownerDesignName>ecoapp_modeler</ownerDesignName>
+<useDomainConstraints>false</useDomainConstraints>
+<use>1</use>
+<logicalDatatype>LOGDT024</logicalDatatype>
+<ownDataTypeParameters>,,</ownDataTypeParameters>
+<autoIncrementCycle>false</autoIncrementCycle>
+</Column>
+<Column name="not_recycled_mat_p" id="427645BF-F07B-B4BE-A527-61DF7E63C675">
+<createdBy>root</createdBy>
+<createdTime>2021-04-12 22:39:12 UTC</createdTime>
+<commentInRDBMS><![CDATA[Product not recycled materials]]></commentInRDBMS>
+<generatorID>D0AE0981-33F6-3519-2673-66DB4729C2FF</generatorID>
+<ownerDesignName>ecoapp_modeler</ownerDesignName>
+<useDomainConstraints>false</useDomainConstraints>
+<use>1</use>
+<logicalDatatype>LOGDT024</logicalDatatype>
+<ownDataTypeParameters>,,</ownDataTypeParameters>
+<autoIncrementCycle>false</autoIncrementCycle>
+</Column>
+<Column name="recycled_mat_b" id="CB1F2CAE-1BE8-F2F5-2D17-EE055D245F30">
+<createdBy>root</createdBy>
+<createdTime>2021-04-12 22:39:12 UTC</createdTime>
+<commentInRDBMS><![CDATA[Bundle recycled materials]]></commentInRDBMS>
+<generatorID>586074B5-4C28-3E43-9661-C6B4BD649988</generatorID>
+<ownerDesignName>ecoapp_modeler</ownerDesignName>
+<useDomainConstraints>false</useDomainConstraints>
+<use>1</use>
+<logicalDatatype>LOGDT024</logicalDatatype>
+<ownDataTypeParameters>,,</ownDataTypeParameters>
+<autoIncrementCycle>false</autoIncrementCycle>
+</Column>
+<Column name="reused_mat_b" id="9C016008-E79C-03DE-95F9-8C3304A9E69B">
+<createdBy>root</createdBy>
+<createdTime>2021-04-12 22:39:12 UTC</createdTime>
+<commentInRDBMS><![CDATA[Bundle reused materials]]></commentInRDBMS>
+<generatorID>512E13D2-8B58-E2D1-9BCF-A332A9A886B8</generatorID>
+<ownerDesignName>ecoapp_modeler</ownerDesignName>
+<useDomainConstraints>false</useDomainConstraints>
+<use>1</use>
+<logicalDatatype>LOGDT024</logicalDatatype>
+<ownDataTypeParameters>,,</ownDataTypeParameters>
+<autoIncrementCycle>false</autoIncrementCycle>
+</Column>
+<Column name="not_recycled_mat_b" id="AA0DB63F-2B07-9E87-AF51-30CA517C2098">
+<createdBy>root</createdBy>
+<createdTime>2021-04-12 22:39:12 UTC</createdTime>
+<commentInRDBMS><![CDATA[Bundle not recycled materials]]></commentInRDBMS>
+<generatorID>C0C98156-41E4-44C7-ADE3-A611D84D6159</generatorID>
+<ownerDesignName>ecoapp_modeler</ownerDesignName>
+<useDomainConstraints>false</useDomainConstraints>
+<use>1</use>
+<logicalDatatype>LOGDT024</logicalDatatype>
+<ownDataTypeParameters>,,</ownDataTypeParameters>
+<autoIncrementCycle>false</autoIncrementCycle>
+</Column>
+<Column name="elijo_reciclar" id="A99F2220-B508-8A1A-FE6D-2169EC818563">
+<createdBy>root</createdBy>
+<createdTime>2021-04-12 22:39:12 UTC</createdTime>
+<generatorID>CCDEC583-C5BA-1DEA-A958-6F11A2C2DC4A</generatorID>
+<ownerDesignName>ecoapp_modeler</ownerDesignName>
+<useDomainConstraints>false</useDomainConstraints>
+<use>1</use>
+<logicalDatatype>LOGDT006</logicalDatatype>
+<dataTypeSize>1</dataTypeSize>
+<ownDataTypeParameters>1,,</ownDataTypeParameters>
+<autoIncrementCycle>false</autoIncrementCycle>
+</Column>
+</columns>
+<indexes itemClass="oracle.dbtools.crest.model.design.relational.Index">
+<ind_PK_UK id="83F72794-7B2C-863B-CE08-F00963A14731" name="article-form_PK">
+<createdBy>root</createdBy>
+<createdTime>2021-04-12 22:39:12 UTC</createdTime>
+<generatorID>77C3005F-09FC-70BE-9CEC-91566876D08A</generatorID>
+<ownerDesignName>ecoapp_modeler</ownerDesignName>
+<pk>true</pk>
+<indexState>Primary Constraint</indexState>
+<isSurrogateKey>false</isSurrogateKey>
+<indexColumnUsage>
+<colUsage columnID="3EACE234-4120-4B6F-388B-FD199B89F278"/>
+</indexColumnUsage>
+</ind_PK_UK>
+<ind_PK_UK id="B6098220-9443-72C5-0D04-451ABF971D4A" name="article-form__IDX">
+<createdBy>root</createdBy>
+<createdTime>2021-04-12 22:39:12 UTC</createdTime>
+<ownerDesignName>ecoapp_modeler</ownerDesignName>
+<indexState>Unique Plain Index</indexState>
+<isSurrogateKey>false</isSurrogateKey>
+<relationGeneratorID>C6DAF504-E2FB-DE47-1407-89A52AE39B7F</relationGeneratorID>
+<indexColumnUsage>
+<colUsage columnID="2752F2FE-6567-0BDF-D1FE-9A9BE9F0A46A"/>
+</indexColumnUsage>
+</ind_PK_UK>
+<ind_PK_UK id="00450B8F-7E5B-97D5-EDBA-8ABB0F2F7429" name="article-form_article_FK">
+<createdBy>root</createdBy>
+<createdTime>2021-04-12 22:39:12 UTC</createdTime>
+<generatorID>C6DAF504-E2FB-DE47-1407-89A52AE39B7F</generatorID>
+<ownerDesignName>ecoapp_modeler</ownerDesignName>
+<indexState>Foreign Key</indexState>
+<isSurrogateKey>false</isSurrogateKey>
+<indexColumnUsage>
+<colUsage columnID="2752F2FE-6567-0BDF-D1FE-9A9BE9F0A46A"/>
+</indexColumnUsage>
+</ind_PK_UK>
+</indexes>
+</Table>
