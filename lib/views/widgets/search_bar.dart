@@ -11,7 +11,7 @@ class SearchBar extends StatelessWidget {
         border: OutlineInputBorder(
           borderRadius: BorderRadius.circular(20.0)
         ),
-        hintText: 'Buscar en Marketplace',
+        hintText: 'Busca en Marketplace',
         suffixIcon: Icon(Icons.search),
         contentPadding: EdgeInsets.symmetric(
           horizontal: 20.0,
@@ -27,7 +27,7 @@ class SearchBar extends StatelessWidget {
 
     return Container(
       margin: EdgeInsets.only(
-        top: 35.0,
+        top: 10.0,
         left: 10.0,
         right: 10.0,
         bottom: 10.0

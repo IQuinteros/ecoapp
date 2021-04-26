@@ -5,6 +5,7 @@ import 'package:flutter_ecoapp/views/widgets/categories/category_box.dart';
 
 import 'package:flutter_ecoapp/views/widgets/mini_button.dart';
 import 'package:flutter_ecoapp/views/widgets/search_bar.dart';
+import 'package:flutter_swiper/flutter_swiper.dart';
 
 
 class HomeView extends StatelessWidget {
@@ -15,14 +16,28 @@ class HomeView extends StatelessWidget {
   }
 
   Widget getContent(BuildContext context){
-    final featuredProducts = Row(
-      children: EcoAppDebug.getFeaturedProducts()
-    );
+    final featuredProducts = EcoAppDebug.getFeaturedProducts();
 
+    /*/
     final scrollable = Container(
       child: SingleChildScrollView(
         child: featuredProducts,
         scrollDirection: Axis.horizontal,
+      ),
+      margin: EdgeInsets.only(
+        top: 20.0
+      ),
+    );*/
+
+    final scrollable = Container(
+      width: MediaQuery.of(context).size.width,
+      height: 300.0,
+      child: Swiper(
+        itemCount: featuredProducts.length,
+        itemBuilder: (BuildContext context, int index){
+          return featuredProducts[index];
+        },
+        pagination: new SwiperPagination(),
       ),
       margin: EdgeInsets.only(
         top: 20.0
@@ -52,7 +67,7 @@ class HomeView extends StatelessWidget {
             )
           ],
           mainAxisAlignment: MainAxisAlignment.spaceAround,
-        ),
+        ),  
       ),
     );
 
