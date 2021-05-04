@@ -1,0 +1,137 @@
+<?xml version = '1.0' encoding = 'UTF-8'?>
+<Table class="oracle.dbtools.crest.model.design.relational.Table" directorySegmentName="seg_0" id="C047B80F-88B2-9399-573B-BA96551DD946" name="opinion">
+<createdBy>iquin</createdBy>
+<createdTime>2021-05-04 02:03:29 UTC</createdTime>
+<generatorID>0A3D1AFE-22EA-5AFC-ACC6-0358ECCD5F38</generatorID>
+<ownerDesignName>ecoapp_modeler</ownerDesignName>
+<allowColumnReorder>false</allowColumnReorder>
+<existDependencyGenerateInDDl>true</existDependencyGenerateInDDl>
+<parsed>true</parsed>
+<columns itemClass="oracle.dbtools.crest.model.design.relational.Column">
+<Column name="id" id="0317F30B-D7C9-4031-F4BD-00ADEA55A8D5">
+<createdBy>iquin</createdBy>
+<createdTime>2021-05-04 02:03:29 UTC</createdTime>
+<generatorID>0B6C30F7-72C1-32BE-BEAA-1F3294D2A47F</generatorID>
+<ownerDesignName>ecoapp_modeler</ownerDesignName>
+<useDomainConstraints>false</useDomainConstraints>
+<use>1</use>
+<logicalDatatype>LOGDT011</logicalDatatype>
+<ownDataTypeParameters>,,</ownDataTypeParameters>
+<autoIncrementCycle>false</autoIncrementCycle>
+</Column>
+<Column name="rating" id="A764C211-7ABE-08F9-5FA8-CADD6ABC54A0">
+<createdBy>iquin</createdBy>
+<createdTime>2021-05-04 02:03:29 UTC</createdTime>
+<generatorID>618802BF-1C5A-150F-3F92-B2AC6EBCA44A</generatorID>
+<ownerDesignName>ecoapp_modeler</ownerDesignName>
+<useDomainConstraints>false</useDomainConstraints>
+<use>1</use>
+<logicalDatatype>LOGDT011</logicalDatatype>
+<ownDataTypeParameters>,,</ownDataTypeParameters>
+<autoIncrementCycle>false</autoIncrementCycle>
+</Column>
+<Column name="title" id="A7199DD9-8E3F-1D0F-6D50-6060ADC15F7E">
+<createdBy>iquin</createdBy>
+<createdTime>2021-05-04 02:03:29 UTC</createdTime>
+<generatorID>99A4DCCC-EC80-F697-6066-AFA17C4CD2B6</generatorID>
+<ownerDesignName>ecoapp_modeler</ownerDesignName>
+<useDomainConstraints>false</useDomainConstraints>
+<use>1</use>
+<logicalDatatype>LOGDT024</logicalDatatype>
+<dataTypeSize>50</dataTypeSize>
+<ownDataTypeParameters>50,,</ownDataTypeParameters>
+<autoIncrementCycle>false</autoIncrementCycle>
+</Column>
+<Column name="content" id="40384756-1612-F335-8649-629DAA8E0768">
+<createdBy>iquin</createdBy>
+<createdTime>2021-05-04 02:03:29 UTC</createdTime>
+<generatorID>5E0E7AA8-1002-413A-9366-496692519CA1</generatorID>
+<ownerDesignName>ecoapp_modeler</ownerDesignName>
+<useDomainConstraints>false</useDomainConstraints>
+<use>1</use>
+<logicalDatatype>LOGDT024</logicalDatatype>
+<dataTypeSize>250</dataTypeSize>
+<ownDataTypeParameters>250,,</ownDataTypeParameters>
+<autoIncrementCycle>false</autoIncrementCycle>
+</Column>
+<Column name="date" id="253910C8-2DC5-6E34-8F17-D99032AED137">
+<createdBy>iquin</createdBy>
+<createdTime>2021-05-04 02:03:29 UTC</createdTime>
+<generatorID>4A0667D4-E0E4-7A66-0B8F-A76704060D33</generatorID>
+<ownerDesignName>ecoapp_modeler</ownerDesignName>
+<useDomainConstraints>false</useDomainConstraints>
+<use>1</use>
+<logicalDatatype>LOGDT015</logicalDatatype>
+<ownDataTypeParameters>,,</ownDataTypeParameters>
+<autoIncrementCycle>false</autoIncrementCycle>
+</Column>
+<Column name="article_id" id="1EDA91B3-7901-F0A2-306B-7C32E0761E76">
+<createdBy>iquin</createdBy>
+<createdTime>2021-05-04 02:03:29 UTC</createdTime>
+<generatorID>CC7CAC60-3DC8-FF0E-431F-342C2ADD09C8</generatorID>
+<ownerDesignName>ecoapp_modeler</ownerDesignName>
+<nullsAllowed>true</nullsAllowed>
+<useDomainConstraints>false</useDomainConstraints>
+<use>1</use>
+<logicalDatatype>LOGDT011</logicalDatatype>
+<ownDataTypeParameters>,,</ownDataTypeParameters>
+<previousColumn>false</previousColumn>
+<autoIncrementCycle>false</autoIncrementCycle>
+<associations>
+<colAssociation fkAssociation="D4CE4C54-DA8F-A86F-6684-26360024CBB6" referredColumn="C8E17779-B577-1635-C0B4-4308AE0B61C1"/>
+</associations>
+</Column>
+<Column name="profile_id" id="BB5375A1-3651-A770-DC6E-13D54A83D4B4">
+<createdBy>iquin</createdBy>
+<createdTime>2021-05-04 02:03:29 UTC</createdTime>
+<generatorID>3C836704-F6B8-51FD-6467-A3BE8C3AD78D</generatorID>
+<ownerDesignName>ecoapp_modeler</ownerDesignName>
+<nullsAllowed>true</nullsAllowed>
+<useDomainConstraints>false</useDomainConstraints>
+<use>1</use>
+<logicalDatatype>LOGDT011</logicalDatatype>
+<ownDataTypeParameters>,,</ownDataTypeParameters>
+<previousColumn>false</previousColumn>
+<autoIncrementCycle>false</autoIncrementCycle>
+<associations>
+<colAssociation fkAssociation="0A549F1E-2268-C394-92FD-EAD753A966AB" referredColumn="9FA41FFF-AE28-EA64-021C-837469F5EF94"/>
+</associations>
+</Column>
+</columns>
+<indexes itemClass="oracle.dbtools.crest.model.design.relational.Index">
+<ind_PK_UK id="417B42F8-2CCF-CA44-35CC-11F86613F324" name="opinion_PK">
+<createdBy>iquin</createdBy>
+<createdTime>2021-05-04 02:03:29 UTC</createdTime>
+<generatorID>EEA40E2F-7593-35DC-CDAA-35FC879141AE</generatorID>
+<ownerDesignName>ecoapp_modeler</ownerDesignName>
+<pk>true</pk>
+<indexState>Primary Constraint</indexState>
+<isSurrogateKey>false</isSurrogateKey>
+<indexColumnUsage>
+<colUsage columnID="0317F30B-D7C9-4031-F4BD-00ADEA55A8D5"/>
+</indexColumnUsage>
+</ind_PK_UK>
+<ind_PK_UK id="16F7BE8D-A4A9-EF3E-B34F-02670DAF74D5" name="opinion_article_FK">
+<createdBy>iquin</createdBy>
+<createdTime>2021-05-04 02:03:29 UTC</createdTime>
+<generatorID>5ED187D4-773B-9B29-EFAE-8C3DF27A62AE</generatorID>
+<ownerDesignName>ecoapp_modeler</ownerDesignName>
+<indexState>Foreign Key</indexState>
+<isSurrogateKey>false</isSurrogateKey>
+<indexColumnUsage>
+<colUsage columnID="1EDA91B3-7901-F0A2-306B-7C32E0761E76"/>
+</indexColumnUsage>
+</ind_PK_UK>
+<ind_PK_UK id="2777D525-C813-6974-1532-449A55C48908" name="opinion_profile_FK">
+<createdBy>iquin</createdBy>
+<createdTime>2021-05-04 02:03:30 UTC</createdTime>
+<generatorID>BFBCC957-DFEE-E448-7D7A-F1A1932D2F25</generatorID>
+<ownerDesignName>ecoapp_modeler</ownerDesignName>
+<indexState>Foreign Key</indexState>
+<isSurrogateKey>false</isSurrogateKey>
+<indexColumnUsage>
+<colUsage columnID="BB5375A1-3651-A770-DC6E-13D54A83D4B4"/>
+</indexColumnUsage>
+</ind_PK_UK>
+</indexes>
+</Table>

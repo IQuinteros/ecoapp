@@ -1,0 +1,61 @@
+<?xml version = '1.0' encoding = 'UTF-8'?>
+<Table class="oracle.dbtools.crest.model.design.relational.Table" directorySegmentName="seg_0" id="3B186844-F306-F1D5-7A03-36075D4DD49D" name="chat">
+<createdBy>iquin</createdBy>
+<createdTime>2021-05-04 02:03:29 UTC</createdTime>
+<generatorID>D81767A2-A1C6-0DCE-0876-2A0433721F89</generatorID>
+<ownerDesignName>ecoapp_modeler</ownerDesignName>
+<allowColumnReorder>false</allowColumnReorder>
+<existDependencyGenerateInDDl>true</existDependencyGenerateInDDl>
+<parsed>true</parsed>
+<columns itemClass="oracle.dbtools.crest.model.design.relational.Column">
+<Column name="id" id="23519E6D-EA15-9934-EB1C-A96F20DA734C">
+<createdBy>iquin</createdBy>
+<createdTime>2021-05-04 02:03:29 UTC</createdTime>
+<generatorID>B7CAE152-791F-122E-4C3A-0F403896516A</generatorID>
+<ownerDesignName>ecoapp_modeler</ownerDesignName>
+<useDomainConstraints>false</useDomainConstraints>
+<use>1</use>
+<logicalDatatype>LOGDT011</logicalDatatype>
+<ownDataTypeParameters>,,</ownDataTypeParameters>
+<autoIncrementCycle>false</autoIncrementCycle>
+</Column>
+<Column name="created_date" id="B1987DDE-AE9F-72C6-29C2-9D087F446B82">
+<createdBy>iquin</createdBy>
+<createdTime>2021-05-04 02:03:29 UTC</createdTime>
+<generatorID>E137542C-A864-9C8A-719D-09649AF095FD</generatorID>
+<ownerDesignName>ecoapp_modeler</ownerDesignName>
+<useDomainConstraints>false</useDomainConstraints>
+<use>1</use>
+<logicalDatatype>LOGDT015</logicalDatatype>
+<ownDataTypeParameters>,,</ownDataTypeParameters>
+<autoIncrementCycle>false</autoIncrementCycle>
+</Column>
+<Column name="closed" id="45A1D44D-0EDD-930F-198F-04C943F843E8">
+<createdBy>iquin</createdBy>
+<createdTime>2021-05-04 02:03:29 UTC</createdTime>
+<generatorID>83A7D71F-DF0E-E712-DD88-F2F701CF0ABF</generatorID>
+<ownerDesignName>ecoapp_modeler</ownerDesignName>
+<nullsAllowed>true</nullsAllowed>
+<useDomainConstraints>false</useDomainConstraints>
+<use>1</use>
+<logicalDatatype>LOGDT006</logicalDatatype>
+<dataTypeSize>1</dataTypeSize>
+<ownDataTypeParameters>1,,</ownDataTypeParameters>
+<autoIncrementCycle>false</autoIncrementCycle>
+</Column>
+</columns>
+<indexes itemClass="oracle.dbtools.crest.model.design.relational.Index">
+<ind_PK_UK id="90B2FBF1-B715-422F-CBB8-C9EDF7038765" name="chat_PK">
+<createdBy>iquin</createdBy>
+<createdTime>2021-05-04 02:03:29 UTC</createdTime>
+<generatorID>6F82C672-B721-A4FC-18D0-D2C4A1F9247C</generatorID>
+<ownerDesignName>ecoapp_modeler</ownerDesignName>
+<pk>true</pk>
+<indexState>Primary Constraint</indexState>
+<isSurrogateKey>false</isSurrogateKey>
+<indexColumnUsage>
+<colUsage columnID="23519E6D-EA15-9934-EB1C-A96F20DA734C"/>
+</indexColumnUsage>
+</ind_PK_UK>
+</indexes>
+</Table>

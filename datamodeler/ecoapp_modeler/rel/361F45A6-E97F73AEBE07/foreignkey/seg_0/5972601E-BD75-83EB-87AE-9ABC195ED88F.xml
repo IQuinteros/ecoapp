@@ -1,0 +1,17 @@
+<?xml version = '1.0' encoding = 'UTF-8'?>
+<FKIndexAssociation class="oracle.dbtools.crest.model.design.relational.FKIndexAssociation" directorySegmentName="seg_0" id="5972601E-BD75-83EB-87AE-9ABC195ED88F" containerWithKeyObject="56F082FD-2DD5-6428-A856-2054917B87F5" localFKIndex="C02FFD5E-1A50-C997-8CB8-3CE8C42B1B9C" name="message_shop_FK">
+<createdBy>iquin</createdBy>
+<createdTime>2021-05-04 02:03:30 UTC</createdTime>
+<generatorID>9299B17B-4FFA-D8E8-D642-004FDE05B441</generatorID>
+<ownerDesignName>ecoapp_modeler</ownerDesignName>
+<referredTableLongName>shop</referredTableLongName>
+<deleteRule>NO ACTION</deleteRule>
+<referredTableID>26C60AAB-7ABF-E3DE-4C77-9A34C8DACF76</referredTableID>
+<keyObject>9056E7CA-EC58-0BE7-EA9B-5C4B8D2FF138</keyObject>
+<referredKeyID>9056E7CA-EC58-0BE7-EA9B-5C4B8D2FF138</referredKeyID>
+<mandatory>false</mandatory>
+<refColNames>id</refColNames>
+<transferable>true</transferable>
+<rely>false</rely>
+<columnDependencyConstraintGenerateInDDL>true</columnDependencyConstraintGenerateInDDL>
+</FKIndexAssociation>

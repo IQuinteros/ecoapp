@@ -1,0 +1,17 @@
+<?xml version = '1.0' encoding = 'UTF-8'?>
+<FKIndexAssociation class="oracle.dbtools.crest.model.design.relational.FKIndexAssociation" directorySegmentName="seg_1" id="F854A260-E032-18E0-4A36-EA604F161266" containerWithKeyObject="A23D9F39-B326-AA47-EA9B-E7E60062AAB2" localFKIndex="90B2CB39-C4AC-B644-E444-ED105C7DE188" name="purchase_chat_FK">
+<createdBy>iquin</createdBy>
+<createdTime>2021-05-04 02:03:30 UTC</createdTime>
+<generatorID>BC143440-F174-9154-0CA5-6C08F7E6387C</generatorID>
+<ownerDesignName>ecoapp_modeler</ownerDesignName>
+<referredTableLongName>chat</referredTableLongName>
+<deleteRule>NO ACTION</deleteRule>
+<referredTableID>3B186844-F306-F1D5-7A03-36075D4DD49D</referredTableID>
+<keyObject>90B2FBF1-B715-422F-CBB8-C9EDF7038765</keyObject>
+<referredKeyID>90B2FBF1-B715-422F-CBB8-C9EDF7038765</referredKeyID>
+<mandatory>true</mandatory>
+<refColNames>id</refColNames>
+<transferable>true</transferable>
+<rely>false</rely>
+<columnDependencyConstraintGenerateInDDL>true</columnDependencyConstraintGenerateInDDL>
+</FKIndexAssociation>
