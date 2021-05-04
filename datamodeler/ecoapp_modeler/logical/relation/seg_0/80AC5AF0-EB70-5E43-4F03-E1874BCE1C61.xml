@@ -1,19 +1,19 @@
 <?xml version = '1.0' encoding = 'UTF-8'?>
-<Relation class="oracle.dbtools.crest.model.design.logical.Relation" name="profile-history" directorySegmentName="seg_0" id="7696C89E-901E-C93F-C5D0-631521ADAE53">
-<createdBy>iquinteros</createdBy>
-<createdTime>2021-04-10 22:47:50 UTC</createdTime>
+<Relation class="oracle.dbtools.crest.model.design.logical.Relation" name="user_searches" directorySegmentName="seg_0" id="80AC5AF0-EB70-5E43-4F03-E1874BCE1C61">
+<createdBy>iquin</createdBy>
+<createdTime>2021-05-04 01:48:31 UTC</createdTime>
 <ownerDesignName>ecoapp_modeler</ownerDesignName>
 <engineerTo>
 <item key="361F45A6-1E26-C41D-C2C3-E97F73AEBE07" value="true"/>
 </engineerTo>
 <sourcePk>3729AE8D-DDE0-B012-CA28-72C35A086F2F</sourcePk>
 <identifying>false</identifying>
-<optionalSource>true</optionalSource>
+<optionalSource>false</optionalSource>
 <optionalTarget>true</optionalTarget>
 <sourceCardinality>1</sourceCardinality>
 <sourceEntity>E6C8B31C-BD97-CC17-E91B-9974F3D7E309</sourceEntity>
 <targetCardinalityString>*</targetCardinalityString>
-<targetEntity>AD163415-EDB8-B04D-ECAE-5AE445E52FCC</targetEntity>
+<targetEntity>C2A7F26F-2AA0-4DB9-DBF7-D0022F3FA34C</targetEntity>
 <transferable>true</transferable>
 <deleteRule>NO ACTION</deleteRule>
 </Relation>

@@ -65,10 +65,9 @@
 <logicalDatatype>LOGDT011</logicalDatatype>
 <ownDataTypeParameters>,,</ownDataTypeParameters>
 </Attribute>
-<Attribute name="recycled_mat_p" id="8BD03344-A2E8-8A44-4754-1C671BDDC036">
-<createdBy>root</createdBy>
-<createdTime>2021-04-12 21:25:51 UTC</createdTime>
-<commentInRDBMS><![CDATA[Product recycled materials]]></commentInRDBMS>
+<Attribute name="recycled_mats" id="FABE2673-E408-05E5-5DEF-DBF2A2B1341E">
+<createdBy>iquin</createdBy>
+<createdTime>2021-05-03 03:29:58 UTC</createdTime>
 <ownerDesignName>ecoapp_modeler</ownerDesignName>
 <engineerTo>
 <item key="361F45A6-1E26-C41D-C2C3-E97F73AEBE07" value="true"/>
@@ -76,12 +75,39 @@
 <useDomainConstraints>false</useDomainConstraints>
 <use>1</use>
 <logicalDatatype>LOGDT024</logicalDatatype>
+<dataTypeSize>10</dataTypeSize>
+<ownDataTypeParameters>10,,</ownDataTypeParameters>
+</Attribute>
+<Attribute name="recycled_mats_detail" id="64B76018-D309-C545-7A44-CD414AE9F841">
+<createdBy>iquin</createdBy>
+<createdTime>2021-05-03 03:30:43 UTC</createdTime>
+<ownerDesignName>ecoapp_modeler</ownerDesignName>
+<engineerTo>
+<item key="361F45A6-1E26-C41D-C2C3-E97F73AEBE07" value="true"/>
+</engineerTo>
+<nullsAllowed>true</nullsAllowed>
+<useDomainConstraints>false</useDomainConstraints>
+<use>1</use>
+<logicalDatatype>LOGDT024</logicalDatatype>
+<dataTypeSize>255</dataTypeSize>
+<ownDataTypeParameters>255,,</ownDataTypeParameters>
+</Attribute>
+<Attribute name="reuse_tips" id="CC23AC20-6127-43AB-4A20-1159265E9569">
+<createdBy>iquin</createdBy>
+<createdTime>2021-05-03 03:31:10 UTC</createdTime>
+<ownerDesignName>ecoapp_modeler</ownerDesignName>
+<engineerTo>
+<item key="361F45A6-1E26-C41D-C2C3-E97F73AEBE07" value="true"/>
+</engineerTo>
+<nullsAllowed>true</nullsAllowed>
+<useDomainConstraints>false</useDomainConstraints>
+<use>1</use>
+<logicalDatatype>LOGDT040</logicalDatatype>
 <ownDataTypeParameters>,,</ownDataTypeParameters>
 </Attribute>
-<Attribute name="reused_mat_p" id="7968D9A9-4F47-3B62-93EF-F7E2CB690A94">
-<createdBy>root</createdBy>
-<createdTime>2021-04-12 21:31:29 UTC</createdTime>
-<commentInRDBMS><![CDATA[Product reused materials]]></commentInRDBMS>
+<Attribute name="recycled_prod" id="DC2A42CC-4BD5-634B-E082-2B3AB412565D">
+<createdBy>iquin</createdBy>
+<createdTime>2021-05-03 03:31:54 UTC</createdTime>
 <ownerDesignName>ecoapp_modeler</ownerDesignName>
 <engineerTo>
 <item key="361F45A6-1E26-C41D-C2C3-E97F73AEBE07" value="true"/>
@@ -89,72 +115,22 @@
 <useDomainConstraints>false</useDomainConstraints>
 <use>1</use>
 <logicalDatatype>LOGDT024</logicalDatatype>
-<ownDataTypeParameters>,,</ownDataTypeParameters>
+<dataTypeSize>10</dataTypeSize>
+<ownDataTypeParameters>10,,</ownDataTypeParameters>
 </Attribute>
-<Attribute name="not_recycled_mat_p" id="D0AE0981-33F6-3519-2673-66DB4729C2FF">
-<createdBy>root</createdBy>
-<createdTime>2021-04-12 21:32:11 UTC</createdTime>
-<commentInRDBMS><![CDATA[Product not recycled materials]]></commentInRDBMS>
+<Attribute name="recycled_prod_detail" id="A373DFD6-0B09-2645-61D7-F8D9EDE77CC0">
+<createdBy>iquin</createdBy>
+<createdTime>2021-05-03 03:32:19 UTC</createdTime>
 <ownerDesignName>ecoapp_modeler</ownerDesignName>
 <engineerTo>
 <item key="361F45A6-1E26-C41D-C2C3-E97F73AEBE07" value="true"/>
 </engineerTo>
+<nullsAllowed>true</nullsAllowed>
 <useDomainConstraints>false</useDomainConstraints>
 <use>1</use>
 <logicalDatatype>LOGDT024</logicalDatatype>
-<ownDataTypeParameters>,,</ownDataTypeParameters>
-</Attribute>
-<Attribute name="recycled_mat_b" id="586074B5-4C28-3E43-9661-C6B4BD649988">
-<createdBy>root</createdBy>
-<createdTime>2021-04-12 21:32:46 UTC</createdTime>
-<commentInRDBMS><![CDATA[Bundle recycled materials]]></commentInRDBMS>
-<ownerDesignName>ecoapp_modeler</ownerDesignName>
-<engineerTo>
-<item key="361F45A6-1E26-C41D-C2C3-E97F73AEBE07" value="true"/>
-</engineerTo>
-<useDomainConstraints>false</useDomainConstraints>
-<use>1</use>
-<logicalDatatype>LOGDT024</logicalDatatype>
-<ownDataTypeParameters>,,</ownDataTypeParameters>
-</Attribute>
-<Attribute name="reused_mat_b" id="512E13D2-8B58-E2D1-9BCF-A332A9A886B8">
-<createdBy>root</createdBy>
-<createdTime>2021-04-12 21:34:52 UTC</createdTime>
-<commentInRDBMS><![CDATA[Bundle reused materials]]></commentInRDBMS>
-<ownerDesignName>ecoapp_modeler</ownerDesignName>
-<engineerTo>
-<item key="361F45A6-1E26-C41D-C2C3-E97F73AEBE07" value="true"/>
-</engineerTo>
-<useDomainConstraints>false</useDomainConstraints>
-<use>1</use>
-<logicalDatatype>LOGDT024</logicalDatatype>
-<ownDataTypeParameters>,,</ownDataTypeParameters>
-</Attribute>
-<Attribute name="not_recycled_mat_b" id="C0C98156-41E4-44C7-ADE3-A611D84D6159">
-<createdBy>root</createdBy>
-<createdTime>2021-04-12 21:35:07 UTC</createdTime>
-<commentInRDBMS><![CDATA[Bundle not recycled materials]]></commentInRDBMS>
-<ownerDesignName>ecoapp_modeler</ownerDesignName>
-<engineerTo>
-<item key="361F45A6-1E26-C41D-C2C3-E97F73AEBE07" value="true"/>
-</engineerTo>
-<useDomainConstraints>false</useDomainConstraints>
-<use>1</use>
-<logicalDatatype>LOGDT024</logicalDatatype>
-<ownDataTypeParameters>,,</ownDataTypeParameters>
-</Attribute>
-<Attribute name="elijo_reciclar" id="CCDEC583-C5BA-1DEA-A958-6F11A2C2DC4A">
-<createdBy>root</createdBy>
-<createdTime>2021-04-12 21:44:22 UTC</createdTime>
-<ownerDesignName>ecoapp_modeler</ownerDesignName>
-<engineerTo>
-<item key="361F45A6-1E26-C41D-C2C3-E97F73AEBE07" value="true"/>
-</engineerTo>
-<useDomainConstraints>false</useDomainConstraints>
-<use>1</use>
-<logicalDatatype>LOGDT006</logicalDatatype>
-<dataTypeSize>1</dataTypeSize>
-<ownDataTypeParameters>1,,</ownDataTypeParameters>
+<dataTypeSize>255</dataTypeSize>
+<ownDataTypeParameters>255,,</ownDataTypeParameters>
 </Attribute>
 </attributes>
 <identifiers itemClass="oracle.dbtools.crest.model.design.logical.CandidateKey">
@@ -162,8 +138,9 @@
 <createdBy>iquinteros</createdBy>
 <createdTime>2021-04-10 21:37:10 UTC</createdTime>
 <ownerDesignName>ecoapp_modeler</ownerDesignName>
+<shouldEngineer>false</shouldEngineer>
 <engineerTo>
-<item key="361F45A6-1E26-C41D-C2C3-E97F73AEBE07" value="true"/>
+<item key="361F45A6-1E26-C41D-C2C3-E97F73AEBE07" value="false"/>
 </engineerTo>
 <pk>true</pk>
 <usedAttributes>

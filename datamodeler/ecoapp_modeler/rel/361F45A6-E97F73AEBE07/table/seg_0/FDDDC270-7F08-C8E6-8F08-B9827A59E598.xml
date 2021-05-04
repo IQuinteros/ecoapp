@@ -1,0 +1,160 @@
+<?xml version = '1.0' encoding = 'UTF-8'?>
+<Table class="oracle.dbtools.crest.model.design.relational.Table" directorySegmentName="seg_0" id="FDDDC270-7F08-C8E6-8F08-B9827A59E598" name="purchase">
+<createdBy>iquin</createdBy>
+<createdTime>2021-05-04 01:51:20 UTC</createdTime>
+<generatorID>5DA4531D-8D4B-2982-F91B-DDB62BAFEA98</generatorID>
+<ownerDesignName>ecoapp_modeler</ownerDesignName>
+<allowColumnReorder>false</allowColumnReorder>
+<existDependencyGenerateInDDl>true</existDependencyGenerateInDDl>
+<parsed>true</parsed>
+<columns itemClass="oracle.dbtools.crest.model.design.relational.Column">
+<Column name="id" id="68CC87D2-5D23-DEE4-A2BC-6CDE8F133784">
+<createdBy>iquin</createdBy>
+<createdTime>2021-05-04 01:51:20 UTC</createdTime>
+<generatorID>CCB9AAEC-C1C1-E6BA-F17B-0126ACEB6D34</generatorID>
+<ownerDesignName>ecoapp_modeler</ownerDesignName>
+<useDomainConstraints>false</useDomainConstraints>
+<use>1</use>
+<logicalDatatype>LOGDT011</logicalDatatype>
+<ownDataTypeParameters>,,</ownDataTypeParameters>
+<autoIncrementCycle>false</autoIncrementCycle>
+</Column>
+<Column name="total" id="FE9ADF61-404F-D76D-E22C-A5B94BA406B2">
+<createdBy>iquin</createdBy>
+<createdTime>2021-05-04 01:51:20 UTC</createdTime>
+<generatorID>E69AAB93-5B39-E6E9-EFCB-F385876D3CE2</generatorID>
+<ownerDesignName>ecoapp_modeler</ownerDesignName>
+<useDomainConstraints>false</useDomainConstraints>
+<use>1</use>
+<logicalDatatype>LOGDT011</logicalDatatype>
+<ownDataTypeParameters>,,</ownDataTypeParameters>
+<autoIncrementCycle>false</autoIncrementCycle>
+</Column>
+<Column name="created_date" id="BE69CEFD-8D6E-34E5-7D5C-E71C94816846">
+<createdBy>iquin</createdBy>
+<createdTime>2021-05-04 01:51:20 UTC</createdTime>
+<generatorID>4E6DFC59-37B5-D129-B0BB-4245D65DE1C7</generatorID>
+<ownerDesignName>ecoapp_modeler</ownerDesignName>
+<useDomainConstraints>false</useDomainConstraints>
+<use>1</use>
+<logicalDatatype>LOGDT015</logicalDatatype>
+<ownDataTypeParameters>,,</ownDataTypeParameters>
+<autoIncrementCycle>false</autoIncrementCycle>
+</Column>
+<Column name="profile_id" id="4224E78B-CF14-31D6-19F6-D15036B7CE13">
+<createdBy>iquin</createdBy>
+<createdTime>2021-05-04 01:51:20 UTC</createdTime>
+<generatorID>7A9501C0-3428-02E3-B488-A227694A7B9E</generatorID>
+<ownerDesignName>ecoapp_modeler</ownerDesignName>
+<nullsAllowed>true</nullsAllowed>
+<useDomainConstraints>false</useDomainConstraints>
+<use>1</use>
+<logicalDatatype>LOGDT011</logicalDatatype>
+<ownDataTypeParameters>,,</ownDataTypeParameters>
+<previousColumn>false</previousColumn>
+<autoIncrementCycle>false</autoIncrementCycle>
+<associations>
+<colAssociation fkAssociation="B3B18AE9-6EA2-E039-C855-634731F9D7B4" referredColumn="E14647A4-2708-8046-B368-138246E9C86E"/>
+</associations>
+</Column>
+<Column name="info-purchase_id" id="349DC9C7-03BA-2947-422D-9BD0B54B592C">
+<createdBy>iquin</createdBy>
+<createdTime>2021-05-04 01:51:20 UTC</createdTime>
+<generatorID>D563F411-2B60-2C97-72F2-2BA7DC1E5115</generatorID>
+<ownerDesignName>ecoapp_modeler</ownerDesignName>
+<useDomainConstraints>false</useDomainConstraints>
+<use>1</use>
+<logicalDatatype>LOGDT011</logicalDatatype>
+<ownDataTypeParameters>,,</ownDataTypeParameters>
+<previousColumn>false</previousColumn>
+<autoIncrementCycle>false</autoIncrementCycle>
+<associations>
+<colAssociation fkAssociation="9523AA91-9A67-043A-13C9-342D373658B6" referredColumn="50AA2AFF-8918-3D72-2F90-9864971F74DB"/>
+</associations>
+</Column>
+<Column name="chat_id" id="AD0FAB45-56FC-23E8-4025-231B3C5DF4B8">
+<createdBy>iquin</createdBy>
+<createdTime>2021-05-04 01:51:20 UTC</createdTime>
+<generatorID>F58A1EC0-5A06-F000-D888-90715CED7BE2</generatorID>
+<ownerDesignName>ecoapp_modeler</ownerDesignName>
+<useDomainConstraints>false</useDomainConstraints>
+<use>1</use>
+<logicalDatatype>LOGDT011</logicalDatatype>
+<ownDataTypeParameters>,,</ownDataTypeParameters>
+<previousColumn>false</previousColumn>
+<autoIncrementCycle>false</autoIncrementCycle>
+<associations>
+<colAssociation fkAssociation="84BF1507-93ED-173A-06C2-EA1FD2C6F2DD" referredColumn="07143706-BDDD-2FFE-CFAE-AC21C80BDE3E"/>
+</associations>
+</Column>
+</columns>
+<indexes itemClass="oracle.dbtools.crest.model.design.relational.Index">
+<ind_PK_UK id="DE33ED19-85E2-1E92-DE10-B697208A6BB2" name="purchase_PK">
+<createdBy>iquin</createdBy>
+<createdTime>2021-05-04 01:51:20 UTC</createdTime>
+<generatorID>148C6C82-BA6F-B964-62A9-36CEE4C41D5B</generatorID>
+<ownerDesignName>ecoapp_modeler</ownerDesignName>
+<pk>true</pk>
+<indexState>Primary Constraint</indexState>
+<isSurrogateKey>false</isSurrogateKey>
+<indexColumnUsage>
+<colUsage columnID="68CC87D2-5D23-DEE4-A2BC-6CDE8F133784"/>
+</indexColumnUsage>
+</ind_PK_UK>
+<ind_PK_UK id="12EF5640-E191-27CA-EEBE-7322CF9341DA" name="purchase__IDX">
+<createdBy>iquin</createdBy>
+<createdTime>2021-05-04 01:51:20 UTC</createdTime>
+<ownerDesignName>ecoapp_modeler</ownerDesignName>
+<indexState>Unique Plain Index</indexState>
+<isSurrogateKey>false</isSurrogateKey>
+<relationGeneratorID>BC143440-F174-9154-0CA5-6C08F7E6387C</relationGeneratorID>
+<indexColumnUsage>
+<colUsage columnID="AD0FAB45-56FC-23E8-4025-231B3C5DF4B8"/>
+</indexColumnUsage>
+</ind_PK_UK>
+<ind_PK_UK id="6FD73B9D-8293-B6F1-B9DE-FC30BE475182" name="purchase__IDXv1">
+<createdBy>iquin</createdBy>
+<createdTime>2021-05-04 01:51:20 UTC</createdTime>
+<ownerDesignName>ecoapp_modeler</ownerDesignName>
+<indexState>Unique Plain Index</indexState>
+<isSurrogateKey>false</isSurrogateKey>
+<relationGeneratorID>F77A95F5-9F72-64D5-A160-B51488C7B153</relationGeneratorID>
+<indexColumnUsage>
+<colUsage columnID="349DC9C7-03BA-2947-422D-9BD0B54B592C"/>
+</indexColumnUsage>
+</ind_PK_UK>
+<ind_PK_UK id="450AED81-875B-C6F5-62DF-486B4C8450AE" name="purchase_profile_FK">
+<createdBy>iquin</createdBy>
+<createdTime>2021-05-04 01:51:20 UTC</createdTime>
+<generatorID>9D0C88F8-1FC5-1670-78FB-5F38F92DE818</generatorID>
+<ownerDesignName>ecoapp_modeler</ownerDesignName>
+<indexState>Foreign Key</indexState>
+<isSurrogateKey>false</isSurrogateKey>
+<indexColumnUsage>
+<colUsage columnID="4224E78B-CF14-31D6-19F6-D15036B7CE13"/>
+</indexColumnUsage>
+</ind_PK_UK>
+<ind_PK_UK id="72762BF6-349F-B997-A171-74D3E322207B" name="purchase_chat_FK">
+<createdBy>iquin</createdBy>
+<createdTime>2021-05-04 01:51:20 UTC</createdTime>
+<generatorID>BC143440-F174-9154-0CA5-6C08F7E6387C</generatorID>
+<ownerDesignName>ecoapp_modeler</ownerDesignName>
+<indexState>Foreign Key</indexState>
+<isSurrogateKey>false</isSurrogateKey>
+<indexColumnUsage>
+<colUsage columnID="AD0FAB45-56FC-23E8-4025-231B3C5DF4B8"/>
+</indexColumnUsage>
+</ind_PK_UK>
+<ind_PK_UK id="C60C0BB6-64A2-C47E-71A9-B7387E036B1A" name="purchase_info-purchase_FK">
+<createdBy>iquin</createdBy>
+<createdTime>2021-05-04 01:51:20 UTC</createdTime>
+<generatorID>F77A95F5-9F72-64D5-A160-B51488C7B153</generatorID>
+<ownerDesignName>ecoapp_modeler</ownerDesignName>
+<indexState>Foreign Key</indexState>
+<isSurrogateKey>false</isSurrogateKey>
+<indexColumnUsage>
+<colUsage columnID="349DC9C7-03BA-2947-422D-9BD0B54B592C"/>
+</indexColumnUsage>
+</ind_PK_UK>
+</indexes>
+</Table>

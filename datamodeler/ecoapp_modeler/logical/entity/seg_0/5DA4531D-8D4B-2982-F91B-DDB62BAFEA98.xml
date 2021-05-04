@@ -80,14 +80,29 @@
 <logicalDatatype>LOGDT011</logicalDatatype>
 <ownDataTypeParameters>,,</ownDataTypeParameters>
 </Attribute>
+<Attribute name="id3" id="F58A1EC0-5A06-F000-D888-90715CED7BE2">
+<createdBy>iquin</createdBy>
+<createdTime>2021-05-03 03:34:13 UTC</createdTime>
+<generatorID>BC143440-F174-9154-0CA5-6C08F7E6387C</generatorID>
+<ownerDesignName>ecoapp_modeler</ownerDesignName>
+<engineerTo>
+<item key="361F45A6-1E26-C41D-C2C3-E97F73AEBE07" value="true"/>
+</engineerTo>
+<referedAttribute>B7CAE152-791F-122E-4C3A-0F403896516A</referedAttribute>
+<useDomainConstraints>false</useDomainConstraints>
+<use>1</use>
+<logicalDatatype>LOGDT011</logicalDatatype>
+<ownDataTypeParameters>,,</ownDataTypeParameters>
+</Attribute>
 </attributes>
 <identifiers itemClass="oracle.dbtools.crest.model.design.logical.CandidateKey">
 <identifier id="148C6C82-BA6F-B964-62A9-36CEE4C41D5B" name="compra PK">
 <createdBy>iquinteros</createdBy>
 <createdTime>2021-04-10 22:24:28 UTC</createdTime>
 <ownerDesignName>ecoapp_modeler</ownerDesignName>
+<shouldEngineer>false</shouldEngineer>
 <engineerTo>
-<item key="361F45A6-1E26-C41D-C2C3-E97F73AEBE07" value="true"/>
+<item key="361F45A6-1E26-C41D-C2C3-E97F73AEBE07" value="false"/>
 </engineerTo>
 <pk>true</pk>
 <usedAttributes>

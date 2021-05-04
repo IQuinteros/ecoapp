@@ -82,15 +82,16 @@
 <logicalDatatype>LOGDT011</logicalDatatype>
 <ownDataTypeParameters>,,</ownDataTypeParameters>
 </Attribute>
-<Attribute name="id3" id="74D0704B-5004-7643-3B88-88151A69EF6B">
-<createdBy>root</createdBy>
-<createdTime>2021-04-12 21:17:56 UTC</createdTime>
-<generatorID>44C66B75-5013-2502-74C0-5326D3F48983</generatorID>
+<Attribute name="id4" id="B6CE8E1B-21F2-1856-78AF-2E7935F95C01">
+<createdBy>iquin</createdBy>
+<createdTime>2021-05-03 03:34:50 UTC</createdTime>
+<generatorID>67026C1D-A454-A3CB-3993-EE61ADA22C16</generatorID>
 <ownerDesignName>ecoapp_modeler</ownerDesignName>
 <engineerTo>
 <item key="361F45A6-1E26-C41D-C2C3-E97F73AEBE07" value="true"/>
 </engineerTo>
-<referedAttribute>CCB9AAEC-C1C1-E6BA-F17B-0126ACEB6D34</referedAttribute>
+<nullsAllowed>true</nullsAllowed>
+<referedAttribute>B7CAE152-791F-122E-4C3A-0F403896516A</referedAttribute>
 <useDomainConstraints>false</useDomainConstraints>
 <use>1</use>
 <logicalDatatype>LOGDT011</logicalDatatype>
@@ -102,8 +103,9 @@
 <createdBy>iquinteros</createdBy>
 <createdTime>2021-04-10 21:58:39 UTC</createdTime>
 <ownerDesignName>ecoapp_modeler</ownerDesignName>
+<shouldEngineer>false</shouldEngineer>
 <engineerTo>
-<item key="361F45A6-1E26-C41D-C2C3-E97F73AEBE07" value="true"/>
+<item key="361F45A6-1E26-C41D-C2C3-E97F73AEBE07" value="false"/>
 </engineerTo>
 <pk>true</pk>
 <usedAttributes>

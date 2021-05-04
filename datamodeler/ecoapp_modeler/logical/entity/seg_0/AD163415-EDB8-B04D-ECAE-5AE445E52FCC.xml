@@ -39,21 +39,6 @@
 <logicalDatatype>LOGDT015</logicalDatatype>
 <ownDataTypeParameters>,,</ownDataTypeParameters>
 </Attribute>
-<Attribute name="id1" id="1DA362DD-38DF-51C3-169A-CEC2CD9B8316">
-<createdBy>iquinteros</createdBy>
-<createdTime>2021-04-10 22:47:50 UTC</createdTime>
-<generatorID>7696C89E-901E-C93F-C5D0-631521ADAE53</generatorID>
-<ownerDesignName>ecoapp_modeler</ownerDesignName>
-<engineerTo>
-<item key="361F45A6-1E26-C41D-C2C3-E97F73AEBE07" value="true"/>
-</engineerTo>
-<nullsAllowed>true</nullsAllowed>
-<referedAttribute>03073DE2-8C30-3325-DF8B-6CAAC722865B</referedAttribute>
-<useDomainConstraints>false</useDomainConstraints>
-<use>1</use>
-<logicalDatatype>LOGDT011</logicalDatatype>
-<ownDataTypeParameters>,,</ownDataTypeParameters>
-</Attribute>
 <Attribute name="id2" id="31B2F455-84E6-B3FD-2DB4-426ECCE20A6A">
 <createdBy>iquinteros</createdBy>
 <createdTime>2021-04-10 22:49:51 UTC</createdTime>
@@ -69,14 +54,30 @@
 <logicalDatatype>LOGDT011</logicalDatatype>
 <ownDataTypeParameters>,,</ownDataTypeParameters>
 </Attribute>
+<Attribute name="id1" id="AE532D50-EA44-120F-27F1-3EBE894F0856">
+<createdBy>iquin</createdBy>
+<createdTime>2021-05-03 03:28:48 UTC</createdTime>
+<generatorID>7696C89E-901E-C93F-C5D0-631521ADAE53</generatorID>
+<ownerDesignName>ecoapp_modeler</ownerDesignName>
+<engineerTo>
+<item key="361F45A6-1E26-C41D-C2C3-E97F73AEBE07" value="true"/>
+</engineerTo>
+<nullsAllowed>true</nullsAllowed>
+<referedAttribute>1BF3783F-5CAC-01D6-DA24-DECE36D64FDD</referedAttribute>
+<useDomainConstraints>false</useDomainConstraints>
+<use>1</use>
+<logicalDatatype>LOGDT011</logicalDatatype>
+<ownDataTypeParameters>,,</ownDataTypeParameters>
+</Attribute>
 </attributes>
 <identifiers itemClass="oracle.dbtools.crest.model.design.logical.CandidateKey">
 <identifier id="6B7F5FF6-E11E-94AF-F772-D08F11A1B9EB" name="history PK">
 <createdBy>iquinteros</createdBy>
 <createdTime>2021-04-10 22:42:48 UTC</createdTime>
 <ownerDesignName>ecoapp_modeler</ownerDesignName>
+<shouldEngineer>false</shouldEngineer>
 <engineerTo>
-<item key="361F45A6-1E26-C41D-C2C3-E97F73AEBE07" value="true"/>
+<item key="361F45A6-1E26-C41D-C2C3-E97F73AEBE07" value="false"/>
 </engineerTo>
 <pk>true</pk>
 <usedAttributes>

@@ -1,7 +1,7 @@
 <?xml version = '1.0' encoding = 'UTF-8'?>
-<Entity class="oracle.dbtools.crest.model.design.logical.Entity" directorySegmentName="seg_0" id="C9FDEF80-B420-A2E8-1255-B467822511C7" name="photo">
-<createdBy>root</createdBy>
-<createdTime>2021-04-12 03:52:01 UTC</createdTime>
+<Entity class="oracle.dbtools.crest.model.design.logical.Entity" directorySegmentName="seg_0" id="E6C8B31C-BD97-CC17-E91B-9974F3D7E309" name="user">
+<createdBy>iquin</createdBy>
+<createdTime>2021-05-03 03:25:18 UTC</createdTime>
 <ownerDesignName>ecoapp_modeler</ownerDesignName>
 <engineerTo>
 <item key="361F45A6-1E26-C41D-C2C3-E97F73AEBE07" value="true"/>
@@ -15,9 +15,9 @@
 <minVolumes>0</minVolumes>
 <normalForm>Third</normalForm>
 <attributes itemClass="oracle.dbtools.crest.model.design.logical.Attribute">
-<Attribute name="id" id="C829B57F-29AC-7FE6-D305-8CFB3F9E87A3">
-<createdBy>root</createdBy>
-<createdTime>2021-04-12 03:52:08 UTC</createdTime>
+<Attribute name="id" id="1BF3783F-5CAC-01D6-DA24-DECE36D64FDD">
+<createdBy>iquin</createdBy>
+<createdTime>2021-05-03 03:25:18 UTC</createdTime>
 <ownerDesignName>ecoapp_modeler</ownerDesignName>
 <engineerTo>
 <item key="361F45A6-1E26-C41D-C2C3-E97F73AEBE07" value="true"/>
@@ -27,27 +27,27 @@
 <logicalDatatype>LOGDT011</logicalDatatype>
 <ownDataTypeParameters>,,</ownDataTypeParameters>
 </Attribute>
-<Attribute name="photo" id="4D78B503-3834-4913-AC51-0E217E65D241">
-<createdBy>root</createdBy>
-<createdTime>2021-04-12 03:52:24 UTC</createdTime>
+<Attribute name="creation_date" id="4CCABF60-2C9A-44A3-EC3A-97670A4DF30B">
+<createdBy>iquin</createdBy>
+<createdTime>2021-05-03 03:25:42 UTC</createdTime>
 <ownerDesignName>ecoapp_modeler</ownerDesignName>
 <engineerTo>
 <item key="361F45A6-1E26-C41D-C2C3-E97F73AEBE07" value="true"/>
 </engineerTo>
 <useDomainConstraints>false</useDomainConstraints>
 <use>1</use>
-<logicalDatatype>LOGDT029</logicalDatatype>
+<logicalDatatype>LOGDT015</logicalDatatype>
 <ownDataTypeParameters>,,</ownDataTypeParameters>
 </Attribute>
-<Attribute name="id1" id="2C981E2E-156C-6416-C622-85633E62E294">
-<createdBy>root</createdBy>
-<createdTime>2021-04-12 03:53:52 UTC</createdTime>
-<generatorID>D8FD3511-66E8-B0E2-BF37-7B214B49972D</generatorID>
+<Attribute name="id1" id="1CB900AE-896F-33F9-5F2D-968D6EF883AF">
+<createdBy>iquin</createdBy>
+<createdTime>2021-05-03 03:27:39 UTC</createdTime>
+<generatorID>6DECF947-0199-E1BD-F341-47F3D0EC7BE2</generatorID>
 <ownerDesignName>ecoapp_modeler</ownerDesignName>
 <engineerTo>
 <item key="361F45A6-1E26-C41D-C2C3-E97F73AEBE07" value="true"/>
 </engineerTo>
-<referedAttribute>5A8E0D70-B277-D349-CA34-7AC7BEAB2234</referedAttribute>
+<referedAttribute>03073DE2-8C30-3325-DF8B-6CAAC722865B</referedAttribute>
 <useDomainConstraints>false</useDomainConstraints>
 <use>1</use>
 <logicalDatatype>LOGDT011</logicalDatatype>
@@ -55,9 +55,9 @@
 </Attribute>
 </attributes>
 <identifiers itemClass="oracle.dbtools.crest.model.design.logical.CandidateKey">
-<identifier id="C7CF0A2E-EF9B-500A-95C8-C406F3109F75" name="photo PK">
-<createdBy>root</createdBy>
-<createdTime>2021-04-12 03:52:10 UTC</createdTime>
+<identifier id="3729AE8D-DDE0-B012-CA28-72C35A086F2F" name="Profile PK">
+<createdBy>iquin</createdBy>
+<createdTime>2021-05-03 03:25:18 UTC</createdTime>
 <ownerDesignName>ecoapp_modeler</ownerDesignName>
 <shouldEngineer>false</shouldEngineer>
 <engineerTo>
@@ -65,7 +65,7 @@
 </engineerTo>
 <pk>true</pk>
 <usedAttributes>
-<attributeRef>C829B57F-29AC-7FE6-D305-8CFB3F9E87A3</attributeRef>
+<attributeRef>1BF3783F-5CAC-01D6-DA24-DECE36D64FDD</attributeRef>
 </usedAttributes>
 </identifier>
 </identifiers>
