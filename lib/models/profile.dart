@@ -1,9 +1,9 @@
 
 import 'package:flutter/material.dart';
+import 'package:flutter_ecoapp/models/base.dart';
 
-class ProfileModel
+class ProfileModel extends BaseModel
 {
-  int id;
   String name;
   String lastName;
   String email;
@@ -17,7 +17,7 @@ class ProfileModel
   String rutDv;
 
   ProfileModel({
-    @required this.id, 
+    @required int id,
     @required this.name,
     @required this.lastName,
     @required this.email, 
@@ -29,5 +29,5 @@ class ProfileModel
     @required this.lastUpdateDate,
     @required this.rut,
     @required this.rutDv,
-  });
+  }) : super(id: id);
 }
