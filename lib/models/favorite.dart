@@ -1,11 +1,11 @@
 import 'package:flutter/material.dart';
 import 'package:flutter_ecoapp/models/base.dart';
 
-class UserModel extends BaseModel
+class FavoriteModel extends BaseModel
 {
   DateTime createdDate;
 
-  UserModel({
+  FavoriteModel({
     @required int id,
     @required this.createdDate,
   }) : super(id: id);

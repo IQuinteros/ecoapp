@@ -1,12 +1,12 @@
 import 'package:flutter/material.dart';
 import 'package:flutter_ecoapp/models/base.dart';
 
-class UserModel extends BaseModel
+class CityModel extends BaseModel
 {
-  DateTime createdDate;
+  String name;
 
-  UserModel({
+  CityModel({
     @required int id,
-    @required this.createdDate,
+    @required this.name,
   }) : super(id: id);
 }

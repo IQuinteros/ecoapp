@@ -1,4 +1,3 @@
-
 import 'package:flutter/material.dart';
 import 'package:flutter_ecoapp/models/base.dart';
 
@@ -11,9 +10,9 @@ class ProfileModel extends BaseModel
   DateTime bithday;
   bool termsChecked;
   String location;
-  DateTime creationDate;
+  DateTime createdDate;
   DateTime lastUpdateDate;
-  String rut;
+  int rut;
   String rutDv;
 
   ProfileModel({
@@ -25,7 +24,7 @@ class ProfileModel extends BaseModel
     @required this.bithday,
     @required this.termsChecked,
     @required this.location,
-    @required this.creationDate,
+    @required this.createdDate,
     @required this.lastUpdateDate,
     @required this.rut,
     @required this.rutDv,
