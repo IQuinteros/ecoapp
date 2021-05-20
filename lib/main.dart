@@ -1,5 +1,4 @@
 import 'package:flutter/material.dart';
-import 'package:flutter_ecoapp/routes/routes.dart';
 import 'package:flutter_ecoapp/views/main_view.dart';
 
 void main() {

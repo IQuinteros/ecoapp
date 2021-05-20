@@ -1,13 +1,10 @@
 import 'package:flutter/material.dart';
+
 import 'package:flutter_ecoapp/views/debug/debug.dart';
 import 'package:flutter_ecoapp/views/style/colors.dart';
 import 'package:flutter_ecoapp/views/style/text_style.dart';
-import 'package:flutter_ecoapp/views/widgets/articles/article_card.dart';
-import 'package:flutter_ecoapp/views/widgets/categories/category_box.dart';
-
-import 'package:flutter_ecoapp/views/widgets/home/featured_product.dart';
-import 'package:flutter_ecoapp/views/widgets/mini_button.dart';
 import 'package:flutter_ecoapp/views/widgets/search_bar.dart';
+
 import 'package:google_fonts/google_fonts.dart';
 
 

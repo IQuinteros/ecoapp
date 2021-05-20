@@ -3,7 +3,7 @@ import 'package:google_fonts/google_fonts.dart';
 
 class EcoAppTextStyle{
 
-  static TextStyle TITLE_STYLE = GoogleFonts.montserrat(
+  static final TextStyle titleStyle = GoogleFonts.montserrat(
     fontSize: 25,
     fontWeight: FontWeight.bold
   );
@@ -11,7 +11,7 @@ class EcoAppTextStyle{
   static Widget getTitle(String text, {Widget rightButton}){
     final textWidget  = Flexible(child:Text(
       text,
-      style: TITLE_STYLE,
+      style: titleStyle,
       textAlign: TextAlign.start,
       overflow: TextOverflow.fade,
     ));
