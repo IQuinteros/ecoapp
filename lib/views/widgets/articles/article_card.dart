@@ -18,6 +18,8 @@ class ArticleCard extends StatefulWidget {
 
 class _ArticleCardState extends State<ArticleCard> {
 
+  double blurRadius = 2.0;
+  double shadowOpacity = 0.20;
   @override
   Widget build(BuildContext context) {
     final image = Image(
@@ -63,7 +65,7 @@ class _ArticleCardState extends State<ArticleCard> {
         Text(
           '\$ ' + CurrencyUtil.formatToCurrencyString(widget.article.price.round()),
           style: GoogleFonts.montserrat(
-            fontSize: 20,
+            fontSize: 16,
             fontWeight: FontWeight.w500
           ),
         ),
@@ -85,7 +87,7 @@ class _ArticleCardState extends State<ArticleCard> {
         children: [
           SizedBox(width: 10.0),
           firstRow,
-          SizedBox(height: 30),
+          SizedBox(height: 20),
           secondRow,
           SizedBox(width: 10.0)
         ],
@@ -103,24 +105,45 @@ class _ArticleCardState extends State<ArticleCard> {
         mainAxisSize: MainAxisSize.max,
         children: [
           imageContainer,
-          SizedBox(width: 10.0),
+          SizedBox(width: 20.0),
           column,
           SizedBox(width: 10.0)
         ],
       ),
     );
 
-    return Container(
+    return AnimatedContainer(
+      duration: Duration(milliseconds: 100),
+      decoration: BoxDecoration(
+        borderRadius: BorderRadius.circular(20.0),
+        boxShadow: [
+          BoxShadow(
+            offset: Offset(0, 1),
+            blurRadius: blurRadius,
+            spreadRadius: 2.0,
+            color: Colors.black.withOpacity(shadowOpacity)
+          ),
+        ]
+      ),
       margin: EdgeInsets.only(
         left: 10.0,
         right: 10.0,
-        bottom: 5.0
+        bottom: 8.0
       ),
       child: InkWell(
         child: card,
         borderRadius: BorderRadius.circular(20.0),
         onTap: (){},
+        onHover: onHover
       ),
     );
   }
+
+  onHover(val){
+    setState(() {
+      blurRadius = val? 15 : 2;
+      shadowOpacity = val? 0.3 : 0.2;
+    });
+  }
+
 }

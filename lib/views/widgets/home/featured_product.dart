@@ -45,7 +45,7 @@ class _FeaturedProductState extends State<FeaturedProduct> {
     final priceText = Text(
       '\$ ' + CurrencyUtil.formatToCurrencyString(widget.price), 
       style: GoogleFonts.montserrat(
-        fontSize: 25,
+        fontSize: 18,
         fontWeight: FontWeight.w600
       ),
     );
