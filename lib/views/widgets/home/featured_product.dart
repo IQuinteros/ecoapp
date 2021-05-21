@@ -33,12 +33,13 @@ class _FeaturedProductState extends State<FeaturedProduct> {
         ]
       ),
       margin: EdgeInsets.only(
-        bottom: 35.0
+        bottom: 0.0
       ),
       child: Image(
         image: NetworkImage(widget.imageUrl),
-        width: 300.0,
-        fit: BoxFit.contain,
+        width: MediaQuery.of(context).size.width,
+        height: 200.0,
+        fit: BoxFit.cover,
       ),
     );
 
@@ -53,7 +54,7 @@ class _FeaturedProductState extends State<FeaturedProduct> {
     final percentText = Text(
       widget.percent.toString() + '%',
       style: GoogleFonts.montserrat(
-        fontSize: 20,
+        fontSize: 18,
         fontWeight: FontWeight.w600
       ),
     );
@@ -61,8 +62,9 @@ class _FeaturedProductState extends State<FeaturedProduct> {
     final titleText = Text(
       widget.title,
       style: GoogleFonts.montserrat(
-        fontSize: 18,
-        fontWeight: FontWeight.normal
+        fontSize: 16,
+        fontWeight: FontWeight.normal,
+        
       ),
     );
 
@@ -95,15 +97,20 @@ class _FeaturedProductState extends State<FeaturedProduct> {
     );
 
     final locateCard = Positioned(
-      bottom: 0.0,
-      right: 0,
+      top: 150,
       left: 0,
+      right: 0,
       child: Container(
-        margin: EdgeInsets.symmetric(
-          vertical: 0,
-          horizontal: 30.0
+        margin: EdgeInsets.zero,
+        child: Row(
+          mainAxisAlignment: MainAxisAlignment.center,
+          children: [
+            Container(
+              constraints: BoxConstraints(maxWidth: MediaQuery.of(context).size.width - 80),
+              child: card,
+            ),
+          ],
         ),
-        child: card,
       )
     );
 
@@ -111,10 +118,11 @@ class _FeaturedProductState extends State<FeaturedProduct> {
       margin: EdgeInsets.only(
         left: 20.0,
         top: 10.0,
-        bottom: 10.0,
+        bottom: 30.0,
         right: 20.0
       ),
       child: InkWell(
+        borderRadius: BorderRadius.circular(20.0),
         onTap: () {},
         child: Stack(
           children: [
