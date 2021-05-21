@@ -18,26 +18,21 @@ class HomeView extends StatelessWidget {
   Widget getContent(BuildContext context){
     final featuredProducts = EcoAppDebug.getFeaturedProducts();
 
-    /*/
-    final scrollable = Container(
-      child: SingleChildScrollView(
-        child: featuredProducts,
-        scrollDirection: Axis.horizontal,
-      ),
-      margin: EdgeInsets.only(
-        top: 20.0
-      ),
-    );*/
-
     final scrollable = Container(
       width: MediaQuery.of(context).size.width,
-      height: 300.0,
+      height: 290.0,
       child: Swiper(
         itemCount: featuredProducts.length,
         itemBuilder: (BuildContext context, int index){
           return featuredProducts[index];
         },
-        pagination: new SwiperPagination(),
+        loop: false,
+        viewportFraction: 0.9,
+        scale: 0.9,
+        autoplay: true,
+        pagination: new SwiperPagination(
+          builder: SwiperPagination.rect
+        ),
       ),
       margin: EdgeInsets.only(
         top: 20.0
@@ -49,25 +44,23 @@ class HomeView extends StatelessWidget {
         top: 10.0,
         bottom: 10.0
       ),
-      child: SingleChildScrollView(
-        scrollDirection: Axis.horizontal,
-        child: Row(
-          children: [
-            CategoryBox(
-              iconData: Icons.ac_unit,
-              text: 'A granel',
-            ),
-            CategoryBox(
-              iconData: Icons.badge,
-              text: 'Bolsas',
-            ),
-            CategoryBox(
-              iconData: Icons.clean_hands,
-              text: 'Limpieza'
-            )
-          ],
-          mainAxisAlignment: MainAxisAlignment.spaceAround,
-        ),  
+      width: MediaQuery.of(context).size.width,
+      child: Row(
+        children: [
+          CategoryBox(
+            iconData: Icons.ac_unit,
+            text: 'A granel',
+          ),
+          CategoryBox(
+            iconData: Icons.badge,
+            text: 'Bolsas',
+          ),
+          CategoryBox(
+            iconData: Icons.clean_hands,
+            text: 'Limpieza'
+          )
+        ],
+        mainAxisAlignment: MainAxisAlignment.spaceAround,
       ),
     );
 

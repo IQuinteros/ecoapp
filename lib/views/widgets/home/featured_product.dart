@@ -116,10 +116,10 @@ class _FeaturedProductState extends State<FeaturedProduct> {
 
     return Container(
       margin: EdgeInsets.only(
-        left: 20.0,
+        left: 5,
+        right: 5,
         top: 10.0,
-        bottom: 30.0,
-        right: 20.0
+        bottom: 20.0,
       ),
       child: InkWell(
         borderRadius: BorderRadius.circular(20.0),
