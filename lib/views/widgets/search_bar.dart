@@ -1,4 +1,5 @@
 import 'package:flutter/material.dart';
+import 'package:flutter_ecoapp/views/widgets/search/search_delegate.dart';
 import 'package:google_fonts/google_fonts.dart';
 
 class SearchBar extends StatelessWidget {
@@ -18,6 +19,13 @@ class SearchBar extends StatelessWidget {
           vertical: 5.0
         )
       ),
+      readOnly: true,
+      onTap: (){
+        showSearch(
+          context: context, 
+          delegate: ArticleSearch()
+        );
+      },
     );
 
     final filterButton = IconButton(
