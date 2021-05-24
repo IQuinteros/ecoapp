@@ -1,29 +1,25 @@
 import 'package:flutter/material.dart';
+import 'package:flutter_ecoapp/models/article.dart';
 import 'package:flutter_ecoapp/utils/currency_util.dart';
 import 'package:flutter_ecoapp/views/style/colors.dart';
+import 'package:flutter_ecoapp/views/widgets/articles/favorite_button.dart';
 import 'package:google_fonts/google_fonts.dart';
 
 class ArticleCard extends StatefulWidget {
-  final String title;
-  final int price;
-  final int percent;
+  final ArticleModel article;
 
   final bool favorite;
 
-  const ArticleCard({Key key, @required this.title, @required this.price, @required this.percent, this.favorite = false}) : super(key: key);
+  const ArticleCard({Key key, @required this.article, this.favorite = false}) : super(key: key);
 
   @override
-  _ArticleCardState createState() => _ArticleCardState(favorite);
+  _ArticleCardState createState() => _ArticleCardState();
 }
 
 class _ArticleCardState extends State<ArticleCard> {
 
-  bool isFavorite = false;
-
-  _ArticleCardState(bool favorite){
-    this.isFavorite = favorite;
-  }
-
+  double blurRadius = 2.0;
+  double shadowOpacity = 0.20;
   @override
   Widget build(BuildContext context) {
     final image = Image(
@@ -39,17 +35,11 @@ class _ArticleCardState extends State<ArticleCard> {
         boxShadow: <BoxShadow>[
           BoxShadow(
             color: Color.fromRGBO(0, 0, 0, .25),
-            blurRadius: 10.0,
+            blurRadius: 5.0,
             spreadRadius: 5.0
           )
         ]
       ),
-    );
-
-    final favorite = IconButton(
-      icon: Icon(isFavorite? Icons.favorite : Icons.favorite_outline), 
-      color: isFavorite? EcoAppColors.RED_COLOR : Colors.black54,
-      onPressed: toggleFavorite
     );
 
     final firstRow = Row(
@@ -58,13 +48,13 @@ class _ArticleCardState extends State<ArticleCard> {
       children: [
         Flexible(
           child: Text(
-            widget.title,
+            widget.article.title,
             style: GoogleFonts.montserrat(),
             textAlign: TextAlign.left,
             maxLines: 3,
           ),
         ),
-        favorite
+        FavoriteButton(favorite: widget.favorite)
       ],
     );
 
@@ -73,14 +63,14 @@ class _ArticleCardState extends State<ArticleCard> {
       mainAxisSize: MainAxisSize.max,
       children: [
         Text(
-          '\$ ' + CurrencyUtil.formatToCurrencyString(widget.price),
+          '\$ ' + CurrencyUtil.formatToCurrencyString(widget.article.price.round()),
           style: GoogleFonts.montserrat(
-            fontSize: 20,
+            fontSize: 16,
             fontWeight: FontWeight.w500
           ),
         ),
         Text(
-          widget.percent.toString() + '%',
+          '58%',
           style: GoogleFonts.montserrat(
             color: EcoAppColors.MAIN_COLOR,
             fontSize: 16,
@@ -97,7 +87,7 @@ class _ArticleCardState extends State<ArticleCard> {
         children: [
           SizedBox(width: 10.0),
           firstRow,
-          SizedBox(height: 30),
+          SizedBox(height: 20),
           secondRow,
           SizedBox(width: 10.0)
         ],
@@ -105,6 +95,7 @@ class _ArticleCardState extends State<ArticleCard> {
     );
 
     final card = Card(
+      margin: EdgeInsets.zero,
       clipBehavior: Clip.antiAlias,
       shape: RoundedRectangleBorder(
         borderRadius: BorderRadius.circular(20.0)
@@ -114,26 +105,45 @@ class _ArticleCardState extends State<ArticleCard> {
         mainAxisSize: MainAxisSize.max,
         children: [
           imageContainer,
-          SizedBox(width: 10.0),
+          SizedBox(width: 20.0),
           column,
           SizedBox(width: 10.0)
         ],
       ),
     );
 
-    return Container(
-      margin: EdgeInsets.symmetric(
-        horizontal: 10.0
+    return AnimatedContainer(
+      duration: Duration(milliseconds: 100),
+      decoration: BoxDecoration(
+        borderRadius: BorderRadius.circular(20.0),
+        boxShadow: [
+          BoxShadow(
+            offset: Offset(0, 1),
+            blurRadius: blurRadius,
+            spreadRadius: 2.0,
+            color: Colors.black.withOpacity(shadowOpacity)
+          ),
+        ]
+      ),
+      margin: EdgeInsets.only(
+        left: 10.0,
+        right: 10.0,
+        bottom: 8.0
       ),
       child: InkWell(
         child: card,
         borderRadius: BorderRadius.circular(20.0),
         onTap: (){},
+        onHover: onHover
       ),
     );
   }
 
-  void toggleFavorite(){
-    setState(() => isFavorite = !isFavorite);
+  onHover(val){
+    setState(() {
+      blurRadius = val? 15 : 2;
+      shadowOpacity = val? 0.3 : 0.2;
+    });
   }
+
 }

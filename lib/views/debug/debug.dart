@@ -1,4 +1,5 @@
 import 'package:flutter/material.dart';
+import 'package:flutter_ecoapp/models/article.dart';
 import 'package:flutter_ecoapp/views/widgets/articles/article_card.dart';
 import 'package:flutter_ecoapp/views/widgets/articles/cart_article_card.dart';
 import 'package:flutter_ecoapp/views/widgets/home/featured_product.dart';
@@ -9,27 +10,55 @@ class EcoAppDebug{
     return Column(
       children: [
         ArticleCard(
-          title: 'Título largo',
-          percent: 80,
-          price: 20000,
+          article: ArticleModel(
+            id: 1,
+            title: 'Tìtulo largo',
+            price: 20000.0,
+            description: 'Descripción larga',
+            stock: 2,
+            enabled: true,
+            lastUpdateDate: DateTime.now(),
+            createdDate: DateTime.now()
+          ),
           favorite: true,
         ),
         ArticleCard(
-          title: 'Título largo xd sdjhfhsj dfsd',
-          percent: 40,
-          price: 35000,
+          article: ArticleModel(
+            id: 1,
+            title: 'Tìtulo muy muy largo sdjkfsdffdsjkdfjkssds',
+            price: 20000.0,
+            description: 'Descripción larga',
+            stock: 2,
+            enabled: true,
+            lastUpdateDate: DateTime.now(),
+            createdDate: DateTime.now()
+          ),
           favorite: false,
         ),
         ArticleCard(
-          title: 'Título largo',
-          percent: 80,
-          price: 20000,
+          article: ArticleModel(
+            id: 1,
+            title: 'Tìtulo largo',
+            price: 9021545.0,
+            description: 'Descripción larga',
+            stock: 2,
+            enabled: true,
+            lastUpdateDate: DateTime.now(),
+            createdDate: DateTime.now()
+          ),
           favorite: true,
         ),
         ArticleCard(
-          title: 'Título largo xd sdjhfhsj dfsd',
-          percent: 40,
-          price: 35000,
+          article: ArticleModel(
+            id: 1,
+            title: 'Tìtulo uy muy largo sdjkfsdffdsjkdfjkssd sdafasdfasdf asdfasdfasds',
+            price: 2000000.0,
+            description: 'Descripción larga',
+            stock: 2,
+            enabled: true,
+            lastUpdateDate: DateTime.now(),
+            createdDate: DateTime.now()
+          ),
           favorite: false,
         ),
       ],

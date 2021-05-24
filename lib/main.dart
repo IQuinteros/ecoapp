@@ -1,5 +1,4 @@
 import 'package:flutter/material.dart';
-import 'package:flutter_ecoapp/routes/routes.dart';
 import 'package:flutter_ecoapp/views/main_view.dart';
 
 void main() {
@@ -11,6 +10,7 @@ class MyApp extends StatelessWidget {
   @override
   Widget build(BuildContext context) {
     return MaterialApp(
+        debugShowCheckedModeBanner: false,
         title: 'Ecomercio',
         theme: ThemeData(
           primarySwatch: Colors.lightGreen,
