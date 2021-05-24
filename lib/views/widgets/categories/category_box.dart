@@ -1,18 +1,19 @@
 import 'package:flutter/material.dart';
+import 'package:flutter_ecoapp/models/category.dart';
 import 'package:google_fonts/google_fonts.dart';
 
 import 'package:flutter_ecoapp/views/style/colors.dart';
 
 class CategoryBox extends StatelessWidget {
-  final IconData iconData;
-  final String text;
 
-  const CategoryBox({Key key, @required this.iconData, @required this.text}) : super(key: key);
+  final CategoryModel category;
+
+  const CategoryBox({Key key, @required this.category}) : super(key: key);
 
   @override
   Widget build(BuildContext context) {
     final icon = Icon(
-      iconData,
+      category.getIcon(),
       size: 50.0,
       color: EcoAppColors.MAIN_COLOR,
     );
@@ -29,7 +30,7 @@ class CategoryBox extends StatelessWidget {
             icon,
             SizedBox(height: 10.0,),
             Text(
-              text,
+              category.title,
               style: GoogleFonts.montserrat(
                 fontSize: 15
               ),

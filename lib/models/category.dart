@@ -11,4 +11,20 @@ class CategoryModel extends BaseModel
     @required this.title,
     @required this.createdDate,
   }) : super(id: id);
+
+  IconData getIcon(){
+    return getIconOfCategory(this);
+  }
+
+  static IconData getIconOfCategory(CategoryModel categoryRef){
+    switch(categoryRef.title){
+      case 'Hogar':
+        return Icons.home;
+      case 'Cuidado Personal':
+        return Icons.person;
+      case 'Alimentos':
+        return Icons.food_bank;
+      default: return Icons.ac_unit;
+    }
+  }
 }

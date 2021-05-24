@@ -49,16 +49,13 @@ class HomeView extends StatelessWidget {
       child: Row(
         children: [
           CategoryBox(
-            iconData: Icons.ac_unit,
-            text: 'A granel',
+            category: EcoAppDebug.getCategories()[0]
           ),
           CategoryBox(
-            iconData: Icons.badge,
-            text: 'Bolsas',
+            category: EcoAppDebug.getCategories()[1]
           ),
           CategoryBox(
-            iconData: Icons.clean_hands,
-            text: 'Limpieza'
+            category: EcoAppDebug.getCategories()[2]
           )
         ],
         mainAxisAlignment: MainAxisAlignment.spaceAround,
@@ -74,16 +71,13 @@ class HomeView extends StatelessWidget {
           return Column(
             children: [
               CategoryListItem(
-                iconData: Icons.ac_unit,
-                text: 'A granel',
+                category: EcoAppDebug.getCategories()[0]
               ),
               CategoryListItem(
-                iconData: Icons.badge,
-                text: 'Bolsas',
+                category: EcoAppDebug.getCategories()[1]
               ),
               CategoryListItem(
-                iconData: Icons.clean_hands,
-                text: 'Limpieza',
+                category: EcoAppDebug.getCategories()[2]
               ),
             ],
           );

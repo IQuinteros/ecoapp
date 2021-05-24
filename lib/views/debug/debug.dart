@@ -1,5 +1,6 @@
 import 'package:flutter/material.dart';
 import 'package:flutter_ecoapp/models/article.dart';
+import 'package:flutter_ecoapp/models/category.dart';
 import 'package:flutter_ecoapp/views/widgets/articles/article_card.dart';
 import 'package:flutter_ecoapp/views/widgets/articles/cart_article_card.dart';
 import 'package:flutter_ecoapp/views/widgets/home/featured_product.dart';
@@ -117,6 +118,12 @@ class EcoAppDebug{
     ),
   ];
     
-  
+  static List<CategoryModel> getCategories(){
+    return [
+      CategoryModel(id: 1, title: 'Hogar', createdDate: DateTime.now()),
+      CategoryModel(id: 2, title: 'Cuidado Personal', createdDate: DateTime.now()),
+      CategoryModel(id: 3, title: 'Alimentos', createdDate: DateTime.now()),
+    ];
+  }
 
 }
