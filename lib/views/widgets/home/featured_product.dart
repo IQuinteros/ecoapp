@@ -1,5 +1,9 @@
+import 'dart:math';
+
 import 'package:flutter/material.dart';
+import 'package:flutter_ecoapp/models/article.dart';
 import 'package:flutter_ecoapp/utils/currency_util.dart';
+import 'package:flutter_ecoapp/views/widgets/articles/mini_eco_indicator.dart';
 import 'package:google_fonts/google_fonts.dart';
 
 class FeaturedProduct extends StatefulWidget {
@@ -51,11 +55,11 @@ class _FeaturedProductState extends State<FeaturedProduct> {
       ),
     );
 
-    final percentText = Text(
-      widget.percent.toString() + '%',
-      style: GoogleFonts.montserrat(
-        fontSize: 18,
-        fontWeight: FontWeight.w600
+    final ecoIndicator = MiniEcoIndicator(
+      ecoIndicator: EcoIndicator(
+        hasRecycledMaterials: Random().nextBool(),
+        hasReusTips: Random().nextBool(),
+        isRecyclableProduct: Random().nextBool()
       ),
     );
 
@@ -64,7 +68,6 @@ class _FeaturedProductState extends State<FeaturedProduct> {
       style: GoogleFonts.montserrat(
         fontSize: 16,
         fontWeight: FontWeight.normal,
-        
       ),
     );
 
@@ -86,7 +89,7 @@ class _FeaturedProductState extends State<FeaturedProduct> {
               mainAxisAlignment: MainAxisAlignment.spaceBetween,
               children: [
                 priceText,
-                percentText
+                ecoIndicator
               ],
             ),
             SizedBox(height: 5.0),

@@ -33,6 +33,14 @@ class PhotoModel extends BaseModel
   }) : super(id: id);
 }
 
+class EcoIndicator{
+  final bool hasRecycledMaterials;
+  final bool hasReusTips;
+  final bool isRecyclableProduct;
+
+  EcoIndicator({this.hasRecycledMaterials = false, this.hasReusTips = false, this.isRecyclableProduct = false});
+}
+
 class ArticleForm extends BaseModel
 {
   String recycledMats;
@@ -53,4 +61,16 @@ class ArticleForm extends BaseModel
     @required this.createdDate,
     @required this.lastUpdateDate
   }) : super(id: id);
+
+  EcoIndicator getIndicator(){
+    bool hasRecycledMats = recycledMats.isNotEmpty;
+    bool hasReusedTips = reuseTips.isNotEmpty;
+    bool isRecyclable = recycledProd.isNotEmpty;
+
+    return EcoIndicator(
+      hasRecycledMaterials: hasRecycledMats,
+      hasReusTips: hasReusedTips,
+      isRecyclableProduct: isRecyclable
+    );
+  }
 }
