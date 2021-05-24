@@ -1,8 +1,11 @@
+import 'dart:math';
+
 import 'package:flutter/material.dart';
 import 'package:flutter_ecoapp/models/article.dart';
 import 'package:flutter_ecoapp/utils/currency_util.dart';
 import 'package:flutter_ecoapp/views/style/colors.dart';
 import 'package:flutter_ecoapp/views/widgets/articles/favorite_button.dart';
+import 'package:flutter_ecoapp/views/widgets/articles/mini_eco_indicator.dart';
 import 'package:google_fonts/google_fonts.dart';
 
 class ArticleCard extends StatefulWidget {
@@ -58,26 +61,32 @@ class _ArticleCardState extends State<ArticleCard> {
       ],
     );
 
-    final secondRow = Row(
-      mainAxisAlignment: MainAxisAlignment.spaceBetween,
-      mainAxisSize: MainAxisSize.max,
-      children: [
-        Text(
-          '\$ ' + CurrencyUtil.formatToCurrencyString(widget.article.price.round()),
-          style: GoogleFonts.montserrat(
-            fontSize: 16,
-            fontWeight: FontWeight.w500
+    final ecoIndicator = MiniEcoIndicator(
+      ecoIndicator: EcoIndicator(
+        hasRecycledMaterials: Random().nextBool(),
+        hasReusTips: Random().nextBool(),
+        isRecyclableProduct: Random().nextBool()
+      ),
+    );
+
+    final secondRow = Container(
+      margin: EdgeInsets.only(
+        right: 15.0
+      ),
+      child: Row(
+        mainAxisAlignment: MainAxisAlignment.spaceBetween,
+        mainAxisSize: MainAxisSize.max,
+        children: [
+          Text(
+            '\$ ' + CurrencyUtil.formatToCurrencyString(widget.article.price.round()),
+            style: GoogleFonts.montserrat(
+              fontSize: 16,
+              fontWeight: FontWeight.w500
+            ),
           ),
-        ),
-        Text(
-          '58%',
-          style: GoogleFonts.montserrat(
-            color: EcoAppColors.MAIN_COLOR,
-            fontSize: 16,
-            fontWeight: FontWeight.bold
-          ),
-        )
-      ],
+          ecoIndicator,
+        ],
+      ),
     );
 
     var column = Expanded(
