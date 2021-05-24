@@ -106,7 +106,7 @@ class _FeaturedProductState extends State<FeaturedProduct> {
           mainAxisAlignment: MainAxisAlignment.center,
           children: [
             Container(
-              constraints: BoxConstraints(maxWidth: MediaQuery.of(context).size.width * 0.8),
+              constraints: BoxConstraints(maxWidth: MediaQuery.of(context).size.width * 0.7),
               child: card,
             ),
           ],

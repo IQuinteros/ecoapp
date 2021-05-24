@@ -2,6 +2,7 @@ import 'package:flutter/material.dart';
 import 'package:flutter_ecoapp/views/debug/debug.dart';
 import 'package:flutter_ecoapp/views/style/text_style.dart';
 import 'package:flutter_ecoapp/views/widgets/categories/category_box.dart';
+import 'package:flutter_ecoapp/views/widgets/categories/category_list_item.dart';
 
 import 'package:flutter_ecoapp/views/widgets/mini_button.dart';
 import 'package:flutter_ecoapp/views/widgets/search_bar.dart';
@@ -48,20 +49,44 @@ class HomeView extends StatelessWidget {
       child: Row(
         children: [
           CategoryBox(
-            iconData: Icons.ac_unit,
-            text: 'A granel',
+            category: EcoAppDebug.getCategories()[0]
           ),
           CategoryBox(
-            iconData: Icons.badge,
-            text: 'Bolsas',
+            category: EcoAppDebug.getCategories()[1]
           ),
           CategoryBox(
-            iconData: Icons.clean_hands,
-            text: 'Limpieza'
+            category: EcoAppDebug.getCategories()[2]
           )
         ],
         mainAxisAlignment: MainAxisAlignment.spaceAround,
       ),
+    );
+    
+    final categoryView = LayoutBuilder(
+      builder: (context, constraints){
+        if(constraints.maxWidth > 490){
+          return categoryRow;
+        }
+        else{
+          return Column(
+            children: [
+              Divider(),
+              CategoryListItem(
+                category: EcoAppDebug.getCategories()[0]
+              ),
+              Divider(),
+              CategoryListItem(
+                category: EcoAppDebug.getCategories()[1]
+              ),
+              Divider(),
+              CategoryListItem(
+                category: EcoAppDebug.getCategories()[2]
+              ),
+              Divider(),
+            ],
+          );
+        }
+      }
     );
 
     final favoriteList = EcoAppDebug.getArticleItems();
@@ -79,7 +104,7 @@ class HomeView extends StatelessWidget {
             action: (){},
           )
         ),
-        categoryRow,
+        categoryView,
         EcoAppTextStyle.getTitle(
           'Favoritos',
           rightButton: MiniButton(
