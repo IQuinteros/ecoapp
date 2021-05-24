@@ -2,6 +2,7 @@ import 'package:flutter/material.dart';
 import 'package:flutter_ecoapp/views/debug/debug.dart';
 import 'package:flutter_ecoapp/views/style/text_style.dart';
 import 'package:flutter_ecoapp/views/widgets/categories/category_box.dart';
+import 'package:flutter_ecoapp/views/widgets/categories/category_list_item.dart';
 
 import 'package:flutter_ecoapp/views/widgets/mini_button.dart';
 import 'package:flutter_ecoapp/views/widgets/search_bar.dart';
@@ -63,6 +64,32 @@ class HomeView extends StatelessWidget {
         mainAxisAlignment: MainAxisAlignment.spaceAround,
       ),
     );
+    
+    final categoryView = LayoutBuilder(
+      builder: (context, constraints){
+        if(constraints.maxWidth > 400){
+          return categoryRow;
+        }
+        else{
+          return Column(
+            children: [
+              CategoryListItem(
+                iconData: Icons.ac_unit,
+                text: 'A granel',
+              ),
+              CategoryListItem(
+                iconData: Icons.badge,
+                text: 'Bolsas',
+              ),
+              CategoryListItem(
+                iconData: Icons.clean_hands,
+                text: 'Limpieza',
+              ),
+            ],
+          );
+        }
+      }
+    );
 
     final favoriteList = EcoAppDebug.getArticleItems();
 
@@ -79,7 +106,7 @@ class HomeView extends StatelessWidget {
             action: (){},
           )
         ),
-        categoryRow,
+        categoryView,
         EcoAppTextStyle.getTitle(
           'Favoritos',
           rightButton: MiniButton(
