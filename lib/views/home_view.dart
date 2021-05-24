@@ -64,21 +64,25 @@ class HomeView extends StatelessWidget {
     
     final categoryView = LayoutBuilder(
       builder: (context, constraints){
-        if(constraints.maxWidth > 400){
+        if(constraints.maxWidth > 490){
           return categoryRow;
         }
         else{
           return Column(
             children: [
+              Divider(),
               CategoryListItem(
                 category: EcoAppDebug.getCategories()[0]
               ),
+              Divider(),
               CategoryListItem(
                 category: EcoAppDebug.getCategories()[1]
               ),
+              Divider(),
               CategoryListItem(
                 category: EcoAppDebug.getCategories()[2]
               ),
+              Divider(),
             ],
           );
         }
