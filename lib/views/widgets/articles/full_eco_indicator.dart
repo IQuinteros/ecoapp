@@ -1,6 +1,8 @@
 import 'package:flutter/material.dart';
 import 'package:flutter_ecoapp/models/article.dart';
 import 'package:flutter_ecoapp/views/style/colors.dart';
+import 'package:flutter_ecoapp/views/widgets/indicators/circle_indicator.dart';
+import 'package:lipsum/lipsum.dart' as lipsum;
 import 'package:tinycolor/tinycolor.dart';
 
 class FullEcoIndicator extends StatelessWidget {
@@ -13,11 +15,34 @@ class FullEcoIndicator extends StatelessWidget {
     List<Widget> circles = [];
 
     if(ecoIndicator.hasRecycledMaterials)
-      circles.add(getCircle(Icons.inventory, EcoAppColors.BLUE_ACCENT_COLOR, darkenScale: 35));
+      circles.add(
+        CircleIndicator(
+          icon: Icons.inventory, 
+          color: EcoAppColors.BLUE_ACCENT_COLOR, 
+          darkenScale: 35,
+          title: 'Producto con materiales reciclados',
+          description: lipsum.createParagraph(numParagraphs: 2),
+        )
+      );
     if(ecoIndicator.hasReusTips)
-      circles.add(getCircle(Icons.list_alt_rounded, EcoAppColors.ACCENT_COLOR, darkenScale: 38));
+      circles.add(
+        CircleIndicator(
+          icon:Icons.list_alt_rounded, 
+          color: EcoAppColors.ACCENT_COLOR, 
+          darkenScale: 38,
+          title: '¡Hay tips de reutilización!',
+          description: lipsum.createParagraph(numParagraphs: 2),
+        )
+      );
     if(ecoIndicator.isRecyclableProduct)
-      circles.add(getCircle(Icons.eco, EcoAppColors.MAIN_COLOR));
+      circles.add(
+        CircleIndicator(
+          icon: Icons.eco, 
+          color: EcoAppColors.MAIN_COLOR,
+          title: 'El producto es reciclable',
+          description: lipsum.createParagraph(numParagraphs: 2),
+        )
+      );
 
     if(circles.length <= 0)
       return Container();
@@ -54,40 +79,6 @@ class FullEcoIndicator extends StatelessWidget {
           ),
         ]
       ),
-    );
-  }
-
-  Widget getCircle(IconData icon, Color color, {int darkenScale = 21}){
-    return Container(
-      decoration: BoxDecoration(
-        boxShadow: [
-          BoxShadow(
-            offset: Offset(0, 5),
-            color: Colors.black.withOpacity(0.4),
-            blurRadius: 10.0,
-            spreadRadius: 2.0
-          )
-        ],
-        color: TinyColor.fromRGB(r: color.red, g: color.green, b: color.blue).darken(darkenScale).color.withOpacity(1),
-        border: Border.all(
-          color: color,
-          width: 4.0
-        ),
-        shape: BoxShape.circle
-      ),
-      padding: EdgeInsets.all(2.0),
-      child: Ink(
-        decoration: ShapeDecoration(
-          color: color,
-          shape: CircleBorder(),
-        ),
-        child: IconButton(
-          icon: Icon(icon, color: color,),
-          color: color,
-          iconSize: 40,
-          onPressed: (){ print('hola');},
-        ),
-      )
     );
   }
 }
