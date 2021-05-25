@@ -1,5 +1,6 @@
 import 'package:flutter/material.dart';
 import 'package:flutter_ecoapp/models/base.dart';
+import 'package:flutter_ecoapp/models/store.dart';
 
 class ArticleModel extends BaseModel
 {
@@ -13,6 +14,7 @@ class ArticleModel extends BaseModel
 
   List<PhotoModel> photos;
   ArticleForm form;
+  StoreModel store;
 
   String _tag = '';
   set tag(String newTag) => _tag = this.id.toString() + this.title + newTag;
@@ -28,7 +30,8 @@ class ArticleModel extends BaseModel
     @required this.lastUpdateDate,
     @required this.enabled,
     @required this.photos,
-    @required this.form
+    @required this.form,
+    this.store
   }) : super(id: id);
   
 }
@@ -45,16 +48,16 @@ class PhotoModel extends BaseModel
 
 class EcoIndicator{
   final bool hasRecycledMaterials;
-  final bool hasReusTips;
+  final bool hasReuseTips;
   final bool isRecyclableProduct;
 
-  EcoIndicator({this.hasRecycledMaterials = false, this.hasReusTips = false, this.isRecyclableProduct = false});
+  EcoIndicator({this.hasRecycledMaterials = false, this.hasReuseTips = false, this.isRecyclableProduct = false});
 
   @override
   String toString() {
     return '''
       hasRecycledMaterials  : ${hasRecycledMaterials.toString()}
-      hasReusTips           : ${hasReusTips.toString()}
+      hasReusTips           : ${hasReuseTips.toString()}
       isRecyclableProduct   : ${isRecyclableProduct.toString()}
     ''';
   }
@@ -70,6 +73,11 @@ class ArticleForm extends BaseModel
   String generalDetail;
   DateTime createdDate;
   DateTime lastUpdateDate;
+
+  bool get hasDetail{
+    EcoIndicator indicator = getIndicator();
+    return indicator.hasRecycledMaterials || indicator.hasReuseTips || indicator.isRecyclableProduct;
+  }
 
   ArticleForm({
     @required int id,
@@ -90,7 +98,7 @@ class ArticleForm extends BaseModel
 
     return EcoIndicator(
       hasRecycledMaterials: hasRecycledMats,
-      hasReusTips: hasReusedTips,
+      hasReuseTips: hasReusedTips,
       isRecyclableProduct: isRecyclable
     );
   }

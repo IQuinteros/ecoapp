@@ -1,9 +1,11 @@
 import 'package:flutter/material.dart';
 import 'package:flutter_ecoapp/models/article.dart';
 import 'package:flutter_ecoapp/models/category.dart';
+import 'package:flutter_ecoapp/models/store.dart';
 import 'package:flutter_ecoapp/views/widgets/articles/article_card.dart';
 import 'package:flutter_ecoapp/views/widgets/articles/cart_article_card.dart';
 import 'package:flutter_ecoapp/views/widgets/home/featured_product.dart';
+import 'package:lipsum/lipsum.dart' as lipsum;
 
 class EcoAppDebug{
 
@@ -15,7 +17,7 @@ class EcoAppDebug{
             id: initialId,
             title: 'Tìtulo largo',
             price: 20000.0,
-            description: 'Descripción larga',
+            description: lipsum.createParagraph(numParagraphs: 2),
             stock: 2,
             enabled: true,
             lastUpdateDate: DateTime.now(),
@@ -28,11 +30,12 @@ class EcoAppDebug{
               createdDate: DateTime.now(),
               lastUpdateDate: DateTime.now(),
               recycledMats: 'Full',
-              recycledMatsDetail: 'Esto, esto y esto',
+              recycledMatsDetail: lipsum.createParagraph(numParagraphs: 1),
               recycledProd: 'Full',
-              recycledProdDetail: 'Esto, esto y esto',
-              reuseTips: 'Puedes volver a utilizar el empaque así:'
-            )
+              recycledProdDetail: lipsum.createParagraph(numParagraphs: 1),
+              reuseTips: lipsum.createParagraph(numParagraphs: 1)
+            ),
+            store: getStores()[0]
           ),
           favorite: true,
         ),
@@ -41,7 +44,7 @@ class EcoAppDebug{
             id: initialId + 1,
             title: 'Tìtulo muy muy largo sdjkfsdffdsjkdfjkssds',
             price: 20000.0,
-            description: 'Descripción larga',
+            description: lipsum.createParagraph(numParagraphs: 2),
             stock: 2,
             enabled: true,
             lastUpdateDate: DateTime.now(),
@@ -54,9 +57,10 @@ class EcoAppDebug{
               createdDate: DateTime.now(),
               lastUpdateDate: DateTime.now(),
               recycledProd: 'Full',
-              recycledProdDetail: 'Esto, esto y esto',
-              reuseTips: 'Puedes volver a utilizar el empaque así:'
-            )
+              recycledProdDetail: lipsum.createParagraph(numParagraphs: 1),
+              reuseTips: lipsum.createParagraph(numParagraphs: 1)
+            ),
+            store: getStores()[2]
           ),
           favorite: false,
         ),
@@ -65,7 +69,7 @@ class EcoAppDebug{
             id: initialId + 2,
             title: 'Tìtulo largo',
             price: 9021545.0,
-            description: 'Descripción larga',
+            description: lipsum.createParagraph(numParagraphs: 2),
             stock: 2,
             enabled: true,
             lastUpdateDate: DateTime.now(),
@@ -78,10 +82,11 @@ class EcoAppDebug{
               createdDate: DateTime.now(),
               lastUpdateDate: DateTime.now(),
               recycledMats: 'Full',
-              recycledMatsDetail: 'Esto, esto y esto',
+              recycledMatsDetail: lipsum.createParagraph(numParagraphs: 1),
               recycledProd: 'Full',
-              recycledProdDetail: 'Esto, esto y esto',
-            )
+              recycledProdDetail: lipsum.createParagraph(numParagraphs: 1),
+            ),
+            store: getStores()[1]
           ),
           favorite: true,
         ),
@@ -90,7 +95,7 @@ class EcoAppDebug{
             id: initialId + 3,
             title: 'Tìtulo uy muy largo sdjkfsdffdsjkdfjkssd sdafasdfasdf asdfasdfasds',
             price: 2000000.0,
-            description: 'Descripción larga',
+            description: lipsum.createParagraph(numParagraphs: 2),
             stock: 2,
             enabled: true,
             lastUpdateDate: DateTime.now(),
@@ -103,9 +108,10 @@ class EcoAppDebug{
               createdDate: DateTime.now(),
               lastUpdateDate: DateTime.now(),
               recycledProd: 'Full',
-              recycledProdDetail: 'Esto, esto y esto',
-              reuseTips: 'Puedes volver a utilizar el empaque así:'
-            )
+              recycledProdDetail: lipsum.createParagraph(numParagraphs: 1),
+              reuseTips: lipsum.createParagraph(numParagraphs: 1)
+            ),
+            store: getStores()[0]
           ),
           favorite: false,
         ),
@@ -114,7 +120,7 @@ class EcoAppDebug{
             id: initialId + 4,
             title: 'Tìtulo uy muy largo asdf asdfasdfasds',
             price: 2000000.0,
-            description: 'Descripción larga',
+            description: lipsum.createParagraph(numParagraphs: 2),
             stock: 2,
             enabled: true,
             lastUpdateDate: DateTime.now(),
@@ -126,7 +132,8 @@ class EcoAppDebug{
               id: 5,
               createdDate: DateTime.now(),
               lastUpdateDate: DateTime.now(),
-            )
+            ),
+            store: getStores()[0]
           ),
           favorite: false,
         ),
@@ -135,7 +142,7 @@ class EcoAppDebug{
             id: initialId + 5,
             title: 'Tìtulo uy muy largo asdf asdfasdfasds',
             price: 90000.0,
-            description: 'Descripción larga',
+            description: lipsum.createParagraph(numParagraphs: 2),
             stock: 4,
             enabled: true,
             lastUpdateDate: DateTime.now(),
@@ -148,13 +155,58 @@ class EcoAppDebug{
               createdDate: DateTime.now(),
               lastUpdateDate: DateTime.now(),
               recycledProd: 'Full',
-              recycledProdDetail: 'Esto, esto y esto',
-            )
+              recycledProdDetail: lipsum.createParagraph(numParagraphs: 1),
+            ),
+            store: getStores()[2]
           ),
           favorite: false,
         ),
       ],
     );
+  }
+
+  static List<StoreModel> getStores(){
+    return [
+      StoreModel(
+        id: 1, 
+        publicName: 'EcoTienda 1', 
+        description: lipsum.createParagraph(numParagraphs: 1), 
+        email: 'ecotienda@eco.cl', 
+        contactNumber: 912345678, 
+        location: 'Ecolugar de Chile', 
+        rut: 12345678, 
+        rutDv: '1', 
+        enabled: true, 
+        createdDate: DateTime.now(), 
+        lastUpdateDate: DateTime.now(), 
+      ),
+      StoreModel(
+        id: 2, 
+        publicName: 'EcoTienda 2', 
+        description: lipsum.createParagraph(numParagraphs: 1), 
+        email: 'ecotienda2@eco.cl', 
+        contactNumber: 912345678, 
+        location: 'Ecolugar 2 de Chile', 
+        rut: 12345678, 
+        rutDv: '2', 
+        enabled: false, 
+        createdDate: DateTime.now(), 
+        lastUpdateDate: DateTime.now(), 
+      ),
+      StoreModel(
+        id: 3, 
+        publicName: 'EcoTienda 3', 
+        description: lipsum.createParagraph(numParagraphs: 1), 
+        email: 'ecotienda3@eco.cl', 
+        contactNumber: 912345678, 
+        location: 'Ecolugar 3 de Chile', 
+        rut: 12345678, 
+        rutDv: '3', 
+        enabled: true, 
+        createdDate: DateTime.now(), 
+        lastUpdateDate: DateTime.now(), 
+      ),
+    ];
   }
 
   static Widget getCartArticleItems(){

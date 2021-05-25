@@ -24,7 +24,7 @@ class FullEcoIndicator extends StatelessWidget {
           description: lipsum.createParagraph(numParagraphs: 2),
         )
       );
-    if(ecoIndicator.hasReusTips)
+    if(ecoIndicator.hasReuseTips)
       circles.add(
         CircleIndicator(
           icon:Icons.list_alt_rounded, 

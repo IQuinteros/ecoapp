@@ -1,7 +1,7 @@
 import 'package:flutter/material.dart';
 import 'package:flutter_ecoapp/models/base.dart';
 
-class ShopModel extends BaseModel
+class StoreModel extends BaseModel
 {
   String publicName;
   String description;
@@ -14,7 +14,7 @@ class ShopModel extends BaseModel
   DateTime createdDate;
   DateTime lastUpdateDate;
 
-  ShopModel({
+  StoreModel({
     @required int id,
     @required this.publicName,
     @required this.description,

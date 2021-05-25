@@ -63,7 +63,7 @@ class _CartArticleCardState extends State<CartArticleCard> {
     final ecoIndicator = MiniEcoIndicator(
       ecoIndicator: EcoIndicator(
         hasRecycledMaterials: Random().nextBool(),
-        hasReusTips: Random().nextBool(),
+        hasReuseTips: Random().nextBool(),
         isRecyclableProduct: Random().nextBool()
       ),
     );
