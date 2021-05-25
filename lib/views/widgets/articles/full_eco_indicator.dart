@@ -32,15 +32,20 @@ class FullEcoIndicator extends StatelessWidget {
   }
 
   Widget getLine(BuildContext context){
-    return Align(
-      alignment: Alignment.center,
-      child: Opacity(
-        opacity: 0.3,
-        child: Container(
-          height: 15.0,
-          width: double.infinity,
-          color: EcoAppColors.LEFT_BAR_COLOR,
-        ),
+    return Container(
+      height: 65.0,
+      child: Column(
+        mainAxisAlignment: MainAxisAlignment.center,
+        children: [
+          Opacity(
+            opacity: 0.3,
+            child: Container(
+              height: 15.0,
+              width: double.infinity,
+              color: EcoAppColors.LEFT_BAR_COLOR,
+            ),
+          ),
+        ]
       ),
     );
   }
@@ -48,6 +53,14 @@ class FullEcoIndicator extends StatelessWidget {
   Widget getCircle(IconData icon, Color color, {int darkenScale = 21}){
     return Container(
       decoration: BoxDecoration(
+        boxShadow: [
+          BoxShadow(
+            offset: Offset(0, 5),
+            color: Colors.black.withOpacity(0.4),
+            blurRadius: 10.0,
+            spreadRadius: 2.0
+          )
+        ],
         color: TinyColor.fromRGB(r: color.red, g: color.green, b: color.blue).darken(darkenScale).color.withOpacity(1),
         border: Border.all(
           color: color,

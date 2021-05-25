@@ -102,7 +102,6 @@ class ArticleView extends StatelessWidget {
       ),
       padding: EdgeInsets.symmetric(
         vertical: 20.0,
-        horizontal: 20.0
       ),
       child: SingleChildScrollView(
         child: Column(
@@ -115,42 +114,57 @@ class ArticleView extends StatelessWidget {
 
   List<Widget> getColumnContent(BuildContext context, ArticleModel article){
 
-    final title = Row(
-      children: [
-        Text(
-          article.title,
-          textAlign: TextAlign.left,
-        ),
-      ],
+    final title = Padding(
+      padding: EdgeInsets.symmetric(
+        horizontal: 20.0
+      ),
+      child: Row(
+        children: [
+          Text(
+            article.title,
+            textAlign: TextAlign.left,
+          ),
+        ],
+      ),
     );
 
-    final rating = Row(
-      children: [
-        StarsRow(rating: 3.4),
-        SizedBox(width: 10.0),
-        Text(
-          '4 opiniones'
-        )
-      ],
+    final rating = Padding(
+      padding: EdgeInsets.symmetric(
+        horizontal: 20.0
+      ),
+      child: Row(
+        children: [
+          StarsRow(rating: 3.4),
+          SizedBox(width: 10.0),
+          Text(
+            '4 opiniones'
+          )
+        ],
+      ),
     );
 
-    final price = Row(
-      children: [
-        Text(
-          '\$ ' + CurrencyUtil.formatToCurrencyString(article.price.floor()),
-          style: TextStyle(
-            fontSize: 20,
-            fontWeight: FontWeight.bold
+    final price = Padding(
+      padding: EdgeInsets.symmetric(
+        horizontal: 20.0
+      ),
+      child: Row(
+        children: [
+          Text(
+            '\$ ' + CurrencyUtil.formatToCurrencyString(article.price.floor()),
+            style: TextStyle(
+              fontSize: 20,
+              fontWeight: FontWeight.bold
+            ),
           ),
-        ),
-        SizedBox(width: 30.0,),
-        Text(
-          '\$ ' + CurrencyUtil.formatToCurrencyString(article.price.floor()),
-          style: TextStyle(
-            decoration: TextDecoration.lineThrough
+          SizedBox(width: 30.0,),
+          Text(
+            '\$ ' + CurrencyUtil.formatToCurrencyString(article.price.floor()),
+            style: TextStyle(
+              decoration: TextDecoration.lineThrough
+            ),
           ),
-        ),
-      ],
+        ],
+      ),
     );
 
     return [
