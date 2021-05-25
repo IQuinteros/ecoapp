@@ -58,16 +58,18 @@ class ArticleForm extends BaseModel
   String reuseTips;
   String recycledProd;
   String recycledProdDetail;
+  String generalDetail;
   DateTime createdDate;
   DateTime lastUpdateDate;
 
   ArticleForm({
     @required int id,
-    @required this.recycledMats,
-    @required this.recycledMatsDetail,
-    @required this.reuseTips,
-    @required this.recycledProd,
-    @required this.recycledProdDetail,
+    this.recycledMats = '',
+    this.recycledMatsDetail = '',
+    this.reuseTips = '',
+    this.recycledProd = '',
+    this.recycledProdDetail = '',
+    this.generalDetail = '',
     @required this.createdDate,
     @required this.lastUpdateDate
   }) : super(id: id);

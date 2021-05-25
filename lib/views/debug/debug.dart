@@ -19,7 +19,20 @@ class EcoAppDebug{
             stock: 2,
             enabled: true,
             lastUpdateDate: DateTime.now(),
-            createdDate: DateTime.now()
+            createdDate: DateTime.now(),
+            photos: [
+              PhotoModel(id: 1, photoUrl: 'https://picsum.photos/500/300')
+            ],
+            form: ArticleForm(
+              id: 1,
+              createdDate: DateTime.now(),
+              lastUpdateDate: DateTime.now(),
+              recycledMats: 'Full',
+              recycledMatsDetail: 'Esto, esto y esto',
+              recycledProd: 'Full',
+              recycledProdDetail: 'Esto, esto y esto',
+              reuseTips: 'Puedes volver a utilizar el empaque así:'
+            )
           ),
           favorite: true,
         ),
@@ -32,7 +45,18 @@ class EcoAppDebug{
             stock: 2,
             enabled: true,
             lastUpdateDate: DateTime.now(),
-            createdDate: DateTime.now()
+            createdDate: DateTime.now(),
+            photos: [
+              PhotoModel(id: 2, photoUrl: 'https://picsum.photos/500/300')
+            ],
+            form: ArticleForm(
+              id: 2,
+              createdDate: DateTime.now(),
+              lastUpdateDate: DateTime.now(),
+              recycledProd: 'Full',
+              recycledProdDetail: 'Esto, esto y esto',
+              reuseTips: 'Puedes volver a utilizar el empaque así:'
+            )
           ),
           favorite: false,
         ),
@@ -45,7 +69,19 @@ class EcoAppDebug{
             stock: 2,
             enabled: true,
             lastUpdateDate: DateTime.now(),
-            createdDate: DateTime.now()
+            createdDate: DateTime.now(),
+            photos: [
+              PhotoModel(id: 3, photoUrl: 'https://picsum.photos/500/300')
+            ],
+            form: ArticleForm(
+              id: 3,
+              createdDate: DateTime.now(),
+              lastUpdateDate: DateTime.now(),
+              recycledMats: 'Full',
+              recycledMatsDetail: 'Esto, esto y esto',
+              recycledProd: 'Full',
+              recycledProdDetail: 'Esto, esto y esto',
+            )
           ),
           favorite: true,
         ),
@@ -58,7 +94,18 @@ class EcoAppDebug{
             stock: 2,
             enabled: true,
             lastUpdateDate: DateTime.now(),
-            createdDate: DateTime.now()
+            createdDate: DateTime.now(),
+            photos: [
+              PhotoModel(id: 4, photoUrl: 'https://picsum.photos/500/300')
+            ],
+            form: ArticleForm(
+              id: 4,
+              createdDate: DateTime.now(),
+              lastUpdateDate: DateTime.now(),
+              recycledProd: 'Full',
+              recycledProdDetail: 'Esto, esto y esto',
+              reuseTips: 'Puedes volver a utilizar el empaque así:'
+            )
           ),
           favorite: false,
         ),

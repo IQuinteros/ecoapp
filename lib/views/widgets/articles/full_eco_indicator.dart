@@ -6,10 +6,19 @@ import 'package:tinycolor/tinycolor.dart';
 class FullEcoIndicator extends StatelessWidget {
   final EcoIndicator ecoIndicator;
 
-  const FullEcoIndicator({Key key, this.ecoIndicator}) : super(key: key);
+  const FullEcoIndicator({Key key, @required this.ecoIndicator}) : super(key: key);
 
   @override
   Widget build(BuildContext context) {
+
+    List<Widget> circles = [];
+
+    if(ecoIndicator.hasRecycledMaterials)
+      circles.add(getCircle(Icons.inventory, EcoAppColors.BLUE_ACCENT_COLOR, darkenScale: 35));
+    if(ecoIndicator.hasReusTips)
+      circles.add(getCircle(Icons.list_alt_rounded, EcoAppColors.ACCENT_COLOR, darkenScale: 38));
+    if(ecoIndicator.isRecyclableProduct)
+      circles.add(getCircle(Icons.eco, EcoAppColors.MAIN_COLOR));
 
     return Container(
       margin: EdgeInsets.only(
@@ -20,11 +29,7 @@ class FullEcoIndicator extends StatelessWidget {
           getLine(context),
           Row(
             mainAxisAlignment: MainAxisAlignment.spaceAround,
-            children: [
-              getCircle(Icons.inventory, EcoAppColors.BLUE_ACCENT_COLOR, darkenScale: 35),
-              getCircle(Icons.list_alt_rounded, EcoAppColors.ACCENT_COLOR, darkenScale: 38),
-              getCircle(Icons.eco, EcoAppColors.MAIN_COLOR),
-            ],
+            children: circles
           ),
         ],
       ),

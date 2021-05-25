@@ -73,7 +73,7 @@ class ArticleView extends StatelessWidget {
         background: Hero(
           tag: article.tag,
           child: Image(
-            image: NetworkImage('https://picsum.photos/500/300'),
+            image: NetworkImage(article.photos[0].photoUrl),
             height: 120,
             width: 120,
             fit: BoxFit.cover,
@@ -173,7 +173,9 @@ class ArticleView extends StatelessWidget {
       rating,
       SizedBox(height: 15.0,),
       price,
-      FullEcoIndicator()
+      FullEcoIndicator(
+        ecoIndicator: article.form.getIndicator(),
+      )
     ];
   }
 }
