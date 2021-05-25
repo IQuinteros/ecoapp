@@ -221,7 +221,8 @@ class ArticleView extends StatelessWidget {
       getDescription(context, article),
       Divider(thickness: 1,),
       getEcoDetail(context, article),
-      Divider(thickness: 1,)
+      Divider(thickness: 1,),
+      // TODO: Add store information
     ];
   }
 
@@ -274,6 +275,7 @@ class ArticleView extends StatelessWidget {
         columnContent.add(Text(article.form.recycledProdDetail));
         columnContent.add(SizedBox(height: 20.0));
       }
+      columnContent.removeLast();
     }
     else{
       columnContent = [
