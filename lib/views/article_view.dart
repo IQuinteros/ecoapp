@@ -1,5 +1,6 @@
 import 'package:flutter/material.dart';
 import 'package:flutter_ecoapp/models/article.dart';
+import 'package:flutter_ecoapp/utils/currency_util.dart';
 import 'package:flutter_ecoapp/views/style/colors.dart';
 import 'package:flutter_ecoapp/views/widgets/bottom_nav_bar.dart';
 import 'package:flutter_ecoapp/views/widgets/stars_row.dart';
@@ -99,8 +100,8 @@ class ArticleView extends StatelessWidget {
         right: 5.0
       ),
       padding: EdgeInsets.symmetric(
-        vertical: 5.0,
-        horizontal: 5.0
+        vertical: 20.0,
+        horizontal: 20.0
       ),
       child: SingleChildScrollView(
         child: Column(
@@ -112,12 +113,51 @@ class ArticleView extends StatelessWidget {
   }
 
   List<Widget> getColumnContent(BuildContext context, ArticleModel article){
+
+    final title = Row(
+      children: [
+        Text(
+          article.title,
+          textAlign: TextAlign.left,
+        ),
+      ],
+    );
+
+    final rating = Row(
+      children: [
+        StarsRow(rating: 3.4),
+        SizedBox(width: 10.0),
+        Text(
+          '4 opiniones'
+        )
+      ],
+    );
+
+    final price = Row(
+      children: [
+        Text(
+          '\$ ' + CurrencyUtil.formatToCurrencyString(article.price.floor()),
+          style: TextStyle(
+            fontSize: 20,
+            fontWeight: FontWeight.bold
+          ),
+        ),
+        SizedBox(width: 30.0,),
+        Text(
+          '\$ ' + CurrencyUtil.formatToCurrencyString(article.price.floor()),
+          style: TextStyle(
+            decoration: TextDecoration.lineThrough
+          ),
+        ),
+      ],
+    );
+
     return [
-      Text(
-        article.title,
-        textAlign: TextAlign.left,
-      ),
-      StarsRow(rating: 0.1)
+      title,
+      SizedBox(height: 5.0),
+      rating,
+      SizedBox(height: 15.0,),
+      price
     ];
   }
 }
