@@ -10,9 +10,6 @@ class FullEcoIndicator extends StatelessWidget {
 
   @override
   Widget build(BuildContext context) {
-
-    print(ecoIndicator);
-
     List<Widget> circles = [];
 
     if(ecoIndicator.hasRecycledMaterials)
@@ -21,6 +18,9 @@ class FullEcoIndicator extends StatelessWidget {
       circles.add(getCircle(Icons.list_alt_rounded, EcoAppColors.ACCENT_COLOR, darkenScale: 38));
     if(ecoIndicator.isRecyclableProduct)
       circles.add(getCircle(Icons.eco, EcoAppColors.MAIN_COLOR));
+
+    if(circles.length <= 0)
+      return Container();
 
     return Container(
       margin: EdgeInsets.only(

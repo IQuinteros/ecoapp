@@ -109,6 +109,50 @@ class EcoAppDebug{
           ),
           favorite: false,
         ),
+        ArticleCard(
+          article: ArticleModel(
+            id: initialId + 4,
+            title: 'Tìtulo uy muy largo asdf asdfasdfasds',
+            price: 2000000.0,
+            description: 'Descripción larga',
+            stock: 2,
+            enabled: true,
+            lastUpdateDate: DateTime.now(),
+            createdDate: DateTime.now(),
+            photos: [
+              PhotoModel(id: 5, photoUrl: 'https://picsum.photos/500/300')
+            ],
+            form: ArticleForm(
+              id: 5,
+              createdDate: DateTime.now(),
+              lastUpdateDate: DateTime.now(),
+            )
+          ),
+          favorite: false,
+        ),
+        ArticleCard(
+          article: ArticleModel(
+            id: initialId + 5,
+            title: 'Tìtulo uy muy largo asdf asdfasdfasds',
+            price: 90000.0,
+            description: 'Descripción larga',
+            stock: 4,
+            enabled: true,
+            lastUpdateDate: DateTime.now(),
+            createdDate: DateTime.now(),
+            photos: [
+              PhotoModel(id: 6, photoUrl: 'https://picsum.photos/500/300')
+            ],
+            form: ArticleForm(
+              id: 6,
+              createdDate: DateTime.now(),
+              lastUpdateDate: DateTime.now(),
+              recycledProd: 'Full',
+              recycledProdDetail: 'Esto, esto y esto',
+            )
+          ),
+          favorite: false,
+        ),
       ],
     );
   }

@@ -118,13 +118,13 @@ class ArticleView extends StatelessWidget {
       padding: EdgeInsets.symmetric(
         horizontal: 20.0
       ),
-      child: Row(
-        children: [
-          Text(
-            article.title,
-            textAlign: TextAlign.left,
-          ),
-        ],
+      child: Container(
+        width: double.infinity,
+        child: Text(
+          article.title,
+          overflow: TextOverflow.fade,
+          textAlign: TextAlign.left,
+        ),
       ),
     );
 
