@@ -49,6 +49,15 @@ class EcoIndicator{
   final bool isRecyclableProduct;
 
   EcoIndicator({this.hasRecycledMaterials = false, this.hasReusTips = false, this.isRecyclableProduct = false});
+
+  @override
+  String toString() {
+    return '''
+      hasRecycledMaterials  : ${hasRecycledMaterials.toString()}
+      hasReusTips           : ${hasReusTips.toString()}
+      isRecyclableProduct   : ${isRecyclableProduct.toString()}
+    ''';
+  }
 }
 
 class ArticleForm extends BaseModel

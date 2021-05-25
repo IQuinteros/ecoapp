@@ -11,6 +11,8 @@ class FullEcoIndicator extends StatelessWidget {
   @override
   Widget build(BuildContext context) {
 
+    print(ecoIndicator);
+
     List<Widget> circles = [];
 
     if(ecoIndicator.hasRecycledMaterials)

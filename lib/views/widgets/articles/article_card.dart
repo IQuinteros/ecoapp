@@ -67,11 +67,7 @@ class _ArticleCardState extends State<ArticleCard> {
     );
 
     final ecoIndicator = MiniEcoIndicator(
-      ecoIndicator: EcoIndicator(
-        hasRecycledMaterials: Random().nextBool(),
-        hasReusTips: Random().nextBool(),
-        isRecyclableProduct: Random().nextBool()
-      ),
+      ecoIndicator: widget.article.form.getIndicator()
     );
 
     final secondRow = Container(
