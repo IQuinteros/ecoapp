@@ -37,6 +37,9 @@ dependencies:
   # Responsive grids
   responsive_grid: ^2.0.0
 
+  # Colors filter
+  tinycolor: ^1.0.3
+
 dev_dependencies:
   flutter_test:
     sdk: flutter

@@ -6,5 +6,6 @@ class EcoAppColors{
   static const Color ACCENT_COLOR = Color.fromRGBO(245, 184, 46, 1);
   static const Color BLUE_ACCENT_COLOR = Color.fromRGBO(58, 174, 216, 1);
   static const Color RED_COLOR = Color.fromRGBO(255, 15, 128, 1);
+  static const Color LEFT_BAR_COLOR = Color.fromRGBO(0, 139, 114, 1);
 
 }

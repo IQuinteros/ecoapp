@@ -2,6 +2,7 @@ import 'package:flutter/material.dart';
 import 'package:flutter_ecoapp/models/article.dart';
 import 'package:flutter_ecoapp/utils/currency_util.dart';
 import 'package:flutter_ecoapp/views/style/colors.dart';
+import 'package:flutter_ecoapp/views/widgets/articles/full_eco_indicator.dart';
 import 'package:flutter_ecoapp/views/widgets/bottom_nav_bar.dart';
 import 'package:flutter_ecoapp/views/widgets/stars_row.dart';
 
@@ -157,7 +158,8 @@ class ArticleView extends StatelessWidget {
       SizedBox(height: 5.0),
       rating,
       SizedBox(height: 15.0,),
-      price
+      price,
+      FullEcoIndicator()
     ];
   }
 }
