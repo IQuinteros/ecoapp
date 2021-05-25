@@ -3,7 +3,6 @@ import 'dart:math';
 import 'package:flutter/material.dart';
 import 'package:flutter_ecoapp/models/article.dart';
 import 'package:flutter_ecoapp/utils/currency_util.dart';
-import 'package:flutter_ecoapp/views/style/colors.dart';
 import 'package:flutter_ecoapp/views/widgets/articles/favorite_button.dart';
 import 'package:flutter_ecoapp/views/widgets/articles/mini_eco_indicator.dart';
 import 'package:google_fonts/google_fonts.dart';
@@ -25,11 +24,17 @@ class _ArticleCardState extends State<ArticleCard> {
   double shadowOpacity = 0.20;
   @override
   Widget build(BuildContext context) {
-    final image = Image(
-      image: NetworkImage('https://picsum.photos/500/300'),
-      height: 120,
-      width: 120,
-      fit: BoxFit.cover,
+    widget.article.tag = 'article-card';
+
+    print(widget.article.tag);
+    final image = Hero(
+      tag: widget.article.tag,
+      child: Image(
+        image: NetworkImage('https://picsum.photos/500/300'),
+        height: 120,
+        width: 120,
+        fit: BoxFit.cover,
+      ),
     );
 
     final imageContainer = Container(
@@ -142,7 +147,9 @@ class _ArticleCardState extends State<ArticleCard> {
       child: InkWell(
         child: card,
         borderRadius: BorderRadius.circular(20.0),
-        onTap: (){},
+        onTap: (){
+          Navigator.pushNamed(context, 'article', arguments: widget.article);
+        },
         onHover: onHover
       ),
     );

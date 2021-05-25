@@ -7,12 +7,12 @@ import 'package:flutter_ecoapp/views/widgets/home/featured_product.dart';
 
 class EcoAppDebug{
 
-  static Widget getArticleItems(){
+  static Widget getArticleItems({int initialId = 1}){
     return Column(
       children: [
         ArticleCard(
           article: ArticleModel(
-            id: 1,
+            id: initialId,
             title: 'Tìtulo largo',
             price: 20000.0,
             description: 'Descripción larga',
@@ -25,7 +25,7 @@ class EcoAppDebug{
         ),
         ArticleCard(
           article: ArticleModel(
-            id: 1,
+            id: initialId + 1,
             title: 'Tìtulo muy muy largo sdjkfsdffdsjkdfjkssds',
             price: 20000.0,
             description: 'Descripción larga',
@@ -38,7 +38,7 @@ class EcoAppDebug{
         ),
         ArticleCard(
           article: ArticleModel(
-            id: 1,
+            id: initialId + 2,
             title: 'Tìtulo largo',
             price: 9021545.0,
             description: 'Descripción larga',
@@ -51,7 +51,7 @@ class EcoAppDebug{
         ),
         ArticleCard(
           article: ArticleModel(
-            id: 1,
+            id: initialId + 3,
             title: 'Tìtulo uy muy largo sdjkfsdffdsjkdfjkssd sdafasdfasdf asdfasdfasds',
             price: 2000000.0,
             description: 'Descripción larga',

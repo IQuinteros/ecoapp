@@ -1,4 +1,5 @@
 import 'package:flutter/material.dart';
+import 'package:flutter_ecoapp/views/article_view.dart';
 import 'package:flutter_ecoapp/views/main_view.dart';
 
 void main() {
@@ -15,6 +16,10 @@ class MyApp extends StatelessWidget {
         theme: ThemeData(
           primarySwatch: Colors.lightGreen,
         ),
-        home: MainView());
+        home: MainView(),
+        routes: {
+          'article': (BuildContext context) => ArticleView()
+        },
+    );
   }
 }

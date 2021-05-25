@@ -11,6 +11,13 @@ class ArticleModel extends BaseModel
   DateTime lastUpdateDate;
   bool enabled;
 
+  List<PhotoModel> photos;
+  ArticleForm form;
+
+  String _tag = '';
+  set tag(String newTag) => _tag = this.id.toString() + this.title + newTag;
+  String get tag => _tag;
+
   ArticleModel({
     @required int id,
     @required this.title,
@@ -19,8 +26,11 @@ class ArticleModel extends BaseModel
     @required this.stock,
     @required this.createdDate,
     @required this.lastUpdateDate,
-    @required this.enabled
+    @required this.enabled,
+    @required this.photos,
+    @required this.form
   }) : super(id: id);
+  
 }
 
 class PhotoModel extends BaseModel
