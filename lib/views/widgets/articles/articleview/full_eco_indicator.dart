@@ -3,7 +3,6 @@ import 'package:flutter_ecoapp/models/article.dart';
 import 'package:flutter_ecoapp/views/style/colors.dart';
 import 'package:flutter_ecoapp/views/widgets/indicators/circle_indicator.dart';
 import 'package:lipsum/lipsum.dart' as lipsum;
-import 'package:tinycolor/tinycolor.dart';
 
 class FullEcoIndicator extends StatelessWidget {
   final EcoIndicator ecoIndicator;

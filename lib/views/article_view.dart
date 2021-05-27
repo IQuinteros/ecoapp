@@ -7,7 +7,7 @@ import 'package:flutter_ecoapp/views/widgets/articles/articleview/article_eco_de
 import 'package:flutter_ecoapp/views/widgets/articles/articleview/article_photo_section.dart';
 import 'package:flutter_ecoapp/views/widgets/articles/articleview/article_question_section.dart';
 import 'package:flutter_ecoapp/views/widgets/articles/articleview/article_store_description_section.dart';
-import 'package:flutter_ecoapp/views/widgets/articles/full_eco_indicator.dart';
+import 'package:flutter_ecoapp/views/widgets/articles/articleview/full_eco_indicator.dart';
 import 'package:flutter_ecoapp/views/widgets/bottom_nav_bar.dart';
 import 'package:flutter_ecoapp/views/widgets/normal_button.dart';
 import 'package:flutter_ecoapp/views/widgets/stars_row.dart';
@@ -30,11 +30,11 @@ class ArticleView extends StatelessWidget {
   Widget getContent(BuildContext context, ArticleModel article){
     return CustomScrollView(
       slivers: [
-        getAppBar(context, article),
+        _ArticleAppBar(article: article),
         SliverList(
           delegate: SliverChildListDelegate(
             [
-              getMainContent(context, article)
+              _ArticleMainContent(article: article)
             ]
           ),
         )
@@ -42,82 +42,18 @@ class ArticleView extends StatelessWidget {
     );
   }
 
-  Widget getAppBar(BuildContext context, ArticleModel article){
-    return SliverAppBar(
-      elevation: 10.0,
-      backgroundColor: EcoAppColors.MAIN_COLOR,
-      foregroundColor: Colors.white,
-      expandedHeight: 250.0,
-      floating: false,
-      pinned: true,
-      leading: IconButton(
-        icon: Icon(
-          Icons.arrow_back_ios_rounded,
-          color: Colors.white,
-        ),
-        onPressed: () => Navigator.pop(context),
-      ),
-      actions: [
-        IconButton(
-          icon: Icon(
-            Icons.share,
-            color: Colors.white,
-          ),
-          onPressed: (){},
-        ),
-        IconButton(
-          icon: Icon(
-            Icons.favorite_border,
-            color: Colors.white,
-          ),
-          onPressed: (){},
-        ),
-      ],
-      flexibleSpace: FlexibleSpaceBar(
-        centerTitle: false,
-        background: Hero( 
-          tag: article.tag,
-          child: Image(
-            image: NetworkImage(article.photos[0].photoUrl),
-            height: 120,
-            width: 120,
-            fit: BoxFit.cover,
-          )
-        ),
-      ),
-    );
-  }
+}
 
-  Widget getMainContent(BuildContext context, ArticleModel article){
-    return Container(
-      decoration: BoxDecoration(
-        borderRadius: BorderRadius.circular(20.0),
-        color: Colors.white,
-        boxShadow: [
-          BoxShadow(
-            color: Colors.black.withOpacity(0.25),
-            blurRadius: 20.0
-          )
-        ]
-      ),
-      margin: EdgeInsets.only(
-        top: 20.0,
-        left: 5.0,
-        right: 5.0
-      ),
-      padding: EdgeInsets.symmetric(
-        vertical: 20.0,
-      ),
-      child: SingleChildScrollView(
-        child: Column(
-          children: getColumnContent(context, article),
-        ),
-        scrollDirection: Axis.vertical,
-      )
-    );
-  }
+class _ArticleContent extends StatelessWidget {
+  const _ArticleContent({
+    Key key,
+    @required this.article,
+  }) : super(key: key);
 
-  List<Widget> getColumnContent(BuildContext context, ArticleModel article){
+  final ArticleModel article;
+
+  @override
+  Widget build(BuildContext context) {
 
     final title = Padding(
       padding: EdgeInsets.symmetric(
@@ -207,30 +143,124 @@ class ArticleView extends StatelessWidget {
       ),
     );
 
-    return [
-      PhotoSection(article: article),
-      title,
-      SizedBox(height: 5.0),
-      rating,
-      SizedBox(height: 15.0,),
-      price,
-      FullEcoIndicator(
-        ecoIndicator: article.form.getIndicator(),
-      ),
-      SizedBox(height: 15.0),
-      storeText,
-      SizedBox(height: 20.0),
-      btnAddToCart,
-      SizedBox(height: 15.0,),
-      Divider(thickness: 1,),
-      DescriptionSection(article: article),
-      Divider(thickness: 1,),
-      EcoDetailSection(article: article),
-      Divider(thickness: 1,),
-      StoreDescriptionSection(article: article),
-      Divider(thickness: 1,),
-      QuestionsSection(article: article)
-    ];
+    return Column(
+      children: [
+        PhotoSection(article: article),
+        title,
+        SizedBox(height: 5.0),
+        rating,
+        SizedBox(height: 15.0,),
+        price,
+        FullEcoIndicator(
+          ecoIndicator: article.form.getIndicator(),
+        ),
+        SizedBox(height: 15.0),
+        storeText,
+        SizedBox(height: 20.0),
+        btnAddToCart,
+        SizedBox(height: 15.0,),
+        Divider(thickness: 1,),
+        DescriptionSection(article: article),
+        Divider(thickness: 1,),
+        EcoDetailSection(article: article),
+        Divider(thickness: 1,),
+        StoreDescriptionSection(article: article),
+        Divider(thickness: 1,),
+        QuestionsSection(article: article)
+      ]
+    );
   }
+}
 
+class _ArticleMainContent extends StatelessWidget {
+  const _ArticleMainContent({
+    Key key,
+    @required this.article,
+  }) : super(key: key);
+
+  final ArticleModel article;
+
+  @override
+  Widget build(BuildContext context) {
+    return Container(
+      decoration: BoxDecoration(
+        borderRadius: BorderRadius.circular(20.0),
+        color: Colors.white,
+        boxShadow: [
+          BoxShadow(
+            color: Colors.black.withOpacity(0.25),
+            blurRadius: 20.0
+          )
+        ]
+      ),
+      margin: EdgeInsets.only(
+        top: 20.0,
+        left: 5.0,
+        right: 5.0
+      ),
+      padding: EdgeInsets.symmetric(
+        vertical: 20.0,
+      ),
+      child: SingleChildScrollView(
+        child: _ArticleContent(article: article,),
+        scrollDirection: Axis.vertical,
+      )
+    );
+  }
+}
+
+class _ArticleAppBar extends StatelessWidget {
+  const _ArticleAppBar({
+    Key key,
+    @required this.article,
+  }) : super(key: key);
+
+  final ArticleModel article;
+
+  @override
+  Widget build(BuildContext context) {
+    return SliverAppBar(
+      elevation: 10.0,
+      backgroundColor: EcoAppColors.MAIN_COLOR,
+      foregroundColor: Colors.white,
+      expandedHeight: 250.0,
+      floating: false,
+      pinned: true,
+      leading: IconButton(
+        icon: Icon(
+          Icons.arrow_back_ios_rounded,
+          color: Colors.white,
+        ),
+        onPressed: () => Navigator.pop(context),
+      ),
+      actions: [
+        IconButton(
+          icon: Icon(
+            Icons.share,
+            color: Colors.white,
+          ),
+          onPressed: (){},
+        ),
+        IconButton(
+          icon: Icon(
+            Icons.favorite_border,
+            color: Colors.white,
+          ),
+          onPressed: (){},
+        ),
+      ],
+      flexibleSpace: FlexibleSpaceBar(
+        centerTitle: false,
+        background: Hero( 
+          tag: article.tag,
+          child: Image(
+            image: NetworkImage(article.photos[0].photoUrl),
+            height: 120,
+            width: 120,
+            fit: BoxFit.cover,
+          )
+        ),
+      ),
+    );
+  }
 }
