@@ -101,7 +101,12 @@ class StoreDescriptionSection extends StatelessWidget {
         children: [
           rowContent,
           SizedBox(height: 20.0),
-          NormalButton(text: 'Ver más datos del vendedor', onPressed: (){})
+          NormalButton(
+            text: 'Ver más datos del vendedor', 
+            onPressed: (){
+              Navigator.pushNamed(context, 'store', arguments: article.store);
+            }
+          )
         ],
       ),
     );

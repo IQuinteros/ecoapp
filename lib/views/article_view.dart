@@ -278,29 +278,31 @@ class _ArticleMainContent extends StatelessWidget {
 
   @override
   Widget build(BuildContext context) {
-    return Container(
-      decoration: BoxDecoration(
-        borderRadius: BorderRadius.circular(20.0),
-        color: Colors.white,
-        boxShadow: [
-          BoxShadow(
-            color: Colors.black.withOpacity(0.25),
-            blurRadius: 20.0
-          )
-        ]
+    return SafeArea(
+      child: Container(
+        decoration: BoxDecoration(
+          borderRadius: BorderRadius.circular(20.0),
+          color: Colors.white,
+          boxShadow: [
+            BoxShadow(
+              color: Colors.black.withOpacity(0.25),
+              blurRadius: 20.0
+            )
+          ]
+        ),
+        margin: EdgeInsets.only(
+          top: 20.0,
+          left: 5.0,
+          right: 5.0
+        ),
+        padding: EdgeInsets.symmetric(
+          vertical: 20.0,
+        ),
+        child: SingleChildScrollView(
+          child: _ArticleContent(article: article,),
+          scrollDirection: Axis.vertical,
+        )
       ),
-      margin: EdgeInsets.only(
-        top: 20.0,
-        left: 5.0,
-        right: 5.0
-      ),
-      padding: EdgeInsets.symmetric(
-        vertical: 20.0,
-      ),
-      child: SingleChildScrollView(
-        child: _ArticleContent(article: article,),
-        scrollDirection: Axis.vertical,
-      )
     );
   }
 }
