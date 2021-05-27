@@ -1,7 +1,11 @@
+import 'dart:math';
+
 import 'package:flutter/material.dart';
 import 'package:flutter_ecoapp/models/article.dart';
 import 'package:flutter_ecoapp/models/category.dart';
 import 'package:flutter_ecoapp/models/district.dart';
+import 'package:flutter_ecoapp/models/opinion.dart';
+import 'package:flutter_ecoapp/models/question.dart';
 import 'package:flutter_ecoapp/models/store.dart';
 import 'package:flutter_ecoapp/views/widgets/articles/article_card.dart';
 import 'package:flutter_ecoapp/views/widgets/articles/cart_article_card.dart';
@@ -10,6 +14,44 @@ import 'package:lipsum/lipsum.dart' as lipsum;
 
 class EcoAppDebug{
 
+  static List<QuestionModel> _questions = [
+    QuestionModel(
+      id: 1, 
+      question: '¿Qué materiales tiene exactamente?', 
+      date: DateTime.now(), 
+      answer: null
+    ),
+    QuestionModel(
+      id: 2, 
+      question: '¿Qué materiales tiene exactamente?', 
+      date: DateTime.now(), 
+      answer: AnswerModel(
+        id: 1,
+        answer: 'Contiene elementos extremadamente amigables al ecosistema como este, este y este otro. Saludos!',
+        date: DateTime.now()
+      )
+    ),
+    QuestionModel(
+      id: 3, 
+      question: '¿Qué materiales tiene asdfasdf adsfasdf exactamente?', 
+      date: DateTime.now(), 
+      answer: AnswerModel(
+        id: 2,
+        answer: 'Contiene elementos extremadamente  asdfasdf asdfasdfamigables al ecosistema como este, este y este otro. Saludos!',
+        date: DateTime.now()
+      )
+    ),
+  ];
+
+  static ArticleRating _rating = ArticleRating(
+    opinions: [
+      OpinionModel(id: 1, rating: Random().nextInt(5), title: 'Mal producto', content: 'Se rompió', date: DateTime.now()),
+      OpinionModel(id: 1, rating: Random().nextInt(5), title: 'Más o menos', content: 'Se rompió rápido', date: DateTime.now()),
+      OpinionModel(id: 1, rating: Random().nextInt(5), title: 'Buen producto', content: 'Sirve bien', date: DateTime.now()),
+      OpinionModel(id: 1, rating: Random().nextInt(5), title: 'Buen buen producto', date: DateTime.now()),
+      OpinionModel(id: 1, rating: Random().nextInt(5), title: 'Excelente producto', content: 'Excelente producto porque es buenísimo', date: DateTime.now()),
+    ] 
+  );
 
   static Widget getArticleItems({int initialId = 1}){
     return Column(
@@ -37,7 +79,9 @@ class EcoAppDebug{
               recycledProdDetail: lipsum.createParagraph(numParagraphs: 1),
               reuseTips: lipsum.createParagraph(numParagraphs: 1)
             ),
-            store: getStores()[0]
+            store: getStores()[0],
+            questions: _questions,
+            rating: _rating
           ),
           favorite: true,
         ),
@@ -62,7 +106,9 @@ class EcoAppDebug{
               recycledProdDetail: lipsum.createParagraph(numParagraphs: 1),
               reuseTips: lipsum.createParagraph(numParagraphs: 1)
             ),
-            store: getStores()[2]
+            store: getStores()[2],
+            questions: _questions,
+            rating: _rating
           ),
           favorite: false,
         ),
@@ -88,7 +134,9 @@ class EcoAppDebug{
               recycledProd: 'Full',
               recycledProdDetail: lipsum.createParagraph(numParagraphs: 1),
             ),
-            store: getStores()[1]
+            store: getStores()[1],
+            questions: _questions,
+            rating: _rating
           ),
           favorite: true,
         ),
@@ -113,7 +161,9 @@ class EcoAppDebug{
               recycledProdDetail: lipsum.createParagraph(numParagraphs: 1),
               reuseTips: lipsum.createParagraph(numParagraphs: 1)
             ),
-            store: getStores()[0]
+            store: getStores()[0],
+            questions: _questions,
+            rating: _rating
           ),
           favorite: false,
         ),
@@ -135,7 +185,9 @@ class EcoAppDebug{
               createdDate: DateTime.now(),
               lastUpdateDate: DateTime.now(),
             ),
-            store: getStores()[0]
+            store: getStores()[0],
+            questions: _questions,
+            rating: _rating
           ),
           favorite: false,
         ),
@@ -159,7 +211,9 @@ class EcoAppDebug{
               recycledProd: 'Full',
               recycledProdDetail: lipsum.createParagraph(numParagraphs: 1),
             ),
-            store: getStores()[2]
+            store: getStores()[2],
+            questions: _questions,
+            rating: _rating
           ),
           favorite: false,
         ),
@@ -277,7 +331,8 @@ class EcoAppDebug{
           recycledProd: 'Full',
           recycledProdDetail: lipsum.createParagraph(numParagraphs: 1),
         ),
-        store: getStores()[1]
+        store: getStores()[1],
+        rating: _rating
       ),
     ),
     FeaturedProduct(
@@ -302,7 +357,8 @@ class EcoAppDebug{
           recycledProd: 'Full',
           recycledProdDetail: lipsum.createParagraph(numParagraphs: 1),
         ),
-        store: getStores()[1]
+        store: getStores()[1],
+        rating: _rating
       ),
     ),
     FeaturedProduct(
@@ -327,7 +383,8 @@ class EcoAppDebug{
           recycledProd: 'Full',
           recycledProdDetail: lipsum.createParagraph(numParagraphs: 1),
         ),
-        store: getStores()[1]
+        store: getStores()[1],
+        rating: _rating
       ),
     ),
   ];

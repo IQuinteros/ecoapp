@@ -1,5 +1,7 @@
 import 'package:flutter/material.dart';
 import 'package:flutter_ecoapp/models/base.dart';
+import 'package:flutter_ecoapp/models/opinion.dart';
+import 'package:flutter_ecoapp/models/question.dart';
 import 'package:flutter_ecoapp/models/store.dart';
 
 class ArticleModel extends BaseModel
@@ -15,6 +17,8 @@ class ArticleModel extends BaseModel
   List<PhotoModel> photos;
   ArticleForm form;
   StoreModel store;
+  List<QuestionModel> questions;
+  ArticleRating rating;
 
   String _tag = '';
   set tag(String newTag) => _tag = this.id.toString() + this.title + newTag;
@@ -31,7 +35,9 @@ class ArticleModel extends BaseModel
     @required this.enabled,
     @required this.photos,
     @required this.form,
-    this.store
+    this.store,
+    this.questions = const [],
+    @required this.rating
   }) : super(id: id);
   
 }

@@ -150,10 +150,10 @@ class _ArticleContent extends StatelessWidget {
       ),
       child: Row(
         children: [
-          StarsRow(rating: 3.4),
+          StarsRow(rating: article.rating.avgRating),
           SizedBox(width: 10.0),
           Text(
-            '4 opiniones',
+            '${article.rating.count} opiniones',
             style: GoogleFonts.montserrat(),
           )
         ],
@@ -218,7 +218,7 @@ class _ArticleContent extends StatelessWidget {
         onPressed: () {},
       ),
     );
-
+    
     return Column(
       children: [
         PhotoSection(article: article),
