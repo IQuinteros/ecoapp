@@ -460,6 +460,7 @@ class ArticleView extends StatelessWidget {
         vertical: 10.0
       ),
       child: Column(
+        crossAxisAlignment: CrossAxisAlignment.start,
         children: [
           Row(
             mainAxisAlignment: MainAxisAlignment.spaceBetween,
@@ -484,7 +485,7 @@ class ArticleView extends StatelessWidget {
             child: Text(
               'Contiene elementos extremadamente amigables al ecosistema como este, este y este otro, Saludos!',
               style: GoogleFonts.montserrat(
-                fontWeight: FontWeight.w300
+                fontWeight: FontWeight.w300,
               ),
             ),
           )
