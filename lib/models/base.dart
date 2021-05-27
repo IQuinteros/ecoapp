@@ -11,6 +11,7 @@ abstract class TagModel{
   int _id;
   String _title;
 
+  @protected
   void initTagging({int newID, String newTitle}){
     _id = newID;
     _title = newTitle;
