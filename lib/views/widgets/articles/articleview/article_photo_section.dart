@@ -11,28 +11,8 @@ class PhotoSection extends StatelessWidget {
 
   @override
   Widget build(BuildContext context) {
-    final photo = GestureDetector(
-      child: Container(
-        margin: EdgeInsets.only(
-          right: 10.0
-        ),
-        decoration: BoxDecoration(
-          boxShadow: [
-            BoxShadow(
-              color: Colors.black.withOpacity(0.25),
-              blurRadius: 5,
-              spreadRadius: 1
-            )
-          ]
-        ),
-        child: Image(
-          image: NetworkImage(article.photos[0].photoUrl),
-          width: 150,
-          fit: BoxFit.cover,
-        ),
-      ),
-      onTap: (){},
-    );
+    if(article.photos == null || article.photos.length <= 0)
+      return Container();
 
     return Container(
       height: 100,
@@ -50,13 +30,47 @@ class PhotoSection extends StatelessWidget {
           ),
           child: Row(
             mainAxisAlignment: MainAxisAlignment.start,
-            children: [
-              photo,
-              photo,
-            ],
+            children: getPhotoItems(),
           ),
         ),
       ),
+    );
+  }
+
+  List<Widget> getPhotoItems() => article.photos.map<Widget>((element) => _PhotoItem(photoUrl: element.photoUrl)).toList();
+}
+
+class _PhotoItem extends StatelessWidget {
+  const _PhotoItem({
+    Key key,
+    @required this.photoUrl,
+  }) : super(key: key);
+
+  final String photoUrl;
+
+  @override
+  Widget build(BuildContext context) {
+    return GestureDetector(
+      child: Container(
+        margin: EdgeInsets.only(
+          right: 10.0
+        ),
+        decoration: BoxDecoration(
+          boxShadow: [
+            BoxShadow(
+              color: Colors.black.withOpacity(0.25),
+              blurRadius: 5,
+              spreadRadius: 1
+            )
+          ]
+        ),
+        child: Image(
+          image: NetworkImage(photoUrl),
+          width: 150,
+          fit: BoxFit.cover,
+        ),
+      ),
+      onTap: (){},
     );
   }
 }
