@@ -1,6 +1,7 @@
 import 'package:flutter/material.dart';
 import 'package:flutter_ecoapp/models/article.dart';
 import 'package:flutter_ecoapp/models/category.dart';
+import 'package:flutter_ecoapp/models/district.dart';
 import 'package:flutter_ecoapp/models/store.dart';
 import 'package:flutter_ecoapp/views/widgets/articles/article_card.dart';
 import 'package:flutter_ecoapp/views/widgets/articles/cart_article_card.dart';
@@ -179,6 +180,10 @@ class EcoAppDebug{
         enabled: true, 
         createdDate: DateTime.now(), 
         lastUpdateDate: DateTime.now(), 
+        district: DistrictModel(
+          id: 1,
+          name: 'Concepción'
+        )
       ),
       StoreModel(
         id: 2, 
@@ -192,6 +197,10 @@ class EcoAppDebug{
         enabled: false, 
         createdDate: DateTime.now(), 
         lastUpdateDate: DateTime.now(), 
+        district: DistrictModel(
+          id: 1,
+          name: 'Penco'
+        )
       ),
       StoreModel(
         id: 3, 
@@ -205,6 +214,10 @@ class EcoAppDebug{
         enabled: true, 
         createdDate: DateTime.now(), 
         lastUpdateDate: DateTime.now(), 
+        district: DistrictModel(
+          id: 1,
+          name: 'Talcahuano'
+        )
       ),
     ];
   }
