@@ -160,6 +160,9 @@ class _ArticleContent extends StatelessWidget {
       ),
     );
 
+    // Only display when past price is higher than 0, and is higher than the current price
+    bool havePastPrice = article.pastPrice != null && article.pastPrice > 0 && article.pastPrice > article.price;
+
     final price = Padding(
       padding: EdgeInsets.symmetric(
         horizontal: 20.0
@@ -174,12 +177,12 @@ class _ArticleContent extends StatelessWidget {
             ),
           ),
           SizedBox(width: 30.0,),
-          Text(
-            '\$ ' + CurrencyUtil.formatToCurrencyString(article.price.floor()),
+          havePastPrice? Text(
+            '\$ ' + CurrencyUtil.formatToCurrencyString(article.pastPrice.floor()),
             style: GoogleFonts.montserrat(
               decoration: TextDecoration.lineThrough
             ),
-          ),
+          ) : Container(),
         ],
       ),
     );

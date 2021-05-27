@@ -9,6 +9,7 @@ class ArticleModel extends BaseModel
   String title;
   String description;
   double price;
+  double pastPrice;
   int stock;
   DateTime createdDate;
   DateTime lastUpdateDate;
@@ -29,6 +30,7 @@ class ArticleModel extends BaseModel
     @required this.title,
     @required this.description,
     @required this.price,
+    this.pastPrice,
     @required this.stock,
     @required this.createdDate,
     @required this.lastUpdateDate,
