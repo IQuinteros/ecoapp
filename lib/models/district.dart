@@ -1,11 +1,11 @@
 import 'package:flutter/material.dart';
 import 'package:flutter_ecoapp/models/base.dart';
 
-class CityModel extends BaseModel
+class DistrictModel extends BaseModel
 {
   String name;
 
-  CityModel({
+  DistrictModel({
     @required int id,
     @required this.name,
   }) : super(id: id);

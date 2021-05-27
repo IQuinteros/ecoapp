@@ -1,6 +1,10 @@
+import 'dart:math';
+
 import 'package:flutter/material.dart';
+import 'package:flutter_ecoapp/models/article.dart';
 import 'package:flutter_ecoapp/utils/currency_util.dart';
 import 'package:flutter_ecoapp/views/style/colors.dart';
+import 'package:flutter_ecoapp/views/widgets/articles/mini_eco_indicator.dart';
 import 'package:google_fonts/google_fonts.dart';
 
 class CartArticleCard extends StatefulWidget {
@@ -56,22 +60,23 @@ class _CartArticleCardState extends State<CartArticleCard> {
       ],
     );
 
+    final ecoIndicator = MiniEcoIndicator(
+      ecoIndicator: EcoIndicator(
+        hasRecycledMaterials: Random().nextBool(),
+        hasReuseTips: Random().nextBool(),
+        isRecyclableProduct: Random().nextBool()
+      ),
+    );
+
     final secondRow = Row(
       mainAxisAlignment: MainAxisAlignment.spaceBetween,
       mainAxisSize: MainAxisSize.max,
       children: [
-        Text(
-          widget.percent.toString() + '%',
-          style: GoogleFonts.montserrat(
-            color: EcoAppColors.MAIN_COLOR,
-            fontSize: 16,
-            fontWeight: FontWeight.w500
-          ),
-        ),
+        ecoIndicator,
         Text(
           '\$ ' + CurrencyUtil.formatToCurrencyString(widget.price),
           style: GoogleFonts.montserrat(
-            fontSize: 20,
+            fontSize: 16,
             fontWeight: FontWeight.w500
           ),
         ),

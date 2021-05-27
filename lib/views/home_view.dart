@@ -89,7 +89,8 @@ class HomeView extends StatelessWidget {
       }
     );
 
-    final favoriteList = EcoAppDebug.getArticleItems();
+    final historyList = EcoAppDebug.getArticleItems(initialId: 1);
+    final favoriteList = EcoAppDebug.getArticleItems(initialId: 5);
 
     final column = Column(
       crossAxisAlignment: CrossAxisAlignment.start,
@@ -120,7 +121,7 @@ class HomeView extends StatelessWidget {
             action: (){},
           )
         ),
-        favoriteList
+        historyList
       ],
     );
 

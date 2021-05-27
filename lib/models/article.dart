@@ -1,26 +1,47 @@
 import 'package:flutter/material.dart';
 import 'package:flutter_ecoapp/models/base.dart';
+import 'package:flutter_ecoapp/models/opinion.dart';
+import 'package:flutter_ecoapp/models/question.dart';
+import 'package:flutter_ecoapp/models/store.dart';
 
 class ArticleModel extends BaseModel
 {
   String title;
   String description;
   double price;
+  double pastPrice;
   int stock;
   DateTime createdDate;
   DateTime lastUpdateDate;
   bool enabled;
+
+  List<PhotoModel> photos;
+  ArticleForm form;
+  StoreModel store;
+  List<QuestionModel> questions;
+  ArticleRating rating;
+
+  String _tag = '';
+  set tag(String newTag) => _tag = this.id.toString() + this.title + newTag;
+  String get tag => _tag;
 
   ArticleModel({
     @required int id,
     @required this.title,
     @required this.description,
     @required this.price,
+    this.pastPrice,
     @required this.stock,
     @required this.createdDate,
     @required this.lastUpdateDate,
-    @required this.enabled
+    @required this.enabled,
+    @required this.photos,
+    @required this.form,
+    this.store,
+    this.questions = const [],
+    @required this.rating
   }) : super(id: id);
+  
 }
 
 class PhotoModel extends BaseModel
@@ -35,10 +56,19 @@ class PhotoModel extends BaseModel
 
 class EcoIndicator{
   final bool hasRecycledMaterials;
-  final bool hasReusTips;
+  final bool hasReuseTips;
   final bool isRecyclableProduct;
 
-  EcoIndicator({this.hasRecycledMaterials = false, this.hasReusTips = false, this.isRecyclableProduct = false});
+  EcoIndicator({this.hasRecycledMaterials = false, this.hasReuseTips = false, this.isRecyclableProduct = false});
+
+  @override
+  String toString() {
+    return '''
+      hasRecycledMaterials  : ${hasRecycledMaterials.toString()}
+      hasReusTips           : ${hasReuseTips.toString()}
+      isRecyclableProduct   : ${isRecyclableProduct.toString()}
+    ''';
+  }
 }
 
 class ArticleForm extends BaseModel
@@ -48,16 +78,23 @@ class ArticleForm extends BaseModel
   String reuseTips;
   String recycledProd;
   String recycledProdDetail;
+  String generalDetail;
   DateTime createdDate;
   DateTime lastUpdateDate;
 
+  bool get hasDetail{
+    EcoIndicator indicator = getIndicator();
+    return indicator.hasRecycledMaterials || indicator.hasReuseTips || indicator.isRecyclableProduct;
+  }
+
   ArticleForm({
     @required int id,
-    @required this.recycledMats,
-    @required this.recycledMatsDetail,
-    @required this.reuseTips,
-    @required this.recycledProd,
-    @required this.recycledProdDetail,
+    this.recycledMats = '',
+    this.recycledMatsDetail = '',
+    this.reuseTips = '',
+    this.recycledProd = '',
+    this.recycledProdDetail = '',
+    this.generalDetail = '',
     @required this.createdDate,
     @required this.lastUpdateDate
   }) : super(id: id);
@@ -69,7 +106,7 @@ class ArticleForm extends BaseModel
 
     return EcoIndicator(
       hasRecycledMaterials: hasRecycledMats,
-      hasReusTips: hasReusedTips,
+      hasReuseTips: hasReusedTips,
       isRecyclableProduct: isRecyclable
     );
   }

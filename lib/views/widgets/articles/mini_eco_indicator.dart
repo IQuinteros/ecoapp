@@ -13,11 +13,11 @@ class MiniEcoIndicator extends StatelessWidget {
 
     List<Color> colors = [];
     if(ecoIndicator.hasRecycledMaterials)
-      colors.add(EcoAppColors.MAIN_COLOR);
-    if(ecoIndicator.hasReusTips)
       colors.add(EcoAppColors.BLUE_ACCENT_COLOR);
-    if(ecoIndicator.isRecyclableProduct)
+    if(ecoIndicator.hasReuseTips)
       colors.add(EcoAppColors.ACCENT_COLOR);
+    if(ecoIndicator.isRecyclableProduct)
+      colors.add(EcoAppColors.MAIN_COLOR);
 
     return Container(
       child: getStructure(colors)

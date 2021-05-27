@@ -1,10 +1,12 @@
 import 'package:flutter/material.dart';
 import 'package:flutter_ecoapp/models/base.dart';
+import 'package:flutter_ecoapp/models/district.dart';
 
-class ShopModel extends BaseModel
+class StoreModel extends BaseModel
 {
   String publicName;
   String description;
+  String photoUrl = '';
   String email;
   int contactNumber;
   String location;
@@ -14,10 +16,13 @@ class ShopModel extends BaseModel
   DateTime createdDate;
   DateTime lastUpdateDate;
 
-  ShopModel({
+  DistrictModel district;
+
+  StoreModel({
     @required int id,
     @required this.publicName,
     @required this.description,
+    this.photoUrl = 'https://seeklogo.com/images/F/facebook-marketplace-logo-46A976DABC-seeklogo.com.png',
     @required this.email,
     @required this.contactNumber,
     @required this.location,
@@ -26,5 +31,6 @@ class ShopModel extends BaseModel
     @required this.enabled,
     @required this.createdDate,
     @required this.lastUpdateDate,
+    @required this.district
   }) : super(id: id);
 }
