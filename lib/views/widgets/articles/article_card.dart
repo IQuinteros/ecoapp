@@ -26,7 +26,6 @@ class _ArticleCardState extends State<ArticleCard> {
   Widget build(BuildContext context) {
     widget.article.tag = 'article-card';
 
-    print(widget.article.tag);
     final image = Hero(
       tag: widget.article.tag,
       child: Image(

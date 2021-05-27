@@ -8,9 +8,11 @@ import 'package:flutter_ecoapp/views/widgets/articles/articleview/article_photo_
 import 'package:flutter_ecoapp/views/widgets/articles/articleview/article_question_section.dart';
 import 'package:flutter_ecoapp/views/widgets/articles/articleview/article_store_description_section.dart';
 import 'package:flutter_ecoapp/views/widgets/articles/articleview/full_eco_indicator.dart';
+import 'package:flutter_ecoapp/views/widgets/articles/favorite_button.dart';
 import 'package:flutter_ecoapp/views/widgets/bottom_nav_bar.dart';
 import 'package:flutter_ecoapp/views/widgets/normal_button.dart';
 import 'package:flutter_ecoapp/views/widgets/stars_row.dart';
+import 'package:google_fonts/google_fonts.dart';
 
 class ArticleView extends StatelessWidget {
 
@@ -44,6 +46,74 @@ class ArticleView extends StatelessWidget {
 
 }
 
+class _ArticleAppBar extends StatelessWidget {
+  const _ArticleAppBar({
+    Key key,
+    @required this.article,
+  }) : super(key: key);
+
+  final ArticleModel article;
+
+  @override
+  Widget build(BuildContext context) {
+    return SliverAppBar(
+      elevation: 10.0,
+      backgroundColor: EcoAppColors.MAIN_COLOR,
+      foregroundColor: Colors.white,
+      expandedHeight: 250.0,
+      floating: false,
+      pinned: true,
+      leading: IconButton(
+        icon: Icon(
+          Icons.arrow_back_ios_rounded,
+          color: Colors.white,
+        ),
+        onPressed: () => Navigator.pop(context),
+      ),
+      actions: [
+        IconButton(
+          icon: Icon(
+            Icons.share,
+            color: Colors.white,
+          ),
+          onPressed: (){},
+        ),
+        FavoriteButton(favorite: false, disabledColor: Colors.white,)
+      ],
+      title: Text(
+        article.title,
+        style: TextStyle(
+          color: Colors.white,
+          shadows: [
+            Shadow(
+              color: Colors.black,
+            )
+          ]
+        ),
+      ),
+      stretch: true,
+      forceElevated: true,
+      flexibleSpace: FlexibleSpaceBar(
+        centerTitle: false,
+        stretchModes: const <StretchMode>[
+          StretchMode.zoomBackground,
+          StretchMode.blurBackground,
+          StretchMode.fadeTitle,
+        ],
+        background: Hero( 
+          tag: article.tag,
+          child: Image(
+            image: NetworkImage(article.photos[0].photoUrl),
+            height: 120,
+            width: 120,
+            fit: BoxFit.cover,
+          )
+        ),
+      ),
+    );
+  }
+}
+
 class _ArticleContent extends StatelessWidget {
   const _ArticleContent({
     Key key,
@@ -65,20 +135,26 @@ class _ArticleContent extends StatelessWidget {
           article.title,
           overflow: TextOverflow.fade,
           textAlign: TextAlign.left,
+          style: GoogleFonts.montserrat(
+            fontWeight: FontWeight.w500
+          ),
         ),
       ),
     );
 
     final rating = Padding(
-      padding: EdgeInsets.symmetric(
-        horizontal: 20.0
+      padding: EdgeInsets.only(
+        top: 10.0,
+        left: 20.0,
+        right: 20.0
       ),
       child: Row(
         children: [
           StarsRow(rating: 3.4),
           SizedBox(width: 10.0),
           Text(
-            '4 opiniones'
+            '4 opiniones',
+            style: GoogleFonts.montserrat(),
           )
         ],
       ),
@@ -92,15 +168,15 @@ class _ArticleContent extends StatelessWidget {
         children: [
           Text(
             '\$ ' + CurrencyUtil.formatToCurrencyString(article.price.floor()),
-            style: TextStyle(
+            style: GoogleFonts.montserrat(
               fontSize: 20,
-              fontWeight: FontWeight.bold
+              fontWeight: FontWeight.w600
             ),
           ),
           SizedBox(width: 30.0,),
           Text(
             '\$ ' + CurrencyUtil.formatToCurrencyString(article.price.floor()),
-            style: TextStyle(
+            style: GoogleFonts.montserrat(
               decoration: TextDecoration.lineThrough
             ),
           ),
@@ -117,13 +193,13 @@ class _ArticleContent extends StatelessWidget {
         child: RichText(
           text: TextSpan(
             text: 'Vendido por ',
-            style: TextStyle(
+            style: GoogleFonts.montserrat(
               color: Colors.black
             ),
             children: [
               TextSpan(
                 text: '${article.store.publicName}',
-                style: TextStyle(
+                style: GoogleFonts.montserrat(
                   color: EcoAppColors.MAIN_COLOR
                 )
               )
@@ -205,62 +281,6 @@ class _ArticleMainContent extends StatelessWidget {
         child: _ArticleContent(article: article,),
         scrollDirection: Axis.vertical,
       )
-    );
-  }
-}
-
-class _ArticleAppBar extends StatelessWidget {
-  const _ArticleAppBar({
-    Key key,
-    @required this.article,
-  }) : super(key: key);
-
-  final ArticleModel article;
-
-  @override
-  Widget build(BuildContext context) {
-    return SliverAppBar(
-      elevation: 10.0,
-      backgroundColor: EcoAppColors.MAIN_COLOR,
-      foregroundColor: Colors.white,
-      expandedHeight: 250.0,
-      floating: false,
-      pinned: true,
-      leading: IconButton(
-        icon: Icon(
-          Icons.arrow_back_ios_rounded,
-          color: Colors.white,
-        ),
-        onPressed: () => Navigator.pop(context),
-      ),
-      actions: [
-        IconButton(
-          icon: Icon(
-            Icons.share,
-            color: Colors.white,
-          ),
-          onPressed: (){},
-        ),
-        IconButton(
-          icon: Icon(
-            Icons.favorite_border,
-            color: Colors.white,
-          ),
-          onPressed: (){},
-        ),
-      ],
-      flexibleSpace: FlexibleSpaceBar(
-        centerTitle: false,
-        background: Hero( 
-          tag: article.tag,
-          child: Image(
-            image: NetworkImage(article.photos[0].photoUrl),
-            height: 120,
-            width: 120,
-            fit: BoxFit.cover,
-          )
-        ),
-      ),
     );
   }
 }

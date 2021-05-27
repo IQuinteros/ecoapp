@@ -10,6 +10,7 @@ import 'package:lipsum/lipsum.dart' as lipsum;
 
 class EcoAppDebug{
 
+
   static Widget getArticleItems({int initialId = 1}){
     return Column(
       children: [
@@ -255,22 +256,79 @@ class EcoAppDebug{
 
   static List<FeaturedProduct> getFeaturedProducts() => [
     FeaturedProduct(
-      imageUrl: 'https://picsum.photos/500/300',
-      price: 45000,
-      percent: 85,
-      title: 'Título del anuncio largo y largo muy',
+      article: ArticleModel(
+        id: 10 + 2,
+        title: 'Tìtulo largo',
+        price: 9021545.0,
+        description: lipsum.createParagraph(numParagraphs: 2),
+        stock: 2,
+        enabled: true,
+        lastUpdateDate: DateTime.now(),
+        createdDate: DateTime.now(),
+        photos: [
+          PhotoModel(id: 3, photoUrl: 'https://picsum.photos/500/300')
+        ],
+        form: ArticleForm(
+          id: 3,
+          createdDate: DateTime.now(),
+          lastUpdateDate: DateTime.now(),
+          recycledMats: 'Full',
+          recycledMatsDetail: lipsum.createParagraph(numParagraphs: 1),
+          recycledProd: 'Full',
+          recycledProdDetail: lipsum.createParagraph(numParagraphs: 1),
+        ),
+        store: getStores()[1]
+      ),
     ),
     FeaturedProduct(
-      imageUrl: 'https://picsum.photos/500/300',
-      price: 30000,
-      percent: 85,
-      title: 'Título del anuncio',
+      article: ArticleModel(
+        id: 10 + 3,
+        title: 'Tìtulo largo',
+        price: 9021545.0,
+        description: lipsum.createParagraph(numParagraphs: 2),
+        stock: 2,
+        enabled: true,
+        lastUpdateDate: DateTime.now(),
+        createdDate: DateTime.now(),
+        photos: [
+          PhotoModel(id: 3, photoUrl: 'https://picsum.photos/500/300')
+        ],
+        form: ArticleForm(
+          id: 3,
+          createdDate: DateTime.now(),
+          lastUpdateDate: DateTime.now(),
+          recycledMats: 'Full',
+          recycledMatsDetail: lipsum.createParagraph(numParagraphs: 1),
+          recycledProd: 'Full',
+          recycledProdDetail: lipsum.createParagraph(numParagraphs: 1),
+        ),
+        store: getStores()[1]
+      ),
     ),
     FeaturedProduct(
-      imageUrl: 'https://picsum.photos/500/300',
-      price: 89000,
-      percent: 85,
-      title: 'Título del anuncio',
+      article: ArticleModel(
+        id: 10 + 4,
+        title: 'Tìtulo largo',
+        price: 9021545.0,
+        description: lipsum.createParagraph(numParagraphs: 2),
+        stock: 2,
+        enabled: true,
+        lastUpdateDate: DateTime.now(),
+        createdDate: DateTime.now(),
+        photos: [
+          PhotoModel(id: 3, photoUrl: 'https://picsum.photos/500/300')
+        ],
+        form: ArticleForm(
+          id: 3,
+          createdDate: DateTime.now(),
+          lastUpdateDate: DateTime.now(),
+          recycledMats: 'Full',
+          recycledMatsDetail: lipsum.createParagraph(numParagraphs: 1),
+          recycledProd: 'Full',
+          recycledProdDetail: lipsum.createParagraph(numParagraphs: 1),
+        ),
+        store: getStores()[1]
+      ),
     ),
   ];
     

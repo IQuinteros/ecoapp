@@ -8,13 +8,9 @@ import 'package:google_fonts/google_fonts.dart';
 
 class FeaturedProduct extends StatefulWidget {
 
-  final int price;
-  final int percent;
-  final String title;
+  final ArticleModel article;
 
-  final String imageUrl;
-
-  const FeaturedProduct({Key key, @required this.price, @required this.percent, @required this.title, @required this.imageUrl}) : super(key: key);
+  const FeaturedProduct({Key key, @required this.article}) : super(key: key);
 
   @override
   _FeaturedProductState createState() => _FeaturedProductState();
@@ -24,31 +20,37 @@ class _FeaturedProductState extends State<FeaturedProduct> {
 
   @override
   Widget build(BuildContext context) {
-    final image = Container(
-      clipBehavior: Clip.antiAlias,
-      decoration: BoxDecoration(
-        borderRadius: BorderRadius.circular(20.0),
-        boxShadow: <BoxShadow>[
-          BoxShadow(
-            blurRadius: 10.0,
-            spreadRadius: 2.0,
-            color: Color.fromRGBO(0, 0, 0, .25)
-          )
-        ]
-      ),
-      margin: EdgeInsets.only(
-        bottom: 0.0
-      ),
-      child: Image(
-        image: NetworkImage(widget.imageUrl),
-        width: MediaQuery.of(context).size.width,
-        height: 200.0,
-        fit: BoxFit.cover,
+    widget.article.tag = 'featured-card';
+
+    print(widget.article.tag);
+    final image = Hero(
+      tag: widget.article.tag,
+      child: Container(
+        clipBehavior: Clip.antiAlias,
+        decoration: BoxDecoration(
+          borderRadius: BorderRadius.circular(20.0),
+          boxShadow: <BoxShadow>[
+            BoxShadow(
+              blurRadius: 10.0,
+              spreadRadius: 2.0,
+              color: Color.fromRGBO(0, 0, 0, .25)
+            )
+          ]
+        ),
+        margin: EdgeInsets.only(
+          bottom: 0.0
+        ),
+        child: Image(
+          image: NetworkImage(widget.article.photos[0].photoUrl),
+          width: MediaQuery.of(context).size.width,
+          height: 200.0,
+          fit: BoxFit.cover,
+        ),
       ),
     );
 
     final priceText = Text(
-      '\$ ' + CurrencyUtil.formatToCurrencyString(widget.price), 
+      '\$ ' + CurrencyUtil.formatToCurrencyString(widget.article.price.truncate()), 
       style: GoogleFonts.montserrat(
         fontSize: 18,
         fontWeight: FontWeight.w600
@@ -64,7 +66,7 @@ class _FeaturedProductState extends State<FeaturedProduct> {
     );
 
     final titleText = Text(
-      widget.title,
+      widget.article.title,
       style: GoogleFonts.montserrat(
         fontSize: 16,
         fontWeight: FontWeight.normal,
@@ -126,7 +128,9 @@ class _FeaturedProductState extends State<FeaturedProduct> {
       ),
       child: InkWell(
         borderRadius: BorderRadius.circular(20.0),
-        onTap: () {},
+        onTap: () {
+          Navigator.pushNamed(context, 'article', arguments: widget.article);
+        },
         child: Stack(
           children: [
             image,
