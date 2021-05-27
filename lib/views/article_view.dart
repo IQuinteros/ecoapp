@@ -218,7 +218,24 @@ class _ArticleContent extends StatelessWidget {
       ),
       child: NormalButton(
         text: 'Agregar al Carrito',
-        onPressed: () {},
+        onPressed: () {
+          // TODO: Add cart system
+          showDialog(
+            context: context, 
+            builder: (BuildContext context){
+              return AlertDialog(
+                title: Text('Añadido al carrito'),
+                content: Text('${article.title} ha sido añadido exitósamente al carrito'),
+                actions: [
+                  TextButton(
+                    onPressed: () => Navigator.pop(context), 
+                    child: Text('Aceptar')
+                  )
+                ],
+              );
+            }
+          );
+        },
       ),
     );
     
