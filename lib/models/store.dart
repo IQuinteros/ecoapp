@@ -2,7 +2,7 @@ import 'package:flutter/material.dart';
 import 'package:flutter_ecoapp/models/base.dart';
 import 'package:flutter_ecoapp/models/district.dart';
 
-class StoreModel extends BaseModel
+class StoreModel extends BaseModel with TagModel
 {
   String publicName;
   String description;
@@ -32,5 +32,7 @@ class StoreModel extends BaseModel
     @required this.createdDate,
     @required this.lastUpdateDate,
     @required this.district
-  }) : super(id: id);
+  }) : super(id: id){
+    initTagging(newID: this.id, newTitle: this.publicName);
+  }
 }

@@ -5,7 +5,7 @@ import 'package:flutter_ecoapp/models/opinion.dart';
 import 'package:flutter_ecoapp/models/question.dart';
 import 'package:flutter_ecoapp/models/store.dart';
 
-class ArticleModel extends BaseModel
+class ArticleModel extends BaseModel with TagModel
 {
   String title;
   String description;
@@ -43,7 +43,9 @@ class ArticleModel extends BaseModel
     this.store,
     this.questions = const [],
     @required this.rating
-  }) : super(id: id);
+  }) : super(id: id){
+    initTagging(newID: this.id, newTitle: this.title);
+  }
   
 }
 

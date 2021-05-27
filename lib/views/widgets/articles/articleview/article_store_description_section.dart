@@ -18,26 +18,31 @@ class StoreDescriptionSection extends StatelessWidget {
   Widget build(BuildContext context) {
     StoreModel store = article.store;
 
+    store.tag = 'article-description';
+
     final storeLogo = Column(
       children: [
-        Container(
-          clipBehavior: Clip.antiAlias,
-          decoration: BoxDecoration(
-            shape: BoxShape.circle,
-            boxShadow: [
-              BoxShadow(
-                color: Colors.black.withOpacity(0.25),
-                offset: Offset(0, 3),
-                blurRadius: 3.0,
-                spreadRadius: 0.0
-              )
-            ]
-          ),
-          height: 80.0,
-          width: 80.0,
-          child: Image(
-            image: NetworkImage(store.photoUrl),
-            fit: BoxFit.cover
+        Hero(
+          tag: store.tag,
+          child: Container(
+            clipBehavior: Clip.antiAlias,
+            decoration: BoxDecoration(
+              shape: BoxShape.circle,
+              boxShadow: [
+                BoxShadow(
+                  color: Colors.black.withOpacity(0.25),
+                  offset: Offset(0, 3),
+                  blurRadius: 3.0,
+                  spreadRadius: 0.0
+                )
+              ]
+            ),
+            height: 80.0,
+            width: 80.0,
+            child: Image(
+              image: NetworkImage(store.photoUrl),
+              fit: BoxFit.cover
+            ),
           ),
         ),
         SizedBox(height: 15.0,),

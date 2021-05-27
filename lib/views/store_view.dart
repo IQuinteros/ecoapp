@@ -56,22 +56,25 @@ class StoreView extends StatelessWidget {
   }
 
   Widget getCover(StoreModel store){
-    final image = Container(
-      width: 100,
-      height: 100,
-      clipBehavior: Clip.antiAlias,
-      decoration: BoxDecoration(
-        shape: BoxShape.circle,
-        boxShadow: [
-          BoxShadow(
-            color: Colors.black.withOpacity(0.25),
-            blurRadius: 5
-          )
-        ]
-      ),
-      child: Image(
-        image: NetworkImage(store.photoUrl),
-        fit: BoxFit.cover,
+    final image = Hero(
+      tag: store.tag,
+      child: Container(
+        width: 100,
+        height: 100,
+        clipBehavior: Clip.antiAlias,
+        decoration: BoxDecoration(
+          shape: BoxShape.circle,
+          boxShadow: [
+            BoxShadow(
+              color: Colors.black.withOpacity(0.25),
+              blurRadius: 5
+            )
+          ]
+        ),
+        child: Image(
+          image: NetworkImage(store.photoUrl),
+          fit: BoxFit.cover,
+        ),
       ),
     );
 
