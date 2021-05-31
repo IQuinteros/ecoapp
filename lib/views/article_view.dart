@@ -218,7 +218,24 @@ class _ArticleContent extends StatelessWidget {
       ),
       child: NormalButton(
         text: 'Agregar al Carrito',
-        onPressed: () {},
+        onPressed: () {
+          // TODO: Add cart system
+          showDialog(
+            context: context, 
+            builder: (BuildContext context){
+              return AlertDialog(
+                title: Text('Añadido al carrito'),
+                content: Text('${article.title} ha sido añadido exitósamente al carrito'),
+                actions: [
+                  TextButton(
+                    onPressed: () => Navigator.pop(context), 
+                    child: Text('Aceptar')
+                  )
+                ],
+              );
+            }
+          );
+        },
       ),
     );
     
@@ -261,29 +278,31 @@ class _ArticleMainContent extends StatelessWidget {
 
   @override
   Widget build(BuildContext context) {
-    return Container(
-      decoration: BoxDecoration(
-        borderRadius: BorderRadius.circular(20.0),
-        color: Colors.white,
-        boxShadow: [
-          BoxShadow(
-            color: Colors.black.withOpacity(0.25),
-            blurRadius: 20.0
-          )
-        ]
+    return SafeArea(
+      child: Container(
+        decoration: BoxDecoration(
+          borderRadius: BorderRadius.circular(20.0),
+          color: Colors.white,
+          boxShadow: [
+            BoxShadow(
+              color: Colors.black.withOpacity(0.25),
+              blurRadius: 20.0
+            )
+          ]
+        ),
+        margin: EdgeInsets.only(
+          top: 20.0,
+          left: 5.0,
+          right: 5.0
+        ),
+        padding: EdgeInsets.symmetric(
+          vertical: 20.0,
+        ),
+        child: SingleChildScrollView(
+          child: _ArticleContent(article: article,),
+          scrollDirection: Axis.vertical,
+        )
       ),
-      margin: EdgeInsets.only(
-        top: 20.0,
-        left: 5.0,
-        right: 5.0
-      ),
-      padding: EdgeInsets.symmetric(
-        vertical: 20.0,
-      ),
-      child: SingleChildScrollView(
-        child: _ArticleContent(article: article,),
-        scrollDirection: Axis.vertical,
-      )
     );
   }
 }

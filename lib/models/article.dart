@@ -1,10 +1,11 @@
 import 'package:flutter/material.dart';
 import 'package:flutter_ecoapp/models/base.dart';
+import 'package:flutter_ecoapp/models/category.dart';
 import 'package:flutter_ecoapp/models/opinion.dart';
 import 'package:flutter_ecoapp/models/question.dart';
 import 'package:flutter_ecoapp/models/store.dart';
 
-class ArticleModel extends BaseModel
+class ArticleModel extends BaseModel with TagModel
 {
   String title;
   String description;
@@ -15,6 +16,7 @@ class ArticleModel extends BaseModel
   DateTime lastUpdateDate;
   bool enabled;
 
+  CategoryModel category;
   List<PhotoModel> photos;
   ArticleForm form;
   StoreModel store;
@@ -37,10 +39,13 @@ class ArticleModel extends BaseModel
     @required this.enabled,
     @required this.photos,
     @required this.form,
+    @required this.category,
     this.store,
     this.questions = const [],
     @required this.rating
-  }) : super(id: id);
+  }) : super(id: id){
+    initTagging(newID: this.id, newTitle: this.title);
+  }
   
 }
 

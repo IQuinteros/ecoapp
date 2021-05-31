@@ -81,7 +81,12 @@ class EcoAppDebug{
             ),
             store: getStores()[0],
             questions: _questions,
-            rating: _rating
+            rating: _rating,
+            category: CategoryModel(
+              id: 1,
+              title: 'Hogar',
+              createdDate: DateTime.now()
+            )
           ),
           favorite: true,
         ),
@@ -108,7 +113,12 @@ class EcoAppDebug{
             ),
             store: getStores()[2],
             questions: _questions,
-            rating: _rating
+            rating: _rating,
+            category: CategoryModel(
+              id: 1,
+              title: 'Hogar',
+              createdDate: DateTime.now()
+            )
           ),
           favorite: false,
         ),
@@ -136,7 +146,12 @@ class EcoAppDebug{
             ),
             store: getStores()[1],
             questions: _questions,
-            rating: _rating
+            rating: _rating,
+            category: CategoryModel(
+              id: 1,
+              title: 'Hogar',
+              createdDate: DateTime.now()
+            )
           ),
           favorite: true,
         ),
@@ -163,7 +178,12 @@ class EcoAppDebug{
             ),
             store: getStores()[0],
             questions: _questions,
-            rating: _rating
+            rating: _rating,
+            category: CategoryModel(
+              id: 1,
+              title: 'Hogar',
+              createdDate: DateTime.now()
+            )
           ),
           favorite: false,
         ),
@@ -187,7 +207,12 @@ class EcoAppDebug{
             ),
             store: getStores()[0],
             questions: _questions,
-            rating: _rating
+            rating: _rating,
+            category: CategoryModel(
+              id: 1,
+              title: 'Hogar',
+              createdDate: DateTime.now()
+            )
           ),
           favorite: false,
         ),
@@ -213,7 +238,12 @@ class EcoAppDebug{
             ),
             store: getStores()[2],
             questions: _questions,
-            rating: _rating
+            rating: _rating,
+            category: CategoryModel(
+              id: 1,
+              title: 'Hogar',
+              createdDate: DateTime.now()
+            )
           ),
           favorite: false,
         ),
@@ -332,7 +362,12 @@ class EcoAppDebug{
           recycledProdDetail: lipsum.createParagraph(numParagraphs: 1),
         ),
         store: getStores()[1],
-        rating: _rating
+        rating: _rating,
+        category: CategoryModel(
+          id: 1,
+          title: 'Hogar',
+          createdDate: DateTime.now()
+        )
       ),
     ),
     FeaturedProduct(
@@ -358,7 +393,12 @@ class EcoAppDebug{
           recycledProdDetail: lipsum.createParagraph(numParagraphs: 1),
         ),
         store: getStores()[1],
-        rating: _rating
+        rating: _rating,
+        category: CategoryModel(
+          id: 1,
+          title: 'Hogar',
+          createdDate: DateTime.now()
+        )
       ),
     ),
     FeaturedProduct(
@@ -384,7 +424,12 @@ class EcoAppDebug{
           recycledProdDetail: lipsum.createParagraph(numParagraphs: 1),
         ),
         store: getStores()[1],
-        rating: _rating
+        rating: _rating,
+        category: CategoryModel(
+          id: 1,
+          title: 'Hogar',
+          createdDate: DateTime.now()
+        )
       ),
     ),
   ];

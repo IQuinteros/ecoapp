@@ -22,6 +22,7 @@ class NormalButton extends StatelessWidget {
           child: Text(
             text,
             style: GoogleFonts.montserrat(),
+            textAlign: TextAlign.center,
           ),
         ),
         style: ButtonStyle(
