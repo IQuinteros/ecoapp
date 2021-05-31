@@ -1,9 +1,8 @@
 import 'package:flutter/material.dart';
 
-import 'package:flutter_ecoapp/views/debug/debug.dart';
 import 'package:flutter_ecoapp/views/style/colors.dart';
 import 'package:flutter_ecoapp/views/style/text_style.dart';
-import 'package:flutter_ecoapp/views/widgets/search_bar.dart';
+import 'package:flutter_ecoapp/views/widgets/profile/profileview/profile_buttons_section.dart';
 
 import 'package:google_fonts/google_fonts.dart';
 
@@ -16,7 +15,6 @@ class ProfileView extends StatelessWidget {
   }
 
   Widget getContent(BuildContext context){
-
     final column = Column(
       crossAxisAlignment: CrossAxisAlignment.start,
       children: [
@@ -57,7 +55,7 @@ class ProfileView extends StatelessWidget {
       child: Column(
         children: [
           getProfileCover(),
-          getButtons()
+          ProfileButtonsSection()
         ],
       ),
     );
@@ -105,70 +103,23 @@ class ProfileView extends StatelessWidget {
       ),
     );
 
-    return Container(
-      padding: EdgeInsets.symmetric(
-        horizontal: 20.0,
-        vertical: 20.0
+    return GestureDetector(
+      child: Container(
+        padding: EdgeInsets.symmetric(
+          horizontal: 20.0,
+          vertical: 20.0
+        ),
+        child: Row(
+          children: [
+            img,
+            SizedBox(width: 20.0,),
+            Expanded(child: content)
+          ],
+        ),
       ),
-      child: Row(
-        children: [
-          img,
-          SizedBox(width: 20.0,),
-          Expanded(child: content)
-        ],
-      ),
-    );
-  }
-
-  Widget getButtons(){
-    return Container(
-      child: Column(
-        children: [
-          Divider(thickness: 1),
-          getButton(
-            icon: Icons.star_border_rounded,
-            title: 'Lista de favoritos',
-            onTap: (){}
-          ),
-          Divider(thickness: 1),
-          getButton(
-            icon: Icons.history,
-            title: 'Historial',
-            onTap: (){}
-          ),
-          Divider(thickness: 1),
-          getButton(
-            icon: Icons.shopping_cart_outlined,
-            title: 'Mis compras',
-            onTap: (){}
-          ),
-          Divider(thickness: 1),
-          getButton(
-            icon: Icons.settings_outlined,
-            title: 'Ajustes de perfil',
-            onTap: (){}
-          ),
-          SizedBox(height: 10.0),
-        ],
-      )
-    );
-  }
-
-  Widget getButton({IconData icon, String title, Function onTap}){
-    return ListTile(
-      leading: Icon(
-        icon, 
-        size: 35, 
-        color: EcoAppColors.MAIN_COLOR
-      ),
-      title: Text(title),
-      trailing: Icon(
-        Icons.keyboard_arrow_right_rounded,
-        color: EcoAppColors.MAIN_COLOR,
-        size: 30
-      ),
-      enabled: true,
-      onTap: () => onTap,
+      onTap: (){
+        // TODO: Navigate to login
+      },
     );
   }
 }
