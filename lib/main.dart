@@ -1,5 +1,6 @@
 import 'package:flutter/material.dart';
 import 'package:flutter_ecoapp/views/article_view.dart';
+import 'package:flutter_ecoapp/views/login_view.dart';
 import 'package:flutter_ecoapp/views/main_view.dart';
 import 'package:flutter_ecoapp/views/store_view.dart';
 
@@ -20,7 +21,8 @@ class MyApp extends StatelessWidget {
         home: MainView(),
         routes: {
           'article': (BuildContext context) => ArticleView(),
-          'store': (BuildContext context) => StoreView()
+          'store': (BuildContext context) => StoreView(),
+          'login': (BuildContext context) => LoginView()
         },
     );
   }
