@@ -6,7 +6,7 @@ import 'package:flutter_ecoapp/views/widgets/normal_button.dart';
 import 'package:flutter_ecoapp/views/widgets/normal_input.dart';
 import 'package:google_fonts/google_fonts.dart';
 
-class LoginView extends StatelessWidget {
+class RegisterView extends StatelessWidget {
 
   @override
   Widget build(BuildContext context) {
@@ -17,7 +17,7 @@ class LoginView extends StatelessWidget {
         centerTitle: false,
         elevation: 0,
         title: Text(
-          'Iniciar sesión',
+          'Registrarme',
           style: GoogleFonts.montserrat(
             fontWeight: FontWeight.w500
           ),
@@ -49,6 +49,32 @@ class LoginView extends StatelessWidget {
         ),
         child: Column(
           children: [
+            Row(
+              mainAxisSize: MainAxisSize.max,
+              children: [
+                Expanded(
+                  child: Text(
+                    'Hola! Obtendrás toda la experiencia completa de ayudar al medioambiente y aportar al futuro del planeta y la humanidad',
+                    style: GoogleFonts.montserrat(),
+                    textAlign: TextAlign.start,
+                  ),
+                ),
+              ],
+            ),
+            SizedBox(height: 20.0,),
+            Row(
+              mainAxisSize: MainAxisSize.max,
+              children: [
+                Expanded(
+                  child: Text(
+                    'Solo unos pocos pasos más :)',
+                    style: GoogleFonts.montserrat(),
+                    textAlign: TextAlign.start,
+                  ),
+                ),
+              ],
+            ),
+            SizedBox(height: 20.0,),
             NormalInput(header: 'Email', hint: 'Ingresa tu email', icon: Icons.mail),
             NormalInput(header: 'Contraseña', hint: 'Ingresa tu contraseña', icon: Icons.vpn_key),
             Container(
@@ -78,7 +104,7 @@ class LoginView extends StatelessWidget {
               ),
               child: NormalButton(
                 text: '¡Soy nuevo! Quiero registrarme', 
-                onPressed: () => Navigator.pushNamed(context, 'register')
+                onPressed: (){}
               ),
             ),
           ],
