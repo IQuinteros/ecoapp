@@ -10,11 +10,11 @@ class OpinionModel extends BaseModel
   DateTime date;
 
   OpinionModel({
-    @required int id,
-    @required this.rating,
-    @required this.title,
+    required int id,
+    required this.rating,
+    required this.title,
     this.content = '',
-    @required this.date,
+    required this.date,
   }) : super(id: id);
 }
 

@@ -3,15 +3,15 @@ import 'package:flutter_ecoapp/views/style/colors.dart';
 
 class ProfileButton extends StatelessWidget {
   const ProfileButton({
-    Key key,
-    @required this.icon,
-    @required this.title,
-    @required this.onTap,
+    Key? key,
+    required this.icon,
+    required this.title,
+    required this.onTap,
   }) : super(key: key);
 
   final IconData icon;
   final String title;
-  final Function onTap;
+  final Function()? onTap;
 
   @override
   Widget build(BuildContext context) {

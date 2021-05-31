@@ -6,8 +6,8 @@ import 'package:google_fonts/google_fonts.dart';
 
 class QuestionsSection extends StatelessWidget {
   const QuestionsSection({
-    Key key,
-    @required this.article,
+    Key? key,
+    required this.article,
   }) : super(key: key);
 
   final ArticleModel article;
@@ -54,7 +54,7 @@ class QuestionsSection extends StatelessWidget {
       children: getQuestions()
     );
 
-    bool haveQuestions = article.questions != null && article.questions.length > 0;
+    bool haveQuestions = article.questions != null && article.questions!.length > 0;
 
     return Container(
       margin: EdgeInsets.symmetric(
@@ -91,22 +91,22 @@ class QuestionsSection extends StatelessWidget {
 
   List<Widget> getQuestions(){
     List<Widget> questionsWidgets = [];
-    article?.questions?.take(3)?.forEach((element) => questionsWidgets.add(_Question(question: element,)));
+    article.questions!.take(3).forEach((element) => questionsWidgets.add(_Question(question: element,)));
     return questionsWidgets;
   }
 }
 
 class _Question extends StatelessWidget {
   const _Question({
-    Key key,
-    @required this.question
+    Key? key,
+    required this.question
   }) : super(key: key);
 
   final QuestionModel question;
 
   @override
   Widget build(BuildContext context) {
-    bool hasAnswer = question.answer != null && question.answer.answer.isNotEmpty;
+    bool hasAnswer = question.answer != null && question.answer!.answer.isNotEmpty;
 
     final answerContainer = hasAnswer?
       Container(
@@ -115,7 +115,7 @@ class _Question extends StatelessWidget {
           left: 20.0
         ),
         child: Text(
-          question?.answer?.answer,
+          question.answer!.answer,
           style: GoogleFonts.montserrat(
             fontWeight: FontWeight.w300,
           ),
@@ -135,12 +135,12 @@ class _Question extends StatelessWidget {
             children: [
               Expanded(
                 child: Text(
-                  question?.question,
+                  question.question,
                   style: GoogleFonts.montserrat(),
                 ),
               ),
               Text(
-                '${question?.date?.day.toString()}/${question?.date?.month.toString()}/${question?.date?.year.toString()}',
+                '${question.date.day.toString()}/${question.date.month.toString()}/${question.date.year.toString()}',
                 style: GoogleFonts.montserrat(
                   color: Colors.black45
                 ),

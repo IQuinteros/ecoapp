@@ -6,7 +6,7 @@ class FavoriteModel extends BaseModel
   DateTime createdDate;
 
   FavoriteModel({
-    @required int id,
-    @required this.createdDate,
+    required int id,
+    required this.createdDate,
   }) : super(id: id);
 }

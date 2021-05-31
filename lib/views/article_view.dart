@@ -18,9 +18,9 @@ class ArticleView extends StatelessWidget {
 
   @override
   Widget build(BuildContext context) {
-    final ArticleModel article = ModalRoute.of(context).settings.arguments;
+    final ArticleModel? article = ModalRoute.of(context)!.settings.arguments as ArticleModel;
     return Scaffold(
-      body: getContent(context, article),
+      body: getContent(context, article!),
       bottomNavigationBar: EcoBottomNavigationBar(
         currentIndex: 0,
           onTap: (value){
@@ -48,8 +48,8 @@ class ArticleView extends StatelessWidget {
 
 class _ArticleAppBar extends StatelessWidget {
   const _ArticleAppBar({
-    Key key,
-    @required this.article,
+    Key? key,
+    required this.article,
   }) : super(key: key);
 
   final ArticleModel article;
@@ -116,8 +116,8 @@ class _ArticleAppBar extends StatelessWidget {
 
 class _ArticleContent extends StatelessWidget {
   const _ArticleContent({
-    Key key,
-    @required this.article,
+    Key? key,
+    required this.article,
   }) : super(key: key);
 
   final ArticleModel article;
@@ -161,7 +161,7 @@ class _ArticleContent extends StatelessWidget {
     );
 
     // Only display when past price is higher than 0, and is higher than the current price
-    bool havePastPrice = article.pastPrice != null && article.pastPrice > 0 && article.pastPrice > article.price;
+    bool havePastPrice = article.pastPrice != null && article.pastPrice! > 0 && article.pastPrice! > article.price;
 
     final price = Padding(
       padding: EdgeInsets.symmetric(
@@ -178,7 +178,7 @@ class _ArticleContent extends StatelessWidget {
           ),
           SizedBox(width: 30.0,),
           havePastPrice? Text(
-            '\$ ' + CurrencyUtil.formatToCurrencyString(article.pastPrice.floor()),
+            '\$ ' + CurrencyUtil.formatToCurrencyString(article.pastPrice!.floor()),
             style: GoogleFonts.montserrat(
               decoration: TextDecoration.lineThrough
             ),
@@ -201,7 +201,7 @@ class _ArticleContent extends StatelessWidget {
             ),
             children: [
               TextSpan(
-                text: '${article.store.publicName}',
+                text: '${article.store!.publicName}',
                 style: GoogleFonts.montserrat(
                   color: EcoAppColors.MAIN_COLOR
                 )
@@ -270,8 +270,8 @@ class _ArticleContent extends StatelessWidget {
 
 class _ArticleMainContent extends StatelessWidget {
   const _ArticleMainContent({
-    Key key,
-    @required this.article,
+    Key? key,
+    required this.article,
   }) : super(key: key);
 
   final ArticleModel article;

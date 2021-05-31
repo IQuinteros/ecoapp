@@ -97,39 +97,39 @@ class RegisterView extends StatelessWidget {
               header: 'Nombres', 
               hint: 'Ingresa tus nombres', 
               icon: Icons.person,
-              controller: controllers['name'],
-              validator: (value) => value.isEmpty? 'Debe ingresar su nombre' : null,
+              controller: controllers['name']!,
+              validator: (value) => value!.isEmpty? 'Debe ingresar su nombre' : null,
             ),
             NormalInput(
               header: 'Apellidos', 
               hint: 'Ingresa tus apellidos', 
               icon: Icons.person,
-              controller: controllers['lastName'],
-              validator: (value) => value.isEmpty? 'Debe ingresar sus apellidos' : null
+              controller: controllers['lastName']!,
+              validator: (value) => value!.isEmpty? 'Debe ingresar sus apellidos' : null
             ),
             NormalInput(
               header: 'Email', 
               hint: 'Ingresa tu email', 
               icon: Icons.mail,
               type: TextInputType.emailAddress,
-              controller: controllers['email'],
-              validator: (value) => value.isEmpty? 'Debe ingresar su email' : null
+              controller: controllers['email']!,
+              validator: (value) => value!.isEmpty? 'Debe ingresar su email' : null
             ),
             NormalInput(
               header: 'Rut', 
               hint: 'Ingresa tu rut', 
               icon: Icons.person,
               type: TextInputType.number,
-              controller: controllers['rut'],
-              validator: (value) => value.isEmpty? 'Debe ingresar su rut' : null
+              controller: controllers['rut']!,
+              validator: (value) => value!.isEmpty? 'Debe ingresar su rut' : null
             ),
             NormalInput(
               header: 'Teléfono - Celular', 
               hint: 'Ingresa tu número de contacto', 
               icon: Icons.phone,
               type: TextInputType.phone,
-              controller: controllers['phone'],
-              validator: (value) => value.isEmpty? 'Debe ingresar su número de contacto' : null
+              controller: controllers['phone']!,
+              validator: (value) => value!.isEmpty? 'Debe ingresar su número de contacto' : null
             ),
             NormalInput(
               header: 'Fecha de nacimiento', 
@@ -137,7 +137,7 @@ class RegisterView extends StatelessWidget {
               icon: Icons.date_range,
               readOnly: true,
               onTap: () {
-                Future<DateTime> response = showDatePicker(
+                Future<DateTime?> response = showDatePicker(
                   context: context, 
                   initialDate: DateTime.now(), 
                   firstDate: DateTime(1900), 
@@ -145,11 +145,13 @@ class RegisterView extends StatelessWidget {
                   initialDatePickerMode: DatePickerMode.year,
                 );
                 response.then((value){
-                  controllers['date'].text = '${value.day}/${value.month}/${value.year}';
+                  if(value == null)
+                    return;
+                  controllers['date']!.text = '${value.day}/${value.month}/${value.year}';
                 });
               },
-              controller: controllers['date'],
-              validator: (value) => value.isEmpty? 'Debe ingresar su fecha de nacimiento' : null
+              controller: controllers['date']!,
+              validator: (value) => value!.isEmpty? 'Debe ingresar su fecha de nacimiento' : null
             ),
             NormalInput(
               header: 'Comuna', 
@@ -159,15 +161,15 @@ class RegisterView extends StatelessWidget {
               onTap: (){
                 
               },
-              controller: controllers['district'],
-              validator: (value) => value.isEmpty? 'Debe ingresar su comuna' : null
+              controller: controllers['district']!,
+              validator: (value) => value!.isEmpty? 'Debe ingresar su comuna' : null
             ),
             NormalInput(
               header: 'Dirección', 
               hint: 'Ingresa tu dirección', 
               icon: Icons.location_on,
-              controller: controllers['location'],
-              validator: (value) => value.isEmpty? 'Debe ingresar su dirección' : null
+              controller: controllers['location']!,
+              validator: (value) => value!.isEmpty? 'Debe ingresar su dirección' : null
             ),
             Container(
               margin: EdgeInsets.symmetric(
@@ -185,7 +187,7 @@ class RegisterView extends StatelessWidget {
   }
 
   void createAccount(BuildContext context){
-    if(_formKey.currentState.validate()){
+    if(_formKey.currentState!.validate()){
       Navigator.push(context, MaterialPageRoute(builder: (BuildContext context) => RegisterPassView()));
     }
   }

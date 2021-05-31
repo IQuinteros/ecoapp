@@ -11,9 +11,9 @@ class ChatModel extends BaseModel
   List<MessageModel> messages;
 
   ChatModel({
-    @required int id,
-    @required this.closed,
-    @required this.createdDate,
+    required int id,
+    required this.closed,
+    required this.createdDate,
     this.messages = const []
   }) : super(id: id);
 }
@@ -29,11 +29,12 @@ class MessageModel extends BaseModel
   StoreModel store;
 
   MessageModel({
-    @required int id,
-    @required this.message,
-    @required this.date,
-    @required this.chat,
-    @required this.profile,
-    @required this.store
+    required int id,
+    required this.message,
+    required this.date,
+    required this.chat,
+    required this.profile,
+    required this.store,
+    required this.owner
   }) : super(id: id);
 }

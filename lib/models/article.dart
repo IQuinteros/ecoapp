@@ -10,7 +10,7 @@ class ArticleModel extends BaseModel with TagModel
   String title;
   String description;
   double price;
-  double pastPrice;
+  double? pastPrice;
   int stock;
   DateTime createdDate;
   DateTime lastUpdateDate;
@@ -19,8 +19,8 @@ class ArticleModel extends BaseModel with TagModel
   CategoryModel category;
   List<PhotoModel> photos;
   ArticleForm form;
-  StoreModel store;
-  List<QuestionModel> questions;
+  StoreModel? store;
+  List<QuestionModel>? questions;
   ArticleRating rating;
 
   String _tag = '';
@@ -28,21 +28,21 @@ class ArticleModel extends BaseModel with TagModel
   String get tag => _tag;
 
   ArticleModel({
-    @required int id,
-    @required this.title,
-    @required this.description,
-    @required this.price,
+    required int id,
+    required this.title,
+    required this.description,
+    required this.price,
     this.pastPrice,
-    @required this.stock,
-    @required this.createdDate,
-    @required this.lastUpdateDate,
-    @required this.enabled,
-    @required this.photos,
-    @required this.form,
-    @required this.category,
+    required this.stock,
+    required this.createdDate,
+    required this.lastUpdateDate,
+    required this.enabled,
+    required this.photos,
+    required this.form,
+    required this.category,
     this.store,
     this.questions = const [],
-    @required this.rating
+    required this.rating
   }) : super(id: id){
     initTagging(newID: this.id, newTitle: this.title);
   }
@@ -54,8 +54,8 @@ class PhotoModel extends BaseModel
   String photoUrl;
 
   PhotoModel({
-    @required int id,
-    @required this.photoUrl,
+    required int id,
+    required this.photoUrl,
   }) : super(id: id);
 }
 
@@ -93,15 +93,15 @@ class ArticleForm extends BaseModel
   }
 
   ArticleForm({
-    @required int id,
+    required int id,
     this.recycledMats = '',
     this.recycledMatsDetail = '',
     this.reuseTips = '',
     this.recycledProd = '',
     this.recycledProdDetail = '',
     this.generalDetail = '',
-    @required this.createdDate,
-    @required this.lastUpdateDate
+    required this.createdDate,
+    required this.lastUpdateDate
   }) : super(id: id);
 
   EcoIndicator getIndicator(){

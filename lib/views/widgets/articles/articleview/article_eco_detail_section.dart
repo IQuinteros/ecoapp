@@ -5,8 +5,8 @@ import 'package:google_fonts/google_fonts.dart';
 
 class EcoDetailSection extends StatelessWidget {
   const EcoDetailSection({
-    Key key,
-    @required this.article,
+    Key? key,
+    required this.article,
   }) : super(key: key);
 
   final ArticleModel article;
@@ -61,8 +61,8 @@ class EcoDetailSection extends StatelessWidget {
 
 class _EcoTitle extends StatelessWidget {
   const _EcoTitle({
-    Key key,
-    this.title
+    Key? key,
+    required this.title
   }) : super(key: key);
 
   final String title;

@@ -6,7 +6,7 @@ class UserModel extends BaseModel
   DateTime createdDate;
 
   UserModel({
-    @required int id,
-    @required this.createdDate,
+    required int id,
+    required this.createdDate,
   }) : super(id: id);
 }

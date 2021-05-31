@@ -7,7 +7,7 @@ class EcoBottomNavigationBar extends StatelessWidget {
   final Function(int) onTap;
   final int currentIndex;
 
-  const EcoBottomNavigationBar({Key key, this.onTap, this.currentIndex}) : super(key: key);
+  const EcoBottomNavigationBar({Key? key, required this.onTap, required this.currentIndex}) : super(key: key);
 
   @override
   Widget build(BuildContext context) {

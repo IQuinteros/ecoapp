@@ -4,7 +4,7 @@ import 'package:flutter_ecoapp/views/style/colors.dart';
 class StarsRow extends StatelessWidget {
   final double rating;
 
-  const StarsRow({Key key, this.rating}) : super(key: key);
+  const StarsRow({Key? key, required this.rating}) : super(key: key);
 
   @override
   Widget build(BuildContext context) {

@@ -7,9 +7,9 @@ class CategoryModel extends BaseModel
   DateTime createdDate;
 
   CategoryModel({
-    @required int id,
-    @required this.title,
-    @required this.createdDate,
+    required int id,
+    required this.title,
+    required this.createdDate,
   }) : super(id: id);
 
   IconData getIcon(){

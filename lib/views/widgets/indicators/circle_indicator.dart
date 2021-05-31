@@ -11,7 +11,7 @@ class CircleIndicator extends StatelessWidget {
   final String description;
   final bool canPress;
 
-  const CircleIndicator({Key key, this.icon, this.color, this.darkenScale = 21, this.title = 'Eco Amigable', this.description = '', this.canPress = true}) : super(key: key);
+  const CircleIndicator({Key? key, required this.icon, required this.color, this.darkenScale = 21, this.title = 'Eco Amigable', this.description = '', this.canPress = true}) : super(key: key);
   
   @override
   Widget build(BuildContext context) {

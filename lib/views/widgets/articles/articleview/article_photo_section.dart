@@ -3,8 +3,8 @@ import 'package:flutter_ecoapp/models/article.dart';
 
 class PhotoSection extends StatelessWidget {
   const PhotoSection({
-    Key key,
-    @required this.article,
+    Key? key,
+    required this.article,
   }) : super(key: key);
 
   final ArticleModel article;
@@ -42,8 +42,8 @@ class PhotoSection extends StatelessWidget {
 
 class _PhotoItem extends StatelessWidget {
   const _PhotoItem({
-    Key key,
-    @required this.photoUrl,
+    Key? key,
+    required this.photoUrl,
   }) : super(key: key);
 
   final String photoUrl;

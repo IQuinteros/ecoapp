@@ -3,16 +3,16 @@ import 'package:flutter/material.dart';
 abstract class BaseModel{
   int id;
 
-  BaseModel({@required this.id});
+  BaseModel({required this.id});
 }
 
 abstract class TagModel{
 
-  int _id;
-  String _title;
+  late int _id;
+  late String _title;
 
   @protected
-  void initTagging({int newID, String newTitle}){
+  void initTagging({required int newID, required String newTitle}){
     _id = newID;
     _title = newTitle;
   }

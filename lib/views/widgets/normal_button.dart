@@ -6,10 +6,10 @@ class NormalButton extends StatelessWidget {
   final String text;
   final Color color;
   final Color textColor;
-  final Widget leading;
-  final Function onPressed;
+  final Widget? leading;
+  final Function()? onPressed;
 
-  const NormalButton({Key key, @required this.text, this.color = EcoAppColors.MAIN_COLOR, this.textColor = Colors.white, @required this.onPressed, this.leading}) : super(key: key);
+  const NormalButton({Key? key, required this.text, this.color = EcoAppColors.MAIN_COLOR, this.textColor = Colors.white, required this.onPressed, this.leading}) : super(key: key);
 
   @override
   Widget build(BuildContext context) {

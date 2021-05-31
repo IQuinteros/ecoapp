@@ -6,7 +6,7 @@ class MiniEcoIndicator extends StatelessWidget {
 
   final EcoIndicator ecoIndicator;
 
-  const MiniEcoIndicator({Key key, @required this.ecoIndicator}) : super(key: key);
+  const MiniEcoIndicator({Key? key, required this.ecoIndicator}) : super(key: key);
 
   @override
   Widget build(BuildContext context) {

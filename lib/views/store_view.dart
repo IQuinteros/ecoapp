@@ -11,14 +11,14 @@ class StoreView extends StatelessWidget {
 
   @override
   Widget build(BuildContext context) {
-    final StoreModel store = ModalRoute.of(context).settings.arguments;
+    final StoreModel? store = ModalRoute.of(context)!.settings.arguments as StoreModel;
     return Scaffold(
       appBar: AppBar(
         backgroundColor: Colors.transparent,
         centerTitle: false,
         elevation: 0,
         title: Text(
-          store.publicName,
+          store!.publicName,
           style: GoogleFonts.montserrat(
             fontWeight: FontWeight.w500
           ),

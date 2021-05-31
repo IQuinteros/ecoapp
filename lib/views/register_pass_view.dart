@@ -78,19 +78,24 @@ class RegisterPassView extends StatelessWidget {
               header: 'Nueva contraseña', 
               hint: 'Mínimo 6 caracteres', 
               icon: Icons.person,
-              controller: controllers['pass'],
-              validator: (value) => value.isEmpty? 'Debe ingresar su nombre' : null,
+              controller: controllers['pass']!,
+              validator: (value) => value!.isEmpty
+                ? 'Debe ingresar su nombre'
+                : value.length < 6
+                  ? 'Debe tener mínimo 6 caracteres'
+                  : null,
               isPassword: true,
             ),
             NormalInput(
               header: 'Repetir contraseña', 
               hint: 'Confirma tu nueva contraseña', 
               icon: Icons.person,
-              controller: controllers['confirm'],
-              validator: (value) {
-                if(value.isEmpty)
+              controller: controllers['confirm']!,
+              validator: (String? value) {
+                if(value == null || value.isEmpty)
                   return 'Debe confirmar la contraseña';
-                if(value != controllers['pass'].text)
+                  
+                if(value != controllers['pass']!.text)
                   return 'Las contraseñas no coinciden';
                 
                 return null;
@@ -112,7 +117,7 @@ class RegisterPassView extends StatelessWidget {
   }
 
   void createAccount(BuildContext context){
-    if(_formKey.currentState.validate()){
+    if(_formKey.currentState!.validate()){
       // TODO: Create account
 
       Navigator.popUntil(context, ModalRoute.withName('/'));
