@@ -1,6 +1,7 @@
 import 'package:flutter/material.dart';
 import 'package:flutter_ecoapp/models/article.dart';
 import 'package:flutter_ecoapp/models/question.dart';
+import 'package:flutter_ecoapp/views/questions_view.dart';
 import 'package:flutter_ecoapp/views/widgets/normal_button.dart';
 import 'package:google_fonts/google_fonts.dart';
 
@@ -83,7 +84,10 @@ class QuestionsSection extends StatelessWidget {
           SizedBox(height: 5.0),
           questions,
           SizedBox(height: 15.0),
-          NormalButton(text: 'Ver más preguntas', onPressed: (){})
+          NormalButton(
+            text: 'Ver más preguntas', 
+            onPressed: () => Navigator.push(context, MaterialPageRoute(builder: (BuildContext context) => QuestionsView(article: article,)))
+          )
         ],
       ),
     );
