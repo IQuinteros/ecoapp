@@ -11,7 +11,8 @@ class NormalInput extends StatelessWidget {
     this.onTap, 
     this.type = TextInputType.text, 
     this.controller, 
-    this.validator,
+    this.validator, 
+    this.isPassword = false,
   }) : super(key: key);
 
   final String header;
@@ -20,6 +21,7 @@ class NormalInput extends StatelessWidget {
   final bool readOnly;
   final Function onTap;
   final TextInputType type;
+  final bool isPassword;
   final TextEditingController controller;
   final String Function(String) validator;
 
@@ -35,6 +37,7 @@ class NormalInput extends StatelessWidget {
         style: GoogleFonts.montserrat(),
         readOnly: readOnly,
         validator: validator,
+        obscureText: isPassword,
         decoration: InputDecoration(
           border: OutlineInputBorder(
             borderRadius: BorderRadius.circular(20.0)

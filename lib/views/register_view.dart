@@ -1,5 +1,6 @@
 import 'package:flutter/cupertino.dart';
 import 'package:flutter/material.dart';
+import 'package:flutter_ecoapp/views/register_pass_view.dart';
 import 'package:flutter_ecoapp/views/style/colors.dart';
 import 'package:flutter_ecoapp/views/widgets/bottom_nav_bar.dart';
 import 'package:flutter_ecoapp/views/widgets/normal_button.dart';
@@ -185,9 +186,8 @@ class RegisterView extends StatelessWidget {
 
   void createAccount(BuildContext context){
     if(_formKey.currentState.validate()){
-
+      Navigator.push(context, MaterialPageRoute(builder: (BuildContext context) => RegisterPassView()));
     }
-      // Navigator.push(context,); TODO: Navigate to password page
   }
 
 }

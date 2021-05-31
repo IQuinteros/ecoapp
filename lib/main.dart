@@ -19,8 +19,9 @@ class MyApp extends StatelessWidget {
         theme: ThemeData(
           primarySwatch: Colors.lightGreen,
         ),
-        home: MainView(),
+        initialRoute: '/',
         routes: {
+          '/': (BuildContext context) => MainView(),
           'article': (BuildContext context) => ArticleView(),
           'store': (BuildContext context) => StoreView(),
           'login': (BuildContext context) => LoginView(),
