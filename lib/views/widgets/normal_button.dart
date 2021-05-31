@@ -25,10 +25,12 @@ class NormalButton extends StatelessWidget {
             children: [
               leading?? Container(),
               leading != null? SizedBox(width: 10.0) : Container(),
-              Text(
-                text,
-                style: GoogleFonts.montserrat(),
-                textAlign: TextAlign.center,
+              Expanded(
+                child: Text(
+                  text,
+                  style: GoogleFonts.montserrat(),
+                  textAlign: TextAlign.center,
+                ),
               ),
             ],
           )

@@ -78,7 +78,7 @@ class LoginView extends StatelessWidget {
               ),
               child: NormalButton(
                 text: '¡Soy nuevo! Quiero registrarme', 
-                onPressed: (){}
+                onPressed: () => Navigator.pushNamed(context, 'register')
               ),
             ),
           ],

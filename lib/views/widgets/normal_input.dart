@@ -6,12 +6,24 @@ class NormalInput extends StatelessWidget {
     Key key,
     @required this.header,
     @required this.hint,
-    @required this.icon,
+    @required this.icon, 
+    this.readOnly = false, 
+    this.onTap, 
+    this.type = TextInputType.text, 
+    this.controller, 
+    this.validator, 
+    this.isPassword = false,
   }) : super(key: key);
 
   final String header;
   final String hint;
   final IconData icon;
+  final bool readOnly;
+  final Function onTap;
+  final TextInputType type;
+  final bool isPassword;
+  final TextEditingController controller;
+  final String Function(String) validator;
 
   @override
   Widget build(BuildContext context) {
@@ -19,8 +31,13 @@ class NormalInput extends StatelessWidget {
       margin: EdgeInsets.only(
         bottom: 20.0
       ),
-      child: TextField(
+      child: TextFormField(
+        controller: controller,
+        keyboardType: type,
         style: GoogleFonts.montserrat(),
+        readOnly: readOnly,
+        validator: validator,
+        obscureText: isPassword,
         decoration: InputDecoration(
           border: OutlineInputBorder(
             borderRadius: BorderRadius.circular(20.0)
@@ -34,6 +51,7 @@ class NormalInput extends StatelessWidget {
           labelText: header,
           prefixIcon: Icon(icon)
         ),
+        onTap: onTap,
       ),
     );
   }
