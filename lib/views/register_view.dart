@@ -75,35 +75,69 @@ class RegisterView extends StatelessWidget {
               ],
             ),
             SizedBox(height: 20.0,),
-            NormalInput(header: 'Email', hint: 'Ingresa tu email', icon: Icons.mail),
-            NormalInput(header: 'Contraseña', hint: 'Ingresa tu contraseña', icon: Icons.vpn_key),
+            NormalInput(
+              header: 'Nombres', 
+              hint: 'Ingresa tus nombres', 
+              icon: Icons.person,
+            ),
+            NormalInput(
+              header: 'Apellidos', 
+              hint: 'Ingresa tus apellidos', 
+              icon: Icons.person
+            ),
+            NormalInput(
+              header: 'Email', 
+              hint: 'Ingresa tu email', 
+              icon: Icons.mail,
+              type: TextInputType.emailAddress,
+            ),
+            NormalInput(
+              header: 'Rut', 
+              hint: 'Ingresa tu rut', 
+              icon: Icons.person,
+              type: TextInputType.number,
+            ),
+            NormalInput(
+              header: 'Teléfono - Celular', 
+              hint: 'Ingresa tu número de contacto', 
+              icon: Icons.phone,
+              type: TextInputType.phone,
+            ),
+            NormalInput(
+              header: 'Fecha de nacimiento', 
+              hint: 'Ingresa tu fecha de nacimiento', 
+              icon: Icons.date_range,
+              readOnly: true,
+              onTap: () {
+                showDatePicker(
+                  context: context, 
+                  initialDate: DateTime.now(), 
+                  firstDate: DateTime(1900), 
+                  lastDate: DateTime.now(),
+                  initialDatePickerMode: DatePickerMode.year,
+                );
+              },
+            ),
+            NormalInput(
+              header: 'Comuna', 
+              hint: 'Ingresa tu comuna', 
+              icon: Icons.location_on,
+              readOnly: true,
+              onTap: (){
+                // TODO: Combo Box with districts
+               },
+            ),
+            NormalInput(
+              header: 'Dirección', 
+              hint: 'Ingresa tu dirección', 
+              icon: Icons.location_on
+            ),
             Container(
               margin: EdgeInsets.symmetric(
                 horizontal: 40.0
               ),
               child: NormalButton(
-                text: 'Iniciar sesión', 
-                onPressed: (){}
-              ),
-            ),
-            Container(
-              margin: EdgeInsets.only(
-                left: 40.0,
-                right: 40.0,
-                top: 20.0
-              ),
-              child: GoogleButton(),
-            ),
-            SizedBox(height: 10.0,),
-            Divider(thickness: 1,),
-            Container(
-              margin: EdgeInsets.only(
-                left: 40.0,
-                right: 40.0,
-                top: 10.0
-              ),
-              child: NormalButton(
-                text: '¡Soy nuevo! Quiero registrarme', 
+                text: 'Crear mi cuenta', 
                 onPressed: (){}
               ),
             ),
