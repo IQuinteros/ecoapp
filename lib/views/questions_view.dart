@@ -3,9 +3,6 @@ import 'package:flutter_ecoapp/models/article.dart';
 import 'package:flutter_ecoapp/models/question.dart';
 import 'package:flutter_ecoapp/views/style/colors.dart';
 import 'package:flutter_ecoapp/views/widgets/bottom_nav_bar.dart';
-import 'package:flutter_ecoapp/views/widgets/google_button.dart';
-import 'package:flutter_ecoapp/views/widgets/normal_button.dart';
-import 'package:flutter_ecoapp/views/widgets/normal_input.dart';
 import 'package:google_fonts/google_fonts.dart';
 
 class QuestionsView extends StatelessWidget {
@@ -55,17 +52,28 @@ class QuestionsView extends StatelessWidget {
         ),
         child: Column(
           children: [
-            getArticleCover(),
+            _QuestionsArticleCover(article: article),
             SizedBox(height: 10.0,),
             Divider(thickness: 1,),
-            getQuestions()
+            _QuestionsList(article: article)
           ],
         ),
       ),
     );
   }
 
-  Widget getArticleCover(){
+}
+
+class _QuestionsArticleCover extends StatelessWidget {
+  const _QuestionsArticleCover({
+    Key? key,
+    required this.article,
+  }) : super(key: key);
+
+  final ArticleModel article;
+
+  @override
+  Widget build(BuildContext context) {
     final img = article.photos.length > 0? Container(
       width: 80,
       height: 80,
@@ -118,21 +126,41 @@ class QuestionsView extends StatelessWidget {
       ),
     );
   }
+}
 
-  Widget getQuestions() {
+class _QuestionsList extends StatelessWidget {
+  const _QuestionsList({
+    Key? key,
+    required this.article,
+  }) : super(key: key);
+
+  final ArticleModel article;
+
+  @override
+  Widget build(BuildContext context) {
     List<QuestionModel> questions = article.questions!;
     List<Widget> content = [];
 
     questions.forEach((element) { 
-      content.addAll([getQuestionTile(element), Divider(thickness: 1,)]);
+      content.addAll([_QuestionTile(question: element), Divider(thickness: 1,)]);
     });
 
     return Column(
       children: content
     );
   }
+}
 
-  Widget getQuestionTile(QuestionModel question){
+class _QuestionTile extends StatelessWidget {
+  const _QuestionTile({
+    Key? key,
+    required this.question,
+  }) : super(key: key);
+
+  final QuestionModel question;
+
+  @override
+  Widget build(BuildContext context) {
     final answer = question.answer != null
       ? Container(
           margin: EdgeInsets.only(
@@ -176,7 +204,6 @@ class QuestionsView extends StatelessWidget {
       ),
     );
   }
-
 }
 
 
