@@ -65,17 +65,19 @@ class StoreDescriptionSection extends StatelessWidget {
             fontSize: 16,
             fontWeight: FontWeight.w500
           ),
+          textAlign: TextAlign.end,
         ),
         SizedBox(height: 10.0),
         Text(
           'Media de reseña de clientes',
-          style: GoogleFonts.montserrat()
+          style: GoogleFonts.montserrat(),
+          textAlign: TextAlign.end,
         ),
         SizedBox(height: 10.0),
         Row(
           mainAxisAlignment: MainAxisAlignment.end,
           children: [
-            Text('4.2', style: GoogleFonts.montserrat(),),
+            Text('4.2', style: GoogleFonts.montserrat(), textAlign: TextAlign.end,),
             StarsRow(rating: 2,)
           ],
         ),
@@ -85,6 +87,7 @@ class StoreDescriptionSection extends StatelessWidget {
           style: GoogleFonts.montserrat(
             fontWeight: FontWeight.w500
           ),
+          textAlign: TextAlign.end,
         )
       ],
     );

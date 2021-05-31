@@ -87,17 +87,20 @@ class StoreView extends StatelessWidget {
             '${store.location}, ${store.district?.name}',
             style: GoogleFonts.montserrat(
               fontWeight: FontWeight.w500
-            )
+            ),
+            textAlign: TextAlign.end,
           ),
           SizedBox(height: 10.0),
           Text(
             'Ventas concretadas: 17.350',
             style: GoogleFonts.montserrat(),
+            textAlign: TextAlign.end,
           ),
           SizedBox(height: 10.0),
           Text(
             'Creado el ${store.createdDate.day}/${store.createdDate.month}/${store.createdDate.year}',
             style: GoogleFonts.montserrat(),
+            textAlign: TextAlign.end,
           )
         ],
       ),
@@ -108,7 +111,7 @@ class StoreView extends StatelessWidget {
       children: [
         image,
         SizedBox(width: 20.0),
-        info
+        Expanded(child: info)
       ],
     );
 
@@ -158,6 +161,8 @@ class StoreView extends StatelessWidget {
       child: Column(
         children: [
           firstRow,
+          SizedBox(height: 10.0),
+          Divider(thickness: 1,),
           description,
           rating,
         ],
