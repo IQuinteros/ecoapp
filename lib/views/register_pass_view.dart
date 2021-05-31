@@ -79,7 +79,11 @@ class RegisterPassView extends StatelessWidget {
               hint: 'Mínimo 6 caracteres', 
               icon: Icons.person,
               controller: controllers['pass'],
-              validator: (value) => value.isEmpty? 'Debe ingresar su nombre' : null,
+              validator: (value) => value.isEmpty
+                ? 'Debe ingresar su nombre' 
+                : value.length < 6
+                  ? 'Debe tener mínimo 6 caracteres'
+                  : null,
               isPassword: true,
             ),
             NormalInput(
