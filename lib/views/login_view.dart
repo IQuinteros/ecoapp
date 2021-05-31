@@ -3,6 +3,7 @@ import 'package:flutter_ecoapp/models/store.dart';
 import 'package:flutter_ecoapp/views/debug/debug.dart';
 import 'package:flutter_ecoapp/views/style/colors.dart';
 import 'package:flutter_ecoapp/views/widgets/bottom_nav_bar.dart';
+import 'package:flutter_ecoapp/views/widgets/google_button.dart';
 import 'package:flutter_ecoapp/views/widgets/normal_button.dart';
 import 'package:flutter_ecoapp/views/widgets/search_bar.dart';
 import 'package:flutter_ecoapp/views/widgets/store/storeview/store_cover_section.dart';
@@ -76,10 +77,7 @@ class LoginView extends StatelessWidget {
                 right: 40.0,
                 top: 20.0
               ),
-              child: NormalButton(
-                text: 'Continuar con Google', 
-                onPressed: (){}
-              ),
+              child: GoogleButton(),
             ),
             SizedBox(height: 10.0,),
             Divider(thickness: 1,),
@@ -87,7 +85,7 @@ class LoginView extends StatelessWidget {
               margin: EdgeInsets.only(
                 left: 40.0,
                 right: 40.0,
-                top: 20.0
+                top: 10.0
               ),
               child: NormalButton(
                 text: '¡Soy nuevo! Quiero registrarme', 
