@@ -39,10 +39,25 @@ class ProfileView extends StatelessWidget {
   }
 
   Widget mainContent(BuildContext context){
-    return Card(
+    return Container(
+      margin: EdgeInsets.symmetric(
+        horizontal: 5
+      ),
+      decoration: BoxDecoration(
+        borderRadius: BorderRadius.circular(20.0),
+        color: Colors.white,
+        boxShadow: [
+          BoxShadow(
+            color: Colors.black.withOpacity(0.25),
+            offset: Offset(0, 2),
+            blurRadius: 5
+          )
+        ]
+      ),
       child: Column(
         children: [
-          getProfileCover()
+          getProfileCover(),
+          getButtons()
         ],
       ),
     );
@@ -102,6 +117,58 @@ class ProfileView extends StatelessWidget {
           Expanded(child: content)
         ],
       ),
+    );
+  }
+
+  Widget getButtons(){
+    return Container(
+      child: Column(
+        children: [
+          Divider(thickness: 1),
+          getButton(
+            icon: Icons.star_border_rounded,
+            title: 'Lista de favoritos',
+            onTap: (){}
+          ),
+          Divider(thickness: 1),
+          getButton(
+            icon: Icons.history,
+            title: 'Historial',
+            onTap: (){}
+          ),
+          Divider(thickness: 1),
+          getButton(
+            icon: Icons.shopping_cart_outlined,
+            title: 'Mis compras',
+            onTap: (){}
+          ),
+          Divider(thickness: 1),
+          getButton(
+            icon: Icons.settings_outlined,
+            title: 'Ajustes de perfil',
+            onTap: (){}
+          ),
+          SizedBox(height: 10.0),
+        ],
+      )
+    );
+  }
+
+  Widget getButton({IconData icon, String title, Function onTap}){
+    return ListTile(
+      leading: Icon(
+        icon, 
+        size: 35, 
+        color: EcoAppColors.MAIN_COLOR
+      ),
+      title: Text(title),
+      trailing: Icon(
+        Icons.keyboard_arrow_right_rounded,
+        color: EcoAppColors.MAIN_COLOR,
+        size: 30
+      ),
+      enabled: true,
+      onTap: () => onTap,
     );
   }
 }
