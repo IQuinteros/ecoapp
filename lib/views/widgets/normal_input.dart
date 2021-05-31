@@ -9,7 +9,9 @@ class NormalInput extends StatelessWidget {
     @required this.icon, 
     this.readOnly = false, 
     this.onTap, 
-    this.type = TextInputType.text,
+    this.type = TextInputType.text, 
+    this.controller, 
+    this.validator,
   }) : super(key: key);
 
   final String header;
@@ -18,6 +20,8 @@ class NormalInput extends StatelessWidget {
   final bool readOnly;
   final Function onTap;
   final TextInputType type;
+  final TextEditingController controller;
+  final String Function(String) validator;
 
   @override
   Widget build(BuildContext context) {
@@ -25,10 +29,12 @@ class NormalInput extends StatelessWidget {
       margin: EdgeInsets.only(
         bottom: 20.0
       ),
-      child: TextField(
+      child: TextFormField(
+        controller: controller,
         keyboardType: type,
         style: GoogleFonts.montserrat(),
         readOnly: readOnly,
+        validator: validator,
         decoration: InputDecoration(
           border: OutlineInputBorder(
             borderRadius: BorderRadius.circular(20.0)
