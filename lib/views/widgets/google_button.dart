@@ -4,7 +4,7 @@ import 'package:flutter_ecoapp/views/widgets/normal_button.dart';
 
 class GoogleButton extends StatelessWidget {
 
-  const GoogleButton({Key key}) : super(key: key);
+  const GoogleButton({Key? key}) : super(key: key);
 
   @override
   Widget build(BuildContext context) {

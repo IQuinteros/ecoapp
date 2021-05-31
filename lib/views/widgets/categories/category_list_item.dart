@@ -6,7 +6,7 @@ class CategoryListItem extends StatelessWidget {
 
   final CategoryModel category;
 
-  const CategoryListItem({Key key, @required this.category}) : super(key: key);
+  const CategoryListItem({Key? key, required this.category}) : super(key: key);
 
   @override
   Widget build(BuildContext context) {

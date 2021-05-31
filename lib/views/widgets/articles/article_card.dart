@@ -12,7 +12,7 @@ class ArticleCard extends StatefulWidget {
 
   final bool favorite;
 
-  const ArticleCard({Key key, @required this.article, this.favorite = false}) : super(key: key);
+  const ArticleCard({Key? key, required this.article, this.favorite = false}) : super(key: key);
 
   @override
   _ArticleCardState createState() => _ArticleCardState();

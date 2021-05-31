@@ -5,8 +5,8 @@ import 'package:google_fonts/google_fonts.dart';
 
 class StoreCoverSection extends StatelessWidget {
   const StoreCoverSection({
-    Key key,
-    @required this.store,
+    Key? key,
+    required this.store,
   }) : super(key: key);
 
   final StoreModel store;
@@ -41,7 +41,7 @@ class StoreCoverSection extends StatelessWidget {
         mainAxisAlignment: MainAxisAlignment.spaceAround,
         children: [
           Text(
-            '${store.location}, ${store.district?.name}',
+            '${store.location}, ${store.district.name}',
             style: GoogleFonts.montserrat(
               fontWeight: FontWeight.w500
             ),

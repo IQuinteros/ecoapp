@@ -7,7 +7,7 @@ class CartModel extends BaseModel
   List<ArticleModel> articles;
 
   CartModel({
-    @required int id,
+    required int id,
     this.articles = const [],
   }) : super(id: id);
 

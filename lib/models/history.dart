@@ -6,8 +6,8 @@ class HistoryModel extends BaseModel
   DateTime createdDate;
 
   HistoryModel({
-    @required int id,
-    @required this.createdDate,
+    required int id,
+    required this.createdDate,
   }) : super(id: id);
 }
 
@@ -17,8 +17,8 @@ class HistoryDetailModel extends BaseModel
   bool deleted;
 
   HistoryDetailModel({
-    @required int id,
-    @required this.date,
-    @required this.deleted
+    required int id,
+    required this.date,
+    required this.deleted
   }) : super(id: id);
 }

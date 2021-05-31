@@ -10,7 +10,7 @@ class FeaturedProduct extends StatefulWidget {
 
   final ArticleModel article;
 
-  const FeaturedProduct({Key key, @required this.article}) : super(key: key);
+  const FeaturedProduct({Key? key, required this.article}) : super(key: key);
 
   @override
   _FeaturedProductState createState() => _FeaturedProductState();

@@ -16,17 +16,17 @@ class ProfileModel extends BaseModel
   String rutDv;
 
   ProfileModel({
-    @required int id,
-    @required this.name,
-    @required this.lastName,
-    @required this.email, 
-    @required this.contactNumber,
-    @required this.bithday,
-    @required this.termsChecked,
-    @required this.location,
-    @required this.createdDate,
-    @required this.lastUpdateDate,
-    @required this.rut,
-    @required this.rutDv,
+    required int id,
+    required this.name,
+    required this.lastName,
+    required this.email, 
+    required this.contactNumber,
+    required this.bithday,
+    required this.termsChecked,
+    required this.location,
+    required this.createdDate,
+    required this.lastUpdateDate,
+    required this.rut,
+    required this.rutDv,
   }) : super(id: id);
 }

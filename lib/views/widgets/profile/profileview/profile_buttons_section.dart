@@ -3,7 +3,7 @@ import 'package:flutter_ecoapp/views/widgets/profile/profileview/profile_button.
 
 class ProfileButtonsSection extends StatelessWidget {
   const ProfileButtonsSection({
-    Key key,
+    Key? key,
   }) : super(key: key);
 
   @override

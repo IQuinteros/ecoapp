@@ -6,13 +6,13 @@ class QuestionModel extends BaseModel
   String question;
   DateTime date;
 
-  AnswerModel answer;
+  AnswerModel? answer;
 
   QuestionModel({
-    @required int id,
-    @required this.question,
-    @required this.date,
-    @required this.answer
+    required int id,
+    required this.question,
+    required this.date,
+    this.answer
   }) : super(id: id);
 }
 
@@ -22,8 +22,8 @@ class AnswerModel extends BaseModel
   DateTime date;
 
   AnswerModel({
-    @required int id,
-    @required this.answer,
-    @required this.date,
+    required int id,
+    required this.answer,
+    required this.date,
   }) : super(id: id);
 }

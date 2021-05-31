@@ -8,7 +8,7 @@ class CategoryBox extends StatelessWidget {
 
   final CategoryModel category;
 
-  const CategoryBox({Key key, @required this.category}) : super(key: key);
+  const CategoryBox({Key? key, required this.category}) : super(key: key);
 
   @override
   Widget build(BuildContext context) {

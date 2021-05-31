@@ -8,7 +8,7 @@ class EcoAppTextStyle{
     fontWeight: FontWeight.bold
   );
 
-  static Widget getTitle(String text, {Widget rightButton}){
+  static Widget getTitle(String text, {Widget? rightButton}){
     final textWidget  = Flexible(child:Text(
       text,
       style: titleStyle,

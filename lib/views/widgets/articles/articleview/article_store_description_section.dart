@@ -8,15 +8,15 @@ import 'package:google_fonts/google_fonts.dart';
 
 class StoreDescriptionSection extends StatelessWidget {
   const StoreDescriptionSection({
-    Key key,
-    @required this.article,
+    Key? key,
+    required this.article,
   }) : super(key: key);
 
   final ArticleModel article;
 
   @override
   Widget build(BuildContext context) {
-    StoreModel store = article.store;
+    StoreModel store = article.store!;
 
     store.tag = 'article-description';
 
@@ -83,7 +83,7 @@ class StoreDescriptionSection extends StatelessWidget {
         ),
         SizedBox(height: 10.0),
         Text(
-          '${store.location}, ${store.district?.name}',
+          '${store.location}, ${store.district.name}',
           style: GoogleFonts.montserrat(
             fontWeight: FontWeight.w500
           ),

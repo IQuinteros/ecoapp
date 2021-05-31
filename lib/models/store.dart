@@ -19,19 +19,19 @@ class StoreModel extends BaseModel with TagModel
   DistrictModel district;
 
   StoreModel({
-    @required int id,
-    @required this.publicName,
-    @required this.description,
+    required int id,
+    required this.publicName,
+    required this.description,
     this.photoUrl = 'https://seeklogo.com/images/F/facebook-marketplace-logo-46A976DABC-seeklogo.com.png',
-    @required this.email,
-    @required this.contactNumber,
-    @required this.location,
-    @required this.rut,
-    @required this.rutDv,
-    @required this.enabled,
-    @required this.createdDate,
-    @required this.lastUpdateDate,
-    @required this.district
+    required this.email,
+    required this.contactNumber,
+    required this.location,
+    required this.rut,
+    required this.rutDv,
+    required this.enabled,
+    required this.createdDate,
+    required this.lastUpdateDate,
+    required this.district
   }) : super(id: id){
     initTagging(newID: this.id, newTitle: this.publicName);
   }

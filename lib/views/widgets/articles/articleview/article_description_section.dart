@@ -4,8 +4,8 @@ import 'package:google_fonts/google_fonts.dart';
 
 class DescriptionSection extends StatelessWidget {
   const DescriptionSection({
-    Key key,
-    this.article
+    Key? key,
+    required this.article
   }) : super(key: key);
 
   final ArticleModel article;

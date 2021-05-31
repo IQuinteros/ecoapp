@@ -5,9 +5,9 @@ import 'package:google_fonts/google_fonts.dart';
 class MiniButton extends StatelessWidget {
 
   final String text;
-  final Function action;
+  final Function()? action;
 
-  const MiniButton({Key key, @required this.text, @required this.action}) : super(key: key);
+  const MiniButton({Key? key, required this.text, this.action}) : super(key: key);
 
   @override
   Widget build(BuildContext context) {

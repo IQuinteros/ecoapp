@@ -6,7 +6,7 @@ class DistrictModel extends BaseModel
   String name;
 
   DistrictModel({
-    @required int id,
-    @required this.name,
+    required int id,
+    required this.name,
   }) : super(id: id);
 }

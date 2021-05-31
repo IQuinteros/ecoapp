@@ -8,7 +8,7 @@ class FavoriteButton extends StatefulWidget {
   final Color disabledColor;
 
   const FavoriteButton({
-    Key key, 
+    Key? key, 
     this.favorite = true, 
     this.disabledColor = Colors.black54,
     this.enabledColor = EcoAppColors.RED_COLOR

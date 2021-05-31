@@ -7,8 +7,8 @@ class SearchModel extends BaseModel
   DateTime searchDate;
 
   SearchModel({
-    @required int id,
-    @required this.searchText,
-    @required this.searchDate
+    required int id,
+    required this.searchText,
+    required this.searchDate
   }) : super(id: id);
 }

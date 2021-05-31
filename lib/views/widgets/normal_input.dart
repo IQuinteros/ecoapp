@@ -3,10 +3,10 @@ import 'package:google_fonts/google_fonts.dart';
 
 class NormalInput extends StatelessWidget {
   const NormalInput({
-    Key key,
-    @required this.header,
-    @required this.hint,
-    @required this.icon, 
+    Key? key,
+    required this.header,
+    required this.hint,
+    required this.icon, 
     this.readOnly = false, 
     this.onTap, 
     this.type = TextInputType.text, 
@@ -19,11 +19,11 @@ class NormalInput extends StatelessWidget {
   final String hint;
   final IconData icon;
   final bool readOnly;
-  final Function onTap;
+  final Function()? onTap;
   final TextInputType type;
   final bool isPassword;
-  final TextEditingController controller;
-  final String Function(String) validator;
+  final TextEditingController? controller;
+  final String? Function(String?)? validator;
 
   @override
   Widget build(BuildContext context) {
@@ -51,7 +51,7 @@ class NormalInput extends StatelessWidget {
           labelText: header,
           prefixIcon: Icon(icon)
         ),
-        onTap: onTap,
+        onTap: onTap
       ),
     );
   }
