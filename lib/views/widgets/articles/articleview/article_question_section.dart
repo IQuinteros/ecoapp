@@ -1,6 +1,7 @@
 import 'package:flutter/material.dart';
 import 'package:flutter_ecoapp/models/article.dart';
 import 'package:flutter_ecoapp/models/question.dart';
+import 'package:flutter_ecoapp/views/questions_view.dart';
 import 'package:flutter_ecoapp/views/widgets/normal_button.dart';
 import 'package:google_fonts/google_fonts.dart';
 
@@ -54,7 +55,7 @@ class QuestionsSection extends StatelessWidget {
       children: getQuestions()
     );
 
-    bool haveQuestions = article.questions != null && article.questions!.length > 0;
+    bool haveQuestions = article.questions.length > 0;
 
     return Container(
       margin: EdgeInsets.symmetric(
@@ -83,7 +84,10 @@ class QuestionsSection extends StatelessWidget {
           SizedBox(height: 5.0),
           questions,
           SizedBox(height: 15.0),
-          NormalButton(text: 'Ver más preguntas', onPressed: (){})
+          NormalButton(
+            text: 'Ver más preguntas', 
+            onPressed: () => Navigator.push(context, MaterialPageRoute(builder: (BuildContext context) => QuestionsView(article: article,)))
+          )
         ],
       ),
     );
@@ -91,7 +95,7 @@ class QuestionsSection extends StatelessWidget {
 
   List<Widget> getQuestions(){
     List<Widget> questionsWidgets = [];
-    article.questions!.take(3).forEach((element) => questionsWidgets.add(_Question(question: element,)));
+    article.questions.take(3).forEach((element) => questionsWidgets.add(_Question(question: element,)));
     return questionsWidgets;
   }
 }

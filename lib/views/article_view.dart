@@ -1,6 +1,8 @@
 import 'package:flutter/material.dart';
 import 'package:flutter_ecoapp/models/article.dart';
 import 'package:flutter_ecoapp/utils/currency_util.dart';
+import 'package:flutter_ecoapp/views/opinions_view.dart';
+import 'package:flutter_ecoapp/views/questions_view.dart';
 import 'package:flutter_ecoapp/views/style/colors.dart';
 import 'package:flutter_ecoapp/views/widgets/articles/articleview/article_description_section.dart';
 import 'package:flutter_ecoapp/views/widgets/articles/articleview/article_eco_detail_section.dart';
@@ -142,22 +144,28 @@ class _ArticleContent extends StatelessWidget {
       ),
     );
 
-    final rating = Padding(
-      padding: EdgeInsets.only(
-        top: 10.0,
-        left: 20.0,
-        right: 20.0
+    final rating = GestureDetector(
+      child: Padding(
+        padding: EdgeInsets.only(
+          top: 10.0,
+          left: 20.0,
+          right: 20.0
+        ),
+        child: Row(
+          children: [
+            StarsRow(rating: article.rating.avgRating),
+            SizedBox(width: 10.0),
+            Text(
+              '${article.rating.count} opiniones',
+              style: GoogleFonts.montserrat(),
+            )
+          ],
+        ),
       ),
-      child: Row(
-        children: [
-          StarsRow(rating: article.rating.avgRating),
-          SizedBox(width: 10.0),
-          Text(
-            '${article.rating.count} opiniones',
-            style: GoogleFonts.montserrat(),
-          )
-        ],
-      ),
+      onTap: () => Navigator.push(
+        context, 
+        MaterialPageRoute(builder: (__) => OpinionsView(article: article,))
+      )
     );
 
     // Only display when past price is higher than 0, and is higher than the current price
