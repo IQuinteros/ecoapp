@@ -89,19 +89,20 @@ class _QuestionTile extends StatelessWidget {
             top: 10.0,
           ),
           child: Text(
-          question.answer!.answer,
-          style: GoogleFonts.montserrat(
-            fontWeight: FontWeight.w300
+            question.answer!.answer,
+            style: GoogleFonts.montserrat(
+              fontWeight: FontWeight.w300
+            ),
+            textAlign: TextAlign.start,
           ),
-        ),
-      )
-      : Container();
+        ) : Container();
 
     return Container(
       margin: EdgeInsets.symmetric(
         vertical: 10.0
       ),
       child: Column(
+        crossAxisAlignment: CrossAxisAlignment.start,
         children: [
           Row(
             children: [
