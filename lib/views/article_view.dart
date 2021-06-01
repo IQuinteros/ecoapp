@@ -1,3 +1,4 @@
+import 'package:flutter/gestures.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter_ecoapp/models/article.dart';
 import 'package:flutter_ecoapp/utils/currency_util.dart';
@@ -198,29 +199,34 @@ class _ArticleContent extends StatelessWidget {
       ),
     );
 
-    final storeText = Padding(
-      padding: EdgeInsets.symmetric(
-        horizontal: 20.0
-      ),
-      child: Container(
-        width: double.infinity,
-        child: RichText(
-          text: TextSpan(
-            text: 'Vendido por ',
-            style: GoogleFonts.montserrat(
-              color: Colors.black
-            ),
-            children: [
-              TextSpan(
-                text: '${article.store!.publicName}',
-                style: GoogleFonts.montserrat(
-                  color: EcoAppColors.MAIN_COLOR
-                )
-              )
-            ]
-          ),
+    final storeText = InkWell(
+      onTap: () => print('Go to store'), // TODO: Go to store
+      child: Padding(
+        padding: EdgeInsets.symmetric(
+          horizontal: 20.0
         ),
-      )
+        child: Container(
+          width: double.infinity,
+          child: RichText(
+            textScaleFactor: MediaQuery.of(context).textScaleFactor,
+            text: TextSpan(
+              text: 'Vendido por ',
+              style: GoogleFonts.montserrat(
+                color: Colors.black,
+                fontSize: 15
+              ),
+              children: [
+                TextSpan(
+                  text: '${article.store!.publicName}',
+                  style: GoogleFonts.montserrat(
+                    color: EcoAppColors.MAIN_COLOR
+                  ),
+                )
+              ]
+            ),
+          ),
+        )
+      ),
     );
 
     final btnAddToCart = Padding(
