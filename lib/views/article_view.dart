@@ -1,9 +1,7 @@
-import 'package:flutter/gestures.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter_ecoapp/models/article.dart';
 import 'package:flutter_ecoapp/utils/currency_util.dart';
 import 'package:flutter_ecoapp/views/opinions_view.dart';
-import 'package:flutter_ecoapp/views/questions_view.dart';
 import 'package:flutter_ecoapp/views/style/colors.dart';
 import 'package:flutter_ecoapp/views/widgets/articles/articleview/article_description_section.dart';
 import 'package:flutter_ecoapp/views/widgets/articles/articleview/article_eco_detail_section.dart';
@@ -19,11 +17,14 @@ import 'package:google_fonts/google_fonts.dart';
 
 class ArticleView extends StatelessWidget {
 
+  final ArticleModel article;
+
+  const ArticleView({Key? key, required this.article}) : super(key: key);
+
   @override
   Widget build(BuildContext context) {
-    final ArticleModel? article = ModalRoute.of(context)!.settings.arguments as ArticleModel;
     return Scaffold(
-      body: getContent(context, article!),
+      body: getContent(context),
       bottomNavigationBar: EcoBottomNavigationBar(
         currentIndex: 0,
           onTap: (value){
@@ -32,7 +33,7 @@ class ArticleView extends StatelessWidget {
     );
   }
 
-  Widget getContent(BuildContext context, ArticleModel article){
+  Widget getContent(BuildContext context){
     return CustomScrollView(
       slivers: [
         _ArticleAppBar(article: article),
