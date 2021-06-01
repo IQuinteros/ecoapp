@@ -1,5 +1,6 @@
 import 'package:flutter/material.dart';
 import 'package:flutter_ecoapp/models/base.dart';
+import 'package:flutter_ecoapp/models/district.dart';
 import 'package:flutter_ecoapp/models/profile.dart';
 import 'package:flutter_ecoapp/models/store.dart';
 
@@ -16,6 +17,21 @@ class ChatModel extends BaseModel
     required this.createdDate,
     this.messages = const []
   }) : super(id: id);
+
+  StoreModel get store => StoreModel(
+    id: 1, 
+    publicName: 'dfdsfgs', 
+    description: 'fgdgdgsgds', 
+    email: 'dfsfgsfg', 
+    contactNumber: 123123, 
+    location: 'fsgfsfgs', 
+    rut: 234234, 
+    rutDv: 's', 
+    enabled: true, 
+    createdDate: createdDate, 
+    lastUpdateDate: createdDate, 
+    district: DistrictModel(id: 1, name: 'Penco')
+  ); // TODO: Conenct to api - DEBUG
 }
 
 class MessageModel extends BaseModel
