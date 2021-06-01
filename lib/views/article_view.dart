@@ -144,12 +144,13 @@ class _ArticleContent extends StatelessWidget {
       ),
     );
 
-    final rating = GestureDetector(
+    final rating = InkWell(
       child: Padding(
         padding: EdgeInsets.only(
           top: 10.0,
           left: 20.0,
-          right: 20.0
+          right: 20.0,
+          bottom: 10.0
         ),
         child: Row(
           children: [
@@ -157,7 +158,9 @@ class _ArticleContent extends StatelessWidget {
             SizedBox(width: 10.0),
             Text(
               '${article.rating.count} opiniones',
-              style: GoogleFonts.montserrat(),
+              style: GoogleFonts.montserrat(
+                color: EcoAppColors.MAIN_COLOR
+              ),
             )
           ],
         ),
@@ -253,7 +256,7 @@ class _ArticleContent extends StatelessWidget {
         title,
         SizedBox(height: 5.0),
         rating,
-        SizedBox(height: 15.0,),
+        SizedBox(height: 5.0,),
         price,
         FullEcoIndicator(
           ecoIndicator: article.form.getIndicator(),
