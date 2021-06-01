@@ -4,6 +4,7 @@ import 'package:flutter_ecoapp/models/question.dart';
 import 'package:flutter_ecoapp/views/style/colors.dart';
 import 'package:flutter_ecoapp/views/widgets/articles/article_cover.dart';
 import 'package:flutter_ecoapp/views/widgets/bottom_nav_bar.dart';
+import 'package:flutter_ecoapp/views/widgets/eco_items_list.dart';
 import 'package:google_fonts/google_fonts.dart';
 
 class QuestionsView extends StatelessWidget {
@@ -55,40 +56,20 @@ class QuestionsView extends StatelessWidget {
           children: [
             ArticleCover(
               article: article,
-              subtitle: '${article.questions!.length.toString()} preguntas',
+              subtitle: '${article.questions.length.toString()} preguntas',
             ),
             SizedBox(height: 10.0,),
             Divider(thickness: 1,),
-            _QuestionsList(article: article)
+            EcoItemsList<QuestionModel>(
+              elements: article.questions,
+              forEachElementWidget: (value) => _QuestionTile(question: value),
+            )
           ],
         ),
       ),
     );
   }
 
-}
-
-class _QuestionsList extends StatelessWidget {
-  const _QuestionsList({
-    Key? key,
-    required this.article,
-  }) : super(key: key);
-
-  final ArticleModel article;
-
-  @override
-  Widget build(BuildContext context) {
-    List<QuestionModel> questions = article.questions!;
-    List<Widget> content = [];
-
-    questions.forEach((element) { 
-      content.addAll([_QuestionTile(question: element), Divider(thickness: 1,)]);
-    });
-
-    return Column(
-      children: content
-    );
-  }
 }
 
 class _QuestionTile extends StatelessWidget {

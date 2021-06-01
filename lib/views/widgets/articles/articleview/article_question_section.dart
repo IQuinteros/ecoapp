@@ -55,7 +55,7 @@ class QuestionsSection extends StatelessWidget {
       children: getQuestions()
     );
 
-    bool haveQuestions = article.questions != null && article.questions!.length > 0;
+    bool haveQuestions = article.questions.length > 0;
 
     return Container(
       margin: EdgeInsets.symmetric(
@@ -95,7 +95,7 @@ class QuestionsSection extends StatelessWidget {
 
   List<Widget> getQuestions(){
     List<Widget> questionsWidgets = [];
-    article.questions!.take(3).forEach((element) => questionsWidgets.add(_Question(question: element,)));
+    article.questions.take(3).forEach((element) => questionsWidgets.add(_Question(question: element,)));
     return questionsWidgets;
   }
 }

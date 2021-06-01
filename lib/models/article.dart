@@ -1,4 +1,4 @@
-import 'package:flutter/material.dart';
+
 import 'package:flutter_ecoapp/models/base.dart';
 import 'package:flutter_ecoapp/models/category.dart';
 import 'package:flutter_ecoapp/models/opinion.dart';
@@ -20,7 +20,7 @@ class ArticleModel extends BaseModel with TagModel
   List<PhotoModel> photos;
   ArticleForm form;
   StoreModel? store;
-  List<QuestionModel>? questions;
+  List<QuestionModel> questions;
   ArticleRating rating;
 
   String _tag = '';
