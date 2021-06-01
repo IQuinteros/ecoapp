@@ -102,7 +102,7 @@ class HomeView extends StatelessWidget {
           'Categorías',
           rightButton: MiniButton(
             text: 'Ver mas',
-            action: (){},
+            action: () => Navigator.pushNamed(context, 'categories'),
           )
         ),
         categoryView,
