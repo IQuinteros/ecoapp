@@ -27,4 +27,7 @@ class CategoryModel extends BaseModel
       default: return Icons.ac_unit;
     }
   }
+
+  @override
+  String toString() => this.title;
 }

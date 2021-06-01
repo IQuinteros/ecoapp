@@ -1,5 +1,6 @@
 import 'package:flutter/material.dart';
 import 'package:flutter_ecoapp/models/category.dart';
+import 'package:flutter_ecoapp/views/result_view.dart';
 import 'package:flutter_ecoapp/views/style/colors.dart';
 import 'package:flutter_ecoapp/views/style/text_style.dart';
 import 'package:flutter_ecoapp/views/widgets/bottom_nav_bar.dart';
@@ -31,7 +32,6 @@ class CategoriesView extends StatelessWidget {
         _CategoryTile(context: context, category: CategoryModel(id: 1, title: 'Cuidado personal', createdDate: DateTime.now())),
         SizedBox(height: 20),
         _CategoryTile(context: context, category: CategoryModel(id: 1, title: 'Alimentos', createdDate: DateTime.now())),
-        //EcoAppDebug.getArticleItems()
       ],
     );
 
@@ -70,7 +70,7 @@ class _CategoryTile extends StatelessWidget {
         ]
       ),
       child: ListTile(
-        onTap: () {},   
+        onTap: () => Navigator.push(context, MaterialPageRoute(builder: (__) => ResultView(searching: category.toString(),))),   
         leading: Icon(
           category.getIcon(),
           color: EcoAppColors.MAIN_COLOR,
