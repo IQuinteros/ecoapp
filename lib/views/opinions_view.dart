@@ -1,14 +1,11 @@
 import 'package:flutter/material.dart';
 import 'package:flutter_ecoapp/models/article.dart';
-import 'package:flutter_ecoapp/models/base.dart';
 import 'package:flutter_ecoapp/models/opinion.dart';
-import 'package:flutter_ecoapp/models/question.dart';
 import 'package:flutter_ecoapp/views/style/colors.dart';
-import 'package:flutter_ecoapp/views/widgets/articles/article_cover.dart';
 import 'package:flutter_ecoapp/views/widgets/bottom_nav_bar.dart';
+import 'package:flutter_ecoapp/views/widgets/eco_cover.dart';
 import 'package:flutter_ecoapp/views/widgets/eco_items_list.dart';
 import 'package:flutter_ecoapp/views/widgets/opinions/opinion_tile.dart';
-import 'package:flutter_ecoapp/views/widgets/stars_row.dart';
 import 'package:google_fonts/google_fonts.dart';
 
 class OpinionsView extends StatelessWidget {
@@ -58,9 +55,11 @@ class OpinionsView extends StatelessWidget {
         ),
         child: Column(
           children: [
-            ArticleCover(
-              article: article,
+            EcoCover(
+              image: NetworkImage(article.photos[0].photoUrl),
+              title: article.title,
               subtitle: '${article.rating.count.toString()} opiniones',
+              size: 80
             ),
             SizedBox(height: 10.0,),
             Divider(thickness: 1,),
