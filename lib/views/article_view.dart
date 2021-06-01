@@ -2,7 +2,6 @@ import 'package:flutter/material.dart';
 import 'package:flutter_ecoapp/models/article.dart';
 import 'package:flutter_ecoapp/utils/currency_util.dart';
 import 'package:flutter_ecoapp/views/opinions_view.dart';
-import 'package:flutter_ecoapp/views/questions_view.dart';
 import 'package:flutter_ecoapp/views/style/colors.dart';
 import 'package:flutter_ecoapp/views/widgets/articles/articleview/article_description_section.dart';
 import 'package:flutter_ecoapp/views/widgets/articles/articleview/article_eco_detail_section.dart';
@@ -18,11 +17,14 @@ import 'package:google_fonts/google_fonts.dart';
 
 class ArticleView extends StatelessWidget {
 
+  final ArticleModel article;
+
+  const ArticleView({Key? key, required this.article}) : super(key: key);
+
   @override
   Widget build(BuildContext context) {
-    final ArticleModel? article = ModalRoute.of(context)!.settings.arguments as ArticleModel;
     return Scaffold(
-      body: getContent(context, article!),
+      body: getContent(context),
       bottomNavigationBar: EcoBottomNavigationBar(
         currentIndex: 0,
           onTap: (value){
@@ -31,7 +33,7 @@ class ArticleView extends StatelessWidget {
     );
   }
 
-  Widget getContent(BuildContext context, ArticleModel article){
+  Widget getContent(BuildContext context){
     return CustomScrollView(
       slivers: [
         _ArticleAppBar(article: article),
@@ -144,12 +146,13 @@ class _ArticleContent extends StatelessWidget {
       ),
     );
 
-    final rating = GestureDetector(
+    final rating = InkWell(
       child: Padding(
         padding: EdgeInsets.only(
           top: 10.0,
           left: 20.0,
-          right: 20.0
+          right: 20.0,
+          bottom: 10.0
         ),
         child: Row(
           children: [
@@ -157,7 +160,9 @@ class _ArticleContent extends StatelessWidget {
             SizedBox(width: 10.0),
             Text(
               '${article.rating.count} opiniones',
-              style: GoogleFonts.montserrat(),
+              style: GoogleFonts.montserrat(
+                color: EcoAppColors.MAIN_COLOR
+              ),
             )
           ],
         ),
@@ -195,29 +200,34 @@ class _ArticleContent extends StatelessWidget {
       ),
     );
 
-    final storeText = Padding(
-      padding: EdgeInsets.symmetric(
-        horizontal: 20.0
-      ),
-      child: Container(
-        width: double.infinity,
-        child: RichText(
-          text: TextSpan(
-            text: 'Vendido por ',
-            style: GoogleFonts.montserrat(
-              color: Colors.black
-            ),
-            children: [
-              TextSpan(
-                text: '${article.store!.publicName}',
-                style: GoogleFonts.montserrat(
-                  color: EcoAppColors.MAIN_COLOR
-                )
-              )
-            ]
-          ),
+    final storeText = InkWell(
+      onTap: () => print('Go to store'), // TODO: Go to store
+      child: Padding(
+        padding: EdgeInsets.symmetric(
+          horizontal: 20.0
         ),
-      )
+        child: Container(
+          width: double.infinity,
+          child: RichText(
+            textScaleFactor: MediaQuery.of(context).textScaleFactor,
+            text: TextSpan(
+              text: 'Vendido por ',
+              style: GoogleFonts.montserrat(
+                color: Colors.black,
+                fontSize: 15
+              ),
+              children: [
+                TextSpan(
+                  text: '${article.store!.publicName}',
+                  style: GoogleFonts.montserrat(
+                    color: EcoAppColors.MAIN_COLOR
+                  ),
+                )
+              ]
+            ),
+          ),
+        )
+      ),
     );
 
     final btnAddToCart = Padding(
@@ -253,7 +263,7 @@ class _ArticleContent extends StatelessWidget {
         title,
         SizedBox(height: 5.0),
         rating,
-        SizedBox(height: 15.0,),
+        SizedBox(height: 5.0,),
         price,
         FullEcoIndicator(
           ecoIndicator: article.form.getIndicator(),

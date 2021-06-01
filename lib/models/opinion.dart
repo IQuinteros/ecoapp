@@ -1,5 +1,6 @@
-import 'package:flutter/material.dart';
+import 'package:flutter_ecoapp/models/article.dart';
 import 'package:flutter_ecoapp/models/base.dart';
+import 'package:flutter_ecoapp/models/category.dart';
 
 class OpinionModel extends BaseModel
 {
@@ -16,6 +17,41 @@ class OpinionModel extends BaseModel
     this.content = '',
     required this.date,
   }) : super(id: id);
+
+  // TODO: Connect with api. Only debug 
+  ArticleModel get article => ArticleModel(
+    id: 202, 
+    title: 'Example', 
+    description: 'HOLAH HOL', 
+    price: 12, 
+    stock: 34, 
+    createdDate: DateTime.now(), 
+    lastUpdateDate: DateTime.now(), 
+    enabled: true, 
+    form: ArticleForm(
+      createdDate: DateTime.now(),
+      id: 1,
+      lastUpdateDate: DateTime.now(),
+      generalDetail: '',
+      recycledMats: '',
+      recycledMatsDetail: '',
+      recycledProd: '',
+      recycledProdDetail: '',
+      reuseTips: ''
+    ), 
+    category: CategoryModel(createdDate: DateTime.now(), id: 1, title: 'Hogar'), 
+    rating: ArticleRating(
+      opinions: [
+        OpinionModel(
+          date: DateTime.now(),
+          id: 2,
+          rating: 3,
+          title: 'Hola hola',
+          content: 'COntent fsdkfsdk'
+        )
+      ]
+    )
+  );
 }
 
 class ArticleRating{

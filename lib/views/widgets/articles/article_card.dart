@@ -1,8 +1,7 @@
-import 'dart:math';
-
 import 'package:flutter/material.dart';
 import 'package:flutter_ecoapp/models/article.dart';
 import 'package:flutter_ecoapp/utils/currency_util.dart';
+import 'package:flutter_ecoapp/views/article_view.dart';
 import 'package:flutter_ecoapp/views/widgets/articles/favorite_button.dart';
 import 'package:flutter_ecoapp/views/widgets/articles/mini_eco_indicator.dart';
 import 'package:google_fonts/google_fonts.dart';
@@ -143,7 +142,7 @@ class _ArticleCardState extends State<ArticleCard> {
         child: card,
         borderRadius: BorderRadius.circular(20.0),
         onTap: (){
-          Navigator.pushNamed(context, 'article', arguments: widget.article);
+          Navigator.push(context, MaterialPageRoute(builder: (__) => ArticleView(article: widget.article,)));
         },
         onHover: onHover
       ),

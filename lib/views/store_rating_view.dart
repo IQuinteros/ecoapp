@@ -1,6 +1,6 @@
 import 'package:flutter/material.dart';
-import 'package:flutter_ecoapp/models/article.dart';
 import 'package:flutter_ecoapp/models/opinion.dart';
+import 'package:flutter_ecoapp/models/store.dart';
 import 'package:flutter_ecoapp/views/style/colors.dart';
 import 'package:flutter_ecoapp/views/widgets/bottom_nav_bar.dart';
 import 'package:flutter_ecoapp/views/widgets/eco_cover.dart';
@@ -8,11 +8,11 @@ import 'package:flutter_ecoapp/views/widgets/eco_items_list.dart';
 import 'package:flutter_ecoapp/views/widgets/opinions/opinion_tile.dart';
 import 'package:google_fonts/google_fonts.dart';
 
-class OpinionsView extends StatelessWidget {
+class StoreRatingView extends StatelessWidget {
 
-  final ArticleModel article;
+  final StoreModel store;
 
-  const OpinionsView({Key? key, required this.article}) : super(key: key);
+  const StoreRatingView({Key? key, required this.store}) : super(key: key);
 
   @override
   Widget build(BuildContext context) {
@@ -23,7 +23,7 @@ class OpinionsView extends StatelessWidget {
         centerTitle: false,
         elevation: 0,
         title: Text(
-          'Opiniones del producto',
+          'Valoración de clientes',
           style: GoogleFonts.montserrat(
             fontWeight: FontWeight.w500
           ),
@@ -47,6 +47,7 @@ class OpinionsView extends StatelessWidget {
   }
 
   Widget mainContent(BuildContext context){
+
     return SingleChildScrollView(
       child: Container(
         margin: EdgeInsets.symmetric(
@@ -56,17 +57,17 @@ class OpinionsView extends StatelessWidget {
         child: Column(
           children: [
             EcoCover(
-              image: NetworkImage(article.photos[0].photoUrl),
-              title: article.title,
-              subtitle: '${article.rating.count.toString()} opiniones',
-              size: 80
+              image: NetworkImage(store.photoUrl),
+              title: store.publicName,
+              subtitle: '${store.location}, ${store.district}',
+              miniContent: 'x valoraciones',
             ),
             SizedBox(height: 10.0,),
             Divider(thickness: 1,),
             EcoItemsList<OpinionModel>(
-              elements: article.rating.opinions,
-              forEachElementWidget: (value) => OpinionTile(opinion: value,)
-            )
+              elements: store.allOpinions,
+              forEachElementWidget: (value) => OpinionTile(opinion: value, displayArticle: true)
+            ) 
           ],
         ),
       ),
@@ -74,4 +75,5 @@ class OpinionsView extends StatelessWidget {
   }
 
 }
+
 

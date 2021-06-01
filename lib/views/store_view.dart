@@ -3,6 +3,7 @@ import 'package:flutter_ecoapp/models/store.dart';
 import 'package:flutter_ecoapp/views/debug/debug.dart';
 import 'package:flutter_ecoapp/views/style/colors.dart';
 import 'package:flutter_ecoapp/views/widgets/bottom_nav_bar.dart';
+import 'package:flutter_ecoapp/views/widgets/eco_cover.dart';
 import 'package:flutter_ecoapp/views/widgets/search_bar.dart';
 import 'package:flutter_ecoapp/views/widgets/store/storeview/store_cover_section.dart';
 import 'package:google_fonts/google_fonts.dart';
@@ -56,5 +57,4 @@ class StoreView extends StatelessWidget {
   }
 
 }
-
 
