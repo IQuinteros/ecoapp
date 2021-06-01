@@ -65,7 +65,7 @@ class _CategoryTile extends StatelessWidget {
         boxShadow: [
           BoxShadow(
             color: Colors.black.withOpacity(0.25),
-            blurRadius: 2
+            blurRadius: 1
           )
         ]
       ),
