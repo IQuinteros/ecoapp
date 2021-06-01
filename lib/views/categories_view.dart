@@ -1,6 +1,5 @@
 import 'package:flutter/material.dart';
 import 'package:flutter_ecoapp/models/category.dart';
-import 'package:flutter_ecoapp/views/debug/debug.dart';
 import 'package:flutter_ecoapp/views/style/colors.dart';
 import 'package:flutter_ecoapp/views/style/text_style.dart';
 import 'package:flutter_ecoapp/views/widgets/bottom_nav_bar.dart';
@@ -27,20 +26,11 @@ class CategoriesView extends StatelessWidget {
         EcoAppTextStyle.getTitle(
           'Categorías',
         ),
-        getTile(
-          context,
-          category: CategoryModel(id: 1, title: 'Hogar', createdDate: DateTime.now())
-        ),
+        _CategoryTile(context: context, category: CategoryModel(id: 1, title: 'Hogar', createdDate: DateTime.now())),
         SizedBox(height: 20),
-        getTile(
-          context,
-          category: CategoryModel(id: 1, title: 'Cuidado personal', createdDate: DateTime.now())
-        ),
+        _CategoryTile(context: context, category: CategoryModel(id: 1, title: 'Cuidado personal', createdDate: DateTime.now())),
         SizedBox(height: 20),
-        getTile(
-          context,
-          category: CategoryModel(id: 1, title: 'Alimentos', createdDate: DateTime.now())
-        ),
+        _CategoryTile(context: context, category: CategoryModel(id: 1, title: 'Alimentos', createdDate: DateTime.now())),
         //EcoAppDebug.getArticleItems()
       ],
     );
@@ -50,8 +40,20 @@ class CategoriesView extends StatelessWidget {
       scrollDirection: Axis.vertical,
     );
   }
+}
 
-  Widget getTile(BuildContext context, {required CategoryModel category}){
+class _CategoryTile extends StatelessWidget {
+  const _CategoryTile({
+    Key? key,
+    required this.context,
+    required this.category,
+  }) : super(key: key);
+
+  final BuildContext context;
+  final CategoryModel category;
+
+  @override
+  Widget build(BuildContext context) {
     return Container(
       clipBehavior: Clip.antiAlias,
       margin: EdgeInsets.symmetric(
