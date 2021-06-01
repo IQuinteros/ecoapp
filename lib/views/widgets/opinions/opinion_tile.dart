@@ -30,9 +30,12 @@ class OpinionTile extends StatelessWidget {
       ),
     );
 
-    return Container(
+    final container = Container(
       margin: EdgeInsets.symmetric(
         vertical: 10.0
+      ),
+      padding: EdgeInsets.symmetric(
+        horizontal: 5.0
       ),
       child: Column(
         crossAxisAlignment: CrossAxisAlignment.start,
@@ -42,13 +45,10 @@ class OpinionTile extends StatelessWidget {
             mainAxisAlignment: MainAxisAlignment.spaceBetween,
             children: [
               StarsRow(rating: opinion.rating.toDouble()),
-              displayArticle? InkWell(
-                onTap: () => print(opinion.article.title), // TODO: Navigate to article
-                child: Text(
-                  'Ver artículo',
-                  style: GoogleFonts.montserrat(
-                    color: EcoAppColors.MAIN_COLOR
-                  ),
+              displayArticle? Text(
+                'Ver artículo',
+                style: GoogleFonts.montserrat(
+                  color: EcoAppColors.MAIN_COLOR
                 ),
               ) : Container()
             ],
@@ -75,5 +75,16 @@ class OpinionTile extends StatelessWidget {
         ],
       ),
     );
+
+    if(displayArticle){
+      return InkWell(
+        borderRadius: BorderRadius.circular(10.0),
+        child: container,
+        onTap: () => print(opinion.article.title), // TODO: Navigate to article
+      );
+    }
+    else{
+      return container;
+    }
   }
 }
