@@ -9,4 +9,7 @@ class DistrictModel extends BaseModel
     required int id,
     required this.name,
   }) : super(id: id);
+
+  @override
+  String toString() => this.name;
 }

@@ -1,6 +1,11 @@
 import 'package:flutter/material.dart';
+import 'package:flutter_ecoapp/models/article.dart';
 import 'package:flutter_ecoapp/models/base.dart';
+import 'package:flutter_ecoapp/models/category.dart';
 import 'package:flutter_ecoapp/models/district.dart';
+import 'package:flutter_ecoapp/models/opinion.dart';
+import 'package:flutter_ecoapp/models/question.dart';
+import 'package:flutter_ecoapp/views/debug/debug.dart';
 
 class StoreModel extends BaseModel with TagModel
 {
@@ -35,4 +40,76 @@ class StoreModel extends BaseModel with TagModel
   }) : super(id: id){
     initTagging(newID: this.id, newTitle: this.publicName);
   }
+
+  List<ArticleModel> get articles => [ // TODO: Only debug items
+    ArticleModel(
+      id: 1, 
+      title: 'Example', 
+      description: 'HOLAH HOL', 
+      price: 12, 
+      stock: 34, 
+      createdDate: createdDate, 
+      lastUpdateDate: lastUpdateDate, 
+      enabled: enabled, 
+      form: ArticleForm(
+        createdDate: createdDate,
+        id: 1,
+        lastUpdateDate: lastUpdateDate,
+        generalDetail: '',
+        recycledMats: '',
+        recycledMatsDetail: '',
+        recycledProd: '',
+        recycledProdDetail: '',
+        reuseTips: ''
+      ), 
+      category: CategoryModel(createdDate: createdDate, id: 1, title: 'Hogar'), 
+      rating: ArticleRating(
+        opinions: [
+          OpinionModel(
+            date: createdDate,
+            id: 2,
+            rating: 3,
+            title: 'Hola hola',
+            content: 'COntent fsdkfsdk'
+          )
+        ]
+      )
+    ),
+    ArticleModel(
+      id: 1, 
+      title: 'Example', 
+      description: 'HOLAH HOL', 
+      price: 12, 
+      stock: 34, 
+      createdDate: createdDate, 
+      lastUpdateDate: lastUpdateDate, 
+      enabled: enabled, 
+      form: ArticleForm(
+        createdDate: createdDate,
+        id: 1,
+        lastUpdateDate: lastUpdateDate,
+        generalDetail: '',
+        recycledMats: '',
+        recycledMatsDetail: '',
+        recycledProd: '',
+        recycledProdDetail: '',
+        reuseTips: ''
+      ), 
+      category: CategoryModel(createdDate: createdDate, id: 1, title: 'Hogar'), 
+      rating: ArticleRating(
+        opinions: [
+          OpinionModel(
+            date: createdDate,
+            id: 2,
+            rating: 4,
+            title: 'Hola  sdfasdf asdf asdf ',
+            content: 'COntent asdf asdf asdf asdf asd '
+          )
+        ]
+      )
+    )
+  ]; // TODO Connect with api
+
+  List<OpinionModel> get allOpinions => articles.map((e) => e.rating.opinions).toList().fold([], (value, element) => value + element);
+
 }

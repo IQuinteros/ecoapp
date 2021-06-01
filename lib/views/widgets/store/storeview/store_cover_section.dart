@@ -1,5 +1,6 @@
 import 'package:flutter/material.dart';
 import 'package:flutter_ecoapp/models/store.dart';
+import 'package:flutter_ecoapp/views/store_rating_view.dart';
 import 'package:flutter_ecoapp/views/widgets/stars_row.dart';
 import 'package:google_fonts/google_fonts.dart';
 
@@ -83,6 +84,9 @@ class StoreCoverSection extends StatelessWidget {
     );
 
     final rating = Container(
+      padding: EdgeInsets.symmetric(
+        horizontal: 60.0
+      ),
       child: Column(
         children: [
           Text(
@@ -110,6 +114,16 @@ class StoreCoverSection extends StatelessWidget {
       ),
     );
 
+    final ratingGesture = InkWell(
+      child: rating,
+      onTap: () => Navigator.push(
+        context, 
+        MaterialPageRoute(
+          builder: (__) => StoreRatingView(store: store)
+        )
+      ),
+    );
+
     return Container(
       margin: EdgeInsets.symmetric(
         vertical: 20.0,
@@ -121,7 +135,7 @@ class StoreCoverSection extends StatelessWidget {
           SizedBox(height: 10.0),
           Divider(thickness: 1,),
           description,
-          rating,
+          ratingGesture,
         ],
       ),
     );

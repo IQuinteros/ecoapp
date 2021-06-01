@@ -37,7 +37,7 @@ class ArticleModel extends BaseModel with TagModel
     required this.createdDate,
     required this.lastUpdateDate,
     required this.enabled,
-    required this.photos,
+    this.photos = const [],
     required this.form,
     required this.category,
     this.store,
