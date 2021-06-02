@@ -25,11 +25,11 @@ class ArticleView extends StatelessWidget {
   Widget build(BuildContext context) {
     return Scaffold(
       body: getContent(context),
-      bottomNavigationBar: EcoBottomNavigationBar(
+      /* bottomNavigationBar: EcoBottomNavigationBar(
         currentIndex: 0,
           onTap: (value){
         },
-      )
+      ) */
     );
   }
 

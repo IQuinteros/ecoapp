@@ -42,12 +42,12 @@ class _ChatViewState extends State<ChatView> {
           },
         ),
       ),
-      body: SafeArea(child: mainContent(context)),
-      bottomNavigationBar: EcoBottomNavigationBar(
+      body: mainContent(context)
+      /* bottomNavigationBar: EcoBottomNavigationBar(
         currentIndex: 0,
           onTap: (value){
         },
-      )
+      ) */
     );
   }
 
@@ -86,43 +86,51 @@ class _ChatViewState extends State<ChatView> {
     final sendMessage = Container(
       padding: EdgeInsets.symmetric(
         horizontal: 10.0,
-        vertical: 5
+        vertical: 10.0
       ),
       decoration: BoxDecoration(
-        color: Colors.white,
+        color: EcoAppColors.MAIN_COLOR,
         boxShadow: [
           BoxShadow(
-            color: Colors.black.withOpacity(0.25),
+            color: Colors.black.withOpacity(0.5),
             offset: Offset(1, 0),
-            blurRadius: 3
+            blurRadius: 8
           )
         ]
       ),
-      child: Row(
-        children: [
-          Expanded(
-            child: TextField(
-              style: GoogleFonts.montserrat(),
-              decoration: InputDecoration(
-                border: OutlineInputBorder(
+      child: SafeArea(
+        child: Row(
+          children: [
+            Expanded(
+              child: Container(
+                decoration: BoxDecoration(
+                  color: Colors.white,
                   borderRadius: BorderRadius.circular(20.0)
                 ),
-                hintText: 'Enviar mensaje',
-                contentPadding: EdgeInsets.symmetric(
-                  horizontal: 20.0,
-                  vertical: 5.0
+                child: TextField(
+                  style: GoogleFonts.montserrat(),
+                  decoration: InputDecoration(
+                    border: OutlineInputBorder(
+                      borderRadius: BorderRadius.circular(20.0)
+                    ),
+                    hintText: 'Enviar mensaje',
+                    contentPadding: EdgeInsets.symmetric(
+                      horizontal: 20.0,
+                      vertical: 5.0
+                    ),
+                  ),
                 ),
               ),
             ),
-          ),
-          IconButton(
-            icon: Icon(
-              Icons.send,
-              color: EcoAppColors.MAIN_COLOR,
-            ), 
-            onPressed: () => print('Send') // TODO: Send message
-          ),
-        ],
+            IconButton(
+              icon: Icon(
+                Icons.send,
+                color: Colors.white
+              ), 
+              onPressed: () => print('Send') // TODO: Send message
+            ),
+          ],
+        ),
       ),
     );
 
@@ -144,10 +152,10 @@ class _ChatViewState extends State<ChatView> {
 
     return Stack(
       children: [
-        scroll,
+        SafeArea(child: scroll),
         Align(
-          child: sendMessage,
           alignment: Alignment.bottomCenter,
+          child: sendMessage,
         )
       ],
     );

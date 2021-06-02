@@ -36,7 +36,7 @@ class PurchaseDetailView extends StatelessWidget {
 
     final content = Column(
       children: [
-        SearchBar(),
+        //SearchBar(),
         EcoAppTextStyle.getTitle(
           'Compra #${purchase.id}',
           leftButton: IconButton(
