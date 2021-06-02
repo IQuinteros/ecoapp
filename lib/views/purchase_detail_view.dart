@@ -2,6 +2,7 @@ import 'package:flutter/material.dart';
 import 'package:flutter_ecoapp/models/article.dart';
 import 'package:flutter_ecoapp/models/purchase.dart';
 import 'package:flutter_ecoapp/models/store.dart';
+import 'package:flutter_ecoapp/views/chat_view.dart';
 import 'package:flutter_ecoapp/views/debug/debug.dart';
 import 'package:flutter_ecoapp/views/store_view.dart';
 import 'package:flutter_ecoapp/views/style/colors.dart';
@@ -31,7 +32,7 @@ class PurchaseDetailView extends StatelessWidget {
 
   Widget getContent(BuildContext context){
     List<Widget> storeSections = [];
-    purchase.storeSortedArticles.forEach((key, value) => storeSections.add(getStoreList(context, key, value)));
+    purchase.storeSortedArticles.forEach((key, value) => storeSections.add(_StoreList(store: key, articles: value, purchase: purchase,)));
 
     final content = Column(
       children: [
@@ -60,8 +61,22 @@ class PurchaseDetailView extends StatelessWidget {
       scrollDirection: Axis.vertical,
     );
   }
+}
 
-  Widget getStoreList(BuildContext context, StoreModel? store, List<ArticleToPurchase> articles){
+class _StoreList extends StatelessWidget {
+  const _StoreList({
+    Key? key,
+    required this.store,
+    required this.articles,
+    required this.purchase
+  }) : super(key: key);
+
+  final StoreModel? store;
+  final List<ArticleToPurchase> articles;
+  final PurchaseModel purchase;
+
+  @override
+  Widget build(BuildContext context) {
     List<Widget> articlesToDisplay = articles.map<Widget>((e) => ArticleCard.fromPurchase(
       article: e.article,
       ecoIndicator: e.form.getIndicator(),
@@ -85,23 +100,40 @@ class PurchaseDetailView extends StatelessWidget {
               top: 5.0
             ),
             child: Expanded(
-              child: InkWell(
-                borderRadius: BorderRadius.circular(10.0),
-                onTap: onTap,
-                child: Container(
-                  padding: EdgeInsets.symmetric(
-                    vertical: 5.0,
-                    horizontal: 5.0
-                  ),
-                  child: Text(
-                    store != null? store.publicName : 'Otras tiendas',
-                    style: GoogleFonts.montserrat(
-                      color: store != null? EcoAppColors.MAIN_COLOR : Colors.black,
-                      fontWeight: FontWeight.w400,
-                      fontSize: 18
+              child: Row(
+                children: [
+                  InkWell(
+                    borderRadius: BorderRadius.circular(10.0),
+                    onTap: onTap,
+                    child: Container(
+                      padding: EdgeInsets.symmetric(
+                        vertical: 5.0,
+                        horizontal: 5.0
+                      ),
+                      child: Text(
+                        store != null? store!.publicName : 'Otras tiendas',
+                        style: GoogleFonts.montserrat(
+                          color: store != null? EcoAppColors.MAIN_COLOR : Colors.black,
+                          fontWeight: FontWeight.w400,
+                          fontSize: 18
+                        ),
+                      ),
                     ),
                   ),
-                ),
+                  Expanded(child: Container()),
+                  store != null? IconButton(
+                    icon: Icon(
+                      Icons.sms_rounded,
+                      color: EcoAppColors.MAIN_COLOR,
+                    ), 
+                    onPressed: () => Navigator.push(
+                        context, 
+                        MaterialPageRoute(
+                          builder: (__) => ChatView(chat: purchase.chat,)
+                        )
+                    )
+                  ) : Container()
+                ],
               ),
             ),
           ),

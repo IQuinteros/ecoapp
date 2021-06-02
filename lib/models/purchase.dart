@@ -2,6 +2,7 @@ import 'package:flutter/material.dart';
 import 'package:flutter_ecoapp/models/article.dart';
 import 'package:flutter_ecoapp/models/base.dart';
 import 'package:flutter_ecoapp/models/category.dart';
+import 'package:flutter_ecoapp/models/chat.dart';
 import 'package:flutter_ecoapp/models/opinion.dart';
 import 'package:flutter_ecoapp/models/store.dart';
 
@@ -47,6 +48,14 @@ class PurchaseModel extends BaseModel
       toReturn.update(storeToUpdate, (value) => value + [element], ifAbsent: () => [element]);
     }); 
     return toReturn;
+  }
+
+  ChatModel get chat {  // TODO: Connect with api
+    return ChatModel(
+      id: 1,
+      createdDate: createdDate,
+      closed: false
+    );
   }
 }
 
