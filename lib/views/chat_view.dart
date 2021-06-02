@@ -55,9 +55,23 @@ class ChatView extends StatelessWidget {
 
   Widget chatList(){
     return Container(
+      decoration: BoxDecoration(
+        color: Colors.white,
+        borderRadius: BorderRadius.circular(20.0),
+        boxShadow: [
+          BoxShadow(
+            color: Colors.black.withOpacity(0.3),
+            blurRadius: 3
+          )
+        ]
+      ),
+      margin: EdgeInsets.symmetric(
+        horizontal: 5
+      ),
       child: Column(
         children: [
           chatItem(ChatModel(id: 1, closed: false, createdDate: DateTime.now())),
+          Divider(thickness: 1),
           chatItem(ChatModel(id: 1, closed: false, createdDate: DateTime.now()))
         ],
       ),
@@ -86,29 +100,50 @@ class ChatView extends StatelessWidget {
 
     final info = Container(
       child: Column(
+        crossAxisAlignment: CrossAxisAlignment.start,
         children: [
           Text(
             chat.store.publicName,
             style: GoogleFonts.montserrat(
               fontWeight: FontWeight.w500
             ),
+            textAlign: TextAlign.start,
           ),
           Text(
             chat.store.publicName,
-            style: GoogleFonts.montserrat(
-              fontWeight: FontWeight.w500
-            ),
+            style: GoogleFonts.montserrat(),
+            textAlign: TextAlign.start,
           ),
         ],
       ),
     );
 
-    return Container(
-      child: Row(
-        children: [
-          img,
-          info
-        ],
+    final status = Container(
+      width: 10,
+      height: 10,
+      decoration: BoxDecoration(
+        shape: BoxShape.circle,
+        color: EcoAppColors.RED_COLOR
+      ),
+    );
+
+    return InkWell(
+      borderRadius: BorderRadius.circular(20),
+      onTap: () => print('HOLA'),
+      child: Container(
+        padding: EdgeInsets.symmetric(
+          vertical: 10.0,
+          horizontal: 10.0
+        ),
+        child: Row(
+          children: [
+            img,
+            SizedBox(width: 15,),
+            Expanded(child: info),
+            status,
+            SizedBox(width: 10)
+          ],
+        ),
       ),
     );
   }
