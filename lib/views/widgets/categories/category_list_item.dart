@@ -1,5 +1,6 @@
 import 'package:flutter/material.dart';
 import 'package:flutter_ecoapp/models/category.dart';
+import 'package:flutter_ecoapp/views/result_view.dart';
 import 'package:flutter_ecoapp/views/style/colors.dart';
 
 class CategoryListItem extends StatelessWidget {
@@ -23,7 +24,7 @@ class CategoryListItem extends StatelessWidget {
       ),
       trailing: Icon(Icons.keyboard_arrow_right),
       selectedTileColor: EcoAppColors.ACCENT_COLOR,
-      onTap: (){},
+      onTap: () => Navigator.push(context, MaterialPageRoute(builder: (__) => ResultView(searching: category.toString(),))),
     );
   }
 }

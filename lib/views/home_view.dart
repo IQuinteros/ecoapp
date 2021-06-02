@@ -1,5 +1,7 @@
 import 'package:flutter/material.dart';
 import 'package:flutter_ecoapp/views/debug/debug.dart';
+import 'package:flutter_ecoapp/views/favorites.view.dart';
+import 'package:flutter_ecoapp/views/result_view.dart';
 import 'package:flutter_ecoapp/views/style/text_style.dart';
 import 'package:flutter_ecoapp/views/widgets/categories/category_box.dart';
 import 'package:flutter_ecoapp/views/widgets/categories/category_list_item.dart';
@@ -72,7 +74,7 @@ class HomeView extends StatelessWidget {
             children: [
               Divider(),
               CategoryListItem(
-                category: EcoAppDebug.getCategories()[0]
+                category: EcoAppDebug.getCategories()[0],
               ),
               Divider(),
               CategoryListItem(
@@ -110,7 +112,7 @@ class HomeView extends StatelessWidget {
           'Favoritos',
           rightButton: MiniButton(
             text: 'Ver mas',
-            action: (){},
+            action: () => Navigator.push(context, MaterialPageRoute(builder: (__) => FavoritesView())),
           )
         ),
         favoriteList,
