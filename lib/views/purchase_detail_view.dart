@@ -52,13 +52,74 @@ class PurchaseDetailView extends StatelessWidget {
         Column(
           crossAxisAlignment: CrossAxisAlignment.stretch,
           children: storeSections
-        )
+        ),
+        Divider(thickness: 1),
+        _SummaryItem(purchase: purchase)
       ],
     );
 
     return SingleChildScrollView(
       child: content,
       scrollDirection: Axis.vertical,
+    );
+  }
+}
+
+class _SummaryItem extends StatelessWidget {
+  const _SummaryItem({
+    Key? key,
+    required this.purchase,
+  }) : super(key: key);
+
+  final PurchaseModel purchase;
+
+  @override
+  Widget build(BuildContext context) {
+    return Container(
+      margin: EdgeInsets.symmetric(
+        vertical: 10.0,
+        horizontal: 20.0
+      ),
+      child: Column(
+        crossAxisAlignment: CrossAxisAlignment.stretch,
+        children: [
+          Row(
+            children: [
+              Text(
+                'Total: ${purchase.total}',
+                style: GoogleFonts.montserrat(
+                  fontWeight: FontWeight.w500,
+                  fontSize: 18
+                ),
+              ),
+              SizedBox(width: 20.0),
+              Expanded(
+                              child: Text(
+                  '${purchase.realTotal}',
+                  style: GoogleFonts.montserrat(
+                    fontWeight: FontWeight.w300,
+                    fontSize: 16,
+                    decoration: TextDecoration.lineThrough
+                  ),
+                ),
+              ),
+            ],
+          ),
+          SizedBox(height: 10,),
+          Text(
+            'Descuento: ${purchase.discount.toStringAsFixed(1)}%',
+            style: GoogleFonts.montserrat(
+              fontWeight: FontWeight.w400,
+            ),
+          ),
+          SizedBox(height: 10,),
+          Text(
+            'Fecha de compra: ${purchase.createdDate.day}/${purchase.createdDate.month}/${purchase.createdDate.year}',
+            style: GoogleFonts.montserrat(),
+          ),
+          // TODO: Check requirements
+        ],
+      ),
     );
   }
 }

@@ -57,6 +57,16 @@ class PurchaseModel extends BaseModel
       closed: false
     );
   }
+
+  double get realTotal {
+    double toreturn = articles.fold<double>(0, (double value, element) {
+      value += (element.unitPrice * element.quantity);
+      print(value);
+      return value;
+    });
+    return toreturn;
+  } 
+  double get discount => (realTotal - total) / realTotal * 100;
 }
 
 class InfoPurchaseModel extends BaseModel
