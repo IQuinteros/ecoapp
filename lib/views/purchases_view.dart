@@ -22,7 +22,6 @@ class PurchasesView extends StatelessWidget {
 
   Widget getContent(BuildContext context){
     List<PurchaseModel> purchases = EcoAppDebug.purchases;
-    print(purchases);
 
     final content = Column(
       children: [

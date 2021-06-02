@@ -3,6 +3,7 @@ import 'package:flutter_ecoapp/models/article.dart';
 import 'package:flutter_ecoapp/models/base.dart';
 import 'package:flutter_ecoapp/models/category.dart';
 import 'package:flutter_ecoapp/models/opinion.dart';
+import 'package:flutter_ecoapp/models/store.dart';
 
 class PurchaseModel extends BaseModel
 {
@@ -38,6 +39,22 @@ class PurchaseModel extends BaseModel
 
     return toReturn;
   }
+
+  Map<StoreModel?, List<ArticleToPurchase>> get storeSortedArticles{
+    Map<StoreModel?, List<ArticleToPurchase>> toReturn = {};
+    articles.forEach((element) { 
+      if(toReturn.containsKey(element.store)){
+        toReturn[element.store]!.add(element);
+      }
+      else{
+        toReturn.addAll({
+          element.store: [element]
+        });
+      }
+    });
+
+    return toReturn;
+  }
 }
 
 class InfoPurchaseModel extends BaseModel
@@ -61,6 +78,7 @@ class ArticleToPurchase extends BaseModel
 {
   late PurchaseModel purchase;
   ArticleModel? article;
+  StoreModel? store;
   String title;
   double unitPrice;
   int quantity;
@@ -72,6 +90,7 @@ class ArticleToPurchase extends BaseModel
   ArticleToPurchase({
     required int id,
     this.article,
+    this.store,
     required this.title,
     required this.unitPrice,
     required this.quantity,

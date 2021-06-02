@@ -1,10 +1,8 @@
 import 'package:flutter/material.dart';
-import 'package:flutter_ecoapp/models/article.dart';
 import 'package:flutter_ecoapp/models/purchase.dart';
 import 'package:flutter_ecoapp/utils/currency_util.dart';
-import 'package:flutter_ecoapp/views/article_view.dart';
+import 'package:flutter_ecoapp/views/purchase_detail_view.dart';
 import 'package:flutter_ecoapp/views/style/colors.dart';
-import 'package:flutter_ecoapp/views/widgets/articles/favorite_button.dart';
 import 'package:flutter_ecoapp/views/widgets/articles/mini_eco_indicator.dart';
 import 'package:google_fonts/google_fonts.dart';
 
@@ -33,7 +31,7 @@ class _PurchaseCardState extends State<PurchaseCard> {
           ),
       child: InkWell(
         borderRadius: BorderRadius.circular(20.0),
-        onTap: (){},
+        onTap: () => Navigator.push(context, MaterialPageRoute(builder: (__) => PurchaseDetailView(purchase: purchase))),
         child: Container(
           decoration: BoxDecoration(
             color: Colors.white,
