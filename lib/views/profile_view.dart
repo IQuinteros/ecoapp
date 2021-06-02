@@ -1,5 +1,5 @@
 import 'package:flutter/material.dart';
-import 'package:flutter_ecoapp/views/chat_view.dart';
+import 'package:flutter_ecoapp/views/chats_view.dart';
 
 import 'package:flutter_ecoapp/views/style/colors.dart';
 import 'package:flutter_ecoapp/views/style/text_style.dart';
@@ -22,7 +22,7 @@ class ProfileView extends StatelessWidget {
             icon: Icon(Icons.sms_outlined), 
             color: EcoAppColors.MAIN_COLOR,
             iconSize: 35,
-            onPressed: () => Navigator.push(context, MaterialPageRoute(builder: (__) => ChatView()))
+            onPressed: () => Navigator.push(context, MaterialPageRoute(builder: (__) => ChatsView()))
           )
         ),
         mainContent(context)

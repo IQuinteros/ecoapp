@@ -1,15 +1,10 @@
 import 'package:flutter/material.dart';
 import 'package:flutter_ecoapp/models/chat.dart';
-import 'package:flutter_ecoapp/models/store.dart';
-import 'package:flutter_ecoapp/views/debug/debug.dart';
 import 'package:flutter_ecoapp/views/style/colors.dart';
 import 'package:flutter_ecoapp/views/widgets/bottom_nav_bar.dart';
-import 'package:flutter_ecoapp/views/widgets/eco_cover.dart';
-import 'package:flutter_ecoapp/views/widgets/search_bar.dart';
-import 'package:flutter_ecoapp/views/widgets/store/storeview/store_cover_section.dart';
 import 'package:google_fonts/google_fonts.dart';
 
-class ChatView extends StatelessWidget {
+class ChatsView extends StatelessWidget {
 
   @override
   Widget build(BuildContext context) {
@@ -47,13 +42,21 @@ class ChatView extends StatelessWidget {
     return SingleChildScrollView(
       child: Column(
         children: [
-          chatList()
+          _ChatList()
         ],
       ),
     );
   }
 
-  Widget chatList(){
+}
+
+class _ChatList extends StatelessWidget {
+  const _ChatList({
+    Key? key,
+  }) : super(key: key);
+
+  @override
+  Widget build(BuildContext context) {
     return Container(
       decoration: BoxDecoration(
         color: Colors.white,
@@ -70,18 +73,28 @@ class ChatView extends StatelessWidget {
       ),
       child: Column(
         children: [
-          chatItem(ChatModel(id: 1, closed: false, createdDate: DateTime.now())),
+          _ChatItem(chat: ChatModel(id: 1, closed: false, createdDate: DateTime.now())),
           Divider(thickness: 1),
-          chatItem(ChatModel(id: 1, closed: false, createdDate: DateTime.now()))
+          _ChatItem(chat: ChatModel(id: 1, closed: false, createdDate: DateTime.now()))
         ],
       ),
     );
   }
+}
 
-  Widget chatItem(ChatModel chat){
+class _ChatItem extends StatelessWidget {
+  const _ChatItem({
+    Key? key,
+    required this.chat,
+  }) : super(key: key);
+
+  final ChatModel chat;
+
+  @override
+  Widget build(BuildContext context) {
     final img = Container(
-      height: 80,
-      width: 80,
+      height: 70,
+      width: 70,
       clipBehavior: Clip.antiAlias,
       decoration: BoxDecoration(
         shape: BoxShape.circle,
@@ -129,7 +142,7 @@ class ChatView extends StatelessWidget {
 
     return InkWell(
       borderRadius: BorderRadius.circular(20),
-      onTap: () => print('HOLA'),
+      onTap: () => print('HOLA'), // TODO: Navigate to Chat view
       child: Container(
         padding: EdgeInsets.symmetric(
           vertical: 10.0,
@@ -147,6 +160,5 @@ class ChatView extends StatelessWidget {
       ),
     );
   }
-
 }
 
