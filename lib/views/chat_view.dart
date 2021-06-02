@@ -6,11 +6,17 @@ import 'package:flutter_ecoapp/views/style/colors.dart';
 import 'package:flutter_ecoapp/views/widgets/bottom_nav_bar.dart';
 import 'package:google_fonts/google_fonts.dart';
 
-class ChatView extends StatelessWidget {
+class ChatView extends StatefulWidget {
 
   final ChatModel chat;
 
   ChatView({Key? key, required this.chat}) : super(key: key);
+
+  @override
+  _ChatViewState createState() => _ChatViewState();
+}
+
+class _ChatViewState extends State<ChatView> {
 
   @override
   Widget build(BuildContext context) {
@@ -21,7 +27,7 @@ class ChatView extends StatelessWidget {
         centerTitle: false,
         elevation: 5,
         title: Text(
-          chat.store.publicName,
+          widget.chat.store.publicName,
           style: GoogleFonts.montserrat(
             fontWeight: FontWeight.w500
           ),
@@ -45,7 +51,7 @@ class ChatView extends StatelessWidget {
   }
 
   Widget mainContent(BuildContext context){
-    List<MessageModel> messages = chat.messages;
+    List<MessageModel> messages = widget.chat.messages;
     bool tempIsOwner = false;
     List<Widget> messagesWidget = messages.map<Widget>((e) { 
       Widget message = getMessage(
@@ -73,7 +79,7 @@ class ChatView extends StatelessWidget {
       return message;
     }).toList();
 
-    messagesWidget.insert(0, getPurchase(chat.linkedPurchase));
+    messagesWidget.insert(0, getPurchase(widget.chat.linkedPurchase));
     messagesWidget.add(SizedBox(height: 90,));
 
     final sendMessage = Container(
@@ -118,8 +124,12 @@ class ChatView extends StatelessWidget {
         ],
       ),
     );
+
     final scroll = SingleChildScrollView(
       dragStartBehavior: DragStartBehavior.down,
+      controller: ScrollController(
+        initialScrollOffset: messages.length * 80
+      ),
       child: Container(
         margin: EdgeInsets.symmetric(
           horizontal: 10
@@ -210,7 +220,6 @@ class ChatView extends StatelessWidget {
         right: isOwner? 0 : 40,
         left: isOwner? 40 : 0,
         top: margin,
-        //bottom: margin
       ),
       child: GestureDetector(
         onTap: () {}, // TODO: Go to purchase

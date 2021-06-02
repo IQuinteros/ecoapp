@@ -79,6 +79,138 @@ class ChatModel extends BaseModel
         ), 
         store: store, 
         owner: 'profile'
+      ),
+      MessageModel(
+        id: id, 
+        message: 'Hola hola sdfkjdsf', 
+        date: DateTime.now(), 
+        chat: this, 
+        profile: ProfileModel(
+          bithday: DateTime.now(),
+          contactNumber: 123,
+          createdDate: DateTime.now(),
+          email: 'skdjfjadfs',
+          id: 2,
+          lastName: 'sadjksdjafk',
+          lastUpdateDate: DateTime.now(),
+          location: ' jsadfjdasksf a',
+          name: ' kasdkjadfsk ',
+          rut: 234234,
+          rutDv: '4',
+          termsChecked: true
+        ), 
+        store: store, 
+        owner: 'profile'
+      ),
+      MessageModel(
+        id: id, 
+        message: 'Hola hola jaja buena buena sdfkjdsf', 
+        date: DateTime.now(), 
+        chat: this, 
+        profile: ProfileModel(
+          bithday: DateTime.now(),
+          contactNumber: 123,
+          createdDate: DateTime.now(),
+          email: 'skdjfjadfs',
+          id: 2,
+          lastName: 'sadjksdjafk',
+          lastUpdateDate: DateTime.now(),
+          location: ' jsadfjdasksf a',
+          name: ' kasdkjadfsk ',
+          rut: 234234,
+          rutDv: '4',
+          termsChecked: true
+        ), 
+        store: store, 
+        owner: 'store'
+      ),
+      MessageModel(
+        id: id, 
+        message: 'ahh chaochao sdfkjdsf', 
+        date: DateTime.now(), 
+        chat: this, 
+        profile: ProfileModel(
+          bithday: DateTime.now(),
+          contactNumber: 123,
+          createdDate: DateTime.now(),
+          email: 'skdjfjadfs',
+          id: 2,
+          lastName: 'sadjksdjafk',
+          lastUpdateDate: DateTime.now(),
+          location: ' jsadfjdasksf a',
+          name: ' kasdkjadfsk ',
+          rut: 234234,
+          rutDv: '4',
+          termsChecked: true
+        ), 
+        store: store, 
+        owner: 'profile'
+      ),
+      MessageModel(
+        id: id, 
+        message: 'Hola hola sdfkjdsf', 
+        date: DateTime.now(), 
+        chat: this, 
+        profile: ProfileModel(
+          bithday: DateTime.now(),
+          contactNumber: 123,
+          createdDate: DateTime.now(),
+          email: 'skdjfjadfs',
+          id: 2,
+          lastName: 'sadjksdjafk',
+          lastUpdateDate: DateTime.now(),
+          location: ' jsadfjdasksf a',
+          name: ' kasdkjadfsk ',
+          rut: 234234,
+          rutDv: '4',
+          termsChecked: true
+        ), 
+        store: store, 
+        owner: 'profile'
+      ),
+      MessageModel(
+        id: id, 
+        message: 'Hola hola jaja buena buena sdfkjdsf', 
+        date: DateTime.now(), 
+        chat: this, 
+        profile: ProfileModel(
+          bithday: DateTime.now(),
+          contactNumber: 123,
+          createdDate: DateTime.now(),
+          email: 'skdjfjadfs',
+          id: 2,
+          lastName: 'sadjksdjafk',
+          lastUpdateDate: DateTime.now(),
+          location: ' jsadfjdasksf a',
+          name: ' kasdkjadfsk ',
+          rut: 234234,
+          rutDv: '4',
+          termsChecked: true
+        ), 
+        store: store, 
+        owner: 'store'
+      ),
+      MessageModel(
+        id: id, 
+        message: 'ahh chaochao sdfkjdsf', 
+        date: DateTime.now(), 
+        chat: this, 
+        profile: ProfileModel(
+          bithday: DateTime.now(),
+          contactNumber: 123,
+          createdDate: DateTime.now(),
+          email: 'skdjfjadfs',
+          id: 2,
+          lastName: 'sadjksdjafk',
+          lastUpdateDate: DateTime.now(),
+          location: ' jsadfjdasksf a',
+          name: ' kasdkjadfsk ',
+          rut: 234234,
+          rutDv: '4',
+          termsChecked: true
+        ), 
+        store: store, 
+        owner: 'profile'
       )
     ]);
     return _messages;
