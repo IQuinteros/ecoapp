@@ -1,9 +1,10 @@
 import 'package:flutter/gestures.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter_ecoapp/models/chat.dart';
-import 'package:flutter_ecoapp/models/purchase.dart';
 import 'package:flutter_ecoapp/views/style/colors.dart';
 import 'package:flutter_ecoapp/views/widgets/bottom_nav_bar.dart';
+import 'package:flutter_ecoapp/views/widgets/chat/chatview/message_item.dart';
+import 'package:flutter_ecoapp/views/widgets/chat/chatview/purchase_message_item.dart';
 import 'package:google_fonts/google_fonts.dart';
 
 class ChatView extends StatefulWidget {
@@ -54,7 +55,7 @@ class _ChatViewState extends State<ChatView> {
     List<MessageModel> messages = widget.chat.messages;
     bool tempIsOwner = false;
     List<Widget> messagesWidget = messages.map<Widget>((e) { 
-      Widget message = getMessage(
+      Widget message = MessageItem(
         content: Column(
           crossAxisAlignment: e.isOwner? CrossAxisAlignment.end : CrossAxisAlignment.start,
           children: [
@@ -79,7 +80,7 @@ class _ChatViewState extends State<ChatView> {
       return message;
     }).toList();
 
-    messagesWidget.insert(0, getPurchase(widget.chat.linkedPurchase));
+    messagesWidget.insert(0, PurchaseMessageItem(purchase: widget.chat.linkedPurchase));
     messagesWidget.add(SizedBox(height: 90,));
 
     final sendMessage = Container(
@@ -151,92 +152,6 @@ class _ChatViewState extends State<ChatView> {
       ],
     );
   }
-
-  Widget getPurchase(PurchaseModel purchase){
-    ImageProvider<Object> imgData;
-    if(purchase.articles[0].hasPhotoUrl){
-      imgData = NetworkImage(purchase.articles[0].photoUrl!);
-    }
-    else{
-      imgData = AssetImage('assets/png/no-image.png');
-    }
-
-    final img = Container(
-      width: 60,
-      height: 60,
-      decoration: BoxDecoration(
-        shape: BoxShape.circle,
-        boxShadow: [
-          BoxShadow(
-            color: Colors.black.withOpacity(0.25),
-            blurRadius: 1
-          )
-        ]
-      ),
-      child: Image(
-        image: imgData, // TODO: Linked article
-        fit: BoxFit.cover
-      ),
-    );
-
-    final info = Container(
-      child: Column(
-        crossAxisAlignment: CrossAxisAlignment.start,
-        children: [
-          Text(
-            '${purchase.articles.length} artículos',
-            style: GoogleFonts.montserrat(
-              fontWeight: FontWeight.w500
-            ),
-            textAlign: TextAlign.start
-          ),
-          Text(
-            'Comprado: ${purchase.createdDate.day}/${purchase.createdDate.month}/${purchase.createdDate.year}',
-            style: GoogleFonts.montserrat(
-              fontWeight: FontWeight.w300,
-              fontSize: 12
-            ),
-            textAlign: TextAlign.start,
-          )
-        ],
-      ),
-    );
-
-    return getMessage(
-      content: Row(
-        children: [
-          img,
-          SizedBox(width: 20),
-          info
-        ],
-      ),
-      isOwner: false
-    );
-  }
-
-  Widget getMessage({required Widget content, required bool isOwner, double margin = 10}){
-    return Container(
-      margin: EdgeInsets.only(
-        right: isOwner? 0 : 40,
-        left: isOwner? 40 : 0,
-        top: margin,
-      ),
-      child: GestureDetector(
-        onTap: () {}, // TODO: Go to purchase
-        child: Card(
-          margin: EdgeInsets.zero,
-          shape: RoundedRectangleBorder(borderRadius: BorderRadius.circular(20.0)),
-          elevation: 5,
-          child: Container(
-            padding: EdgeInsets.symmetric(
-              horizontal: 15.0,
-              vertical: 15.0
-            ),
-            child: content
-          ),
-        ),
-      ),
-    );
-  }
 }
+
 
