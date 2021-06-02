@@ -58,14 +58,7 @@ class PurchaseModel extends BaseModel
     );
   }
 
-  double get realTotal {
-    double toreturn = articles.fold<double>(0, (double value, element) {
-      value += (element.unitPrice * element.quantity);
-      print(value);
-      return value;
-    });
-    return toreturn;
-  } 
+  double get realTotal => articles.fold<double>(0, (double value, element) => value += (element.unitPrice * element.quantity));
   double get discount => (realTotal - total) / realTotal * 100;
 }
 
