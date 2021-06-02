@@ -3,17 +3,15 @@ import 'dart:math';
 import 'package:flutter/material.dart';
 import 'package:flutter_ecoapp/models/article.dart';
 import 'package:flutter_ecoapp/utils/currency_util.dart';
+import 'package:flutter_ecoapp/views/article_view.dart';
 import 'package:flutter_ecoapp/views/widgets/articles/mini_eco_indicator.dart';
 import 'package:google_fonts/google_fonts.dart';
 
 class CartArticleCard extends StatefulWidget {
-  final String title;
-  final int price;
-  final int percent;
 
-  final bool favorite;
+  final ArticleModel article;
 
-  const CartArticleCard({Key? key, required this.title, required this.price, required this.percent, this.favorite = false}) : super(key: key);
+  const CartArticleCard({Key? key, required this.article}) : super(key: key);
 
   @override
   _CartArticleCardState createState() => _CartArticleCardState();
@@ -50,7 +48,7 @@ class _CartArticleCardState extends State<CartArticleCard> {
       children: [
         Flexible(
           child: Text(
-            widget.title,
+            widget.article.title,
             style: GoogleFonts.montserrat(),
             textAlign: TextAlign.left,
             maxLines: 3,
@@ -73,7 +71,7 @@ class _CartArticleCardState extends State<CartArticleCard> {
       children: [
         ecoIndicator,
         Text(
-          '\$ ' + CurrencyUtil.formatToCurrencyString(widget.price),
+          '\$ ' + CurrencyUtil.formatToCurrencyString(widget.article.price.truncate()),
           style: GoogleFonts.montserrat(
             fontSize: 16,
             fontWeight: FontWeight.w500
@@ -177,7 +175,7 @@ class _CartArticleCardState extends State<CartArticleCard> {
       child: InkWell(
         child: card,
         borderRadius: BorderRadius.circular(20.0),
-        onTap: (){},
+        onTap: () => Navigator.push(context, MaterialPageRoute(builder: (__) => ArticleView(article: widget.article))),
       ),
     );
   }

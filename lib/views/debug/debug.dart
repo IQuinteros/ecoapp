@@ -504,28 +504,10 @@ class EcoAppDebug{
     return Column(
       children: [
         CartArticleCard(
-          title: 'Título largo',
-          percent: 80,
-          price: 20000,
-          favorite: true,
+          article: _articles[0],
         ),
         CartArticleCard(
-          title: 'Título largo xd sdjhfhsj dfsd',
-          percent: 40,
-          price: 35000,
-          favorite: false,
-        ),
-        CartArticleCard(
-          title: 'Título largo',
-          percent: 80,
-          price: 20000,
-          favorite: true,
-        ),
-        CartArticleCard(
-          title: 'Título largo xd sdjhfhsj dfsd',
-          percent: 40,
-          price: 35000,
-          favorite: false,
+          article: _articles[1],
         ),
       ],
     );
