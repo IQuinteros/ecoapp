@@ -5,6 +5,7 @@ import 'package:flutter_ecoapp/models/article.dart';
 import 'package:flutter_ecoapp/models/category.dart';
 import 'package:flutter_ecoapp/models/district.dart';
 import 'package:flutter_ecoapp/models/opinion.dart';
+import 'package:flutter_ecoapp/models/purchase.dart';
 import 'package:flutter_ecoapp/models/question.dart';
 import 'package:flutter_ecoapp/models/store.dart';
 import 'package:flutter_ecoapp/views/widgets/articles/article_card.dart';
@@ -39,6 +40,152 @@ class EcoAppDebug{
         id: 2,
         answer: 'Contiene elementos extremadamente  asdfasdf asdfasdfamigables al ecosistema como este, este y este otro. Saludos!',
         date: DateTime.now()
+      )
+    ),
+  ];
+
+  static List<PurchaseModel> purchases = [
+    PurchaseModel(
+      articles: [
+        ArticleToPurchase(
+          id: 1, 
+          title: 'Jamón', 
+          unitPrice: 123, 
+          quantity: 12,
+          article: _articles[0],
+          form: ArticleForm.infoPurchase(
+            id: 1,
+            generalDetail: '',
+            recycledMats: '',
+            recycledMatsDetail: '',
+            recycledProd: '',
+            recycledProdDetail: '',
+            reuseTips: 'dsafkdsfjkdfsa'
+          )
+        ),
+        ArticleToPurchase(
+          id: 2, 
+          title: 'Correa', 
+          unitPrice: 432, 
+          quantity: 2,
+          article: _articles[1],
+          photoUrl: 'https://picsum.photos/500/400',
+          form: ArticleForm.infoPurchase(
+            id: 1,
+            generalDetail: '',
+            recycledMats: 'adsfasdf asdf',
+            recycledMatsDetail: '',
+            recycledProd: 'dsafasdf ',
+            recycledProdDetail: '',
+            reuseTips: 'dsafkdsfjkdfsa'
+          )
+        )
+      ],
+      createdDate: DateTime.now(),
+      id: 1,
+      info: InfoPurchaseModel(
+        contactNumber: '234234234',
+        district: 'dfsgdgsf',
+        id: 1,
+        location: 'adsjdfsj',
+        names: 'dsfakjadfjks asdfdfs',
+      ),
+      total: 23423,
+    ),
+    PurchaseModel(
+      articles: [
+        ArticleToPurchase(
+          id: 2, 
+          title: 'Correa', 
+          unitPrice: 432, 
+          quantity: 2,
+          article: _articles[1],
+          photoUrl: 'https://picsum.photos/500/400',
+          form: ArticleForm.infoPurchase(
+            id: 1,
+            generalDetail: '',
+            recycledMats: 'asdfadsf',
+            recycledMatsDetail: '',
+            recycledProd: 'sdfsd',
+            recycledProdDetail: '',
+            reuseTips: 'dsafkdsfjkdfsa'
+          )
+        )
+      ],
+      createdDate: DateTime.now(),
+      id: 2,
+      info: InfoPurchaseModel(
+        contactNumber: '234234234',
+        district: 'dfsgdgsf',
+        id: 1,
+        location: 'adsjdfsj',
+        names: 'dsfakjadfjks asdfdfs',
+      ),
+      total: 6455,
+    )
+  ];
+
+  static List<ArticleModel> _articles = [
+    ArticleModel(
+      id: 1,
+      title: 'Tìtulo largo',
+      price: 20000.0,
+      description: lipsum.createParagraph(numParagraphs: 2),
+      stock: 2,
+      enabled: true,
+      lastUpdateDate: DateTime.now(),
+      createdDate: DateTime.now(),
+      photos: [
+        PhotoModel(id: 1, photoUrl: 'https://picsum.photos/500/300')
+      ],
+      form: ArticleForm(
+        id: 1,
+        createdDate: DateTime.now(),
+        lastUpdateDate: DateTime.now(),
+        recycledMats: 'Full',
+        recycledMatsDetail: lipsum.createParagraph(numParagraphs: 1),
+        recycledProd: 'Full',
+        recycledProdDetail: lipsum.createParagraph(numParagraphs: 1),
+        reuseTips: lipsum.createParagraph(numParagraphs: 1)
+      ),
+      store: getStores()[0],
+      questions: _questions,
+      rating: _rating,
+      category: CategoryModel(
+        id: 1,
+        title: 'Hogar',
+        createdDate: DateTime.now()
+      )
+    ),
+    ArticleModel(
+      id: 2,
+      title: 'Tìtulo largo',
+      price: 234234.0,
+      description: lipsum.createParagraph(numParagraphs: 2),
+      stock: 2,
+      enabled: true,
+      lastUpdateDate: DateTime.now(),
+      createdDate: DateTime.now(),
+      photos: [
+        PhotoModel(id: 1, photoUrl: 'https://picsum.photos/500/300')
+      ],
+      form: ArticleForm(
+        id: 1,
+        createdDate: DateTime.now(),
+        lastUpdateDate: DateTime.now(),
+        recycledMats: 'Full',
+        recycledMatsDetail: lipsum.createParagraph(numParagraphs: 1),
+        recycledProd: 'Full',
+        recycledProdDetail: lipsum.createParagraph(numParagraphs: 1),
+        reuseTips: lipsum.createParagraph(numParagraphs: 1)
+      ),
+      store: getStores()[0],
+      questions: _questions,
+      rating: _rating,
+      category: CategoryModel(
+        id: 1,
+        title: 'Hogar',
+        createdDate: DateTime.now()
       )
     ),
   ];

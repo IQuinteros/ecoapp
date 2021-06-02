@@ -20,6 +20,24 @@ class PurchaseModel extends BaseModel
     required this.info,
     required this.articles
   }) : super(id: id);
+
+  EcoIndicator get summaryEcoIndicator {
+    EcoIndicator toReturn = EcoIndicator(
+      hasRecycledMaterials: false,
+      hasReuseTips: false,
+      isRecyclableProduct: false
+    );
+    articles.forEach((element) { 
+      if(element.form.getIndicator().hasRecycledMaterials)
+        toReturn.hasRecycledMaterials = true;
+      if(element.form.getIndicator().hasReuseTips)
+        toReturn.hasReuseTips = true;
+      if(element.form.getIndicator().isRecyclableProduct)
+        toReturn.isRecyclableProduct = true;
+    });
+
+    return toReturn;
+  }
 }
 
 class InfoPurchaseModel extends BaseModel
@@ -28,7 +46,6 @@ class InfoPurchaseModel extends BaseModel
   String location;
   String contactNumber;
   String district;
-  int? articleLinkedId;
 
   InfoPurchaseModel({
     required int id,
@@ -36,7 +53,6 @@ class InfoPurchaseModel extends BaseModel
     required this.location,
     required this.contactNumber,
     required this.district,
-    this.articleLinkedId
   }) : super(id: id);
 
 }
@@ -48,7 +64,10 @@ class ArticleToPurchase extends BaseModel
   String title;
   double unitPrice;
   int quantity;
+
   String? photoUrl;
+
+  ArticleForm form;
 
   ArticleToPurchase({
     required int id,
@@ -57,6 +76,7 @@ class ArticleToPurchase extends BaseModel
     required this.unitPrice,
     required this.quantity,
     this.photoUrl,
+    required this.form
   }) : super(id: id);
 
   bool get hasPhotoUrl => photoUrl != null && photoUrl!.isNotEmpty;

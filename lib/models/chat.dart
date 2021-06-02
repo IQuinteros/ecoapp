@@ -1,4 +1,5 @@
 import 'package:flutter/material.dart';
+import 'package:flutter_ecoapp/models/article.dart';
 import 'package:flutter_ecoapp/models/base.dart';
 import 'package:flutter_ecoapp/models/district.dart';
 import 'package:flutter_ecoapp/models/profile.dart';
@@ -252,7 +253,16 @@ class ChatModel extends BaseModel
         id: id, 
         title: 'Un artículo a', 
         unitPrice: 12015, 
-        quantity: 2
+        quantity: 2,
+        form: ArticleForm.infoPurchase(
+          id: 1,
+          generalDetail: '',
+          recycledMats: 'sjadsf',
+          recycledMatsDetail: 'sfkjasdkf',
+          recycledProd: '',
+          recycledProdDetail: '',
+          reuseTips: 'dsafjdsafjk'
+        )
       )
     ]
   ); // TODO: Connect to api - DEBUG
