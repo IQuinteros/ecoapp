@@ -60,9 +60,9 @@ class PhotoModel extends BaseModel
 }
 
 class EcoIndicator{
-  final bool hasRecycledMaterials;
-  final bool hasReuseTips;
-  final bool isRecyclableProduct;
+  bool hasRecycledMaterials;
+  bool hasReuseTips;
+  bool isRecyclableProduct;
 
   EcoIndicator({this.hasRecycledMaterials = false, this.hasReuseTips = false, this.isRecyclableProduct = false});
 
@@ -84,8 +84,8 @@ class ArticleForm extends BaseModel
   String recycledProd;
   String recycledProdDetail;
   String generalDetail;
-  DateTime createdDate;
-  DateTime lastUpdateDate;
+  DateTime? createdDate;
+  DateTime? lastUpdateDate;
 
   bool get hasDetail{
     EcoIndicator indicator = getIndicator();
@@ -103,6 +103,16 @@ class ArticleForm extends BaseModel
     required this.createdDate,
     required this.lastUpdateDate
   }) : super(id: id);
+
+  ArticleForm.infoPurchase({
+    required int id,
+    this.recycledMats = '',
+    this.recycledMatsDetail = '',
+    this.reuseTips = '',
+    this.recycledProd = '',
+    this.recycledProdDetail = '',
+    this.generalDetail = '',
+  }): super(id: id);
 
   EcoIndicator getIndicator(){
     bool hasRecycledMats = recycledMats.isNotEmpty;

@@ -2,16 +2,22 @@ import 'package:flutter/material.dart';
 import 'package:flutter_ecoapp/models/article.dart';
 import 'package:flutter_ecoapp/utils/currency_util.dart';
 import 'package:flutter_ecoapp/views/article_view.dart';
+import 'package:flutter_ecoapp/views/style/colors.dart';
 import 'package:flutter_ecoapp/views/widgets/articles/favorite_button.dart';
 import 'package:flutter_ecoapp/views/widgets/articles/mini_eco_indicator.dart';
 import 'package:google_fonts/google_fonts.dart';
 
 class ArticleCard extends StatefulWidget {
-  final ArticleModel article;
+  final ArticleModel? article;
+  final String? title;
+  final EcoIndicator? ecoIndicator;
+  final double? price;
 
   final bool favorite;
 
-  const ArticleCard({Key? key, required this.article, this.favorite = false}) : super(key: key);
+  const ArticleCard({Key? key, required this.article, this.favorite = false, this.ecoIndicator, this.price, this.title}) : super(key: key);
+
+  const ArticleCard.fromPurchase({Key? key, this.article, this.favorite = false, required this.title, required this.ecoIndicator, required this.price}): super(key: key);
 
   @override
   _ArticleCardState createState() => _ArticleCardState();
@@ -23,20 +29,31 @@ class _ArticleCardState extends State<ArticleCard> {
   double shadowOpacity = 0.20;
   @override
   Widget build(BuildContext context) {
-    widget.article.tag = 'article-card';
 
-    final image = Hero(
-      tag: widget.article.tag,
-      child: Image(
-        image: NetworkImage('https://picsum.photos/500/300'),
-        height: 120,
-        width: 120,
-        fit: BoxFit.cover,
-      ),
+    if(widget.article != null)
+      widget.article!.tag = 'article-card';
+    
+    ImageProvider<Object> imageData = AssetImage('assets/png/no-image.png');;
+    if(widget.article != null)
+      imageData = NetworkImage(widget.article!.photos[0].photoUrl);
+
+    final image = Image(
+      image: imageData,
+      height: 120,
+      width: 120,
+      fit: BoxFit.cover,
     );
 
+    Widget heroImage = image;
+
+    if(widget.article != null)
+      heroImage = Hero(
+        tag: widget.article!.tag,
+        child: image
+      );
+
     final imageContainer = Container(
-      child: image,
+      child: heroImage,
       decoration: BoxDecoration(
         boxShadow: <BoxShadow>[
           BoxShadow(
@@ -54,7 +71,7 @@ class _ArticleCardState extends State<ArticleCard> {
       children: [
         Flexible(
           child: Text(
-            widget.article.title,
+            widget.article != null? widget.article!.title : widget.title!,
             style: GoogleFonts.montserrat(),
             textAlign: TextAlign.left,
             maxLines: 3,
@@ -65,7 +82,7 @@ class _ArticleCardState extends State<ArticleCard> {
     );
 
     final ecoIndicator = MiniEcoIndicator(
-      ecoIndicator: widget.article.form.getIndicator()
+      ecoIndicator: widget.article != null? widget.article!.form.getIndicator() : widget.ecoIndicator!
     );
 
     final secondRow = Container(
@@ -77,7 +94,7 @@ class _ArticleCardState extends State<ArticleCard> {
         mainAxisSize: MainAxisSize.max,
         children: [
           Text(
-            '\$ ' + CurrencyUtil.formatToCurrencyString(widget.article.price.round()),
+            '\$ ' + CurrencyUtil.formatToCurrencyString(widget.article != null? widget.article!.price.round() : widget.price!.round()),
             style: GoogleFonts.montserrat(
               fontSize: 16,
               fontWeight: FontWeight.w500
@@ -142,7 +159,22 @@ class _ArticleCardState extends State<ArticleCard> {
         child: card,
         borderRadius: BorderRadius.circular(20.0),
         onTap: (){
-          Navigator.push(context, MaterialPageRoute(builder: (__) => ArticleView(article: widget.article,)));
+          if(widget.article != null)
+            Navigator.push(context, MaterialPageRoute(builder: (__) => ArticleView(article: widget.article!,)));
+          else
+          {
+            ScaffoldMessenger.of(context).removeCurrentSnackBar();
+            ScaffoldMessenger.of(context).showSnackBar(
+              SnackBar(
+                content: Text(
+                  'El artículo no ha sido encontrado', // TODO: Open dialog with little information
+                  style: GoogleFonts.montserrat(),
+                ),
+                backgroundColor: EcoAppColors.MAIN_COLOR,
+                duration: Duration(seconds: 2),
+              ),
+            );
+          }
         },
         onHover: onHover
       ),
