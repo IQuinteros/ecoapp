@@ -3,6 +3,7 @@ import 'package:flutter_ecoapp/models/article.dart';
 import 'package:flutter_ecoapp/models/purchase.dart';
 import 'package:flutter_ecoapp/models/store.dart';
 import 'package:flutter_ecoapp/views/debug/debug.dart';
+import 'package:flutter_ecoapp/views/store_view.dart';
 import 'package:flutter_ecoapp/views/style/colors.dart';
 import 'package:flutter_ecoapp/views/style/text_style.dart';
 import 'package:flutter_ecoapp/views/widgets/articles/article_card.dart';
@@ -30,7 +31,7 @@ class PurchaseDetailView extends StatelessWidget {
 
   Widget getContent(BuildContext context){
     List<Widget> storeSections = [];
-    purchase.storeSortedArticles.forEach((key, value) => storeSections.add(getStoreList(key, value)));
+    purchase.storeSortedArticles.forEach((key, value) => storeSections.add(getStoreList(context, key, value)));
 
     final content = Column(
       children: [
@@ -60,7 +61,18 @@ class PurchaseDetailView extends StatelessWidget {
     );
   }
 
-  Widget getStoreList(StoreModel? store, List<ArticleToPurchase> articles){
+  Widget getStoreList(BuildContext context, StoreModel? store, List<ArticleToPurchase> articles){
+    List<Widget> articlesToDisplay = articles.map<Widget>((e) => ArticleCard.fromPurchase(
+      article: e.article,
+      ecoIndicator: e.form.getIndicator(),
+      price: e.unitPrice,
+      title: e.title,
+    )).toList();
+
+    Function()? onTap;
+    if(store != null)
+      onTap = () => Navigator.pushNamed(context, 'store', arguments: store);
+
     return Container(
       child: Column(
         crossAxisAlignment: CrossAxisAlignment.stretch,
@@ -69,19 +81,33 @@ class PurchaseDetailView extends StatelessWidget {
             padding: EdgeInsets.only(
               left: 20.0,
               right: 20.0,
-              top: 10.0
+              top: 5.0
             ),
-            child: Text(
-              store != null? store.publicName : 'Otras tiendas',
-              style: GoogleFonts.montserrat(
-                color: store != null? EcoAppColors.MAIN_COLOR : Colors.black,
-                fontWeight: FontWeight.w400,
-                fontSize: 18
+            child: Expanded(
+              child: InkWell(
+                borderRadius: BorderRadius.circular(10.0),
+                onTap: onTap,
+                child: Container(
+                  padding: EdgeInsets.symmetric(
+                    vertical: 5.0,
+                    horizontal: 5.0
+                  ),
+                  child: Text(
+                    store != null? store.publicName : 'Otras tiendas',
+                    style: GoogleFonts.montserrat(
+                      color: store != null? EcoAppColors.MAIN_COLOR : Colors.black,
+                      fontWeight: FontWeight.w400,
+                      fontSize: 18
+                    ),
+                  ),
+                ),
               ),
             ),
           ),
           SizedBox(height: 20.0),
-          ArticleCard(article: articles[0].article!) // TODO: Dynamic articles, with ArticlePurchase info
+          Column(
+            children: articlesToDisplay,
+          )
         ],
       ),
     );

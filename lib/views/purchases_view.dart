@@ -21,7 +21,9 @@ class PurchasesView extends StatelessWidget {
   }
 
   Widget getContent(BuildContext context){
-    List<PurchaseModel> purchases = EcoAppDebug.purchases;
+    List<PurchaseModel> purchases = EcoAppDebug.purchases; // Get purchases
+
+    List<Widget> purchasesWidget = purchases.map<Widget>((e) => PurchaseCard(purchase: e)).toList();
 
     final content = Column(
       children: [
@@ -37,12 +39,7 @@ class PurchasesView extends StatelessWidget {
             },
           ),
         ),
-        PurchaseCard(
-          purchase: purchases[0]
-        ),
-        PurchaseCard(
-          purchase: purchases[1]
-        )
+        Column(children: purchasesWidget,)
       ],
     );
 

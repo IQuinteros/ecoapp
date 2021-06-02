@@ -64,6 +64,23 @@ class EcoAppDebug{
           )
         ),
         ArticleToPurchase(
+          id: 1, 
+          title: 'Jamón', 
+          unitPrice: 123, 
+          quantity: 12,
+          article: _articles[0],
+          form: ArticleForm.infoPurchase(
+            id: 1,
+            generalDetail: '',
+            recycledMats: '',
+            recycledMatsDetail: '',
+            recycledProd: '',
+            recycledProdDetail: '',
+            reuseTips: 'dsafkdsfjkdfsa'
+          ),
+          store: getStores()[0]
+        ),
+        ArticleToPurchase(
           id: 2, 
           title: 'Correa', 
           unitPrice: 432, 
@@ -122,6 +139,35 @@ class EcoAppDebug{
         names: 'dsfakjadfjks asdfdfs',
       ),
       total: 6455,
+    ),
+    PurchaseModel(
+      articles: [
+        ArticleToPurchase(
+          id: 3, 
+          title: 'Jojo', 
+          unitPrice: 12312, 
+          quantity: 4,
+          photoUrl: 'https://picsum.photos/500/400',
+          form: ArticleForm.infoPurchase(
+            id: 1,
+            generalDetail: '',
+            recycledMats: '32452345',
+            recycledMatsDetail: '',
+            recycledProd: 'errtgsdv',
+            recycledProdDetail: '',
+          )
+        )
+      ],
+      createdDate: DateTime.now(),
+      id: 2,
+      info: InfoPurchaseModel(
+        contactNumber: '234234234',
+        district: 'dfsgdgsf',
+        id: 1,
+        location: 'adsjdfsj',
+        names: 'dsfakjadfjks asdfdfs',
+      ),
+      total: 23434,
     )
   ];
 

@@ -43,16 +43,9 @@ class PurchaseModel extends BaseModel
   Map<StoreModel?, List<ArticleToPurchase>> get storeSortedArticles{
     Map<StoreModel?, List<ArticleToPurchase>> toReturn = {};
     articles.forEach((element) { 
-      if(toReturn.containsKey(element.store)){
-        toReturn[element.store]!.add(element);
-      }
-      else{
-        toReturn.addAll({
-          element.store: [element]
-        });
-      }
-    });
-
+      StoreModel? storeToUpdate = element.article != null? element.article!.store : element.store;
+      toReturn.update(storeToUpdate, (value) => value + [element], ifAbsent: () => [element]);
+    }); 
     return toReturn;
   }
 }
