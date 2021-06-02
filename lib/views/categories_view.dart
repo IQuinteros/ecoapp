@@ -26,6 +26,14 @@ class CategoriesView extends StatelessWidget {
         SearchBar(),
         EcoAppTextStyle.getTitle(
           'Categorías',
+          leftButton: IconButton(
+            icon: Icon(Icons.keyboard_arrow_left_rounded),
+            color: EcoAppColors.MAIN_COLOR,
+            iconSize: 40,
+            onPressed: (){
+              Navigator.pop(context);
+            },
+          ),
         ),
         _CategoryTile(context: context, category: CategoryModel(id: 1, title: 'Hogar', createdDate: DateTime.now())),
         SizedBox(height: 20),
