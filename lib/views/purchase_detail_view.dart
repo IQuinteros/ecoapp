@@ -67,6 +67,7 @@ class PurchaseDetailView extends StatelessWidget {
       ecoIndicator: e.form.getIndicator(),
       price: e.unitPrice,
       title: e.title,
+      extraTag: 'purchase-list-${e.id}',
     )).toList();
 
     Function()? onTap;

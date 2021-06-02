@@ -14,10 +14,11 @@ class ArticleCard extends StatefulWidget {
   final double? price;
 
   final bool favorite;
+  final String extraTag;
 
-  const ArticleCard({Key? key, required this.article, this.favorite = false, this.ecoIndicator, this.price, this.title}) : super(key: key);
+  const ArticleCard({Key? key, required this.article, this.favorite = false, this.ecoIndicator, this.price, this.title, this.extraTag = ''}) : super(key: key);
 
-  const ArticleCard.fromPurchase({Key? key, this.article, this.favorite = false, required this.title, required this.ecoIndicator, required this.price}): super(key: key);
+  const ArticleCard.fromPurchase({Key? key, this.article, this.favorite = false, required this.title, required this.ecoIndicator, required this.price, this.extraTag = ''}): super(key: key);
 
   @override
   _ArticleCardState createState() => _ArticleCardState();
@@ -31,7 +32,7 @@ class _ArticleCardState extends State<ArticleCard> {
   Widget build(BuildContext context) {
 
     if(widget.article != null)
-      widget.article!.tag = 'article-card';
+      widget.article!.tag = 'article-card-${widget.extraTag}';
     
     ImageProvider<Object> imageData = AssetImage('assets/png/no-image.png');;
     if(widget.article != null)
@@ -119,6 +120,7 @@ class _ArticleCardState extends State<ArticleCard> {
       ),
     );
 
+    // TODO: Add quantity
     final card = Card(
       margin: EdgeInsets.zero,
       clipBehavior: Clip.antiAlias,
