@@ -1,4 +1,5 @@
 import 'package:flutter/material.dart';
+import 'package:flutter_ecoapp/views/favorites.view.dart';
 import 'package:flutter_ecoapp/views/widgets/profile/profileview/profile_button.dart';
 
 class ProfileButtonsSection extends StatelessWidget {
@@ -12,7 +13,11 @@ class ProfileButtonsSection extends StatelessWidget {
       child: Column(
         children: [
           Divider(thickness: 1),
-          ProfileButton(icon: Icons.star_border_rounded, title: 'Lista de favoritos', onTap: (){}),
+          ProfileButton(
+            icon: Icons.star_border_rounded, 
+            title: 'Lista de favoritos', 
+            onTap: () => Navigator.push(context, MaterialPageRoute(builder: (__) => FavoritesView()))
+          ),
           Divider(thickness: 1),
           ProfileButton(icon: Icons.history, title: 'Historial', onTap: (){}),
           Divider(thickness: 1),
