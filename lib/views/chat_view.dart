@@ -213,7 +213,7 @@ class _ChatViewState extends State<ChatView> {
       isOwner: false
     );
   }
-
+  // TODO: Extract widgets
   Widget getMessage({required Widget content, required bool isOwner, double margin = 10}){
     return Container(
       margin: EdgeInsets.only(
