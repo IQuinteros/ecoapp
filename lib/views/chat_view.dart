@@ -74,6 +74,7 @@ class ChatView extends StatelessWidget {
     }).toList();
 
     messagesWidget.insert(0, getPurchase(chat.linkedPurchase));
+    messagesWidget.add(SizedBox(height: 90,));
 
     final sendMessage = Container(
       padding: EdgeInsets.symmetric(
