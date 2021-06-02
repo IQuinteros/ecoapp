@@ -1,5 +1,6 @@
 import 'package:flutter/material.dart';
 import 'package:flutter_ecoapp/models/chat.dart';
+import 'package:flutter_ecoapp/views/chat_view.dart';
 import 'package:flutter_ecoapp/views/style/colors.dart';
 import 'package:flutter_ecoapp/views/widgets/bottom_nav_bar.dart';
 import 'package:google_fonts/google_fonts.dart';
@@ -69,7 +70,8 @@ class _ChatList extends StatelessWidget {
         ]
       ),
       margin: EdgeInsets.symmetric(
-        horizontal: 5
+        vertical: 20.0,
+        horizontal: 10
       ),
       child: Column(
         children: [
@@ -142,7 +144,7 @@ class _ChatItem extends StatelessWidget {
 
     return InkWell(
       borderRadius: BorderRadius.circular(20),
-      onTap: () => print('HOLA'), // TODO: Navigate to Chat view
+      onTap: () => Navigator.push(context, MaterialPageRoute(builder: (__) => ChatView(chat: chat,))),
       child: Container(
         padding: EdgeInsets.symmetric(
           vertical: 10.0,
