@@ -8,4 +8,24 @@ class EcoAppColors{
   static const Color RED_COLOR = Color.fromRGBO(255, 15, 128, 1);
   static const Color LEFT_BAR_COLOR = Color.fromRGBO(0, 139, 114, 1);
 
+
+  // ranges from 0.0 to 1.0
+
+  static Color darken(Color color, [double amount = .1]) {
+    assert(amount >= 0 && amount <= 1);
+
+    final hsl = HSLColor.fromColor(color);
+    final hslDark = hsl.withLightness((hsl.lightness - amount).clamp(0.0, 1.0));
+
+    return hslDark.toColor();
+  }
+
+  static Color lighten(Color color, [double amount = .1]) {
+    assert(amount >= 0 && amount <= 1);
+
+    final hsl = HSLColor.fromColor(color);
+    final hslLight = hsl.withLightness((hsl.lightness + amount).clamp(0.0, 1.0));
+
+    return hslLight.toColor();
+  }
 }

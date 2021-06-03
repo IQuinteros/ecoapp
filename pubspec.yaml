@@ -37,9 +37,6 @@ dependencies:
   # Responsive grids
   responsive_grid: ^2.0.0
 
-  # Colors filter
-  tinycolor: ^1.0.3
-
   # Lorem ipsum
   flutter_lorem: ^2.0.0
 

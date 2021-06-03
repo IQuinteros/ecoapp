@@ -1,6 +1,6 @@
 import 'package:flutter/material.dart';
+import 'package:flutter_ecoapp/views/style/colors.dart';
 import 'package:google_fonts/google_fonts.dart';
-import 'package:tinycolor/tinycolor.dart';
 
 class CircleIndicator extends StatelessWidget {
 
@@ -25,7 +25,7 @@ class CircleIndicator extends StatelessWidget {
             spreadRadius: 2.0
           )
         ],
-        color: TinyColor.fromRGB(r: color.red, g: color.green, b: color.blue).darken(darkenScale).color.withOpacity(1),
+        color: EcoAppColors.darken(color, darkenScale/100),
         border: Border.all(
           color: color,
           width: 4.0
