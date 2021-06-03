@@ -17,7 +17,8 @@ class ProfileView extends StatelessWidget {
     final column = Column(
       crossAxisAlignment: CrossAxisAlignment.start,
       children: [
-        EcoAppTextStyle.getTitle('Mi perfil',
+        EcoTitle(
+          text: 'Mi perfil',
           rightButton: IconButton(
             icon: Icon(Icons.sms_outlined), 
             color: EcoAppColors.MAIN_COLOR,
@@ -25,7 +26,7 @@ class ProfileView extends StatelessWidget {
             onPressed: () => Navigator.push(context, MaterialPageRoute(builder: (__) => ChatsView()))
           )
         ),
-        mainContent(context)
+        _MainContent()
       ],
     );
 
@@ -34,8 +35,15 @@ class ProfileView extends StatelessWidget {
       scrollDirection: Axis.vertical,
     );
   }
+}
 
-  Widget mainContent(BuildContext context){
+class _MainContent extends StatelessWidget {
+  const _MainContent({
+    Key? key,
+  }) : super(key: key);
+
+  @override
+  Widget build(BuildContext context) {
     return Container(
       margin: EdgeInsets.symmetric(
         horizontal: 5

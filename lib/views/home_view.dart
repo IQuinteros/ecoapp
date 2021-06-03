@@ -8,7 +8,7 @@ import 'package:flutter_ecoapp/views/widgets/categories/category_list_item.dart'
 
 import 'package:flutter_ecoapp/views/widgets/mini_button.dart';
 import 'package:flutter_ecoapp/views/widgets/search_bar.dart';
-import 'package:flutter_swiper/flutter_swiper.dart';
+import 'package:flutter_swiper_null_safety/flutter_swiper_null_safety.dart';
 
 
 class HomeView extends StatelessWidget {
@@ -98,26 +98,26 @@ class HomeView extends StatelessWidget {
       crossAxisAlignment: CrossAxisAlignment.start,
       children: [
         SearchBar(),
-        EcoAppTextStyle.getTitle('Productos Destacados'),
+        EcoTitle(text: 'Productos Destacados'),
         scrollable,
-        EcoAppTextStyle.getTitle(
-          'Categorías',
+        EcoTitle(
+          text: 'Categorías',
           rightButton: MiniButton(
             text: 'Ver mas',
             action: () => Navigator.pushNamed(context, 'categories'),
           )
         ),
         categoryView,
-        EcoAppTextStyle.getTitle(
-          'Favoritos',
+        EcoTitle(
+          text: 'Favoritos',
           rightButton: MiniButton(
             text: 'Ver mas',
             action: () => Navigator.push(context, MaterialPageRoute(builder: (__) => FavoritesView())),
           )
         ),
         favoriteList,
-        EcoAppTextStyle.getTitle(
-          'Historial',
+        EcoTitle(
+          text: 'Historial',
           rightButton: MiniButton(
             text: 'Ver mas',
             action: (){},

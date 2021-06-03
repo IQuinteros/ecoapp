@@ -32,7 +32,7 @@ dependencies:
   cupertino_icons: ^1.0.2
 
   # To swiper visual graphics
-  flutter_swiper: ^1.1.6
+  flutter_swiper_null_safety: ^1.0.2
 
   # Responsive grids
   responsive_grid: ^2.0.0
@@ -41,7 +41,7 @@ dependencies:
   tinycolor: ^1.0.3
 
   # Lorem ipsum
-  lipsum: ^1.0.1
+  flutter_lorem: ^2.0.0
 
   # Svg images
   flutter_svg: ^0.22.0

@@ -83,13 +83,13 @@ packages:
     description: flutter
     source: sdk
     version: "0.0.0"
-  flutter_page_indicator:
-    dependency: transitive
+  flutter_lorem:
+    dependency: "direct main"
     description:
-      name: flutter_page_indicator
+      name: flutter_lorem
       url: "https://pub.dartlang.org"
     source: hosted
-    version: "0.0.3"
+    version: "2.0.0"
   flutter_svg:
     dependency: "direct main"
     description:
@@ -97,13 +97,13 @@ packages:
       url: "https://pub.dartlang.org"
     source: hosted
     version: "0.22.0"
-  flutter_swiper:
+  flutter_swiper_null_safety:
     dependency: "direct main"
     description:
-      name: flutter_swiper
+      name: flutter_swiper_null_safety
       url: "https://pub.dartlang.org"
     source: hosted
-    version: "1.1.6"
+    version: "1.0.2"
   flutter_test:
     dependency: "direct dev"
     description: flutter
@@ -137,13 +137,6 @@ packages:
       url: "https://pub.dartlang.org"
     source: hosted
     version: "0.17.0"
-  lipsum:
-    dependency: "direct main"
-    description:
-      name: lipsum
-      url: "https://pub.dartlang.org"
-    source: hosted
-    version: "1.0.1"
   matcher:
     dependency: transitive
     description:
@@ -317,13 +310,6 @@ packages:
       url: "https://pub.dartlang.org"
     source: hosted
     version: "1.0.3"
-  transformer_page_view:
-    dependency: transitive
-    description:
-      name: transformer_page_view
-      url: "https://pub.dartlang.org"
-    source: hosted
-    version: "0.1.6"
   typed_data:
     dependency: transitive
     description:

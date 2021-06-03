@@ -1,17 +1,26 @@
 import 'package:flutter/material.dart';
 import 'package:google_fonts/google_fonts.dart';
 
-class EcoAppTextStyle{
+class EcoTitle extends StatelessWidget {
+  const EcoTitle({
+    Key? key,
+    required this.text,
+    this.rightButton,
+    this.leftButton,
+  }) : super(key: key);
 
-  static final TextStyle titleStyle = GoogleFonts.montserrat(
-    fontSize: 25,
-    fontWeight: FontWeight.bold
-  );
+  final String text;
+  final Widget? rightButton;
+  final Widget? leftButton;
 
-  static Widget getTitle(String text, {Widget? rightButton, Widget? leftButton}){
+  @override
+  Widget build(BuildContext context) {
     final textWidget  = Container(child:Text(
       text,
-      style: titleStyle,
+      style: GoogleFonts.montserrat(
+        fontSize: 25,
+        fontWeight: FontWeight.bold
+      ),
       textAlign: TextAlign.start,
       overflow: TextOverflow.fade,
     ));
@@ -37,5 +46,4 @@ class EcoAppTextStyle{
       ),
     );
   }
-
 }

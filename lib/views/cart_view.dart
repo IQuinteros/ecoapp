@@ -21,7 +21,8 @@ class CartView extends StatelessWidget {
       crossAxisAlignment: CrossAxisAlignment.start,
       children: [
         SearchBar(),
-        EcoAppTextStyle.getTitle('Carrito',
+        EcoTitle(
+          text: 'Carrito',
           rightButton: Text(
             '80%',
             style: GoogleFonts.montserrat(

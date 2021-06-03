@@ -24,8 +24,8 @@ class CategoriesView extends StatelessWidget {
     final content = Column(
       children: [
         SearchBar(),
-        EcoAppTextStyle.getTitle(
-          'Categorías',
+        EcoTitle(
+          text: 'Categorías',
           leftButton: IconButton(
             icon: Icon(Icons.keyboard_arrow_left_rounded),
             color: EcoAppColors.MAIN_COLOR,

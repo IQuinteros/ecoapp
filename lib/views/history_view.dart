@@ -13,8 +13,8 @@ class HistoryView extends StatelessWidget {
     final content = Column(
       children: [
         SearchBar(),
-        EcoAppTextStyle.getTitle(
-          'Mi Historial',
+        EcoTitle(
+          text: 'Mi Historial',
         ),
         EcoAppDebug.getArticleItems()
       ],
