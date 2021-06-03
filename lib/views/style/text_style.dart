@@ -32,17 +32,15 @@ class EcoTitle extends StatelessWidget {
         top: 20.0,
         bottom: 20.0
       ),
-      child: Expanded(
-        child: Row(
-          mainAxisSize: MainAxisSize.max,
-          mainAxisAlignment: MainAxisAlignment.start,
-          children: [
-            leftButton?? Container(),
-            SizedBox(width: 15.0),
-            Expanded(child: textWidget),
-            rightButton?? Container()
-          ],
-        ),
+      child: Row(
+        mainAxisSize: MainAxisSize.max,
+        mainAxisAlignment: MainAxisAlignment.start,
+        children: [
+          leftButton?? Container(),
+          SizedBox(width: 15.0),
+          Expanded(child: textWidget),
+          rightButton?? Container()
+        ],
       ),
     );
   }
