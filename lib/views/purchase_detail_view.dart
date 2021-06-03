@@ -160,42 +160,41 @@ class _StoreList extends StatelessWidget {
               right: 20.0,
               top: 5.0
             ),
-            child: Expanded(
-              child: Row(
-                children: [
-                  InkWell(
-                    borderRadius: BorderRadius.circular(10.0),
-                    onTap: onTap,
-                    child: Container(
-                      padding: EdgeInsets.symmetric(
-                        vertical: 5.0,
-                        horizontal: 5.0
-                      ),
-                      child: Text(
-                        store != null? store!.publicName : 'Otras tiendas',
-                        style: GoogleFonts.montserrat(
-                          color: store != null? EcoAppColors.MAIN_COLOR : Colors.black,
-                          fontWeight: FontWeight.w400,
-                          fontSize: 18
-                        ),
+            child: Row(
+              mainAxisSize: MainAxisSize.max,
+              children: [
+                InkWell(
+                  borderRadius: BorderRadius.circular(10.0),
+                  onTap: onTap,
+                  child: Container(
+                    padding: EdgeInsets.symmetric(
+                      vertical: 5.0,
+                      horizontal: 5.0
+                    ),
+                    child: Text(
+                      store != null? store!.publicName : 'Otras tiendas',
+                      style: GoogleFonts.montserrat(
+                        color: store != null? EcoAppColors.MAIN_COLOR : Colors.black,
+                        fontWeight: FontWeight.w400,
+                        fontSize: 18
                       ),
                     ),
                   ),
-                  Expanded(child: Container()),
-                  store != null? IconButton(
-                    icon: Icon(
-                      Icons.sms_rounded,
-                      color: EcoAppColors.MAIN_COLOR,
-                    ), 
-                    onPressed: () => Navigator.push(
-                        context, 
-                        MaterialPageRoute(
-                          builder: (__) => ChatView(chat: purchase.chat,)
-                        )
-                    )
-                  ) : Container()
-                ],
-              ),
+                ),
+                Expanded(child: Container()),
+                store != null? IconButton(
+                  icon: Icon(
+                    Icons.sms_rounded,
+                    color: EcoAppColors.MAIN_COLOR,
+                  ), 
+                  onPressed: () => Navigator.push(
+                      context, 
+                      MaterialPageRoute(
+                        builder: (__) => ChatView(chat: purchase.chat,)
+                      )
+                  )
+                ) : Container()
+              ],
             ),
           ),
           SizedBox(height: 20.0),
