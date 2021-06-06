@@ -3,7 +3,7 @@ import 'package:flutter_ecoapp/providers/base_api.dart';
 
 class SearchAPI extends BaseAPI<SearchModel>{
   SearchAPI() : super(
-    baseUrl: 'profile',
+    baseUrl: 'search',
     getJsonParams: (item) => item.toJson(),
     constructor: (data) => SearchModel.fromJsonMap(data)
   );

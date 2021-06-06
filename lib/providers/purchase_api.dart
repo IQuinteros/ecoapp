@@ -3,7 +3,7 @@ import 'package:flutter_ecoapp/providers/base_api.dart';
 
 class PurchaseAPI extends BaseAPI<PurchaseModel>{
   PurchaseAPI() : super(
-    baseUrl: 'profile',
+    baseUrl: 'purchase',
     getJsonParams: (item) => item.toJson(),
     constructor: (data) => PurchaseModel.fromJsonMap(data)
   );

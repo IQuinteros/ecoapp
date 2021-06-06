@@ -3,7 +3,7 @@ import 'package:flutter_ecoapp/providers/base_api.dart';
 
 class StoreAPI extends BaseAPI<StoreModel>{
   StoreAPI() : super(
-    baseUrl: 'profile',
+    baseUrl: 'store',
     getJsonParams: (item) => item.toJson(),
     constructor: (data) => StoreModel.fromJsonMap(data)
   );
