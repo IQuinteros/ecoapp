@@ -7,8 +7,8 @@ import 'package:flutter_ecoapp/models/store.dart';
 
 class ChatModel extends BaseModel
 {
-  bool closed;
-  DateTime createdDate;
+  late bool closed;
+  late DateTime createdDate;
 
   List<MessageModel> _messages = [];
   List<MessageModel> get messages { // TODO: Connect to api - DEBUG
@@ -265,6 +265,11 @@ class ChatModel extends BaseModel
       )
     ]
   );
+
+  ChatModel.fromJsonMap(Map<String, dynamic> json) : super(id: json['id']){
+    closed           = json['closed'];
+    createdDate      = json['createdDate'];
+  }
 
   @override
   Map<String, dynamic> toJson() => {

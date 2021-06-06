@@ -4,11 +4,11 @@ import 'package:flutter_ecoapp/models/category.dart';
 
 class OpinionModel extends BaseModel
 {
-  int rating;
-  String title;
-  String content;
+  late int rating;
+  late String title;
+  late String content;
 
-  DateTime date;
+  late DateTime date;
 
   OpinionModel({
     required int id,
@@ -52,6 +52,14 @@ class OpinionModel extends BaseModel
       ]
     )
   );
+  
+
+  OpinionModel.fromJsonMap(Map<String, dynamic> json) : super(id: json['id']){
+    rating          = json['rating'];
+    title           = json['title'];
+    content         = json['content'];
+    date            = json['date'];
+  }
 
   @override
   Map<String, dynamic> toJson() => {

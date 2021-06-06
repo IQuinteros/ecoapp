@@ -2,7 +2,7 @@ import 'package:flutter_ecoapp/models/base.dart';
 
 class DistrictModel extends BaseModel
 {
-  String name;
+  late String name;
 
   DistrictModel({
     required int id,
@@ -11,6 +11,10 @@ class DistrictModel extends BaseModel
 
   @override
   String toString() => this.name;
+
+  DistrictModel.fromJsonMap(Map<String, dynamic> json) : super(id: json['id']){
+    name           = json['name'];
+  }
 
   @override
   Map<String, dynamic> toJson() => {

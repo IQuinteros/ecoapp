@@ -5,12 +5,12 @@ import 'package:flutter_ecoapp/models/store.dart';
 
 class PurchaseModel extends BaseModel
 {
-  double total;
-  DateTime createdDate;
+  late double total;
+  late DateTime createdDate;
 
-  InfoPurchaseModel info;
+  late InfoPurchaseModel info;
 
-  List<ArticleToPurchase> articles;
+  late List<ArticleToPurchase> articles;
 
   PurchaseModel({
     required int id,
@@ -57,6 +57,13 @@ class PurchaseModel extends BaseModel
 
   double get realTotal => articles.fold<double>(0, (double value, element) => value += (element.unitPrice * element.quantity));
   double get discount => (realTotal - total) / realTotal * 100;
+
+  PurchaseModel.fromJsonMap(Map<String, dynamic> json) : super(id: json['id']){
+    total               = json['total'];
+    createdDate         = json['createdDate'];
+    info                = json['info'];
+    articles            = json['articles'];
+  }
 
   @override
   Map<String, dynamic> toJson() => {
