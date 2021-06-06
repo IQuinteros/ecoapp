@@ -25,11 +25,6 @@ class ArticleView extends StatelessWidget {
   Widget build(BuildContext context) {
     return Scaffold(
       body: getContent(context),
-      /* bottomNavigationBar: EcoBottomNavigationBar(
-        currentIndex: 0,
-          onTap: (value){
-        },
-      ) */
     );
   }
 
@@ -117,6 +112,43 @@ class _ArticleAppBar extends StatelessWidget {
     );
   }
 }
+
+class _ArticleMainContent extends StatelessWidget {
+  const _ArticleMainContent({
+    Key? key,
+    required this.article,
+  }) : super(key: key);
+
+  final ArticleModel article;
+
+  @override
+  Widget build(BuildContext context) {
+    return Container(
+      decoration: BoxDecoration(
+        //borderRadius: BorderRadius.circular(20.0),
+        color: Colors.white,
+        /* boxShadow: [
+          BoxShadow(
+            color: Colors.black.withOpacity(0.25),
+            blurRadius: 20.0
+          )
+        ] */
+      ),
+      margin: EdgeInsets.only(
+        left: 5.0,
+        right: 5.0
+      ),
+      padding: EdgeInsets.symmetric(
+        vertical: 20.0,
+      ),
+      child: SafeArea(
+        child: _ArticleContent(article: article,),
+        top: false,
+      ),
+    );
+  }
+}
+
 
 class _ArticleContent extends StatelessWidget {
   const _ArticleContent({
@@ -286,41 +318,3 @@ class _ArticleContent extends StatelessWidget {
   }
 }
 
-class _ArticleMainContent extends StatelessWidget {
-  const _ArticleMainContent({
-    Key? key,
-    required this.article,
-  }) : super(key: key);
-
-  final ArticleModel article;
-
-  @override
-  Widget build(BuildContext context) {
-    return SafeArea(
-      child: Container(
-        decoration: BoxDecoration(
-          borderRadius: BorderRadius.circular(20.0),
-          color: Colors.white,
-          boxShadow: [
-            BoxShadow(
-              color: Colors.black.withOpacity(0.25),
-              blurRadius: 20.0
-            )
-          ]
-        ),
-        margin: EdgeInsets.only(
-          top: 20.0,
-          left: 5.0,
-          right: 5.0
-        ),
-        padding: EdgeInsets.symmetric(
-          vertical: 20.0,
-        ),
-        child: SingleChildScrollView(
-          child: _ArticleContent(article: article,),
-          scrollDirection: Axis.vertical,
-        )
-      ),
-    );
-  }
-}
