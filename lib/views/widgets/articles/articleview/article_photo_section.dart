@@ -11,7 +11,7 @@ class PhotoSection extends StatelessWidget {
 
   @override
   Widget build(BuildContext context) {
-    if(article.photos == null || article.photos.length <= 0)
+    if(article.photos.length <= 0)
       return Container();
 
     return Container(

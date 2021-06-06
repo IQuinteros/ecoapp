@@ -2,7 +2,6 @@ import 'package:flutter/material.dart';
 import 'package:flutter_ecoapp/models/article.dart';
 import 'package:flutter_ecoapp/models/question.dart';
 import 'package:flutter_ecoapp/views/style/colors.dart';
-import 'package:flutter_ecoapp/views/widgets/bottom_nav_bar.dart';
 import 'package:flutter_ecoapp/views/widgets/eco_cover.dart';
 import 'package:flutter_ecoapp/views/widgets/eco_items_list.dart';
 import 'package:google_fonts/google_fonts.dart';

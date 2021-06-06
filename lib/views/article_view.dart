@@ -10,7 +10,6 @@ import 'package:flutter_ecoapp/views/widgets/articles/articleview/article_questi
 import 'package:flutter_ecoapp/views/widgets/articles/articleview/article_store_description_section.dart';
 import 'package:flutter_ecoapp/views/widgets/articles/articleview/full_eco_indicator.dart';
 import 'package:flutter_ecoapp/views/widgets/articles/favorite_button.dart';
-import 'package:flutter_ecoapp/views/widgets/bottom_nav_bar.dart';
 import 'package:flutter_ecoapp/views/widgets/normal_button.dart';
 import 'package:flutter_ecoapp/views/widgets/stars_row.dart';
 import 'package:google_fonts/google_fonts.dart';

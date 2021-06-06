@@ -1,6 +1,5 @@
 import 'package:flutter/material.dart';
 import 'package:flutter_ecoapp/views/result_view.dart';
-import 'package:flutter_ecoapp/views/widgets/bottom_nav_bar.dart';
 import 'package:google_fonts/google_fonts.dart';
 
 class ArticleSearch extends SearchDelegate {

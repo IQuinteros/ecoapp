@@ -2,7 +2,6 @@ import 'package:flutter/material.dart';
 import 'package:flutter_ecoapp/models/article.dart';
 import 'package:flutter_ecoapp/models/opinion.dart';
 import 'package:flutter_ecoapp/views/style/colors.dart';
-import 'package:flutter_ecoapp/views/widgets/bottom_nav_bar.dart';
 import 'package:flutter_ecoapp/views/widgets/eco_cover.dart';
 import 'package:flutter_ecoapp/views/widgets/eco_items_list.dart';
 import 'package:flutter_ecoapp/views/widgets/opinions/opinion_tile.dart';

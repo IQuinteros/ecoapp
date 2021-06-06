@@ -4,7 +4,6 @@ import 'package:flutter/gestures.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter_ecoapp/models/chat.dart';
 import 'package:flutter_ecoapp/views/style/colors.dart';
-import 'package:flutter_ecoapp/views/widgets/bottom_nav_bar.dart';
 import 'package:flutter_ecoapp/views/widgets/chat/chatview/message_item.dart';
 import 'package:flutter_ecoapp/views/widgets/chat/chatview/purchase_message_item.dart';
 import 'package:google_fonts/google_fonts.dart';

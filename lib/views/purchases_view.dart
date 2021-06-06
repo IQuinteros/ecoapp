@@ -5,7 +5,6 @@ import 'package:flutter_ecoapp/views/style/colors.dart';
 import 'package:flutter_ecoapp/views/style/text_style.dart';
 import 'package:flutter_ecoapp/views/widgets/bottom_nav_bar.dart';
 import 'package:flutter_ecoapp/views/widgets/purchases/purchase_card.dart';
-import 'package:flutter_ecoapp/views/widgets/search_bar.dart';
 
 class PurchasesView extends StatelessWidget {
   @override

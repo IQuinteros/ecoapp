@@ -3,9 +3,7 @@ import 'package:flutter_ecoapp/views/cart_view.dart';
 import 'package:flutter_ecoapp/views/history_view.dart';
 import 'package:flutter_ecoapp/views/home_view.dart';
 import 'package:flutter_ecoapp/views/profile_view.dart';
-import 'package:flutter_ecoapp/views/style/colors.dart';
 import 'package:flutter_ecoapp/views/widgets/bottom_nav_bar.dart';
-import 'package:google_fonts/google_fonts.dart';
 
 
 
