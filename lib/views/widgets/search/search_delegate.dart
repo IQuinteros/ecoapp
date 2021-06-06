@@ -1,8 +1,25 @@
 import 'package:flutter/material.dart';
+import 'package:flutter_ecoapp/views/result_view.dart';
+import 'package:flutter_ecoapp/views/widgets/bottom_nav_bar.dart';
+import 'package:google_fonts/google_fonts.dart';
 
 class ArticleSearch extends SearchDelegate {
 
+  ArticleSearch({
+    String hintText = 'Buscar artículos',
+  }) : super(
+    searchFieldLabel: hintText,
+    searchFieldStyle: GoogleFonts.montserrat(),
+    textInputAction: TextInputAction.search
+  );
+
   String selection = '';
+
+  @override
+  ThemeData appBarTheme(BuildContext context) {
+    final ThemeData theme = Theme.of(context);
+    return theme;
+  }
 
   @override
   List<Widget> buildActions(BuildContext context) {
@@ -33,20 +50,24 @@ class ArticleSearch extends SearchDelegate {
   
   @override
   Widget buildResults(BuildContext context) {
-    return Center(
+    /* return Center(
       child: Container(
         height: 100.0,
         width: 100.0,
         color: Colors.redAccent,
         child: Text(selection),
       ),
-    );
+    ); */
+    Navigator.pop(context);
+    Navigator.push(context, MaterialPageRoute(builder: (__) => ResultView(searching: selection,)));
+    return Container();
   }
 
   @override
   Widget buildSuggestions(BuildContext context) {
     return Container();
   }
+
   
   /*
   @override
