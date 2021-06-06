@@ -57,7 +57,7 @@ class _ArticleAppBar extends StatelessWidget {
   Widget build(BuildContext context) {
     return SliverAppBar(
       elevation: 10.0,
-      backgroundColor: EcoAppColors.MAIN_COLOR,
+      backgroundColor: EcoAppColors.MAIN_DARK_COLOR,
       foregroundColor: Colors.white,
       expandedHeight: 250.0,
       floating: false,

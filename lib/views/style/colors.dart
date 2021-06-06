@@ -3,7 +3,7 @@ import 'package:flutter/material.dart';
 class EcoAppColors{
 
   static const Color MAIN_COLOR = Color.fromRGBO(20, 153, 17, 1);
-  static const Color MAIN_DARK_COLOR = Color.fromRGBO(37, 109, 27, 1);
+  static const Color MAIN_DARK_COLOR = Color.fromRGBO(0, 139, 114, 1);//Color.fromRGBO(37, 109, 27, 1);
   static const Color ACCENT_COLOR = Color.fromRGBO(245, 184, 46, 1);
   static const Color BLUE_ACCENT_COLOR = Color.fromRGBO(58, 174, 216, 1);
   static const Color RED_COLOR = Color.fromRGBO(255, 15, 128, 1);

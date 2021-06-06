@@ -52,7 +52,7 @@ class _PurchaseCardState extends State<PurchaseCard> {
             children: [
               Icon(
                 Icons.local_shipping_rounded,
-                color: EcoAppColors.MAIN_COLOR,
+                color: EcoAppColors.MAIN_DARK_COLOR,
                 size: 40.0,
               ),
               SizedBox(width: 20.0),
