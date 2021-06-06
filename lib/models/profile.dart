@@ -43,4 +43,17 @@ class ProfileModel extends BaseModel
     rut             = json['rut'];
     rutDv           = json['rutDv'];
   }
+
+  Map<String, dynamic> toJson() => {
+    'id'              : this.id,
+    'name'            : this.name,
+    'lastName'        : this.lastName,
+    'email'           : this.email,
+    'contactNumber'   : this.contactNumber,
+    'bithday'         : this.bithday,
+    'termsChecked'    : this.termsChecked,
+    'location'        : this.location,
+    'rut'             : this.rut,
+    'rutDv'           : this.rutDv,
+  };
 }
