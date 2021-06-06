@@ -37,12 +37,7 @@ class StoreRatingView extends StatelessWidget {
           },
         ),
       ),
-      body: SafeArea(child: mainContent(context)),
-      bottomNavigationBar: EcoBottomNavigationBar(
-        currentIndex: 0,
-          onTap: (value){
-        },
-      )
+      body: mainContent(context),
     );
   }
 
@@ -54,21 +49,23 @@ class StoreRatingView extends StatelessWidget {
           horizontal: 20.0,
           vertical: 20.0
         ),
-        child: Column(
-          children: [
-            EcoCover(
-              image: NetworkImage(store.photoUrl),
-              title: store.publicName,
-              subtitle: '${store.location}, ${store.district}',
-              miniContent: 'x valoraciones',
-            ),
-            SizedBox(height: 10.0,),
-            Divider(thickness: 1,),
-            EcoItemsList<OpinionModel>(
-              elements: store.allOpinions,
-              forEachElementWidget: (value) => OpinionTile(opinion: value, displayArticle: true)
-            ) 
-          ],
+        child: SafeArea(
+          child: Column(
+            children: [
+              EcoCover(
+                image: NetworkImage(store.photoUrl),
+                title: store.publicName,
+                subtitle: '${store.location}, ${store.district}',
+                miniContent: 'x valoraciones',
+              ),
+              SizedBox(height: 10.0,),
+              Divider(thickness: 1,),
+              EcoItemsList<OpinionModel>(
+                elements: store.allOpinions,
+                forEachElementWidget: (value) => OpinionTile(opinion: value, displayArticle: true)
+              ) 
+            ],
+          ),
         ),
       ),
     );

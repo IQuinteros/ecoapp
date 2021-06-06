@@ -16,7 +16,7 @@ class CategoryBox extends StatelessWidget {
     final icon = Icon(
       category.getIcon(),
       size: 50.0,
-      color: EcoAppColors.MAIN_COLOR,
+      color: EcoAppColors.MAIN_DARK_COLOR,
     );
 
     final card = Card(

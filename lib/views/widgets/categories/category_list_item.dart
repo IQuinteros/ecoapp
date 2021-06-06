@@ -17,12 +17,15 @@ class CategoryListItem extends StatelessWidget {
       ),
       leading: Icon(
         category.getIcon(),
-        color: EcoAppColors.MAIN_COLOR,
+        color: EcoAppColors.MAIN_DARK_COLOR,
       ),
       title: Text(
         category.title
       ),
-      trailing: Icon(Icons.keyboard_arrow_right),
+      trailing: Icon(
+        Icons.keyboard_arrow_right,
+        color: EcoAppColors.MAIN_DARK_COLOR,
+      ),
       selectedTileColor: EcoAppColors.ACCENT_COLOR,
       onTap: () => Navigator.push(context, MaterialPageRoute(builder: (__) => ResultView(searching: category.toString(),))),
     );

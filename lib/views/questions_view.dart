@@ -36,12 +36,7 @@ class QuestionsView extends StatelessWidget {
           },
         ),
       ),
-      body: SafeArea(child: mainContent(context)),
-      bottomNavigationBar: EcoBottomNavigationBar(
-        currentIndex: 0,
-          onTap: (value){
-        },
-      )
+      body: mainContent(context),
     );
   }
 
@@ -52,21 +47,23 @@ class QuestionsView extends StatelessWidget {
           horizontal: 20.0,
           vertical: 20.0
         ),
-        child: Column(
-          children: [
-            EcoCover(
-              image: NetworkImage(article.photos[0].photoUrl),
-              title: article.title,
-              subtitle: '${article.questions.length.toString()} preguntas',
-              size: 80
-            ),
-            SizedBox(height: 10.0,),
-            Divider(thickness: 1,),
-            EcoItemsList<QuestionModel>(
-              elements: article.questions,
-              forEachElementWidget: (value) => _QuestionTile(question: value),
-            )
-          ],
+        child: SafeArea(
+          child: Column(
+            children: [
+              EcoCover(
+                image: NetworkImage(article.photos[0].photoUrl),
+                title: article.title,
+                subtitle: '${article.questions.length.toString()} preguntas',
+                size: 80
+              ),
+              SizedBox(height: 10.0,),
+              Divider(thickness: 1,),
+              EcoItemsList<QuestionModel>(
+                elements: article.questions,
+                forEachElementWidget: (value) => _QuestionTile(question: value),
+              )
+            ],
+          ),
         ),
       ),
     );

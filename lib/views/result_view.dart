@@ -49,6 +49,7 @@ class ResultView extends StatelessWidget {
             ],
           ),
         ),
+        SizedBox(height: 10.0),
         EcoAppDebug.getArticleItems()
       ],
     );

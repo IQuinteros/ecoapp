@@ -43,6 +43,9 @@ dependencies:
   # Svg images
   flutter_svg: ^0.22.0
 
+  # Flutter bloc
+  flutter_bloc: ^7.0.1
+
 dev_dependencies:
   flutter_test:
     sdk: flutter

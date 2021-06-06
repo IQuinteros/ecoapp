@@ -3,7 +3,6 @@ import 'package:flutter_ecoapp/models/store.dart';
 import 'package:flutter_ecoapp/views/debug/debug.dart';
 import 'package:flutter_ecoapp/views/style/colors.dart';
 import 'package:flutter_ecoapp/views/widgets/bottom_nav_bar.dart';
-import 'package:flutter_ecoapp/views/widgets/eco_cover.dart';
 import 'package:flutter_ecoapp/views/widgets/search_bar.dart';
 import 'package:flutter_ecoapp/views/widgets/store/storeview/store_cover_section.dart';
 import 'package:google_fonts/google_fonts.dart';
@@ -33,25 +32,22 @@ class StoreView extends StatelessWidget {
           },
         ),
       ),
-      body: SafeArea(child: mainContent(context, store)),
-      bottomNavigationBar: EcoBottomNavigationBar(
-        currentIndex: 0,
-          onTap: (value){
-        },
-      )
+      body: mainContent(context, store),
     );
   }
 
   Widget mainContent(BuildContext context, StoreModel store){
     return SingleChildScrollView(
-      child: Column(
-        children: [
-          StoreCoverSection(store: store),
-          Divider(thickness: 1,),
-          SearchBar(),
-          SizedBox(height: 20.0),
-          EcoAppDebug.getArticleItems(initialId: 1)
-        ],
+      child: SafeArea(
+        child: Column(
+          children: [
+            StoreCoverSection(store: store),
+            Divider(thickness: 1,),
+            SearchBar(),
+            SizedBox(height: 20.0),
+            EcoAppDebug.getArticleItems(initialId: 1)
+          ],
+        ),
       ),
     );
   }

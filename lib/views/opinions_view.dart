@@ -37,12 +37,7 @@ class OpinionsView extends StatelessWidget {
           },
         ),
       ),
-      body: SafeArea(child: mainContent(context)),
-      bottomNavigationBar: EcoBottomNavigationBar(
-        currentIndex: 0,
-          onTap: (value){
-        },
-      )
+      body: mainContent(context),
     );
   }
 
@@ -53,21 +48,23 @@ class OpinionsView extends StatelessWidget {
           horizontal: 20.0,
           vertical: 20.0
         ),
-        child: Column(
-          children: [
-            EcoCover(
-              image: NetworkImage(article.photos[0].photoUrl),
-              title: article.title,
-              subtitle: '${article.rating.count.toString()} opiniones',
-              size: 80
-            ),
-            SizedBox(height: 10.0,),
-            Divider(thickness: 1,),
-            EcoItemsList<OpinionModel>(
-              elements: article.rating.opinions,
-              forEachElementWidget: (value) => OpinionTile(opinion: value,)
-            )
-          ],
+        child: SafeArea(
+          child: Column(
+            children: [
+              EcoCover(
+                image: NetworkImage(article.photos[0].photoUrl),
+                title: article.title,
+                subtitle: '${article.rating.count.toString()} opiniones',
+                size: 80
+              ),
+              SizedBox(height: 10.0,),
+              Divider(thickness: 1,),
+              EcoItemsList<OpinionModel>(
+                elements: article.rating.opinions,
+                forEachElementWidget: (value) => OpinionTile(opinion: value,)
+              )
+            ],
+          ),
         ),
       ),
     );
