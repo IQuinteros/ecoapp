@@ -77,6 +77,8 @@ class ArticleModel extends BaseModel with TagModel
     'store'           : this.store,
     'questions'       : this.questions,
     'rating'          : this.rating,
+    'createdDate'     : this.createdDate,
+    'lastUpdateDate'  : this.lastUpdateDate,
   };
   
 }
@@ -173,5 +175,7 @@ class ArticleForm extends BaseModel
     'recycledProd'        : recycledProd,
     'recycledProdDetail'  : recycledProdDetail,
     'generalDetail'       : generalDetail,
+    'createdDate'         : createdDate,
+    'lastUpdateDate'      : lastUpdateDate,
   };
 }

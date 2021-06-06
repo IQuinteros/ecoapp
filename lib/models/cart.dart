@@ -15,6 +15,12 @@ class CartModel extends BaseModel
     double total = 0;
     articles.forEach((element) { total += element.price; });
     return total;
-  } 
+  }
+
+  @override
+  Map<String, dynamic> toJson() => {
+    'id'        : id,
+    'articles'  : articles
+  };
 
 }

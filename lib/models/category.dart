@@ -30,4 +30,10 @@ class CategoryModel extends BaseModel
 
   @override
   String toString() => this.title;
+
+  @override
+  Map<String, dynamic> toJson() => {
+    'id': id,
+    'title': title,
+  };
 }

@@ -1,4 +1,3 @@
-import 'package:flutter/material.dart';
 import 'package:flutter_ecoapp/models/base.dart';
 
 class UserModel extends BaseModel
@@ -9,4 +8,10 @@ class UserModel extends BaseModel
     required int id,
     required this.createdDate,
   }) : super(id: id);
+
+  @override
+  Map<String, dynamic> toJson() => {
+    'id'          : id,
+    'createdDate' : createdDate
+  };
 }

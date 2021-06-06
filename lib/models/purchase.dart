@@ -60,6 +60,15 @@ class PurchaseModel extends BaseModel
 
   double get realTotal => articles.fold<double>(0, (double value, element) => value += (element.unitPrice * element.quantity));
   double get discount => (realTotal - total) / realTotal * 100;
+
+  @override
+  Map<String, dynamic> toJson() => {
+    'id'          : id,
+    'total'       : total,
+    'createdDate' : createdDate,
+    'info'        : info,
+    'articles'    : articles
+  };
 }
 
 class InfoPurchaseModel extends BaseModel
@@ -76,6 +85,15 @@ class InfoPurchaseModel extends BaseModel
     required this.contactNumber,
     required this.district,
   }) : super(id: id);
+
+  @override
+  Map<String, dynamic> toJson() => {
+    'id'            : id,
+    'names'         : names,
+    'location'      : location,
+    'contactNumber' : contactNumber,
+    'district'      : district
+  };
 
 }
 
@@ -104,4 +122,17 @@ class ArticleToPurchase extends BaseModel
   }) : super(id: id);
 
   bool get hasPhotoUrl => photoUrl != null && photoUrl!.isNotEmpty;
+
+  @override
+  Map<String, dynamic> toJson() => {
+    'id'        : id,
+    'article'   : article,
+    'store'     : store,
+    'title'     : title,
+    'unitPrice' : unitPrice,
+    'quantity'  : quantity,
+    'photoUrl'  : photoUrl,
+    'form'      : form,
+
+  };
 }

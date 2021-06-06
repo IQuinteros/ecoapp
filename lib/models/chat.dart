@@ -265,7 +265,14 @@ class ChatModel extends BaseModel
         )
       )
     ]
-  ); // TODO: Connect to api - DEBUG
+  );
+
+  @override
+  Map<String, dynamic> toJson() => {
+    'id'          : id,
+    'closed'      : closed,
+    'createdDate' : createdDate
+  };
 
 
 }
@@ -291,4 +298,15 @@ class MessageModel extends BaseModel
   }) : super(id: id);
 
   bool get isOwner => owner != 'store';
+
+  @override
+  Map<String, dynamic> toJson() => {
+    'id': id,
+    'message': message,
+    'date': date,
+    'chat': chat,
+    'profile': profile,
+    'store': store,
+    'owner': owner,
+  };
 }

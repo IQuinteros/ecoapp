@@ -12,4 +12,10 @@ class DistrictModel extends BaseModel
 
   @override
   String toString() => this.name;
+
+  @override
+  Map<String, dynamic> toJson() => {
+    'id'  : id,
+    'name': name
+  };
 }

@@ -52,6 +52,15 @@ class OpinionModel extends BaseModel
       ]
     )
   );
+
+  @override
+  Map<String, dynamic> toJson() => {
+    'id'        : id,
+    'rating'    : rating,
+    'title'     : title,
+    'content'   : content,
+    'date'      : date,
+  };
 }
 
 class ArticleRating{

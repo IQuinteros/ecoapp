@@ -112,4 +112,21 @@ class StoreModel extends BaseModel with TagModel
 
   List<OpinionModel> get allOpinions => articles.map((e) => e.rating.opinions).toList().fold([], (value, element) => value + element);
 
+  @override
+  Map<String, dynamic> toJson() => {
+    'id'            : id,
+    'publicName'    : publicName,
+    'description'   : description,
+    'photoUrl'      : photoUrl,
+    'email'         : email,
+    'contactNumber' : contactNumber,
+    'location'      : location,
+    'rut'           : rut,
+    'rutDv'         : rutDv,
+    'enabled'       : enabled,
+    'createdDate'   : createdDate,
+    'lastUpdateDate': lastUpdateDate,
+    'district'      : district,
+  };
+
 }

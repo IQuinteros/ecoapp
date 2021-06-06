@@ -11,4 +11,11 @@ class SearchModel extends BaseModel
     required this.searchText,
     required this.searchDate
   }) : super(id: id);
+
+  @override
+  Map<String, dynamic> toJson() => {
+    'id'          : id,
+    'searchText'  : searchText,
+    'searchDate'  : searchDate,
+  };
 }
