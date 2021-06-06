@@ -63,6 +63,21 @@ class ArticleModel extends BaseModel with TagModel
     questions       = json['questions'];
     rating          = json['rating'];
   }
+
+  @override
+  Map<String, dynamic> toJson() => {
+    'title'           : this.title,
+    'description'     : this.description,
+    'pastPrice'       : this.pastPrice,
+    'stock'           : this.stock,
+    'enabled'         : this.enabled,
+    'photos'          : this.photos,
+    'form'            : this.form,
+    'category'        : this.category,
+    'store'           : this.store,
+    'questions'       : this.questions,
+    'rating'          : this.rating,
+  };
   
 }
 
@@ -74,6 +89,12 @@ class PhotoModel extends BaseModel
     required int id,
     required this.photoUrl,
   }) : super(id: id);
+
+  @override
+  Map<String, dynamic> toJson() => {
+    'id'          : this.id,
+    'photoUrl'    : this.photoUrl,
+  };
 }
 
 class EcoIndicator{
@@ -142,4 +163,15 @@ class ArticleForm extends BaseModel
       isRecyclableProduct: isRecyclable
     );
   }
+
+  @override
+  Map<String, dynamic> toJson() => {
+    'id'                  : id,
+    'recycledMats'        : recycledMats,
+    'recycledMatsDetail'  : recycledMatsDetail,
+    'reuseTips'           : reuseTips,
+    'recycledProd'        : recycledProd,
+    'recycledProdDetail'  : recycledProdDetail,
+    'generalDetail'       : generalDetail,
+  };
 }

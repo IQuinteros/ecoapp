@@ -4,6 +4,8 @@ abstract class BaseModel{
   late int id;
 
   BaseModel({required this.id});
+
+  Map<String, dynamic> toJson();
 }
 
 abstract class TagModel{

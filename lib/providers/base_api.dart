@@ -10,11 +10,11 @@ abstract class BaseAPI<T extends BaseModel>{
   static const String _baseWebUrl = 'url.com/api/requests';
 
   String baseUrl;
-  Map<String, dynamic> Function(T) getItemParams;
+  Map<String, dynamic> Function(T) getJsonParams;
   T Function(Map<String, dynamic>) constructor;
   
 
-  BaseAPI({required this.baseUrl, required this.getItemParams, required this.constructor});
+  BaseAPI({required this.baseUrl, required this.getJsonParams, required this.constructor});
 
   String get fullUrl => '$_baseWebUrl/$baseUrl';
 
@@ -56,7 +56,7 @@ abstract class BaseAPI<T extends BaseModel>{
 
   // Update method
   Future<T?> update(T actualItem, T newItem) async{
-    Map<String, dynamic> params = getItemParams(newItem);
+    Map<String, dynamic> params = getJsonParams(newItem);
     params['prev_id'] = actualItem.id;
 
     final result = await request('update.php', params);
@@ -66,7 +66,7 @@ abstract class BaseAPI<T extends BaseModel>{
   }
 
   // Insert method
-  Future<T?> insert(T item) async => (await request('insert.php', getItemParams(item))).success? item : null;
+  Future<T?> insert(T item) async => (await request('insert.php', getJsonParams(item))).success? item : null;
 
   // Delete method
   Future<bool> delete(T item) async => (await request('delete.php')).success;

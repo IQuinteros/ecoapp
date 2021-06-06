@@ -44,6 +44,7 @@ class ProfileModel extends BaseModel
     rutDv           = json['rutDv'];
   }
 
+  @override
   Map<String, dynamic> toJson() => {
     'id'              : this.id,
     'name'            : this.name,
