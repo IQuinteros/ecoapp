@@ -3,17 +3,17 @@ import 'package:flutter_ecoapp/models/base.dart';
 
 class ProfileModel extends BaseModel
 {
-  String name;
-  String lastName;
-  String email;
-  int contactNumber;
-  DateTime bithday;
-  bool termsChecked;
-  String location;
-  DateTime createdDate;
-  DateTime lastUpdateDate;
-  int rut;
-  String rutDv;
+  late String name;
+  late String lastName;
+  late String email;
+  late int contactNumber;
+  late DateTime bithday;
+  late bool termsChecked;
+  late String location;
+  late DateTime createdDate;
+  late DateTime lastUpdateDate;
+  late int rut;
+  late String rutDv;
 
   ProfileModel({
     required int id,
@@ -29,4 +29,18 @@ class ProfileModel extends BaseModel
     required this.rut,
     required this.rutDv,
   }) : super(id: id);
+
+  ProfileModel.fromJsonMap(Map<String, dynamic> json) : super(id: json['id']){
+    name            = json['name'];
+    lastName        = json['lastName'];
+    email           = json['email'];
+    contactNumber   = json['contactNumber'];
+    bithday         = json['bithday'];
+    termsChecked    = json['termsChecked'];
+    location        = json['location'];
+    createdDate     = json['createdDate'];
+    lastUpdateDate  = json['lastUpdateDate'];
+    rut             = json['rut'];
+    rutDv           = json['rutDv'];
+  }
 }

@@ -1,9 +1,11 @@
 import 'package:flutter/material.dart';
 
 abstract class BaseModel{
-  int id;
+  late int id;
 
   BaseModel({required this.id});
+
+  BaseModel.fromJson({required Map<String, dynamic> json});
 }
 
 abstract class TagModel{
