@@ -36,7 +36,7 @@ abstract class BaseLocalAPI <T extends BaseModel>{
     );    
   }
 
-  Future<void> updateDog(T item) async {
+  Future<void> update(T item) async {
     final db = await database;
 
     await db.update(

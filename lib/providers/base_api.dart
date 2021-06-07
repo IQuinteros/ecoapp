@@ -39,13 +39,10 @@ abstract class BaseAPI<T extends BaseModel>{
 
   // Select items list
   Future<List<T>> selectAll([Map<String, dynamic>? params]) async{
-    print('START SELECT ALL');
     final result = await request('${baseUrl}_select.php', params);
-    //if(!result.success) return null;
+    if(!result.success) return [];
 
-    print('START ITEMS');
     List<T> items = [];
-    print('Result' + result.data.toString());
     try{
       result.data.forEach((value) => items.add(constructor(value)));
     }
@@ -53,7 +50,7 @@ abstract class BaseAPI<T extends BaseModel>{
       print('Exception: $e');
       print('Exception: $stacktrace');
     }
-    print('SELECT ALL: $items');
+
     return items;
   }
 
@@ -61,7 +58,6 @@ abstract class BaseAPI<T extends BaseModel>{
   Future<T?> selectOne([Map<String, dynamic>? byParam]) async{
     final result = await request('${baseUrl}_get.php', byParam);
     if(!result.success) return null;
-
     
     return constructor(Map.fromIterable(result.data));
   }
