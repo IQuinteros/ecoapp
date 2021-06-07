@@ -61,8 +61,9 @@ class ProfileModel extends BaseModel
     'last_update_date'  : this.lastUpdateDate.toString()
   };
 
+  @override
   Map<String, dynamic> toSqliteParams(){
-    final json = toJson();
+    final json = super.toSqliteParams();
     json['terms_checked'] = termsChecked? 1 : 0;
     return json;
   }

@@ -3,7 +3,7 @@ import 'package:flutter_ecoapp/models/base.dart';
 
 class CartModel extends BaseModel
 {
-  List<ArticleModel> articles;
+  late List<ArticleModel> articles;
 
   CartModel({
     required int id,
@@ -14,6 +14,10 @@ class CartModel extends BaseModel
     double total = 0;
     articles.forEach((element) { total += element.price; });
     return total;
+  }
+
+  CartModel.fromJsonMap(Map<String, dynamic> json) : super(id: json['id']){
+    articles           = json['articles'];
   }
 
   @override

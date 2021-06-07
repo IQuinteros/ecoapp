@@ -6,6 +6,10 @@ abstract class BaseModel{
   BaseModel({required this.id});
 
   Map<String, dynamic> toJson();
+
+  Map<String, dynamic> toSqliteParams(){
+    return toJson();
+  }
 }
 
 abstract class TagModel{
