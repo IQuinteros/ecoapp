@@ -4,6 +4,7 @@ import 'package:flutter_ecoapp/bloc/base_bloc.dart';
 import 'package:flutter_ecoapp/models/profile.dart';
 import 'package:flutter_ecoapp/providers/profile_api.dart';
 import 'package:flutter_ecoapp/providers/sqlite/profile_local_api.dart';
+import 'package:path/path.dart';
 
 class ProfileBloc extends BaseBloc<ProfileModel>{
 
@@ -21,7 +22,7 @@ class ProfileBloc extends BaseBloc<ProfileModel>{
   }
 
   // Session streams  
-  final _sessionStreamController = StreamController<ProfileModel?>.broadcast();
+  var _sessionStreamController = StreamController<ProfileModel?>.broadcast();
 
   ProfileModel? currentProfile;
   Function(ProfileModel?) get _sessionSink => _sessionStreamController.sink.add;
@@ -46,7 +47,7 @@ class ProfileBloc extends BaseBloc<ProfileModel>{
     final profile = await _getCurrentSession();
     _sessionSink(profile);
     currentProfile = profile;
-    _sessionStreamController.close();
+    //_sessionStreamController.close();
   }
   
   // Login profile
@@ -59,6 +60,13 @@ class ProfileBloc extends BaseBloc<ProfileModel>{
     }
 
     return profile;
+  }
+
+  // Logout profile
+  Future<void> logout() async {
+    await profileLocalAPI.clear();
+    //_sessionStreamController = StreamController<ProfileModel?>.broadcast();
+    await updateCurrentSession();
   }
 
   // Register profile

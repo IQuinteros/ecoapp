@@ -238,6 +238,39 @@ class _ProfileModifyMainContent extends StatelessWidget {
                 onPressed: () => Navigator.push(context, MaterialPageRoute(builder: (__) => ProfilyModifyPassView()))
               ),
             ),
+            SizedBox(height: 20.0,),
+            Divider(thickness: 1,),
+            Container(
+              margin: EdgeInsets.symmetric(
+                horizontal: 40.0
+              ),
+              child: NormalButton(
+                text: 'Cerrar sesión', 
+                color: EcoAppColors.LEFT_BAR_COLOR,
+                onPressed: () {
+                  showDialog(
+                    context: context, 
+                    builder: (__){
+                      return AlertDialog(
+                        title: Text('Cerrar sesión'),
+                        content: Text('¿Quiere cerrar sesión?'),
+                        actions: [
+                          TextButton(
+                            onPressed: () => logout(context), 
+                            child: Text('Cerrar sesión')
+                          ),
+                          TextButton(
+                            onPressed: () => Navigator.pop(context),
+                            child: Text('Cancelar')
+                          ),
+                        ],
+                      );
+                    }
+                    
+                  );
+                }
+              ),
+            ),
           ],
         ),
       ),
@@ -253,6 +286,12 @@ class _ProfileModifyMainContent extends StatelessWidget {
     controllers['location']!.text = profile.location;
 
     return content;
+  }
+
+  void logout(BuildContext context){
+    final profileBloc = BlocProvider.of<ProfileBloc>(context);
+    final logout = profileBloc.logout();
+    logout.then((value) => Navigator.popUntil(context, ModalRoute.withName('/')));
   }
 }
 

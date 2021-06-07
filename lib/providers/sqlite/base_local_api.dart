@@ -24,47 +24,72 @@ abstract class BaseLocalAPI <T extends BaseModel>{
   Future<void> initialize() async {
     WidgetsFlutterBinding.ensureInitialized();
 
-    database = openDatabase(
-      join(await getDatabasesPath(), '${tableName}_database.db'),
+    try{
+      database = openDatabase(
+        join(await getDatabasesPath(), '${tableName}_database.db'),
 
-      onCreate: (db, version) {
-        return db.execute(
-          'CREATE TABLE $tableName($params)',
-        );
-      },
-      version: 1,
-    );    
+        onCreate: (db, version) {
+          return db.execute(
+            'CREATE TABLE $tableName($params)',
+          );
+        },
+        version: 1,
+      );   
+    } catch(e, stacktrace){
+      print(e);
+      print(stacktrace);
+    }
   }
 
   Future<void> update(T item) async {
     final db = await database;
 
-    await db.update(
-      tableName,
-      toMapFunction(item),
-      where: 'id = ?',
-      whereArgs: [item.id],
-    );
+    try{
+      await db.update(
+        tableName,
+        toMapFunction(item),
+        where: 'id = ?',
+        whereArgs: [item.id],
+      );
+    } catch(e, stacktrace){
+      print(e);
+      print(stacktrace);
+    }
+  }
+
+  Future<void> clear() async{
+    final items = await select();
+    items.forEach((element) async => delete(element.id));
   }
 
   Future<void> delete(int id) async {
     final db = await database;
 
-    await db.delete(
-      tableName,
-      where: 'id = ?',
-      whereArgs: [id],
-    );
+    try{
+      await db.delete(
+        tableName,
+        where: 'id = ?',
+        whereArgs: [id],
+      );
+    } catch(e, stacktrace){
+      print(e);
+      print(stacktrace);
+    }
   }
 
   Future<void> insert(T item) async {
     final db = await database;
 
-    await db.insert(
-      tableName,
-      toMapFunction(item),
-      conflictAlgorithm: ConflictAlgorithm.replace,
-    );
+    try{
+      await db.insert(
+        tableName,
+        toMapFunction(item),
+        conflictAlgorithm: ConflictAlgorithm.replace,
+      );
+    } catch(e, stacktrace){
+      print(e);
+      print(stacktrace);
+    }
   }
   
   Future<List<T>> select() async {
@@ -72,9 +97,15 @@ abstract class BaseLocalAPI <T extends BaseModel>{
 
     final List<Map<String, dynamic>> maps = await db.query(tableName);
 
-    return List.generate(maps.length, (i) {
-      return constructor(maps[i]);
-    });
+    try{
+      return List.generate(maps.length, (i) {
+        return constructor(maps[i]);
+      });
+    } catch(e, stacktrace){
+      print(e);
+      print(stacktrace);
+      return [];
+    }
   }
 
 }

@@ -41,6 +41,7 @@ class ProfileCoverSection extends StatelessWidget {
         switch(snapshot.connectionState){
           case ConnectionState.done:
           case ConnectionState.active:
+          case ConnectionState.waiting:
             return _ProfileCoverContent(profile: snapshot.data);
           default: return Center(child: CircularProgressIndicator());
         }

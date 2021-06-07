@@ -15,14 +15,14 @@ void main() {
   GestureBinding.instance?.resamplingEnabled = true;
   WidgetsFlutterBinding.ensureInitialized();
 
-  //useSqlite();
+  useSqlite();
   runApp(MyApp());
 }
 
 void useSqlite() async {
   final localProfile = ProfileLocalAPI();
   await localProfile.initialize();
-  localProfile.insert(ProfileModel(
+  /*localProfile.insert(ProfileModel(
     id: 1, 
     name: 'Ignacio', 
     lastName: 'Quinteros',
@@ -35,7 +35,7 @@ void useSqlite() async {
     lastUpdateDate: DateTime.now(),
     rut: 12345, 
     rutDv: '2'
-  ));
+  ));*/
 
   List<ProfileModel> profiles = await localProfile.select();
   print(profiles);

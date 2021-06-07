@@ -36,8 +36,8 @@ class ProfileModel extends BaseModel
     lastName        = json['last_name'];
     email           = json['email'];
     contactNumber   = json['contact_number'];
-    birthday         = DateTime.parse(json['birthday']);
-    termsChecked    = json['termsChecked'];
+    birthday        = DateTime.parse(json['birthday']);
+    termsChecked    = json['terms_checked'] is bool? json['terms_checked'] : json['terms_checked'] != 0;
     location        = json['location'];
     createdDate     = DateTime.parse(json['creation_date']);
     lastUpdateDate  = DateTime.parse(json['last_update_date']);
@@ -49,15 +49,21 @@ class ProfileModel extends BaseModel
   Map<String, dynamic> toJson() => {
     'id'              : this.id,
     'name'            : this.name,
-    'lastName'        : this.lastName,
+    'last_name'        : this.lastName,
     'email'           : this.email,
-    'contactNumber'   : this.contactNumber,
-    'birthday'         : this.birthday,
-    'termsChecked'    : this.termsChecked,
+    'contact_number'   : this.contactNumber,
+    'birthday'         : this.birthday.toString(),
+    'terms_checked'    : this.termsChecked,
     'location'        : this.location,
     'rut'             : this.rut,
-    'rutDv'           : this.rutDv,
-    'createdDate'     : this.createdDate,
-    'lastUpdateDate'  : this.lastUpdateDate
+    'rut_cd'           : this.rutDv,
+    'creation_date'     : this.createdDate.toString(),
+    'last_update_date'  : this.lastUpdateDate.toString()
   };
+
+  Map<String, dynamic> toSqliteParams(){
+    final json = toJson();
+    json['terms_checked'] = termsChecked? 1 : 0;
+    return json;
+  }
 }
