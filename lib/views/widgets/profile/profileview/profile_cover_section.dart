@@ -1,4 +1,7 @@
 import 'package:flutter/material.dart';
+import 'package:flutter_bloc/flutter_bloc.dart';
+import 'package:flutter_ecoapp/bloc/profile_bloc.dart';
+import 'package:flutter_ecoapp/models/profile.dart';
 import 'package:google_fonts/google_fonts.dart';
 
 class ProfileCoverSection extends StatelessWidget {
@@ -8,6 +11,8 @@ class ProfileCoverSection extends StatelessWidget {
 
   @override
   Widget build(BuildContext context) {
+    final ProfileBloc profileBloc = BlocProvider.of<ProfileBloc>(context);
+
     final img = Container(
       clipBehavior: Clip.antiAlias,
       decoration: BoxDecoration(
@@ -28,25 +33,18 @@ class ProfileCoverSection extends StatelessWidget {
       height: 80,
     );
 
-    final content = Container(
-      child: Column(
-        crossAxisAlignment: CrossAxisAlignment.start,
-        children: [
-          Text(
-            'Iniciar sesión',
-            style: GoogleFonts.montserrat(
-              fontSize: 16,
-              fontWeight: FontWeight.w500
-            ),
-            textAlign: TextAlign.start,
-          ),
-          Text(
-            'Inicia sesión fácilmente y disfruta de una experiencia completa',
-            style: GoogleFonts.montserrat(),
-            textAlign: TextAlign.start,
-          )
-        ],
-      ),
+    final streamBuilder = StreamBuilder(
+      stream: profileBloc.sessionStream,
+      initialData: profileBloc.currentProfile,
+      builder: (BuildContext context, AsyncSnapshot<ProfileModel?> snapshot){
+        print(snapshot.connectionState);
+        switch(snapshot.connectionState){
+          case ConnectionState.done:
+          case ConnectionState.active:
+            return _ProfileCoverContent(profile: snapshot.data);
+          default: return Center(child: CircularProgressIndicator());
+        }
+      },
     );
 
     return GestureDetector(
@@ -59,13 +57,48 @@ class ProfileCoverSection extends StatelessWidget {
           children: [
             img,
             SizedBox(width: 20.0,),
-            Expanded(child: content)
+            Expanded(child: streamBuilder)
           ],
         ),
       ),
       onTap: (){
         Navigator.pushNamed(context, 'login');
       },
+    );
+  }
+}
+
+class _ProfileCoverContent extends StatelessWidget {
+  const _ProfileCoverContent({
+    Key? key,
+    required this.profile
+  }) : super(key: key);
+
+  final ProfileModel? profile;
+
+  @override
+  Widget build(BuildContext context) {
+    return Container(
+      child: Column(
+        crossAxisAlignment: CrossAxisAlignment.start,
+        children: [
+          Text(
+            profile == null? 'Iniciar sesión' 
+              : profile!.fullName,
+            style: GoogleFonts.montserrat(
+              fontSize: 16,
+              fontWeight: FontWeight.w500
+            ),
+            textAlign: TextAlign.start,
+          ),
+          Text(
+            profile == null? 'Inicia sesión fácilmente y disfruta de una experiencia completa'
+              : profile!.email,
+            style: GoogleFonts.montserrat(),
+            textAlign: TextAlign.start,
+          )
+        ],
+      ),
     );
   }
 }

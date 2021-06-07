@@ -11,36 +11,44 @@ class ProfileBloc extends BaseBloc<ProfileModel>{
   final ProfileLocalAPI profileLocalAPI = ProfileLocalAPI();
 
   ProfileBloc() : super(0){
-    profileLocalAPI.initialize();
+    initializeBloc();
+  }
 
+  void initializeBloc() async{
+    await profileLocalAPI.initialize();
     // Get current getCurrentSession
-    _getCurrentSession();
+    updateCurrentSession();
   }
 
   // Session streams  
   final _sessionStreamController = StreamController<ProfileModel?>.broadcast();
 
-  Function(ProfileModel?) get sessionSink => _sessionStreamController.sink.add;
+  ProfileModel? currentProfile;
+  Function(ProfileModel?) get _sessionSink => _sessionStreamController.sink.add;
   Stream<ProfileModel?> get sessionStream => _sessionStreamController.stream;
 
   void disposeStreams(){
     _sessionStreamController.close();
   }
 
-
+  // TODO: Delete this variable (Currently is only for testing)
   Future<List<ProfileModel>> get getProfiles => profileAPI.selectAll();
 
   // Only get current session
   Future<ProfileModel?> _getCurrentSession() async { 
     List<ProfileModel> profiles = await profileLocalAPI.select();
-
     if(profiles.length > 0) return profiles[0];
     return null;
   }
 
   // Update current session
-  Future<void> updateCurrentSession() async => sessionSink(await _getCurrentSession());
-
+  Future<void> updateCurrentSession() async {
+    final profile = await _getCurrentSession();
+    _sessionSink(profile);
+    currentProfile = profile;
+    _sessionStreamController.close();
+  }
+  
   // Login profile
   Future<ProfileModel?> login(String email, String password) async {
     ProfileModel? profile = await profileAPI.selectOne({'email': email, 'password': password});
@@ -59,6 +67,9 @@ class ProfileBloc extends BaseBloc<ProfileModel>{
   @override
   Stream mapEventToState(event) {
     // TODO: implement mapEventToState
+    print('MAPPING BLOC');
     throw UnimplementedError();
   }
+
+  
 }

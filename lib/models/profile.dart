@@ -14,6 +14,8 @@ class ProfileModel extends BaseModel
   late int rut;
   late String rutDv;
 
+  String get fullName => '$name $lastName';
+
   ProfileModel({
     required int id,
     required this.name,
