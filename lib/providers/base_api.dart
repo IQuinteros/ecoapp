@@ -7,7 +7,7 @@ import 'package:flutter_ecoapp/models/base.dart';
 
 abstract class BaseAPI<T extends BaseModel>{
 
-  static const String _baseWebUrl = 'url.com/api/requests';
+  static const String _baseWebUrl = 'ecomercioweb.000webhostapp.com/api/requests';
 
   String baseUrl;
   Map<String, dynamic> Function(T) getJsonParams;
@@ -74,7 +74,7 @@ abstract class BaseAPI<T extends BaseModel>{
 }
 
 class RequestResult{
-  // TODO: API SHOULD RETURN 'sucess' PARAM
+  // TODO: API SHOULD RETURN 'success' PARAM
 
   final bool success;
   final Map<String, dynamic> data;

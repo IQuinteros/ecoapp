@@ -55,5 +55,7 @@ class ProfileModel extends BaseModel
     'location'        : this.location,
     'rut'             : this.rut,
     'rutDv'           : this.rutDv,
+    'createdDate'     : this.createdDate,
+    'lastUpdateDate'  : this.lastUpdateDate
   };
 }

@@ -13,6 +13,7 @@ import 'package:flutter_ecoapp/views/widgets/articles/favorite_button.dart';
 import 'package:flutter_ecoapp/views/widgets/normal_button.dart';
 import 'package:flutter_ecoapp/views/widgets/stars_row.dart';
 import 'package:google_fonts/google_fonts.dart';
+import 'package:share_plus/share_plus.dart';
 
 class ArticleView extends StatelessWidget {
 
@@ -74,7 +75,9 @@ class _ArticleAppBar extends StatelessWidget {
             Icons.share,
             color: Colors.white,
           ),
-          onPressed: (){},
+          onPressed: (){
+            Share.share('¡Disponible en Ecomercio! ${article.title} a solo \$${CurrencyUtil.formatToCurrencyString(article.price.toInt())}');
+          },
         ),
         FavoriteButton(favorite: false, disabledColor: Colors.white,)
       ],
