@@ -20,7 +20,7 @@ class ChatModel extends BaseModel
         date: DateTime.now(), 
         chat: this, 
         profile: ProfileModel(
-          bithday: DateTime.now(),
+          birthday: DateTime.now(),
           contactNumber: 123,
           createdDate: DateTime.now(),
           email: 'skdjfjadfs',
@@ -42,7 +42,7 @@ class ChatModel extends BaseModel
         date: DateTime.now(), 
         chat: this, 
         profile: ProfileModel(
-          bithday: DateTime.now(),
+          birthday: DateTime.now(),
           contactNumber: 123,
           createdDate: DateTime.now(),
           email: 'skdjfjadfs',
@@ -64,7 +64,7 @@ class ChatModel extends BaseModel
         date: DateTime.now(), 
         chat: this, 
         profile: ProfileModel(
-          bithday: DateTime.now(),
+          birthday: DateTime.now(),
           contactNumber: 123,
           createdDate: DateTime.now(),
           email: 'skdjfjadfs',
@@ -86,7 +86,7 @@ class ChatModel extends BaseModel
         date: DateTime.now(), 
         chat: this, 
         profile: ProfileModel(
-          bithday: DateTime.now(),
+          birthday: DateTime.now(),
           contactNumber: 123,
           createdDate: DateTime.now(),
           email: 'skdjfjadfs',
@@ -108,7 +108,7 @@ class ChatModel extends BaseModel
         date: DateTime.now(), 
         chat: this, 
         profile: ProfileModel(
-          bithday: DateTime.now(),
+          birthday: DateTime.now(),
           contactNumber: 123,
           createdDate: DateTime.now(),
           email: 'skdjfjadfs',
@@ -130,7 +130,7 @@ class ChatModel extends BaseModel
         date: DateTime.now(), 
         chat: this, 
         profile: ProfileModel(
-          bithday: DateTime.now(),
+          birthday: DateTime.now(),
           contactNumber: 123,
           createdDate: DateTime.now(),
           email: 'skdjfjadfs',
@@ -152,7 +152,7 @@ class ChatModel extends BaseModel
         date: DateTime.now(), 
         chat: this, 
         profile: ProfileModel(
-          bithday: DateTime.now(),
+          birthday: DateTime.now(),
           contactNumber: 123,
           createdDate: DateTime.now(),
           email: 'skdjfjadfs',
@@ -174,7 +174,7 @@ class ChatModel extends BaseModel
         date: DateTime.now(), 
         chat: this, 
         profile: ProfileModel(
-          bithday: DateTime.now(),
+          birthday: DateTime.now(),
           contactNumber: 123,
           createdDate: DateTime.now(),
           email: 'skdjfjadfs',
@@ -196,7 +196,7 @@ class ChatModel extends BaseModel
         date: DateTime.now(), 
         chat: this, 
         profile: ProfileModel(
-          bithday: DateTime.now(),
+          birthday: DateTime.now(),
           contactNumber: 123,
           createdDate: DateTime.now(),
           email: 'skdjfjadfs',

@@ -5,9 +5,7 @@ import 'package:flutter_bloc/flutter_bloc.dart';
 import 'package:flutter_ecoapp/bloc/profile_bloc.dart';
 import 'package:flutter_ecoapp/models/profile.dart';
 import 'package:flutter_ecoapp/providers/sqlite/profile_local_api.dart';
-import 'package:flutter_ecoapp/splash.dart';
 import 'package:flutter_ecoapp/views/categories_view.dart';
-import 'package:flutter_ecoapp/views/debug/debug.dart';
 import 'package:flutter_ecoapp/views/login_view.dart';
 import 'package:flutter_ecoapp/views/main_view.dart';
 import 'package:flutter_ecoapp/views/register_view.dart';
@@ -17,7 +15,7 @@ void main() {
   GestureBinding.instance?.resamplingEnabled = true;
   WidgetsFlutterBinding.ensureInitialized();
 
-  useSqlite();
+  //useSqlite();
   runApp(MyApp());
 }
 
@@ -30,7 +28,7 @@ void useSqlite() async {
     lastName: 'Quinteros',
     email: 'i.quinteros@hotmail.com', 
     contactNumber: 123456, 
-    bithday: DateTime.now(), 
+    birthday: DateTime.now(), 
     termsChecked: true, 
     location: 'Mi casa', 
     createdDate: DateTime.now(),

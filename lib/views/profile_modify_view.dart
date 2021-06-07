@@ -1,5 +1,8 @@
 import 'package:flutter/cupertino.dart';
 import 'package:flutter/material.dart';
+import 'package:flutter_bloc/flutter_bloc.dart';
+import 'package:flutter_ecoapp/bloc/profile_bloc.dart';
+import 'package:flutter_ecoapp/models/profile.dart';
 import 'package:flutter_ecoapp/views/profile_modify_pass_view.dart';
 import 'package:flutter_ecoapp/views/style/colors.dart';
 import 'package:flutter_ecoapp/views/widgets/bottom_nav_bar.dart';
@@ -23,6 +26,12 @@ class ProfileModifyView extends StatelessWidget {
 
   @override
   Widget build(BuildContext context) {
+    final profileBloc = BlocProvider.of<ProfileBloc>(context);
+
+    final loading = Center(
+      child: CircularProgressIndicator(),
+    );
+
     return Scaffold(
       appBar: AppBar(
         backgroundColor: Colors.transparent,
@@ -54,7 +63,27 @@ class ProfileModifyView extends StatelessWidget {
       body: SafeArea(
         child: Form(
           key: _formKey,
-          child: mainContent(context)
+          child: FutureBuilder(
+            future: profileBloc.getProfiles,
+            builder: (__, AsyncSnapshot<List<ProfileModel>> snapshot){
+              print('STATE: ${snapshot.connectionState.toString()}');
+              switch(snapshot.connectionState){
+                case ConnectionState.done:
+                  print(snapshot.data);
+
+                  if(snapshot.data == null){
+                    print('Snapshot data null');
+                    return loading;
+                  }
+
+                  return _ProfileModifyMainContent(
+                    controllers: controllers,
+                    profile: snapshot.data![0],
+                  ); 
+                default: return loading;
+              }
+            }
+          )
         ),
       ),
       bottomNavigationBar: EcoBottomNavigationBar(
@@ -65,8 +94,21 @@ class ProfileModifyView extends StatelessWidget {
     );
   }
 
-  Widget mainContent(BuildContext context){
-    return SingleChildScrollView(
+}
+
+class _ProfileModifyMainContent extends StatelessWidget {
+  const _ProfileModifyMainContent({
+    Key? key,
+    required this.profile,
+    required this.controllers,
+  }) : super(key: key);
+
+  final Map<String, TextEditingController> controllers;
+  final ProfileModel profile;
+
+  @override
+  Widget build(BuildContext context) {
+    final content = SingleChildScrollView(
       child: Container(
         margin: EdgeInsets.symmetric(
           horizontal: 20.0,
@@ -200,9 +242,18 @@ class ProfileModifyView extends StatelessWidget {
         ),
       ),
     );
+
+    controllers['name']!.text = profile.name;
+    controllers['lastName']!.text = profile.lastName;
+    controllers['email']!.text = profile.email;
+    controllers['phone']!.text = profile.contactNumber.toString();
+    final birthdayString = '${profile.birthday.day}/${profile.birthday.month}/${profile.birthday.year}';
+    controllers['date']!.text = birthdayString;
+
+    controllers['location']!.text = profile.location;
+
+    return content;
   }
-
-
 }
 
 

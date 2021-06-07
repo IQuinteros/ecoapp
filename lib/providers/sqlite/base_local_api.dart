@@ -21,7 +21,7 @@ abstract class BaseLocalAPI <T extends BaseModel>{
     required this.constructor
   });
 
-  Future initialize() async {
+  Future<void> initialize() async {
     WidgetsFlutterBinding.ensureInitialized();
 
     database = openDatabase(
@@ -57,7 +57,7 @@ abstract class BaseLocalAPI <T extends BaseModel>{
     );
   }
 
-  Future insert(T item) async {
+  Future<void> insert(T item) async {
     final db = await database;
 
     await db.insert(

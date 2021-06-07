@@ -6,7 +6,7 @@ class ProfileModel extends BaseModel
   late String lastName;
   late String email;
   late int contactNumber;
-  late DateTime bithday;
+  late DateTime birthday;
   late bool termsChecked;
   late String location;
   late DateTime createdDate;
@@ -20,7 +20,7 @@ class ProfileModel extends BaseModel
     required this.lastName,
     required this.email, 
     required this.contactNumber,
-    required this.bithday,
+    required this.birthday,
     required this.termsChecked,
     required this.location,
     required this.createdDate,
@@ -31,16 +31,16 @@ class ProfileModel extends BaseModel
 
   ProfileModel.fromJsonMap(Map<String, dynamic> json) : super(id: json['id']){
     name            = json['name'];
-    lastName        = json['lastName'];
+    lastName        = json['last_name'];
     email           = json['email'];
-    contactNumber   = json['contactNumber'];
-    bithday         = json['bithday'];
+    contactNumber   = json['contact_number'];
+    birthday         = DateTime.parse(json['birthday']);
     termsChecked    = json['termsChecked'];
     location        = json['location'];
-    createdDate     = json['createdDate'];
-    lastUpdateDate  = json['lastUpdateDate'];
+    createdDate     = DateTime.parse(json['creation_date']);
+    lastUpdateDate  = DateTime.parse(json['last_update_date']);
     rut             = json['rut'];
-    rutDv           = json['rutDv'];
+    rutDv           = json['rut_cd'];
   }
 
   @override
@@ -50,7 +50,7 @@ class ProfileModel extends BaseModel
     'lastName'        : this.lastName,
     'email'           : this.email,
     'contactNumber'   : this.contactNumber,
-    'bithday'         : this.bithday,
+    'birthday'         : this.birthday,
     'termsChecked'    : this.termsChecked,
     'location'        : this.location,
     'rut'             : this.rut,
