@@ -1,3 +1,6 @@
+import 'dart:convert';
+
+import 'package:awesome_dialog/awesome_dialog.dart';
 import 'package:flutter/cupertino.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter_bloc/flutter_bloc.dart';
@@ -68,7 +71,7 @@ class ProfileModifyView extends StatelessWidget {
 }
 
 class _ProfileModifyMainContent extends StatelessWidget {
-  const _ProfileModifyMainContent({
+  _ProfileModifyMainContent({
     Key? key,
     required this.profile,
     required this.controllers,
@@ -76,6 +79,8 @@ class _ProfileModifyMainContent extends StatelessWidget {
 
   final Map<String, TextEditingController> controllers;
   final ProfileModel profile;
+
+  final _formKey = GlobalKey<FormState>();
 
   @override
   Widget build(BuildContext context) {
@@ -139,7 +144,7 @@ class _ProfileModifyMainContent extends StatelessWidget {
                 onTap: () {
                   Future<DateTime?> response = showDatePicker(
                     context: context, 
-                    initialDate: DateTime.now(), 
+                    initialDate: profile.birthday, 
                     firstDate: DateTime(1900), 
                     lastDate: DateTime.now(),
                     initialDatePickerMode: DatePickerMode.year,
@@ -148,6 +153,7 @@ class _ProfileModifyMainContent extends StatelessWidget {
                     if(value == null)
                       return;
                     controllers['date']!.text = '${value.day}/${value.month}/${value.year}';
+                    profile.birthday = value;
                   });
                 },
                 controller: controllers['date']!,
@@ -245,13 +251,38 @@ class _ProfileModifyMainContent extends StatelessWidget {
 
     controllers['location']!.text = profile.location;
 
-    return content;
+    return Form(key: _formKey, child: content);
   }
 
-  void _updateProfile(BuildContext context){
-    
+  void _updateProfile(BuildContext context) async {
+    if(!_formKey.currentState!.validate()) return;
     final profileBloc = BlocProvider.of<ProfileBloc>(context);
-    profileBloc.updateProfile(profile);
+
+    profile.name = controllers['name']!.text;
+    profile.lastName = controllers['lastName']!.text;
+    profile.email = controllers['email']!.text;
+    profile.contactNumber = int.parse(controllers['phone']!.text);
+    profile.location = controllers['location']!.text;
+    
+    bool updated = await profileBloc.updateProfile(profile);
+
+    if(updated){
+      AwesomeDialog(
+        title: 'Datos actualizados',
+        desc: 'Tu perfil ha sido actualizado con éxito',
+        dialogType: DialogType.SUCCES, 
+        animType: AnimType.BOTTOMSLIDE,
+        context: context,
+        btnOkText: 'Aceptar',
+        btnOkOnPress: () {}
+      )..show();
+    }
+    else{
+      ScaffoldMessenger.of(context).showSnackBar(SnackBar(
+        content: Text('Ha ocurrido un error al guardar los cambios'),
+        backgroundColor: EcoAppColors.LEFT_BAR_COLOR,
+      ));
+    }
   }
 
 }

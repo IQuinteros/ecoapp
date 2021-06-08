@@ -24,9 +24,12 @@ abstract class BaseAPI<T extends BaseModel>{
     print('processing ${jsonEncode(params)}');
     final resp = await http.post(
       uri,
-      body: params,
+      body: jsonEncode(params),
+      headers: <String, String>{
+        'Content-Type': 'application/json; charset=UTF-8',
+      },
     );
-    print('querying $resp');
+    print('querying ${resp.body}');
     final decodedData = json.decode(resp.body);
 
     print('decoded: $decodedData');

@@ -59,6 +59,9 @@ dependencies:
   # Animations
   animated_widgets: ^1.1.0
 
+  # Dialogs
+  awesome_dialog: ^2.1.0
+
   # Splash screen
   flutter_native_splash: ^1.1.8+4
 
