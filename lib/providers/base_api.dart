@@ -49,9 +49,14 @@ abstract class BaseAPI<T extends BaseModel>{
   // Request
   Future<RequestResult> request(String subUrl, [Map<String, dynamic>? queryParams]) async{
     // HTTP for localhost, HTTPS for hosting
-    final url = Uri.http(_authority, '$_requests/$baseUrl' + '/$subUrl');
-    final result = await _processResponse(url, queryParams);
+    try{
+      final url = Uri.http(_authority, '$_requests/$baseUrl' + '/$subUrl');
+      final result = await _processResponse(url, queryParams);
     return RequestResult(result['success'], result['data']);
+    }
+    catch(e, stacktrace){
+      return RequestResult(false, []);
+    }
   }
 
   // Basic Methods
@@ -63,7 +68,8 @@ abstract class BaseAPI<T extends BaseModel>{
 
     List<T> items = [];
     try{
-      result.data.forEach((value) => items.add(constructor(value)));
+      if(result.data != null)
+        result.data!.forEach((value) => items.add(constructor(value)));
     }
     catch (e, stacktrace){
       print('Exception: $e');
@@ -77,7 +83,8 @@ abstract class BaseAPI<T extends BaseModel>{
   Future<T?> selectOne({Map<String, dynamic>? byParam, String? customName}) async{
     final result = await request(_getRequestUrl('get', customName), byParam);
     if(!result.success) return null;
-    return constructor(Map.fromIterable(result.data));
+    if(result.data == null) return null;
+    return constructor(Map.fromIterable(result.data!));
   }
 
   // Update method
@@ -103,7 +110,7 @@ class RequestResult{
   // TODO: API SHOULD RETURN 'success' PARAM
 
   final bool success;
-  final Iterable data;
+  final Iterable? data;
 
   RequestResult(this.success, this.data);
 }
