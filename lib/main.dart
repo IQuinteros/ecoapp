@@ -15,30 +15,7 @@ void main() {
   GestureBinding.instance?.resamplingEnabled = true;
   WidgetsFlutterBinding.ensureInitialized();
 
-  useSqlite();
   runApp(MyApp());
-}
-
-void useSqlite() async {
-  final localProfile = ProfileLocalAPI();
-  await localProfile.initialize();
-  /*localProfile.insert(ProfileModel(
-    id: 1, 
-    name: 'Ignacio', 
-    lastName: 'Quinteros',
-    email: 'i.quinteros@hotmail.com', 
-    contactNumber: 123456, 
-    birthday: DateTime.now(), 
-    termsChecked: true, 
-    location: 'Mi casa', 
-    createdDate: DateTime.now(),
-    lastUpdateDate: DateTime.now(),
-    rut: 12345, 
-    rutDv: '2'
-  ));*/
-
-  List<ProfileModel> profiles = await localProfile.select();
-  print(profiles);
 }
 
 class MyApp extends StatelessWidget {

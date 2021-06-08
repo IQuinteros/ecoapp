@@ -18,7 +18,8 @@ class ProfileBloc extends BaseBloc<ProfileModel>{
   void initializeBloc() async{
     await profileLocalAPI.initialize();
     // Get current getCurrentSession
-    _updateCurrentSession();
+    await _updateCurrentSession();
+    _updateCurrentSessionFromRemote();
   }
 
   // Session streams  
@@ -31,9 +32,6 @@ class ProfileBloc extends BaseBloc<ProfileModel>{
   void disposeStreams(){
     _sessionStreamController.close();
   }
-
-  // TODO: Delete this variable (Currently is only for testing)
-  Future<List<ProfileModel>> get getProfiles => profileAPI.selectAll();
 
   // Only get current session
   Future<ProfileModel?> _getCurrentSession() async { 
@@ -48,6 +46,19 @@ class ProfileBloc extends BaseBloc<ProfileModel>{
     _sessionSink(profile);
     currentProfile = profile;
     //_sessionStreamController.close();
+  }
+
+  // Update current session with remote data
+  Future<void> _updateCurrentSessionFromRemote() async {
+    if(currentProfile == null) return;
+
+    final profiles = await profileAPI.selectAll(params: {'id': currentProfile!.id});
+
+    if(profiles.length > 0){
+      await profileLocalAPI.clear();
+      await profileLocalAPI.insert(profiles[0]);
+      _updateCurrentSession();
+    }
   }
   
   // Login profile
