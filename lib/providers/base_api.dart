@@ -71,8 +71,8 @@ abstract class BaseAPI<T extends BaseModel>{
   }
 
   // Update method
-  Future<T?> update({required T item, String? customName}) async{
-    Map<String, dynamic> params = getJsonParams(item);
+  Future<T?> update({required T item, String? customName, Map<String, dynamic> additionalParams = const {}}) async{
+    Map<String, dynamic> params = getJsonParams(item)..addAll(additionalParams);
     params['prev_id'] = item.id;
 
     final result = await request(_getRequestUrl('update', customName), params);
@@ -82,10 +82,10 @@ abstract class BaseAPI<T extends BaseModel>{
   }
 
   // Insert method
-  Future<T?> insert({required T item, String? customName}) async => (await request(_getRequestUrl('insert', customName), getJsonParams(item))).success? item : null;
+  Future<T?> insert({required T item, String? customName, Map<String, dynamic> additionalParams = const {}}) async => (await request(_getRequestUrl('insert', customName), getJsonParams(item)..addAll(additionalParams))).success? item : null;
 
   // Delete method
-  Future<bool> delete({required T item, String? customName}) async => (await request(_getRequestUrl('delete', customName))).success;
+  Future<bool> delete({required T item, String? customName}) async => (await request(_getRequestUrl('delete', customName), getJsonParams(item))).success;
 
 }
 
