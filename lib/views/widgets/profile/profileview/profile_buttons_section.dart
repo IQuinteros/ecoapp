@@ -22,24 +22,33 @@ class ProfileButtonsSection extends StatelessWidget {
       child: Column(
         children: [
           Divider(thickness: 1),
+          ProfileButton(icon: Icons.history, title: 'Historial', onTap: (){}),
+          Divider(thickness: 1),
           ProfileButton(
             icon: Icons.star_border_rounded, 
             title: 'Lista de favoritos', 
-            onTap: () => Navigator.push(context, MaterialPageRoute(builder: (__) => profile != null? FavoritesView() : LoginView()))
+            onTap: () => Navigator.push(context, MaterialPageRoute(builder: (__) => profile != null? FavoritesView() : LoginView())),
+            subtitle: profile == null? Text(
+              'Necesita iniciar sesión'
+            ) : null
           ),
-          Divider(thickness: 1),
-          ProfileButton(icon: Icons.history, title: 'Historial', onTap: (){}),
           Divider(thickness: 1),
           ProfileButton(
             icon: Icons.shopping_cart_outlined, 
             title: 'Mis compras', 
-            onTap: () => Navigator.push(context, MaterialPageRoute(builder: (__) => profile != null? PurchasesView() : LoginView()))
+            onTap: () => Navigator.push(context, MaterialPageRoute(builder: (__) => profile != null? PurchasesView() : LoginView())),
+            subtitle: profile == null? Text(
+              'Necesita iniciar sesión'
+            ) : null
           ),
           Divider(thickness: 1),
           ProfileButton(
             icon: Icons.settings_outlined, 
             title: 'Ajustes de perfil', 
-            onTap: () => Navigator.push(context, MaterialPageRoute(builder: (__) => profile != null? ProfileModifyView() : LoginView()))
+            onTap: () => Navigator.push(context, MaterialPageRoute(builder: (__) => profile != null? ProfileModifyView() : LoginView())),
+            subtitle: profile == null? Text(
+              'Necesita iniciar sesión'
+            ) : null
           ),
           SizedBox(height: 10.0),
         ],

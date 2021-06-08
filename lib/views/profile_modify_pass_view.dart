@@ -163,8 +163,7 @@ class _ProfilyModifyPassViewState extends State<ProfilyModifyPassView> {
       }     
 
       if(!_formKey.currentState!.validate()) return;
-      
-      print('NOW: CHANGE PASS');
+
       bool result = await profileBloc.changePassword(controllers['pass']!.text);
 
       loading.dismiss();
@@ -176,7 +175,7 @@ class _ProfilyModifyPassViewState extends State<ProfilyModifyPassView> {
           animType: AnimType.BOTTOMSLIDE,
           context: context,
           btnOkText: 'Aceptar',
-          btnOkOnPress: () => Navigator.pop(context),
+          btnOkOnPress: (){},
           onDissmissCallback: (__) => Navigator.pop(context),
           padding: EdgeInsets.symmetric(horizontal: 20.0, vertical: 10.0)
         )..show();

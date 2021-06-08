@@ -7,11 +7,13 @@ class ProfileButton extends StatelessWidget {
     required this.icon,
     required this.title,
     required this.onTap,
+    this.subtitle
   }) : super(key: key);
 
   final IconData icon;
   final String title;
   final Function()? onTap;
+  final Widget? subtitle;
 
   @override
   Widget build(BuildContext context) {
@@ -27,6 +29,7 @@ class ProfileButton extends StatelessWidget {
         color: EcoAppColors.MAIN_DARK_COLOR,
         size: 30
       ),
+      subtitle: subtitle,
       onTap: onTap,
     );
   }
