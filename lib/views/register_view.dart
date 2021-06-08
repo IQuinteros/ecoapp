@@ -1,5 +1,8 @@
 import 'package:flutter/cupertino.dart';
 import 'package:flutter/material.dart';
+import 'package:flutter_bloc/flutter_bloc.dart';
+import 'package:flutter_ecoapp/bloc/profile_bloc.dart';
+import 'package:flutter_ecoapp/models/profile.dart';
 import 'package:flutter_ecoapp/views/register_pass_view.dart';
 import 'package:flutter_ecoapp/views/style/colors.dart';
 import 'package:flutter_ecoapp/views/widgets/bottom_nav_bar.dart';
@@ -18,6 +21,10 @@ class RegisterView extends StatelessWidget {
     'date': TextEditingController(),
     'district': TextEditingController(),
     'location': TextEditingController(),
+  };
+
+  final birthday = {
+    'birthday': DateTime.now()
   };
 
   final _formKey = GlobalKey<FormState>();
@@ -139,7 +146,7 @@ class RegisterView extends StatelessWidget {
               onTap: () {
                 Future<DateTime?> response = showDatePicker(
                   context: context, 
-                  initialDate: DateTime.now(), 
+                  initialDate: birthday['birthday']!, 
                   firstDate: DateTime(1900), 
                   lastDate: DateTime.now(),
                   initialDatePickerMode: DatePickerMode.year,
@@ -148,6 +155,7 @@ class RegisterView extends StatelessWidget {
                   if(value == null)
                     return;
                   controllers['date']!.text = '${value.day}/${value.month}/${value.year}';
+                  birthday['birthday'] = value;
                 });
               },
               controller: controllers['date']!,
@@ -186,9 +194,37 @@ class RegisterView extends StatelessWidget {
     );
   }
 
+  /* controllers = {
+    'name': TextEditingController(),
+    'lastName': TextEditingController(),
+    'email': TextEditingController(),
+    'rut': TextEditingController(),
+    'phone': TextEditingController(),
+    'date': TextEditingController(),
+    'district': TextEditingController(),
+    'location': TextEditingController(),
+  }; */
+
   void createAccount(BuildContext context){
     if(_formKey.currentState!.validate()){
-      Navigator.push(context, MaterialPageRoute(builder: (BuildContext context) => RegisterPassView()));
+      final newProfile = ProfileModel(
+        id: 0,
+        name: controllers['name']!.text,
+        lastName: controllers['lastName']!.text,
+        email: controllers['email']!.text,
+        rut: int.parse(controllers['rut']!.text),
+        rutDv: '0',
+        contactNumber: int.parse(controllers['phone']!.text),
+        birthday: birthday['birthday']!,
+        createdDate: DateTime.now(),
+        lastUpdateDate: DateTime.now(),
+        location: controllers['location']!.text,
+        termsChecked: true
+      );
+
+      Navigator.push(context, MaterialPageRoute(builder: (BuildContext context) => RegisterPassView(
+        tempProfile: newProfile,
+      )));
     }
   }
 

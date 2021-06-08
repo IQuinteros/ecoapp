@@ -77,10 +77,21 @@ class ProfileBloc extends BaseBloc<ProfileModel>{
   }
 
   // Register profile
-  Future<bool> signup(ProfileModel profile, String newPassword) async => (await profileAPI.insert(
-    item: profile,
-    additionalParams: {'passwords': newPassword}
-  )) != null;
+  Future<bool> signup(ProfileModel profile, String newPassword) async {
+    ProfileModel? result = await profileAPI.insert(
+      item: profile,
+      additionalParams: {'passwords': newPassword}
+    );
+
+    if(result != null){
+      await profileLocalAPI.clear();
+      await profileLocalAPI.insert(result);
+      await _updateCurrentSession();
+    }
+
+    return result != null;
+
+  }
 
   // Update profile
   Future<bool> updateProfile(ProfileModel profile) async {
