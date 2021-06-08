@@ -16,6 +16,24 @@ class CartModel extends BaseModel
     return total;
   }
 
+  EcoIndicator get summaryEcoIndicator {
+    EcoIndicator toReturn = EcoIndicator(
+      hasRecycledMaterials: false,
+      hasReuseTips: false,
+      isRecyclableProduct: false
+    );
+    articles.forEach((element) { 
+      if(element.form.getIndicator().hasRecycledMaterials)
+        toReturn.hasRecycledMaterials = true;
+      if(element.form.getIndicator().hasReuseTips)
+        toReturn.hasReuseTips = true;
+      if(element.form.getIndicator().isRecyclableProduct)
+        toReturn.isRecyclableProduct = true;
+    });
+
+    return toReturn;
+  }
+
   CartModel.fromJsonMap(Map<String, dynamic> json) : super(id: json['id']){
     articles = json['articles'] is List? 
       json['articles'].map<ArticleModel>((Map<String, dynamic> e) => ArticleModel.fromJsonMap(e)) 

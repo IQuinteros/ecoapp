@@ -62,6 +62,9 @@ dependencies:
   # Dialogs
   awesome_dialog: ^2.1.0
 
+  # Number picker
+  numberpicker: ^2.1.1
+
   # Splash screen
   flutter_native_splash: ^1.1.8+4
 

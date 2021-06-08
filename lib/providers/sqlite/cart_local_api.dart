@@ -7,7 +7,7 @@ class CartLocalAPI extends BaseLocalAPI<CartModel>{
     constructor: (value) => CartModel.fromJsonMap(value),
     toMapFunction: (item) => item.toSqliteParams(),
     params: 'id INTEGER PRIMARY KEY, articles TEXT',
-    tableName: 'profile'
+    tableName: 'cart'
   );
 
 }
