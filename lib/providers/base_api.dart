@@ -7,8 +7,8 @@ import 'package:flutter_ecoapp/models/base.dart';
 
 abstract class BaseAPI<T extends BaseModel>{
 
-  static const String _authority = 'ecomercioweb.000webhostapp.com';
-  static const String _requests = 'api/requests';
+  static const String _authority = 'localhost';
+  static const String _requests = 'ecoweb/api/requests';
 
   final String baseUrl;
   Map<String, dynamic> Function(T) getJsonParams;
@@ -16,6 +16,8 @@ abstract class BaseAPI<T extends BaseModel>{
   
 
   BaseAPI({required this.baseUrl, required this.getJsonParams, required this.constructor});
+
+  String _getRequestUrl(String normalName, String? customName) => customName != null? '${baseUrl}_$customName.php' : '${baseUrl}_$normalName.php'; 
 
   // Process Response
   Future<Map<String, dynamic>> _processResponse(Uri uri) async{
@@ -30,7 +32,8 @@ abstract class BaseAPI<T extends BaseModel>{
 
   // Request
   Future<RequestResult> request(String subUrl, [Map<String, dynamic>? queryParams]) async{
-    final url = Uri.https(_authority, '$_requests/$baseUrl' + '/$subUrl', queryParams);
+    // HTTP for localhost, HTTPS for hosting
+    final url = Uri.http(_authority, '$_requests/$baseUrl' + '/$subUrl', queryParams);
     final result = await _processResponse(url);
     return RequestResult(result['success'], result['data']);
   }
@@ -38,8 +41,8 @@ abstract class BaseAPI<T extends BaseModel>{
   // Basic Methods
 
   // Select items list
-  Future<List<T>> selectAll([Map<String, dynamic>? params]) async{
-    final result = await request('${baseUrl}_select.php', params);
+  Future<List<T>> selectAll({Map<String, dynamic>? params, String? customName}) async{
+    final result = await request(_getRequestUrl('select', customName), params);
     if(!result.success) return [];
 
     List<T> items = [];
@@ -55,29 +58,28 @@ abstract class BaseAPI<T extends BaseModel>{
   }
 
   // Select only one
-  Future<T?> selectOne([Map<String, dynamic>? byParam]) async{
-    final result = await request('${baseUrl}_get.php', byParam);
+  Future<T?> selectOne({Map<String, dynamic>? byParam, String? customName}) async{
+    final result = await request(_getRequestUrl('get', customName), byParam);
     if(!result.success) return null;
-    
     return constructor(Map.fromIterable(result.data));
   }
 
   // Update method
-  Future<T?> update(T actualItem, T newItem) async{
-    Map<String, dynamic> params = getJsonParams(newItem);
-    params['prev_id'] = actualItem.id;
+  Future<T?> update({required T item, String? customName}) async{
+    Map<String, dynamic> params = getJsonParams(item);
+    params['prev_id'] = item.id;
 
-    final result = await request('${baseUrl}_update.php', params);
+    final result = await request(_getRequestUrl('update', customName), params);
     if(!result.success) return null;
 
-    return newItem;
+    return item;
   }
 
   // Insert method
-  Future<T?> insert(T item) async => (await request('${baseUrl}_insert.php', getJsonParams(item))).success? item : null;
+  Future<T?> insert({required T item, String? customName}) async => (await request(_getRequestUrl('insert', customName), getJsonParams(item))).success? item : null;
 
   // Delete method
-  Future<bool> delete(T item) async => (await request('${baseUrl}_delete.php')).success;
+  Future<bool> delete({required T item, String? customName}) async => (await request(_getRequestUrl('delete', customName))).success;
 
 }
 

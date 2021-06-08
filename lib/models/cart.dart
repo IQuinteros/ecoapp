@@ -17,13 +17,15 @@ class CartModel extends BaseModel
   }
 
   CartModel.fromJsonMap(Map<String, dynamic> json) : super(id: json['id']){
-    articles           = json['articles'];
+    articles = json['articles'] is List? 
+      json['articles'].map<ArticleModel>((Map<String, dynamic> e) => ArticleModel.fromJsonMap(e)) 
+      : [];
   }
 
   @override
   Map<String, dynamic> toJson() => {
     'id'        : id,
-    'articles'  : articles
+    'articles'  : articles.map<Map<String, dynamic>>((e) => e.toJson()).toList()
   };
 
 }

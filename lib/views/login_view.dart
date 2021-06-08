@@ -1,4 +1,7 @@
 import 'package:flutter/material.dart';
+import 'package:flutter_bloc/flutter_bloc.dart';
+import 'package:flutter_ecoapp/bloc/profile_bloc.dart';
+import 'package:flutter_ecoapp/models/profile.dart';
 import 'package:flutter_ecoapp/views/style/colors.dart';
 import 'package:flutter_ecoapp/views/widgets/bottom_nav_bar.dart';
 import 'package:flutter_ecoapp/views/widgets/google_button.dart';
@@ -7,6 +10,13 @@ import 'package:flutter_ecoapp/views/widgets/normal_input.dart';
 import 'package:google_fonts/google_fonts.dart';
 
 class LoginView extends StatelessWidget {
+
+  final controllers = {
+    'email': TextEditingController(),
+    'pass': TextEditingController(),
+  };
+
+  final _formKey = GlobalKey<FormState>();
 
   @override
   Widget build(BuildContext context) {
@@ -31,7 +41,7 @@ class LoginView extends StatelessWidget {
           },
         ),
       ),
-      body: SafeArea(child: mainContent(context)),
+      body: SafeArea(child: Form(key: _formKey, child: mainContent(context))),
       bottomNavigationBar: EcoBottomNavigationBar(
         currentIndex: 0,
           onTap: (value){
@@ -49,15 +59,32 @@ class LoginView extends StatelessWidget {
         ),
         child: Column(
           children: [
-            NormalInput(header: 'Email', hint: 'Ingresa tu email', icon: Icons.mail),
-            NormalInput(header: 'Contraseña', hint: 'Ingresa tu contraseña', icon: Icons.vpn_key),
+            NormalInput(
+              header: 'Email', 
+              hint: 'Ingresa tu email', 
+              icon: Icons.mail,
+              controller: controllers['email'],
+              validator: (value) => value!.isEmpty
+                ? 'Debe ingresar su email'
+                : null
+            ),
+            NormalInput(
+              header: 'Contraseña', 
+              hint: 'Ingresa tu contraseña', 
+              icon: Icons.vpn_key,
+              controller: controllers['pass'],
+              validator: (value) => value!.isEmpty
+                ? 'Debe ingresar su contraseña'
+                : null,
+              isPassword: true,
+            ),
             Container(
               margin: EdgeInsets.symmetric(
                 horizontal: 40.0
               ),
               child: NormalButton(
                 text: 'Iniciar sesión', 
-                onPressed: (){}
+                onPressed: () => _tryLogin(context)
               ),
             ),
             Container(
@@ -87,6 +114,39 @@ class LoginView extends StatelessWidget {
     );
   }
 
+  void _tryLogin(BuildContext context) async{
+    if(_formKey.currentState!.validate()){
+      final profileBloc = BlocProvider.of<ProfileBloc>(context);
+      
+      ProfileModel? profile = await profileBloc.login(controllers['email']!.text, controllers['pass']!.text);
+      
+      print('LOGIN: $profile');
+
+      if(profile == null){
+        showDialog(
+          context: context, 
+          builder: (BuildContext context){
+            return AlertDialog(
+              title: Text('Usuario no encontrado'),
+              content: Text('El email y/o contraseña son incorrectos'),
+              actions: [
+                TextButton(
+                  onPressed: () => Navigator.pop(context), 
+                  child: Text('Volver')
+                )
+              ],
+            );
+          }
+        );
+      }
+      else{
+        Navigator.pop(context);
+        ScaffoldMessenger.of(context).showSnackBar(SnackBar(
+          content: Text('Bienvenido ${profile.fullName}')
+        ));
+      }
+    }
+  }
 }
 
 

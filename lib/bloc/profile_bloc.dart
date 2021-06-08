@@ -18,7 +18,7 @@ class ProfileBloc extends BaseBloc<ProfileModel>{
   void initializeBloc() async{
     await profileLocalAPI.initialize();
     // Get current getCurrentSession
-    updateCurrentSession();
+    _updateCurrentSession();
   }
 
   // Session streams  
@@ -43,7 +43,7 @@ class ProfileBloc extends BaseBloc<ProfileModel>{
   }
 
   // Update current session
-  Future<void> updateCurrentSession() async {
+  Future<void> _updateCurrentSession() async {
     final profile = await _getCurrentSession();
     _sessionSink(profile);
     currentProfile = profile;
@@ -52,25 +52,32 @@ class ProfileBloc extends BaseBloc<ProfileModel>{
   
   // Login profile
   Future<ProfileModel?> login(String email, String password) async {
-    ProfileModel? profile = await profileAPI.selectOne({'email': email, 'password': password});
+    List<ProfileModel> profile = await profileAPI.selectAll(
+      params: {'email': email, 'password': password},
+      customName: 'login'
+    );
 
-    if(profile != null){
-      (await profileLocalAPI.select()).forEach((element) async => await profileLocalAPI.delete(element.id));
-      profileLocalAPI.insert(profile);
+
+    if(profile.length > 0){
+      await profileLocalAPI.clear();
+      await profileLocalAPI.insert(profile[0]);
+      _updateCurrentSession();
+      return profile[0];
     }
-
-    return profile;
+    else{
+      return null;
+    }
   }
 
   // Logout profile
   Future<void> logout() async {
     await profileLocalAPI.clear();
     //_sessionStreamController = StreamController<ProfileModel?>.broadcast();
-    await updateCurrentSession();
+    await _updateCurrentSession();
   }
 
   // Register profile
-  Future<bool> register(ProfileModel profile) async => (await profileAPI.insert(profile)) != null;
+  Future<bool> register(ProfileModel profile) async => (await profileAPI.insert(item: profile)) != null;
 
   @override
   Stream mapEventToState(event) {
