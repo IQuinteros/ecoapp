@@ -79,6 +79,9 @@ class ProfileBloc extends BaseBloc<ProfileModel>{
   // Register profile
   Future<bool> register(ProfileModel profile) async => (await profileAPI.insert(item: profile)) != null;
 
+  // Update profile
+  Future<bool> updateProfile(ProfileModel profile) async => (await profileAPI.update(item: profile)) != null;
+
   @override
   Stream mapEventToState(event) {
     // TODO: implement mapEventToState

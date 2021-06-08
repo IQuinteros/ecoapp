@@ -119,8 +119,6 @@ class LoginView extends StatelessWidget {
       final profileBloc = BlocProvider.of<ProfileBloc>(context);
       
       ProfileModel? profile = await profileBloc.login(controllers['email']!.text, controllers['pass']!.text);
-      
-      print('LOGIN: $profile');
 
       if(profile == null){
         showDialog(

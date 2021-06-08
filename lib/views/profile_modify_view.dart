@@ -195,7 +195,7 @@ class _ProfileModifyMainContent extends StatelessWidget {
                 ),
                 child: NormalButton(
                   text: 'Guardar cambios', 
-                  onPressed: () {} // TODO: Save data
+                  onPressed: () => _updateProfile(context) // TODO: Save data
                 ),
               ),
               SizedBox(height: 20.0,),
@@ -246,6 +246,12 @@ class _ProfileModifyMainContent extends StatelessWidget {
     controllers['location']!.text = profile.location;
 
     return content;
+  }
+
+  void _updateProfile(BuildContext context){
+    
+    final profileBloc = BlocProvider.of<ProfileBloc>(context);
+    profileBloc.updateProfile(profile);
   }
 
 }

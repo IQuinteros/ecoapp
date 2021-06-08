@@ -1,4 +1,5 @@
 import 'package:flutter_ecoapp/models/base.dart';
+import 'package:flutter_ecoapp/models/district.dart';
 
 class ProfileModel extends BaseModel
 {
@@ -13,6 +14,8 @@ class ProfileModel extends BaseModel
   late DateTime lastUpdateDate;
   late int rut;
   late String rutDv;
+  
+  DistrictModel get district => DistrictModel(id: 1, name: 'Concepción');
 
   String get fullName => '$name $lastName';
 
@@ -54,7 +57,8 @@ class ProfileModel extends BaseModel
     'contact_number'   : this.contactNumber,
     'birthday'         : this.birthday.toString(),
     'terms_checked'    : this.termsChecked,
-    'location'        : this.location,
+    'district'          : this.district.id,
+    'location'          : this.location,
     'rut'             : this.rut,
     'rut_cd'           : this.rutDv,
     'creation_date'     : this.createdDate.toString(),
