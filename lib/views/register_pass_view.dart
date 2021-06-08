@@ -107,7 +107,8 @@ class RegisterPassView extends StatelessWidget {
                   return 'Las contraseñas no coinciden';
                 
                 return null;
-              }
+              },
+              isPassword: true,
             ),
             Container(
               margin: EdgeInsets.symmetric(
