@@ -128,7 +128,21 @@ class RegisterPassView extends StatelessWidget {
     if(_formKey.currentState!.validate()){
 
       final profileBloc = BlocProvider.of<ProfileBloc>(context);
+
+      final loading = AwesomeDialog(
+        title: 'Creando cuenta',
+        desc: 'Estás a nada de acceder a la experiencia completa de ECOmercio',
+        dialogType: DialogType.NO_HEADER, 
+        animType: AnimType.BOTTOMSLIDE,
+        context: context,
+        dismissOnTouchOutside: false,
+        dismissOnBackKeyPress: false,
+        padding: EdgeInsets.symmetric(horizontal: 20.0, vertical: 10.0)
+      )..show();
+
       bool result = await profileBloc.signup(tempProfile, controllers['pass']!.text);
+
+      loading.dismiss();
 
       if(result){
         AwesomeDialog(
@@ -139,7 +153,8 @@ class RegisterPassView extends StatelessWidget {
           context: context,
           btnOkText: 'Aceptar',
           btnOkOnPress: () => Navigator.popUntil(context, ModalRoute.withName('/')),
-          onDissmissCallback: (__) => Navigator.popUntil(context, ModalRoute.withName('/'))
+          onDissmissCallback: (__) => Navigator.popUntil(context, ModalRoute.withName('/')),
+          padding: EdgeInsets.symmetric(horizontal: 20.0, vertical: 10.0)
         )..show();
       }
       else{

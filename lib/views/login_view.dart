@@ -1,3 +1,4 @@
+import 'package:awesome_dialog/awesome_dialog.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter_bloc/flutter_bloc.dart';
 import 'package:flutter_ecoapp/bloc/profile_bloc.dart';
@@ -118,28 +119,37 @@ class LoginView extends StatelessWidget {
     if(_formKey.currentState!.validate()){
       final profileBloc = BlocProvider.of<ProfileBloc>(context);
       
+      final loading = AwesomeDialog(
+        title: 'Iniciando sesión',
+        desc: 'Danos un momento mientras buscamos tu cuenta',
+        dialogType: DialogType.NO_HEADER, 
+        animType: AnimType.BOTTOMSLIDE,
+        context: context,
+        dismissOnTouchOutside: false,
+        dismissOnBackKeyPress: false,
+        padding: EdgeInsets.symmetric(horizontal: 20.0, vertical: 10.0)
+      )..show();
+
       ProfileModel? profile = await profileBloc.login(controllers['email']!.text, controllers['pass']!.text);
 
+      loading.dismiss();
+
       if(profile == null){
-        showDialog(
-          context: context, 
-          builder: (BuildContext context){
-            return AlertDialog(
-              title: Text('Usuario no encontrado'),
-              content: Text('El email y/o contraseña son incorrectos'),
-              actions: [
-                TextButton(
-                  onPressed: () => Navigator.pop(context), 
-                  child: Text('Volver')
-                )
-              ],
-            );
-          }
-        );
+        AwesomeDialog(
+          title: 'Usuario no encontrado',
+          desc: 'El email y/o contraseña son incorrectos',
+          dialogType: DialogType.ERROR, 
+          animType: AnimType.BOTTOMSLIDE,
+          context: context,
+          btnCancelText: 'Volver',
+          btnCancelOnPress: () {},
+          padding: EdgeInsets.symmetric(horizontal: 20.0, vertical: 10.0)
+        )..show();
       }
       else{
         Navigator.pop(context);
         ScaffoldMessenger.of(context).showSnackBar(SnackBar(
+          backgroundColor: EcoAppColors.MAIN_DARK_COLOR,
           content: Text('Bienvenido ${profile.fullName}')
         ));
       }

@@ -194,17 +194,6 @@ class RegisterView extends StatelessWidget {
     );
   }
 
-  /* controllers = {
-    'name': TextEditingController(),
-    'lastName': TextEditingController(),
-    'email': TextEditingController(),
-    'rut': TextEditingController(),
-    'phone': TextEditingController(),
-    'date': TextEditingController(),
-    'district': TextEditingController(),
-    'location': TextEditingController(),
-  }; */
-
   void createAccount(BuildContext context){
     if(_formKey.currentState!.validate()){
       final newProfile = ProfileModel(

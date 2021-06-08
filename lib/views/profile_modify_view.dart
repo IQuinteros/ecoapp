@@ -263,8 +263,21 @@ class _ProfileModifyMainContent extends StatelessWidget {
     profile.email = controllers['email']!.text;
     profile.contactNumber = int.parse(controllers['phone']!.text);
     profile.location = controllers['location']!.text;
+
+    final loading = AwesomeDialog(
+      title: 'Actualizando datos',
+      desc: 'Tus datos serán actualizados en un momento',
+      dialogType: DialogType.NO_HEADER, 
+      animType: AnimType.BOTTOMSLIDE,
+      context: context,
+      dismissOnTouchOutside: false,
+      dismissOnBackKeyPress: false,
+      padding: EdgeInsets.symmetric(horizontal: 20.0, vertical: 10.0)
+    )..show();
     
     bool updated = await profileBloc.updateProfile(profile);
+
+    loading.dismiss();
 
     if(updated){
       AwesomeDialog(
@@ -274,7 +287,8 @@ class _ProfileModifyMainContent extends StatelessWidget {
         animType: AnimType.BOTTOMSLIDE,
         context: context,
         btnOkText: 'Aceptar',
-        btnOkOnPress: () {}
+        btnOkOnPress: () {},
+        padding: EdgeInsets.symmetric(horizontal: 20.0, vertical: 10.0)
       )..show();
     }
     else{
