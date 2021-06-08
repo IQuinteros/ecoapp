@@ -159,12 +159,13 @@ class RegisterPassView extends StatelessWidget {
         )..show();
       }
       else{
+        ScaffoldMessenger.of(context).removeCurrentSnackBar();
         ScaffoldMessenger.of(context).showSnackBar(
-        SnackBar(
-          content: Text('Ha ocurrido un error intentando crear la cuenta'),
-          backgroundColor: EcoAppColors.MAIN_DARK_COLOR,
-        )
-      );
+          SnackBar(
+            content: Text('Ha ocurrido un error intentando crear la cuenta'),
+            backgroundColor: EcoAppColors.MAIN_DARK_COLOR,
+          )
+        );
       }
     }
     

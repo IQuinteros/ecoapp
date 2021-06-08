@@ -1,13 +1,21 @@
+import 'package:awesome_dialog/awesome_dialog.dart';
 import 'package:flutter/cupertino.dart';
 import 'package:flutter/material.dart';
+import 'package:flutter_bloc/flutter_bloc.dart';
+import 'package:flutter_ecoapp/bloc/profile_bloc.dart';
 import 'package:flutter_ecoapp/views/style/colors.dart';
 import 'package:flutter_ecoapp/views/widgets/bottom_nav_bar.dart';
 import 'package:flutter_ecoapp/views/widgets/normal_button.dart';
 import 'package:flutter_ecoapp/views/widgets/normal_input.dart';
 import 'package:google_fonts/google_fonts.dart';
 
-class ProfilyModifyPassView extends StatelessWidget {
+class ProfilyModifyPassView extends StatefulWidget {
 
+  @override
+  _ProfilyModifyPassViewState createState() => _ProfilyModifyPassViewState();
+}
+
+class _ProfilyModifyPassViewState extends State<ProfilyModifyPassView> {
   final controllers = {
     'previous': TextEditingController(),
     'pass': TextEditingController(),
@@ -15,6 +23,8 @@ class ProfilyModifyPassView extends StatelessWidget {
   };
 
   final _formKey = GlobalKey<FormState>();
+
+  String? previousPassValidation;
 
   @override
   Widget build(BuildContext context) {
@@ -82,8 +92,9 @@ class ProfilyModifyPassView extends StatelessWidget {
               controller: controllers['previous']!,
               validator: (value) => value!.isEmpty
                 ? 'Debe ingresar su contraseña anterior'
-                : null,
+                : previousPassValidation,
               isPassword: true,
+              onChanged: (value) => previousPassValidation = null,
             ),
             NormalInput(
               header: 'Nueva contraseña', 
@@ -110,7 +121,8 @@ class ProfilyModifyPassView extends StatelessWidget {
                   return 'Las contraseñas no coinciden';
                 
                 return null;
-              }
+              },
+              isPassword: true,
             ),
             Container(
               margin: EdgeInsets.symmetric(
@@ -118,7 +130,7 @@ class ProfilyModifyPassView extends StatelessWidget {
               ),
               child: NormalButton(
                 text: 'Cambiar contraseña', 
-                onPressed: () => createAccount(context)
+                onPressed: () => changePassword(context)
               ),
             ),
           ],
@@ -127,21 +139,61 @@ class ProfilyModifyPassView extends StatelessWidget {
     );
   }
 
-  void createAccount(BuildContext context){
+  void changePassword(BuildContext context) async {
     if(_formKey.currentState!.validate()){
-      // TODO: Create account
+      final profileBloc = BlocProvider.of<ProfileBloc>(context);
 
-      Navigator.popUntil(context, ModalRoute.withName('/'));
-      ScaffoldMessenger.of(context).showSnackBar(
-        SnackBar(
-          content: Text('Cuenta creada exitósamente'),
-          backgroundColor: EcoAppColors.MAIN_COLOR,
-        )
-      );
+      final loading = AwesomeDialog(
+        title: 'Verificando datos',
+        desc: 'Solo tomará un momento',
+        dialogType: DialogType.NO_HEADER, 
+        animType: AnimType.BOTTOMSLIDE,
+        context: context,
+        dismissOnTouchOutside: false,
+        dismissOnBackKeyPress: false,
+        padding: EdgeInsets.symmetric(horizontal: 20.0, vertical: 10.0)
+      )..show();
+
+      bool validData = await profileBloc.canLogin(profileBloc.currentProfile!.email, controllers['previous']!.text);
+      if(!validData){
+        setState(() {
+          previousPassValidation = 'La contraseña anterior no es correcta';
+        });
+        loading.dismiss();
+      }     
+
+      if(!_formKey.currentState!.validate()) return;
+      
+      print('NOW: CHANGE PASS');
+      bool result = await profileBloc.changePassword(controllers['pass']!.text);
+
+      loading.dismiss();
+      if(result){
+        AwesomeDialog(
+          title: 'Contraseña modificada',
+          desc: 'Recuerda usar tu nueva contraseña para iniciar sesión en la app',
+          dialogType: DialogType.SUCCES, 
+          animType: AnimType.BOTTOMSLIDE,
+          context: context,
+          btnOkText: 'Aceptar',
+          btnOkOnPress: () => Navigator.pop(context),
+          onDissmissCallback: (__) => Navigator.pop(context),
+          padding: EdgeInsets.symmetric(horizontal: 20.0, vertical: 10.0)
+        )..show();
+      }
+      else{
+        ScaffoldMessenger.of(context).removeCurrentSnackBar();
+        ScaffoldMessenger.of(context).showSnackBar(
+          SnackBar(
+            content: Text('Ha ocurrido un error intentando cambiar la contraseña'),
+            backgroundColor: EcoAppColors.MAIN_DARK_COLOR,
+          )
+        );
+      }
+      
     }
     
   }
-
 }
 
 

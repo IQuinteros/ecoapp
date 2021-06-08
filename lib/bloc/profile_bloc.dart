@@ -1,5 +1,6 @@
 import 'dart:async';
 
+import 'package:flutter/rendering.dart';
 import 'package:flutter_ecoapp/bloc/base_bloc.dart';
 import 'package:flutter_ecoapp/models/profile.dart';
 import 'package:flutter_ecoapp/providers/profile_api.dart';
@@ -68,17 +69,22 @@ class ProfileBloc extends BaseBloc<ProfileModel>{
       customName: 'login'
     );
 
-
     if(profile.length > 0){
       await profileLocalAPI.clear();
       await profileLocalAPI.insert(profile[0]);
-      _updateCurrentSession();
+      await _updateCurrentSession();
       return profile[0];
     }
     else{
       return null;
     }
   }
+
+  /// Can login?
+  Future<bool> canLogin(String email, String password) async => (await profileAPI.selectAll(
+    params: {'email': email, 'password': password},
+    customName: 'login'
+  )).length > 0;
 
   /// Logout profile
   Future<void> logout() async {
@@ -92,6 +98,17 @@ class ProfileBloc extends BaseBloc<ProfileModel>{
     List<ProfileModel> result = await profileAPI.selectAll(params: {'email': profile.email});
 
     return result.length > 0;
+  }
+
+  /// Change password
+  Future<bool> changePassword(String newPass) async {
+    if(currentProfile == null) return false;
+
+    return await (profileAPI.update(
+      item: currentProfile!, 
+      additionalParams: {'password': newPass},
+      customName: 'update_pass'
+    )) != null;
   }
 
   /// Register profile

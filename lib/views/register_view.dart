@@ -246,7 +246,6 @@ class _RegisterViewState extends State<RegisterView> {
         setState(() {
           emailValidation = 'Ya existe un usuario con ese email';
         });
-        print('FOUND');
       }
 
       loading.dismiss();
