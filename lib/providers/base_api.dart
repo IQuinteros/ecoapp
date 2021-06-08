@@ -31,10 +31,19 @@ abstract class BaseAPI<T extends BaseModel>{
       },
     );
     print('querying ${resp.body}');
-    final decodedData = json.decode(resp.body);
+    try{
+      final decodedData = json.decode(resp.body);
+      print('decoded: $decodedData');
+      return decodedData;
+    }
+    catch(e, stacktrace){
+      print(e);
+      print(stacktrace);
+      return {'success': false};
+    }
 
-    print('decoded: $decodedData');
-    return decodedData;
+    
+    
   }
 
   // Request

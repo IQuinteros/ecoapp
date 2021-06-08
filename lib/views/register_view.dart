@@ -1,8 +1,10 @@
+import 'package:awesome_dialog/awesome_dialog.dart';
 import 'package:flutter/cupertino.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter_bloc/flutter_bloc.dart';
 import 'package:flutter_ecoapp/bloc/profile_bloc.dart';
 import 'package:flutter_ecoapp/models/profile.dart';
+import 'package:flutter_ecoapp/utils/email_util.dart';
 import 'package:flutter_ecoapp/views/register_pass_view.dart';
 import 'package:flutter_ecoapp/views/style/colors.dart';
 import 'package:flutter_ecoapp/views/widgets/bottom_nav_bar.dart';
@@ -10,7 +12,14 @@ import 'package:flutter_ecoapp/views/widgets/normal_button.dart';
 import 'package:flutter_ecoapp/views/widgets/normal_input.dart';
 import 'package:google_fonts/google_fonts.dart';
 
-class RegisterView extends StatelessWidget {
+class RegisterView extends StatefulWidget {
+
+  @override
+  _RegisterViewState createState() => _RegisterViewState();
+}
+
+class _RegisterViewState extends State<RegisterView> {
+  String? emailValidation;
 
   final controllers = {
     'name': TextEditingController(),
@@ -120,7 +129,15 @@ class RegisterView extends StatelessWidget {
               icon: Icons.mail,
               type: TextInputType.emailAddress,
               controller: controllers['email']!,
-              validator: (value) => value!.isEmpty? 'Debe ingresar su email' : null
+              validator: (value) {
+                if(value!.isEmpty) 
+                  return 'Debe ingresar su email';
+                if(!EmailUtil.validateEmail(value))
+                  return 'Debe ser un email válido';
+                
+                return emailValidation;
+              },
+              onChanged: (value) => emailValidation = null,
             ),
             NormalInput(
               header: 'Rut', 
@@ -194,8 +211,11 @@ class RegisterView extends StatelessWidget {
     );
   }
 
-  void createAccount(BuildContext context){
+  void createAccount(BuildContext context) async {
     if(_formKey.currentState!.validate()){
+    
+      final profileBloc = BlocProvider.of<ProfileBloc>(context);
+
       final newProfile = ProfileModel(
         id: 0,
         name: controllers['name']!.text,
@@ -211,12 +231,33 @@ class RegisterView extends StatelessWidget {
         termsChecked: true
       );
 
+      final loading = AwesomeDialog(
+        title: 'Verificando datos',
+        desc: 'Solo tomará un momento',
+        dialogType: DialogType.NO_HEADER, 
+        animType: AnimType.BOTTOMSLIDE,
+        context: context,
+        dismissOnTouchOutside: false,
+        dismissOnBackKeyPress: false,
+        padding: EdgeInsets.symmetric(horizontal: 20.0, vertical: 10.0)
+      )..show();
+
+      if(await profileBloc.exists(newProfile)){
+        setState(() {
+          emailValidation = 'Ya existe un usuario con ese email';
+        });
+        print('FOUND');
+      }
+
+      loading.dismiss();
+
+      if(!_formKey.currentState!.validate()) return;
+
       Navigator.push(context, MaterialPageRoute(builder: (BuildContext context) => RegisterPassView(
         tempProfile: newProfile,
       )));
     }
   }
-
 }
 
 

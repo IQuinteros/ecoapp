@@ -65,6 +65,7 @@ class LoginView extends StatelessWidget {
               hint: 'Ingresa tu email', 
               icon: Icons.mail,
               controller: controllers['email'],
+              type: TextInputType.emailAddress,
               validator: (value) => value!.isEmpty
                 ? 'Debe ingresar su email'
                 : null

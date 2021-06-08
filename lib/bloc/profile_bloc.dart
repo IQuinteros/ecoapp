@@ -22,7 +22,7 @@ class ProfileBloc extends BaseBloc<ProfileModel>{
     _updateCurrentSessionFromRemote();
   }
 
-  // Session streams  
+  /// Session streams  
   var _sessionStreamController = StreamController<ProfileModel?>.broadcast();
 
   ProfileModel? currentProfile;
@@ -33,14 +33,14 @@ class ProfileBloc extends BaseBloc<ProfileModel>{
     _sessionStreamController.close();
   }
 
-  // Only get current session
+  /// Only get current session
   Future<ProfileModel?> _getCurrentSession() async { 
     List<ProfileModel> profiles = await profileLocalAPI.select();
     if(profiles.length > 0) return profiles[0];
     return null;
   }
 
-  // Update current session
+  /// Update current session
   Future<void> _updateCurrentSession() async {
     final profile = await _getCurrentSession();
     _sessionSink(profile);
@@ -48,7 +48,7 @@ class ProfileBloc extends BaseBloc<ProfileModel>{
     //_sessionStreamController.close();
   }
 
-  // Update current session with remote data
+  /// Update current session with remote data
   Future<void> _updateCurrentSessionFromRemote() async {
     if(currentProfile == null) return;
 
@@ -61,7 +61,7 @@ class ProfileBloc extends BaseBloc<ProfileModel>{
     }
   }
   
-  // Login profile
+  /// Login profile
   Future<ProfileModel?> login(String email, String password) async {
     List<ProfileModel> profile = await profileAPI.selectAll(
       params: {'email': email, 'password': password},
@@ -80,14 +80,21 @@ class ProfileBloc extends BaseBloc<ProfileModel>{
     }
   }
 
-  // Logout profile
+  /// Logout profile
   Future<void> logout() async {
     await profileLocalAPI.clear();
     //_sessionStreamController = StreamController<ProfileModel?>.broadcast();
     await _updateCurrentSession();
   }
 
-  // Register profile
+  /// Check email profile exists
+  Future<bool> exists(ProfileModel profile) async{
+    List<ProfileModel> result = await profileAPI.selectAll(params: {'email': profile.email});
+
+    return result.length > 0;
+  }
+
+  /// Register profile
   Future<bool> signup(ProfileModel profile, String newPassword) async {
     ProfileModel? result = await profileAPI.insert(
       item: profile,
@@ -104,7 +111,7 @@ class ProfileBloc extends BaseBloc<ProfileModel>{
 
   }
 
-  // Update profile
+  /// Update profile
   Future<bool> updateProfile(ProfileModel profile) async {
     ProfileModel? result = await profileAPI.update(item: profile);
 

@@ -9,6 +9,7 @@ class NormalInput extends StatelessWidget {
     required this.icon, 
     this.readOnly = false, 
     this.onTap, 
+    this.onChanged,
     this.type = TextInputType.text, 
     this.controller, 
     this.validator, 
@@ -20,6 +21,7 @@ class NormalInput extends StatelessWidget {
   final IconData icon;
   final bool readOnly;
   final Function()? onTap;
+  final Function(String)? onChanged;
   final TextInputType type;
   final bool isPassword;
   final TextEditingController? controller;
@@ -51,7 +53,8 @@ class NormalInput extends StatelessWidget {
           labelText: header,
           prefixIcon: Icon(icon)
         ),
-        onTap: onTap
+        onTap: onTap,
+        onChanged: onChanged,
       ),
     );
   }
