@@ -35,27 +35,40 @@ class _FavoriteButtonState extends State<FavoriteButton> {
   @override
   Widget build(BuildContext context) {
     final profileBloc = BlocProvider.of<ProfileBloc>(context); 
-    
-    ProfileModel? profile = profileBloc.currentProfile;
-    if(profile == null) isFavorite = false;
 
-    return ShakeAnimatedWidget(
-      duration: Duration(seconds: 1),
-      enabled: isShake,
-      shakeAngle: Rotation.deg(z: 30),
-      curve: Curves.ease,
-      child: ScaleAnimatedWidget.tween(
-        enabled: this.isScaling,
-        duration: Duration(milliseconds: 200),
-        curve: Curves.ease,
-        scaleDisabled: 1,
-        scaleEnabled: 1.5,
-        child: IconButton(
-          icon: Icon(isFavorite? Icons.favorite : Icons.favorite_outline), 
-          color: isFavorite? widget.enabledColor : widget.disabledColor,
-          onPressed: () => profile != null? toggleFavorite() : displayProfileMessage(context)
-        ),
-      ),
+    return StreamBuilder(
+      initialData: profileBloc.currentProfile,
+      stream: profileBloc.sessionStream,
+      builder: (BuildContext context, AsyncSnapshot<ProfileModel?> snapshot){
+        switch(snapshot.connectionState){
+          case ConnectionState.done:
+          case ConnectionState.active:
+          case ConnectionState.waiting:
+            ProfileModel? profile = snapshot.data;
+            if(profile == null) isFavorite = false;
+
+            return ShakeAnimatedWidget(
+              duration: Duration(seconds: 1),
+              enabled: isShake,
+              shakeAngle: Rotation.deg(z: 30),
+              curve: Curves.ease,
+              child: ScaleAnimatedWidget.tween(
+                enabled: this.isScaling,
+                duration: Duration(milliseconds: 200),
+                curve: Curves.ease,
+                scaleDisabled: 1,
+                scaleEnabled: 1.5,
+                child: IconButton(
+                  icon: Icon(isFavorite? Icons.favorite : Icons.favorite_outline), 
+                  color: isFavorite? widget.enabledColor : widget.disabledColor,
+                  onPressed: () => profile != null? toggleFavorite() : displayProfileMessage(context)
+                ),
+              ),
+            );
+          default: return Container();
+        }
+        
+      }
     );
   }
 
