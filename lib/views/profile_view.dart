@@ -1,4 +1,7 @@
 import 'package:flutter/material.dart';
+import 'package:flutter_bloc/flutter_bloc.dart';
+import 'package:flutter_ecoapp/bloc/profile_bloc.dart';
+import 'package:flutter_ecoapp/models/profile.dart';
 import 'package:flutter_ecoapp/views/chats_view.dart';
 
 import 'package:flutter_ecoapp/views/style/colors.dart';
@@ -44,6 +47,9 @@ class _MainContent extends StatelessWidget {
 
   @override
   Widget build(BuildContext context) {
+
+    final profileBloc = BlocProvider.of<ProfileBloc>(context);
+
     return Container(
       margin: EdgeInsets.symmetric(
         horizontal: 5
@@ -62,7 +68,19 @@ class _MainContent extends StatelessWidget {
       child: Column(
         children: [
           ProfileCoverSection(),
-          ProfileButtonsSection()
+          StreamBuilder(
+            initialData: profileBloc.currentProfile,
+            stream: profileBloc.sessionStream,
+            builder: (BuildContext context, AsyncSnapshot<ProfileModel?> snapshot){
+              switch(snapshot.connectionState){
+                case ConnectionState.done:
+                case ConnectionState.active:
+                case ConnectionState.waiting:
+                  return ProfileButtonsSection(profile: snapshot.data);
+                default: return Center(child: CircularProgressIndicator());
+              }
+            }
+          )
         ],
       ),
     );

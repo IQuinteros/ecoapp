@@ -5,7 +5,6 @@ import 'package:flutter_ecoapp/bloc/profile_bloc.dart';
 import 'package:flutter_ecoapp/models/profile.dart';
 import 'package:flutter_ecoapp/views/profile_modify_pass_view.dart';
 import 'package:flutter_ecoapp/views/style/colors.dart';
-import 'package:flutter_ecoapp/views/widgets/bottom_nav_bar.dart';
 import 'package:flutter_ecoapp/views/widgets/normal_button.dart';
 import 'package:flutter_ecoapp/views/widgets/normal_input.dart';
 import 'package:google_fonts/google_fonts.dart';
@@ -27,10 +26,6 @@ class ProfileModifyView extends StatelessWidget {
   @override
   Widget build(BuildContext context) {
     final profileBloc = BlocProvider.of<ProfileBloc>(context);
-
-    final loading = Center(
-      child: CircularProgressIndicator(),
-    );
 
     return Scaffold(
       appBar: AppBar(
@@ -60,37 +55,13 @@ class ProfileModifyView extends StatelessWidget {
           )
         ],
       ),
-      body: SafeArea(
-        child: Form(
-          key: _formKey,
-          child: FutureBuilder(
-            future: profileBloc.getProfiles,
-            builder: (__, AsyncSnapshot<List<ProfileModel>> snapshot){
-              print('STATE: ${snapshot.connectionState.toString()}');
-              switch(snapshot.connectionState){
-                case ConnectionState.done:
-                  print(snapshot.data);
-
-                  if(snapshot.data == null){
-                    print('Snapshot data null');
-                    return loading;
-                  }
-
-                  return _ProfileModifyMainContent(
-                    controllers: controllers,
-                    profile: snapshot.data![0],
-                  ); 
-                default: return loading;
-              }
-            }
-          )
-        ),
+      body: Form(
+        key: _formKey,
+        child: _ProfileModifyMainContent(
+          controllers: controllers,
+          profile: profileBloc.currentProfile!
+        )
       ),
-      bottomNavigationBar: EcoBottomNavigationBar(
-        currentIndex: 0,
-        onTap: (value){
-        },
-      )
     );
   }
 
@@ -109,156 +80,158 @@ class _ProfileModifyMainContent extends StatelessWidget {
   @override
   Widget build(BuildContext context) {
     final content = SingleChildScrollView(
-      child: Container(
-        margin: EdgeInsets.symmetric(
-          horizontal: 20.0,
-          vertical: 20.0
-        ),
-        child: Column(
-          children: [
-            Row(
-              mainAxisSize: MainAxisSize.max,
-              children: [
-                Expanded(
-                  child: Text(
-                    'Cambia los datos de tu cuenta',
-                    style: GoogleFonts.montserrat(),
-                    textAlign: TextAlign.start,
-                  ),
-                ),
-              ],
-            ),
-            SizedBox(height: 20.0,),
-            NormalInput(
-              header: 'Nombres', 
-              hint: 'Ingresa tus nombres', 
-              icon: Icons.person,
-              controller: controllers['name']!,
-              validator: (value) => value!.isEmpty? 'Debe ingresar su nombre' : null,
-            ),
-            NormalInput(
-              header: 'Apellidos', 
-              hint: 'Ingresa tus apellidos', 
-              icon: Icons.person,
-              controller: controllers['lastName']!,
-              validator: (value) => value!.isEmpty? 'Debe ingresar sus apellidos' : null
-            ),
-            NormalInput(
-              header: 'Email', 
-              hint: 'Ingresa tu email', 
-              icon: Icons.mail,
-              type: TextInputType.emailAddress,
-              controller: controllers['email']!,
-              validator: (value) => value!.isEmpty? 'Debe ingresar su email' : null
-            ),
-            NormalInput(
-              header: 'Teléfono - Celular', 
-              hint: 'Ingresa tu número de contacto', 
-              icon: Icons.phone,
-              type: TextInputType.phone,
-              controller: controllers['phone']!,
-              validator: (value) => value!.isEmpty? 'Debe ingresar su número de contacto' : null
-            ),
-            NormalInput(
-              header: 'Fecha de nacimiento', 
-              hint: 'Ingresa tu fecha de nacimiento', 
-              icon: Icons.date_range,
-              readOnly: true,
-              onTap: () {
-                Future<DateTime?> response = showDatePicker(
-                  context: context, 
-                  initialDate: DateTime.now(), 
-                  firstDate: DateTime(1900), 
-                  lastDate: DateTime.now(),
-                  initialDatePickerMode: DatePickerMode.year,
-                );
-                response.then((value){
-                  if(value == null)
-                    return;
-                  controllers['date']!.text = '${value.day}/${value.month}/${value.year}';
-                });
-              },
-              controller: controllers['date']!,
-              validator: (value) => value!.isEmpty? 'Debe ingresar su fecha de nacimiento' : null
-            ),
-            Row(
-              mainAxisSize: MainAxisSize.max,
-              children: [
-                Expanded(
-                  child: Container(
+      child: SafeArea(
+        child: Container(
+          margin: EdgeInsets.symmetric(
+            horizontal: 20.0,
+            vertical: 20.0
+          ),
+          child: Column(
+            children: [
+              Row(
+                mainAxisSize: MainAxisSize.max,
+                children: [
+                  Expanded(
                     child: Text(
-                      'Para compras',
-                      style: GoogleFonts.montserrat(
-                        fontWeight: FontWeight.w500,
-                        fontSize: 18
-                      ),
+                      'Cambia los datos de tu cuenta',
+                      style: GoogleFonts.montserrat(),
                       textAlign: TextAlign.start,
                     ),
                   ),
-                ),
-              ],
-            ),
-            SizedBox(height: 20.0,),
-            NormalInput(
-              header: 'Comuna', 
-              hint: 'Ingresa tu comuna', 
-              icon: Icons.location_on,
-              readOnly: false, // TODO: Change to true
-              onTap: (){
-                
-              },
-              controller: controllers['district']!,
-              validator: (value) => value!.isEmpty? 'Debe ingresar su comuna' : null
-            ),
-            NormalInput(
-              header: 'Dirección', 
-              hint: 'Ingresa tu dirección', 
-              icon: Icons.location_on,
-              controller: controllers['location']!,
-              validator: (value) => value!.isEmpty? 'Debe ingresar su dirección' : null
-            ),
-            Container(
-              margin: EdgeInsets.symmetric(
-                horizontal: 40.0
+                ],
               ),
-              child: NormalButton(
-                text: 'Guardar cambios', 
-                onPressed: () {} // TODO: Save data
+              SizedBox(height: 20.0,),
+              NormalInput(
+                header: 'Nombres', 
+                hint: 'Ingresa tus nombres', 
+                icon: Icons.person,
+                controller: controllers['name']!,
+                validator: (value) => value!.isEmpty? 'Debe ingresar su nombre' : null,
               ),
-            ),
-            SizedBox(height: 20.0,),
-            Divider(thickness: 1,),
-            SizedBox(height: 20.0,),
-            Container(
-              margin: EdgeInsets.symmetric(
-                horizontal: 40.0
+              NormalInput(
+                header: 'Apellidos', 
+                hint: 'Ingresa tus apellidos', 
+                icon: Icons.person,
+                controller: controllers['lastName']!,
+                validator: (value) => value!.isEmpty? 'Debe ingresar sus apellidos' : null
               ),
-              child: NormalButton(
-                text: 'Cambiar contraseña', 
-                onPressed: () => Navigator.push(context, MaterialPageRoute(builder: (__) => ProfilyModifyPassView()))
+              NormalInput(
+                header: 'Email', 
+                hint: 'Ingresa tu email', 
+                icon: Icons.mail,
+                type: TextInputType.emailAddress,
+                controller: controllers['email']!,
+                validator: (value) => value!.isEmpty? 'Debe ingresar su email' : null
               ),
-            ),
-            SizedBox(height: 20.0,),
-            Divider(thickness: 1,),
-            Container(
-              margin: EdgeInsets.symmetric(
-                horizontal: 40.0
+              NormalInput(
+                header: 'Teléfono - Celular', 
+                hint: 'Ingresa tu número de contacto', 
+                icon: Icons.phone,
+                type: TextInputType.phone,
+                controller: controllers['phone']!,
+                validator: (value) => value!.isEmpty? 'Debe ingresar su número de contacto' : null
               ),
-              child: NormalButton(
-                text: 'Cerrar sesión', 
-                color: EcoAppColors.LEFT_BAR_COLOR,
-                onPressed: () {
-                  showDialog(
+              NormalInput(
+                header: 'Fecha de nacimiento', 
+                hint: 'Ingresa tu fecha de nacimiento', 
+                icon: Icons.date_range,
+                readOnly: true,
+                onTap: () {
+                  Future<DateTime?> response = showDatePicker(
                     context: context, 
-                    builder: (__){
-                      return _CloseSessionDialog();
-                    }
-                    
+                    initialDate: DateTime.now(), 
+                    firstDate: DateTime(1900), 
+                    lastDate: DateTime.now(),
+                    initialDatePickerMode: DatePickerMode.year,
                   );
-                }
+                  response.then((value){
+                    if(value == null)
+                      return;
+                    controllers['date']!.text = '${value.day}/${value.month}/${value.year}';
+                  });
+                },
+                controller: controllers['date']!,
+                validator: (value) => value!.isEmpty? 'Debe ingresar su fecha de nacimiento' : null
               ),
-            ),
-          ],
+              Row(
+                mainAxisSize: MainAxisSize.max,
+                children: [
+                  Expanded(
+                    child: Container(
+                      child: Text(
+                        'Para compras',
+                        style: GoogleFonts.montserrat(
+                          fontWeight: FontWeight.w500,
+                          fontSize: 18
+                        ),
+                        textAlign: TextAlign.start,
+                      ),
+                    ),
+                  ),
+                ],
+              ),
+              SizedBox(height: 20.0,),
+              NormalInput(
+                header: 'Comuna', 
+                hint: 'Ingresa tu comuna', 
+                icon: Icons.location_on,
+                readOnly: false, // TODO: Change to true
+                onTap: (){
+                  
+                },
+                controller: controllers['district']!,
+                validator: (value) => value!.isEmpty? 'Debe ingresar su comuna' : null
+              ),
+              NormalInput(
+                header: 'Dirección', 
+                hint: 'Ingresa tu dirección', 
+                icon: Icons.location_on,
+                controller: controllers['location']!,
+                validator: (value) => value!.isEmpty? 'Debe ingresar su dirección' : null
+              ),
+              Container(
+                margin: EdgeInsets.symmetric(
+                  horizontal: 40.0
+                ),
+                child: NormalButton(
+                  text: 'Guardar cambios', 
+                  onPressed: () {} // TODO: Save data
+                ),
+              ),
+              SizedBox(height: 20.0,),
+              Divider(thickness: 1,),
+              SizedBox(height: 20.0,),
+              Container(
+                margin: EdgeInsets.symmetric(
+                  horizontal: 40.0
+                ),
+                child: NormalButton(
+                  text: 'Cambiar contraseña', 
+                  onPressed: () => Navigator.push(context, MaterialPageRoute(builder: (__) => ProfilyModifyPassView()))
+                ),
+              ),
+              SizedBox(height: 20.0,),
+              Divider(thickness: 1,),
+              Container(
+                margin: EdgeInsets.symmetric(
+                  horizontal: 40.0
+                ),
+                child: NormalButton(
+                  text: 'Cerrar sesión', 
+                  color: EcoAppColors.LEFT_BAR_COLOR,
+                  onPressed: () {
+                    showDialog(
+                      context: context, 
+                      builder: (__){
+                        return _CloseSessionDialog();
+                      }
+                      
+                    );
+                  }
+                ),
+              ),
+            ],
+          ),
         ),
       ),
     );

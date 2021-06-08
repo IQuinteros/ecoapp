@@ -20,9 +20,12 @@ abstract class BaseAPI<T extends BaseModel>{
   String _getRequestUrl(String normalName, String? customName) => customName != null? '${baseUrl}_$customName.php' : '${baseUrl}_$normalName.php'; 
 
   // Process Response
-  Future<Map<String, dynamic>> _processResponse(Uri uri) async{
-    print('processing');
-    final resp = await http.get(uri);
+  Future<Map<String, dynamic>> _processResponse(Uri uri, Map<String, dynamic>? params) async{
+    print('processing ${jsonEncode(params)}');
+    final resp = await http.post(
+      uri,
+      body: params,
+    );
     print('querying $resp');
     final decodedData = json.decode(resp.body);
 
@@ -33,8 +36,8 @@ abstract class BaseAPI<T extends BaseModel>{
   // Request
   Future<RequestResult> request(String subUrl, [Map<String, dynamic>? queryParams]) async{
     // HTTP for localhost, HTTPS for hosting
-    final url = Uri.http(_authority, '$_requests/$baseUrl' + '/$subUrl', queryParams);
-    final result = await _processResponse(url);
+    final url = Uri.http(_authority, '$_requests/$baseUrl' + '/$subUrl');
+    final result = await _processResponse(url, queryParams);
     return RequestResult(result['success'], result['data']);
   }
 
