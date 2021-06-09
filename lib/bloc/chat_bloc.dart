@@ -28,7 +28,7 @@ class ChatBloc extends BaseBloc<ChatModel>{
 
   Future<List<MessageModel>> getMessagesFromChat(ChatModel chat) async => await messageAPI.selectAll(
     params: {
-      'chat': chat.id
+      'chat': chat
     }
   );
 

@@ -9,6 +9,8 @@ class ChatModel extends BaseModel
 {
   late bool closed;
   late DateTime createdDate;
+  late int profileId;
+  late int storeId;
 
   List<MessageModel> _messages = [];
   List<MessageModel> get messages { // TODO: Connect to api - DEBUG
@@ -268,14 +270,18 @@ class ChatModel extends BaseModel
 
   ChatModel.fromJsonMap(Map<String, dynamic> json) : super(id: json['id']){
     closed           = json['closed'];
-    createdDate      = json['createdDate'];
+    createdDate      = json['created_date'];
+    profileId        = json['profile_id'];
+    storeId          = json['store_id'];
   }
 
   @override
   Map<String, dynamic> toJson() => {
     'id'          : id,
     'closed'      : closed,
-    'createdDate' : createdDate
+    'created_date': createdDate,
+    'profile_id'  : profileId,
+    'store_id'    : storeId
   };
 
 
