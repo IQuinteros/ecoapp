@@ -4,6 +4,7 @@ import 'package:flutter/widgets.dart';
 import 'package:flutter_bloc/flutter_bloc.dart';
 import 'package:flutter_ecoapp/bloc/district_bloc.dart';
 import 'package:flutter_ecoapp/bloc/profile_bloc.dart';
+import 'package:flutter_ecoapp/bloc/user_bloc.dart';
 import 'package:flutter_ecoapp/models/profile.dart';
 import 'package:flutter_ecoapp/providers/sqlite/profile_local_api.dart';
 import 'package:flutter_ecoapp/views/categories_view.dart';
@@ -30,6 +31,9 @@ class MyApp extends StatelessWidget {
         ),
         BlocProvider<DistrictBloc>(
           create: (BuildContext context) => DistrictBloc(),
+        ),
+        BlocProvider<UserBloc>(
+          create: (BuildContext context) => UserBloc(),
         ),
       ],
       child: MaterialApp(

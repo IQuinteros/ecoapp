@@ -8,7 +8,7 @@ class UserBloc extends BaseBloc<UserModel>{
   final userAPI = UserAPI();
   final userLocalAPI = UserLocalAPI();
 
-  UserBloc(initialState) : super(initialState);
+  UserBloc() : super(0);
 
   Future<void> initUser() async {
     final users = await userLocalAPI.select();
