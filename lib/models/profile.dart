@@ -15,6 +15,7 @@ class ProfileModel extends BaseModel
   late DateTime lastUpdateDate;
   late int rut;
   late String rutDv;
+  late int districtID;
   
   DistrictModel get district => DistrictModel(id: 1, name: 'Concepción');
   UserModel get user => UserModel(id: 1, createdDate: DateTime.now());
@@ -33,7 +34,7 @@ class ProfileModel extends BaseModel
     required this.createdDate,
     required this.lastUpdateDate,
     required this.rut,
-    required this.rutDv,
+    required this.rutDv
   }) : super(id: id);
 
   ProfileModel.fromJsonMap(Map<String, dynamic> json) : super(id: json['id']){
@@ -48,6 +49,7 @@ class ProfileModel extends BaseModel
     lastUpdateDate  = DateTime.parse(json['last_update_date']);
     rut             = json['rut'];
     rutDv           = json['rut_cd'];
+    districtID      = json['district_id'];
   }
 
   @override
@@ -65,7 +67,7 @@ class ProfileModel extends BaseModel
     'rut_cd'           : this.rutDv,
     'creation_date'     : this.createdDate.toString(),
     'last_update_date'  : this.lastUpdateDate.toString(),
-    'user'              : this.user.id
+    'user'              : this.user.id,
   };
 
   @override

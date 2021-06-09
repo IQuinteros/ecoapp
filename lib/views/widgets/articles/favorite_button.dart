@@ -13,10 +13,14 @@ class FavoriteButton extends StatefulWidget {
   final bool favorite;
   final Color enabledColor;
   final Color disabledColor;
+  final Function(bool)? onChanged;
+  final bool Function()? canChangeState;
 
   const FavoriteButton({
     Key? key, 
     this.favorite = true, 
+    this.onChanged,
+    this.canChangeState,
     this.disabledColor = Colors.black54,
     this.enabledColor = EcoAppColors.RED_COLOR
   }) : super(key: key);
@@ -98,8 +102,18 @@ class _FavoriteButtonState extends State<FavoriteButton> {
   }
 
   void toggleFavorite() {
+    if(widget.canChangeState != null){
+      if(!widget.canChangeState!()){
+        initShake();
+        return;
+      }
+    }
     initScale();
-    setState(() => isFavorite = !isFavorite);
+    setState(() {
+      isFavorite = !isFavorite;
+      if(widget.onChanged != null)
+        widget.onChanged!(isFavorite);
+    });
   }
 
   void displayProfileMessage(BuildContext context){

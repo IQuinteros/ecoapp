@@ -78,7 +78,22 @@ class _ArticleCardState extends State<ArticleCard> {
             maxLines: 3,
           ),
         ),
-        FavoriteButton(favorite: widget.favorite)
+        FavoriteButton(
+          favorite: widget.favorite,
+          canChangeState: () {
+            if(widget.article == null){
+              ScaffoldMessenger.of(context).removeCurrentSnackBar();
+              ScaffoldMessenger.of(context).showSnackBar(SnackBar(
+                content: Text('El artículo no está disponible'),
+                backgroundColor: EcoAppColors.MAIN_DARK_COLOR,
+              ));
+              return false;
+            }
+            else{
+              return true;
+            }
+          },
+        )
       ],
     );
 

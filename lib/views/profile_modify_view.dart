@@ -5,6 +5,7 @@ import 'package:flutter/cupertino.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter_bloc/flutter_bloc.dart';
 import 'package:flutter_ecoapp/bloc/profile_bloc.dart';
+import 'package:flutter_ecoapp/models/district.dart';
 import 'package:flutter_ecoapp/models/profile.dart';
 import 'package:flutter_ecoapp/views/profile_modify_pass_view.dart';
 import 'package:flutter_ecoapp/views/style/colors.dart';
@@ -22,6 +23,10 @@ class ProfileModifyView extends StatelessWidget {
     'date': TextEditingController(),
     'district': TextEditingController(),
     'location': TextEditingController(),
+  };
+
+  final Map<String, DistrictModel?> district = {
+    'district': null
   };
 
   final _formKey = GlobalKey<FormState>();
@@ -54,7 +59,7 @@ class ProfileModifyView extends StatelessWidget {
             icon: Icon(Icons.done_rounded),
             color: EcoAppColors.MAIN_COLOR,
             iconSize: 35,
-            onPressed: (){} // TODO: Save action
+            onPressed: () => _updateProfile(context) // TODO: Save action
           )
         ],
       ),
@@ -62,10 +67,60 @@ class ProfileModifyView extends StatelessWidget {
         key: _formKey,
         child: _ProfileModifyMainContent(
           controllers: controllers,
-          profile: profileBloc.currentProfile!
+          profile: profileBloc.currentProfile!,
+          updateProfile: (BuildContext context) => _updateProfile(context),
         )
       ),
     );
+  }
+
+  void _updateProfile(BuildContext context) async {
+    if(!_formKey.currentState!.validate()) return;
+
+    final profileBloc = BlocProvider.of<ProfileBloc>(context);
+    final profile = profileBloc.currentProfile!;
+
+    profile.name = controllers['name']!.text;
+    profile.lastName = controllers['lastName']!.text;
+    profile.email = controllers['email']!.text;
+    profile.contactNumber = int.parse(controllers['phone']!.text);
+    profile.location = controllers['location']!.text;
+    DistrictModel districtModel = district['district']!;
+    profile.districtID = districtModel.id;
+
+    final loading = AwesomeDialog(
+      title: 'Actualizando datos',
+      desc: 'Tus datos serán actualizados en un momento',
+      dialogType: DialogType.NO_HEADER, 
+      animType: AnimType.BOTTOMSLIDE,
+      context: context,
+      dismissOnTouchOutside: false,
+      dismissOnBackKeyPress: false,
+      padding: EdgeInsets.symmetric(horizontal: 20.0, vertical: 10.0)
+    )..show();
+    
+    bool updated = await profileBloc.updateProfile(profile);
+
+    loading.dismiss();
+
+    if(updated){
+      AwesomeDialog(
+        title: 'Datos actualizados',
+        desc: 'Tu perfil ha sido actualizado con éxito',
+        dialogType: DialogType.SUCCES, 
+        animType: AnimType.BOTTOMSLIDE,
+        context: context,
+        btnOkText: 'Aceptar',
+        btnOkOnPress: () {},
+        padding: EdgeInsets.symmetric(horizontal: 20.0, vertical: 10.0)
+      )..show();
+    }
+    else{
+      ScaffoldMessenger.of(context).showSnackBar(SnackBar(
+        content: Text('Ha ocurrido un error al guardar los cambios'),
+        backgroundColor: EcoAppColors.LEFT_BAR_COLOR,
+      ));
+    }
   }
 
 }
@@ -75,12 +130,12 @@ class _ProfileModifyMainContent extends StatelessWidget {
     Key? key,
     required this.profile,
     required this.controllers,
+    required this.updateProfile
   }) : super(key: key);
 
   final Map<String, TextEditingController> controllers;
   final ProfileModel profile;
-
-  final _formKey = GlobalKey<FormState>();
+  final Function(BuildContext) updateProfile;
 
   @override
   Widget build(BuildContext context) {
@@ -181,10 +236,12 @@ class _ProfileModifyMainContent extends StatelessWidget {
                 header: 'Comuna', 
                 hint: 'Ingresa tu comuna', 
                 icon: Icons.location_on,
-                readOnly: false, // TODO: Change to true
-                onTap: (){
-                  
-                },
+                readOnly: true, // TODO: Change to true
+                onTap: () => selectDistrict(context,
+                  onSelect: (district) {
+                    controllers['district']!.text = district.name;
+                  },
+                ),
                 controller: controllers['district']!,
                 validator: (value) => value!.isEmpty? 'Debe ingresar su comuna' : null
               ),
@@ -201,7 +258,7 @@ class _ProfileModifyMainContent extends StatelessWidget {
                 ),
                 child: NormalButton(
                   text: 'Guardar cambios', 
-                  onPressed: () => _updateProfile(context) // TODO: Save data
+                  onPressed: () => updateProfile(context) // TODO: Save data
                 ),
               ),
               SizedBox(height: 20.0,),
@@ -231,7 +288,6 @@ class _ProfileModifyMainContent extends StatelessWidget {
                       builder: (__){
                         return _CloseSessionDialog();
                       }
-                      
                     );
                   }
                 ),
@@ -251,56 +307,47 @@ class _ProfileModifyMainContent extends StatelessWidget {
 
     controllers['location']!.text = profile.location;
 
-    return Form(key: _formKey, child: content);
+    return content;
   }
 
-  void _updateProfile(BuildContext context) async {
-    if(!_formKey.currentState!.validate()) return;
-    final profileBloc = BlocProvider.of<ProfileBloc>(context);
-
-    profile.name = controllers['name']!.text;
-    profile.lastName = controllers['lastName']!.text;
-    profile.email = controllers['email']!.text;
-    profile.contactNumber = int.parse(controllers['phone']!.text);
-    profile.location = controllers['location']!.text;
-
-    final loading = AwesomeDialog(
-      title: 'Actualizando datos',
-      desc: 'Tus datos serán actualizados en un momento',
-      dialogType: DialogType.NO_HEADER, 
-      animType: AnimType.BOTTOMSLIDE,
-      context: context,
-      dismissOnTouchOutside: false,
-      dismissOnBackKeyPress: false,
-      padding: EdgeInsets.symmetric(horizontal: 20.0, vertical: 10.0)
-    )..show();
-    
-    bool updated = await profileBloc.updateProfile(profile);
-
-    loading.dismiss();
-
-    if(updated){
-      AwesomeDialog(
-        title: 'Datos actualizados',
-        desc: 'Tu perfil ha sido actualizado con éxito',
-        dialogType: DialogType.SUCCES, 
-        animType: AnimType.BOTTOMSLIDE,
-        context: context,
-        btnOkText: 'Aceptar',
-        btnOkOnPress: () {},
-        padding: EdgeInsets.symmetric(horizontal: 20.0, vertical: 10.0)
-      )..show();
-    }
-    else{
-      ScaffoldMessenger.of(context).showSnackBar(SnackBar(
-        content: Text('Ha ocurrido un error al guardar los cambios'),
-        backgroundColor: EcoAppColors.LEFT_BAR_COLOR,
-      ));
-    }
+  void selectDistrict(BuildContext context, {Function(DistrictModel district)? onSelect}) async {
+    showDialog(
+      context: context, 
+      builder: (__){
+        return Dialog(
+          child: Container(
+            padding: EdgeInsets.symmetric(
+              horizontal: 10.0,
+              vertical: 20.0
+            ),
+            child: Column(
+              mainAxisSize: MainAxisSize.min,
+              children: [
+                Text(
+                  'Escoge una comuna',
+                  style: GoogleFonts.montserrat(),
+                  textAlign: TextAlign.center
+                ),
+                SizedBox(height: 10.0),
+                ListTile(
+                  title: Text(
+                    'Concepción',
+                    style: GoogleFonts.montserrat(),
+                  ),
+                  onTap: () {
+                    if(onSelect != null) onSelect(DistrictModel(id: 1, name: 'Concepción'));
+                    Navigator.pop(context);
+                  },
+                ),
+              ],
+            ),
+          ),
+        );
+      }
+    );
   }
 
 }
-
 class _CloseSessionDialog extends StatefulWidget {
   const _CloseSessionDialog({ Key? key }) : super(key: key);
 

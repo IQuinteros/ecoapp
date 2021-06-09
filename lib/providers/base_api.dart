@@ -41,9 +41,6 @@ abstract class BaseAPI<T extends BaseModel>{
       print(stacktrace);
       return {'success': false};
     }
-
-    
-    
   }
 
   // Request
