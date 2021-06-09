@@ -1,6 +1,9 @@
 import 'package:flutter_ecoapp/bloc/base_bloc.dart';
+import 'package:flutter_ecoapp/models/article.dart';
+import 'package:flutter_ecoapp/models/history.dart';
 import 'package:flutter_ecoapp/models/search.dart';
 import 'package:flutter_ecoapp/models/user.dart';
+import 'package:flutter_ecoapp/providers/history_api.dart';
 import 'package:flutter_ecoapp/providers/search_api.dart';
 import 'package:flutter_ecoapp/providers/sqlite/user_local_api.dart';
 import 'package:flutter_ecoapp/providers/user_api.dart';
@@ -57,6 +60,59 @@ class UserBloc extends BaseBloc<UserModel>{
         'user': user.id
       }
     );
+  }
+
+  final historyAPI = HistoryAPI();
+  final historyDetailAPI = HistoryDetailAPI();
+  
+  Future<List<HistoryModel>> getHistory({bool includeDeleted = false}) async {
+    UserModel? user = await getLinkedUser();
+    if(user == null) return [];
+
+    return await historyAPI.selectAll(params: {
+      'user': user.id,
+      'include_deleted': includeDeleted
+    });
+  }
+
+  Future<bool> addToHistory(ArticleModel article) async {
+    UserModel? user = await getLinkedUser();
+    if(user == null) return false;
+
+    List<HistoryModel> history = await historyAPI.selectAll(
+      params: {
+        'article': article.id,
+        'user': user.id
+      }
+    );
+
+    if(history.length > 0){
+      HistoryDetailModel newHistoryDetail = HistoryDetailModel(
+        id: 0, 
+        date: DateTime.now(),
+        history: history[0]
+      );
+      return (await historyDetailAPI.insert(
+        item: newHistoryDetail,
+      )) != null;
+    }
+    else{
+      HistoryModel newHistory = HistoryModel(
+        id: 0,
+        article: article,
+        deleted: false,
+        createdDate: DateTime.now()
+      );
+
+      return (await historyAPI.insert(
+        item: newHistory,
+        additionalParams: {
+          'user': user.id
+        }
+      )) != null;
+    }
+
+    
   }
 
   @override

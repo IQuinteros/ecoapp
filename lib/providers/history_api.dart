@@ -8,3 +8,11 @@ class HistoryAPI extends BaseAPI<HistoryModel>{
     constructor: (data) => HistoryModel.fromJsonMap(data)
   );
 }
+
+class HistoryDetailAPI extends BaseAPI<HistoryDetailModel>{
+  HistoryDetailAPI() : super(
+    baseUrl: 'history_detail',
+    getJsonParams: (item) => item.toJson(),
+    constructor: (data) => HistoryDetailModel.fromJsonMap(data)
+  );
+}
