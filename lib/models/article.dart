@@ -1,7 +1,6 @@
 
 import 'package:flutter_ecoapp/models/base.dart';
 import 'package:flutter_ecoapp/models/category.dart';
-import 'package:flutter_ecoapp/models/favorite.dart';
 import 'package:flutter_ecoapp/models/opinion.dart';
 import 'package:flutter_ecoapp/models/question.dart';
 import 'package:flutter_ecoapp/models/store.dart';
@@ -122,12 +121,12 @@ class EcoIndicator{
 
 class ArticleForm extends BaseModel
 {
-  String recycledMats;
-  String recycledMatsDetail;
-  String reuseTips;
-  String recycledProd;
-  String recycledProdDetail;
-  String generalDetail;
+  late String recycledMats;
+  late String recycledMatsDetail;
+  late String reuseTips;
+  late String recycledProd;
+  late String recycledProdDetail;
+  late String generalDetail;
   DateTime? createdDate;
   DateTime? lastUpdateDate;
 
@@ -157,6 +156,17 @@ class ArticleForm extends BaseModel
     this.recycledProdDetail = '',
     this.generalDetail = '',
   }): super(id: id);
+
+  ArticleForm.fromJsonMap(Map<String, dynamic> json) : super(id: json['id']){
+    recycledMats          = json['recycled_mats'];
+    recycledMatsDetail    = json['recycled_mats_detail'];
+    reuseTips             = json['reuse_tips'];
+    recycledProd          = json['recycled_prod'];
+    recycledProdDetail    = json['recycled_prod_detail'];
+    createdDate           = json['created_date'];
+    lastUpdateDate        = json['last_update_date'];
+    generalDetail         = json['general_detail'];
+  }
 
   EcoIndicator getIndicator(){
     bool hasRecycledMats = recycledMats.isNotEmpty;

@@ -9,3 +9,11 @@ class ArticleAPI extends BaseAPI<ArticleModel>{
     constructor: (data) => ArticleModel.fromJsonMap(data)
   );
 }
+
+class ArticleFormAPI extends BaseAPI<ArticleForm>{
+  ArticleFormAPI() : super(
+    baseUrl: 'article_form',
+    getJsonParams: (item) => item.toJson(),
+    constructor: (data) => ArticleForm.fromJsonMap(data)
+  );
+}
