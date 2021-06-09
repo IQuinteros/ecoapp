@@ -1,15 +1,9 @@
 import 'dart:async';
-
-import 'package:flutter/widgets.dart';
-import 'package:flutter_bloc/flutter_bloc.dart';
 import 'package:flutter_ecoapp/bloc/base_bloc.dart';
-import 'package:flutter_ecoapp/bloc/district_bloc.dart';
-import 'package:flutter_ecoapp/models/district.dart';
 import 'package:flutter_ecoapp/models/profile.dart';
 import 'package:flutter_ecoapp/providers/district_api.dart';
 import 'package:flutter_ecoapp/providers/profile_api.dart';
 import 'package:flutter_ecoapp/providers/sqlite/profile_local_api.dart';
-import 'package:path/path.dart';
 
 class ProfileBloc extends BaseBloc<ProfileModel>{
 
