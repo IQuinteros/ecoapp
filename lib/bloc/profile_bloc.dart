@@ -1,7 +1,10 @@
 import 'dart:async';
 import 'package:flutter_ecoapp/bloc/base_bloc.dart';
+import 'package:flutter_ecoapp/models/article.dart';
+import 'package:flutter_ecoapp/models/favorite.dart';
 import 'package:flutter_ecoapp/models/profile.dart';
 import 'package:flutter_ecoapp/providers/district_api.dart';
+import 'package:flutter_ecoapp/providers/favorite_api.dart';
 import 'package:flutter_ecoapp/providers/profile_api.dart';
 import 'package:flutter_ecoapp/providers/sqlite/profile_local_api.dart';
 
@@ -158,6 +161,45 @@ class ProfileBloc extends BaseBloc<ProfileModel>{
     return result != null;
   }
 
+  final favoriteAPI = FavoriteAPI();
+  Map<ArticleModel, Timer?> favoriteTimer = {};
+  /// Mark as favorite
+  void setFavoriteArticle(ArticleModel articleModel, bool newState, Function(bool) onReady) {
+    articleModel.favorite = newState;
+
+    if(favoriteTimer[articleModel] != null) favoriteTimer[articleModel]!.cancel();
+    favoriteTimer[articleModel] = Timer(Duration(seconds: 5), () => _setFavoriteArticle(articleModel, onReady));
+  }
+
+  Future<void> _setFavoriteArticle(ArticleModel articleModel, Function(bool) onReady) async {
+    if(currentProfile == null) {
+      onReady(false); 
+      return;
+    }
+
+    if(articleModel.favorite){
+      onReady((await favoriteAPI.insert(
+        item: FavoriteModel(
+          id: 0, 
+          article: articleModel, 
+          createdDate: DateTime.now()
+        )
+      )) != null);
+    }
+    else{
+      onReady(await favoriteAPI.delete(
+        item: FavoriteModel(
+          id: 0, 
+          article: articleModel, 
+          createdDate: DateTime.now()
+        ),
+        additionalParams: {
+          'user': currentProfile!.user.id
+        }
+      ));
+    }
+  }
+  
   @override
   Stream mapEventToState(event) {
     // TODO: implement mapEventToState

@@ -1,6 +1,7 @@
 
 import 'package:flutter_ecoapp/models/base.dart';
 import 'package:flutter_ecoapp/models/category.dart';
+import 'package:flutter_ecoapp/models/favorite.dart';
 import 'package:flutter_ecoapp/models/opinion.dart';
 import 'package:flutter_ecoapp/models/question.dart';
 import 'package:flutter_ecoapp/models/store.dart';
@@ -22,6 +23,8 @@ class ArticleModel extends BaseModel with TagModel
   StoreModel? store;
   late List<QuestionModel> questions;
   late ArticleRating rating;
+
+  bool favorite = false;
 
   String _tag = '';
   set tag(String newTag) => _tag = this.id.toString() + this.title + newTag;
@@ -62,6 +65,7 @@ class ArticleModel extends BaseModel with TagModel
     store           = json['store'];
     questions       = json['questions'];
     rating          = json['rating'];
+    favorite        = json['favorite_id'];
   }
 
   @override

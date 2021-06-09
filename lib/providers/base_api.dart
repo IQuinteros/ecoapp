@@ -100,7 +100,7 @@ abstract class BaseAPI<T extends BaseModel>{
   Future<T?> insert({required T item, String? customName, Map<String, dynamic> additionalParams = const {}}) async => (await request(_getRequestUrl('insert', customName), getJsonParams(item)..addAll(additionalParams))).success? item : null;
 
   // Delete method
-  Future<bool> delete({required T item, String? customName}) async => (await request(_getRequestUrl('delete', customName), getJsonParams(item))).success;
+  Future<bool> delete({required T item, String? customName, Map<String, dynamic> additionalParams = const {}}) async => (await request(_getRequestUrl('delete', customName), getJsonParams(item)..addAll(additionalParams))).success;
 
 }
 
