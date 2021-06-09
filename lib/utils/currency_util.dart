@@ -2,10 +2,10 @@ import 'package:intl/intl.dart';
 
 class CurrencyUtil{
 
-  static String formatToCurrencyString(int amount){
+  static String formatToCurrencyString(int amount, {String symbol = ''}){
 
     final numbers = NumberFormat();
-    return numbers.format(amount);
+    return symbol + numbers.format(amount);
 
   }
 

@@ -1,5 +1,9 @@
+import 'package:awesome_dialog/awesome_dialog.dart';
 import 'package:flutter/cupertino.dart';
 import 'package:flutter/material.dart';
+import 'package:flutter_bloc/flutter_bloc.dart';
+import 'package:flutter_ecoapp/bloc/profile_bloc.dart';
+import 'package:flutter_ecoapp/models/profile.dart';
 import 'package:flutter_ecoapp/views/style/colors.dart';
 import 'package:flutter_ecoapp/views/widgets/bottom_nav_bar.dart';
 import 'package:flutter_ecoapp/views/widgets/normal_button.dart';
@@ -14,6 +18,10 @@ class RegisterPassView extends StatelessWidget {
   };
 
   final _formKey = GlobalKey<FormState>();
+
+  final ProfileModel tempProfile;
+
+  RegisterPassView({Key? key, required this.tempProfile}) : super(key: key);
 
   @override
   Widget build(BuildContext context) {
@@ -99,7 +107,8 @@ class RegisterPassView extends StatelessWidget {
                   return 'Las contraseñas no coinciden';
                 
                 return null;
-              }
+              },
+              isPassword: true,
             ),
             Container(
               margin: EdgeInsets.symmetric(
@@ -116,17 +125,48 @@ class RegisterPassView extends StatelessWidget {
     );
   }
 
-  void createAccount(BuildContext context){
+  void createAccount(BuildContext context) async {
     if(_formKey.currentState!.validate()){
-      // TODO: Create account
 
-      Navigator.popUntil(context, ModalRoute.withName('/'));
-      ScaffoldMessenger.of(context).showSnackBar(
-        SnackBar(
-          content: Text('Cuenta creada exitósamente'),
-          backgroundColor: EcoAppColors.MAIN_COLOR,
-        )
-      );
+      final profileBloc = BlocProvider.of<ProfileBloc>(context);
+
+      final loading = AwesomeDialog(
+        title: 'Creando cuenta',
+        desc: 'Estás a nada de acceder a la experiencia completa de ECOmercio',
+        dialogType: DialogType.NO_HEADER, 
+        animType: AnimType.BOTTOMSLIDE,
+        context: context,
+        dismissOnTouchOutside: false,
+        dismissOnBackKeyPress: false,
+        padding: EdgeInsets.symmetric(horizontal: 20.0, vertical: 10.0)
+      )..show();
+
+      bool result = await profileBloc.signup(tempProfile, controllers['pass']!.text);
+
+      loading.dismiss();
+
+      if(result){
+        AwesomeDialog(
+          title: 'Cuenta creada exitósamente',
+          desc: 'Añade artículos a favoritos y disfruta de la mejor experiencia comprando artículos eco-amigables :)',
+          dialogType: DialogType.SUCCES, 
+          animType: AnimType.BOTTOMSLIDE,
+          context: context,
+          btnOkText: 'Aceptar',
+          btnOkOnPress: () => Navigator.popUntil(context, ModalRoute.withName('/')),
+          onDissmissCallback: (__) => Navigator.popUntil(context, ModalRoute.withName('/')),
+          padding: EdgeInsets.symmetric(horizontal: 20.0, vertical: 10.0)
+        )..show();
+      }
+      else{
+        ScaffoldMessenger.of(context).removeCurrentSnackBar();
+        ScaffoldMessenger.of(context).showSnackBar(
+          SnackBar(
+            content: Text('Ha ocurrido un error intentando crear la cuenta'),
+            backgroundColor: EcoAppColors.MAIN_DARK_COLOR,
+          )
+        );
+      }
     }
     
   }

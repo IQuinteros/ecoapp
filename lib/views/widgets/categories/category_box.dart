@@ -1,5 +1,6 @@
 import 'package:flutter/material.dart';
 import 'package:flutter_ecoapp/models/category.dart';
+import 'package:flutter_ecoapp/views/result_view.dart';
 import 'package:google_fonts/google_fonts.dart';
 
 import 'package:flutter_ecoapp/views/style/colors.dart';
@@ -15,7 +16,7 @@ class CategoryBox extends StatelessWidget {
     final icon = Icon(
       category.getIcon(),
       size: 50.0,
-      color: EcoAppColors.MAIN_COLOR,
+      color: EcoAppColors.MAIN_DARK_COLOR,
     );
 
     final card = Card(
@@ -58,7 +59,7 @@ class CategoryBox extends StatelessWidget {
         child: MaterialButton(
           child: card,
           padding: EdgeInsets.all(0),
-          onPressed: (){},
+          onPressed: () => Navigator.push(context, MaterialPageRoute(builder: (__) => ResultView(searching: category.toString(),))),
         ),
       ),
     );

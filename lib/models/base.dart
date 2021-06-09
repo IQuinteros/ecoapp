@@ -1,9 +1,15 @@
 import 'package:flutter/material.dart';
 
 abstract class BaseModel{
-  int id;
+  late int id;
 
   BaseModel({required this.id});
+
+  Map<String, dynamic> toJson();
+
+  Map<String, dynamic> toSqliteParams(){
+    return toJson();
+  }
 }
 
 abstract class TagModel{

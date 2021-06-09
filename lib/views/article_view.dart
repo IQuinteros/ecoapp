@@ -10,10 +10,10 @@ import 'package:flutter_ecoapp/views/widgets/articles/articleview/article_questi
 import 'package:flutter_ecoapp/views/widgets/articles/articleview/article_store_description_section.dart';
 import 'package:flutter_ecoapp/views/widgets/articles/articleview/full_eco_indicator.dart';
 import 'package:flutter_ecoapp/views/widgets/articles/favorite_button.dart';
-import 'package:flutter_ecoapp/views/widgets/bottom_nav_bar.dart';
 import 'package:flutter_ecoapp/views/widgets/normal_button.dart';
 import 'package:flutter_ecoapp/views/widgets/stars_row.dart';
 import 'package:google_fonts/google_fonts.dart';
+import 'package:share_plus/share_plus.dart';
 
 class ArticleView extends StatelessWidget {
 
@@ -25,11 +25,6 @@ class ArticleView extends StatelessWidget {
   Widget build(BuildContext context) {
     return Scaffold(
       body: getContent(context),
-      bottomNavigationBar: EcoBottomNavigationBar(
-        currentIndex: 0,
-          onTap: (value){
-        },
-      )
     );
   }
 
@@ -62,7 +57,7 @@ class _ArticleAppBar extends StatelessWidget {
   Widget build(BuildContext context) {
     return SliverAppBar(
       elevation: 10.0,
-      backgroundColor: EcoAppColors.MAIN_COLOR,
+      backgroundColor: EcoAppColors.MAIN_DARK_COLOR,
       foregroundColor: Colors.white,
       expandedHeight: 250.0,
       floating: false,
@@ -80,7 +75,9 @@ class _ArticleAppBar extends StatelessWidget {
             Icons.share,
             color: Colors.white,
           ),
-          onPressed: (){},
+          onPressed: (){
+            Share.share('¡Disponible en Ecomercio! ${article.title} a solo \$${CurrencyUtil.formatToCurrencyString(article.price.toInt())}');
+          },
         ),
         FavoriteButton(favorite: false, disabledColor: Colors.white,)
       ],
@@ -117,6 +114,43 @@ class _ArticleAppBar extends StatelessWidget {
     );
   }
 }
+
+class _ArticleMainContent extends StatelessWidget {
+  const _ArticleMainContent({
+    Key? key,
+    required this.article,
+  }) : super(key: key);
+
+  final ArticleModel article;
+
+  @override
+  Widget build(BuildContext context) {
+    return Container(
+      decoration: BoxDecoration(
+        //borderRadius: BorderRadius.circular(20.0),
+        color: Colors.white,
+        /* boxShadow: [
+          BoxShadow(
+            color: Colors.black.withOpacity(0.25),
+            blurRadius: 20.0
+          )
+        ] */
+      ),
+      margin: EdgeInsets.only(
+        left: 5.0,
+        right: 5.0
+      ),
+      padding: EdgeInsets.symmetric(
+        vertical: 20.0,
+      ),
+      child: SafeArea(
+        child: _ArticleContent(article: article,),
+        top: false,
+      ),
+    );
+  }
+}
+
 
 class _ArticleContent extends StatelessWidget {
   const _ArticleContent({
@@ -286,41 +320,3 @@ class _ArticleContent extends StatelessWidget {
   }
 }
 
-class _ArticleMainContent extends StatelessWidget {
-  const _ArticleMainContent({
-    Key? key,
-    required this.article,
-  }) : super(key: key);
-
-  final ArticleModel article;
-
-  @override
-  Widget build(BuildContext context) {
-    return SafeArea(
-      child: Container(
-        decoration: BoxDecoration(
-          borderRadius: BorderRadius.circular(20.0),
-          color: Colors.white,
-          boxShadow: [
-            BoxShadow(
-              color: Colors.black.withOpacity(0.25),
-              blurRadius: 20.0
-            )
-          ]
-        ),
-        margin: EdgeInsets.only(
-          top: 20.0,
-          left: 5.0,
-          right: 5.0
-        ),
-        padding: EdgeInsets.symmetric(
-          vertical: 20.0,
-        ),
-        child: SingleChildScrollView(
-          child: _ArticleContent(article: article,),
-          scrollDirection: Axis.vertical,
-        )
-      ),
-    );
-  }
-}

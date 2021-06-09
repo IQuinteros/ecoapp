@@ -1,18 +1,16 @@
-import 'package:flutter/material.dart';
 import 'package:flutter_ecoapp/models/article.dart';
 import 'package:flutter_ecoapp/models/base.dart';
-import 'package:flutter_ecoapp/models/category.dart';
-import 'package:flutter_ecoapp/models/opinion.dart';
+import 'package:flutter_ecoapp/models/chat.dart';
 import 'package:flutter_ecoapp/models/store.dart';
 
 class PurchaseModel extends BaseModel
 {
-  double total;
-  DateTime createdDate;
+  late double total;
+  late DateTime createdDate;
 
-  InfoPurchaseModel info;
+  late InfoPurchaseModel info;
 
-  List<ArticleToPurchase> articles;
+  late List<ArticleToPurchase> articles;
 
   PurchaseModel({
     required int id,
@@ -48,6 +46,33 @@ class PurchaseModel extends BaseModel
     }); 
     return toReturn;
   }
+
+  ChatModel get chat {  // TODO: Connect with api
+    return ChatModel(
+      id: 1,
+      createdDate: createdDate,
+      closed: false
+    );
+  }
+
+  double get realTotal => articles.fold<double>(0, (double value, element) => value += (element.unitPrice * element.quantity));
+  double get discount => (realTotal - total) / realTotal * 100;
+
+  PurchaseModel.fromJsonMap(Map<String, dynamic> json) : super(id: json['id']){
+    total               = json['total'];
+    createdDate         = json['createdDate'];
+    info                = json['info'];
+    articles            = json['articles'];
+  }
+
+  @override
+  Map<String, dynamic> toJson() => {
+    'id'          : id,
+    'total'       : total,
+    'createdDate' : createdDate,
+    'info'        : info,
+    'articles'    : articles
+  };
 }
 
 class InfoPurchaseModel extends BaseModel
@@ -64,6 +89,15 @@ class InfoPurchaseModel extends BaseModel
     required this.contactNumber,
     required this.district,
   }) : super(id: id);
+
+  @override
+  Map<String, dynamic> toJson() => {
+    'id'            : id,
+    'names'         : names,
+    'location'      : location,
+    'contactNumber' : contactNumber,
+    'district'      : district
+  };
 
 }
 
@@ -92,4 +126,17 @@ class ArticleToPurchase extends BaseModel
   }) : super(id: id);
 
   bool get hasPhotoUrl => photoUrl != null && photoUrl!.isNotEmpty;
+
+  @override
+  Map<String, dynamic> toJson() => {
+    'id'        : id,
+    'article'   : article,
+    'store'     : store,
+    'title'     : title,
+    'unitPrice' : unitPrice,
+    'quantity'  : quantity,
+    'photoUrl'  : photoUrl,
+    'form'      : form,
+
+  };
 }

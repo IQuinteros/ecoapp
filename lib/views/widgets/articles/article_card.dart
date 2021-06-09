@@ -14,10 +14,11 @@ class ArticleCard extends StatefulWidget {
   final double? price;
 
   final bool favorite;
+  final String extraTag;
 
-  const ArticleCard({Key? key, required this.article, this.favorite = false, this.ecoIndicator, this.price, this.title}) : super(key: key);
+  const ArticleCard({Key? key, required this.article, this.favorite = false, this.ecoIndicator, this.price, this.title, this.extraTag = ''}) : super(key: key);
 
-  const ArticleCard.fromPurchase({Key? key, this.article, this.favorite = false, required this.title, required this.ecoIndicator, required this.price}): super(key: key);
+  const ArticleCard.fromPurchase({Key? key, this.article, this.favorite = false, required this.title, required this.ecoIndicator, required this.price, this.extraTag = ''}): super(key: key);
 
   @override
   _ArticleCardState createState() => _ArticleCardState();
@@ -31,9 +32,9 @@ class _ArticleCardState extends State<ArticleCard> {
   Widget build(BuildContext context) {
 
     if(widget.article != null)
-      widget.article!.tag = 'article-card';
+      widget.article!.tag = 'article-card-${widget.extraTag}';
     
-    ImageProvider<Object> imageData = AssetImage('assets/png/no-image.png');;
+    ImageProvider<Object> imageData = AssetImage('assets/png/no-image.png');
     if(widget.article != null)
       imageData = NetworkImage(widget.article!.photos[0].photoUrl);
 
@@ -71,18 +72,33 @@ class _ArticleCardState extends State<ArticleCard> {
       children: [
         Flexible(
           child: Text(
-            widget.article != null? widget.article!.title : widget.title!,
+            widget.title != null? widget.title! : widget.article!.title,
             style: GoogleFonts.montserrat(),
             textAlign: TextAlign.left,
             maxLines: 3,
           ),
         ),
-        FavoriteButton(favorite: widget.favorite)
+        FavoriteButton(
+          favorite: widget.favorite,
+          canChangeState: () {
+            if(widget.article == null){
+              ScaffoldMessenger.of(context).removeCurrentSnackBar();
+              ScaffoldMessenger.of(context).showSnackBar(SnackBar(
+                content: Text('El artículo no está disponible'),
+                backgroundColor: EcoAppColors.MAIN_DARK_COLOR,
+              ));
+              return false;
+            }
+            else{
+              return true;
+            }
+          },
+        )
       ],
     );
 
     final ecoIndicator = MiniEcoIndicator(
-      ecoIndicator: widget.article != null? widget.article!.form.getIndicator() : widget.ecoIndicator!
+      ecoIndicator: widget.ecoIndicator != null? widget.ecoIndicator! : widget.article!.form.getIndicator()
     );
 
     final secondRow = Container(
@@ -94,7 +110,7 @@ class _ArticleCardState extends State<ArticleCard> {
         mainAxisSize: MainAxisSize.max,
         children: [
           Text(
-            '\$ ' + CurrencyUtil.formatToCurrencyString(widget.article != null? widget.article!.price.round() : widget.price!.round()),
+            '\$ ' + CurrencyUtil.formatToCurrencyString(widget.price != null? widget.price!.round() : widget.article!.price.round()),
             style: GoogleFonts.montserrat(
               fontSize: 16,
               fontWeight: FontWeight.w500
@@ -119,6 +135,7 @@ class _ArticleCardState extends State<ArticleCard> {
       ),
     );
 
+    // TODO: Add quantity
     final card = Card(
       margin: EdgeInsets.zero,
       clipBehavior: Clip.antiAlias,

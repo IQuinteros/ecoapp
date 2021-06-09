@@ -1,8 +1,9 @@
+import 'dart:ui';
+
 import 'package:flutter/gestures.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter_ecoapp/models/chat.dart';
 import 'package:flutter_ecoapp/views/style/colors.dart';
-import 'package:flutter_ecoapp/views/widgets/bottom_nav_bar.dart';
 import 'package:flutter_ecoapp/views/widgets/chat/chatview/message_item.dart';
 import 'package:flutter_ecoapp/views/widgets/chat/chatview/purchase_message_item.dart';
 import 'package:google_fonts/google_fonts.dart';
@@ -24,30 +25,31 @@ class _ChatViewState extends State<ChatView> {
 
     return Scaffold(
       appBar: AppBar(
-        backgroundColor: Colors.white.withOpacity(0.75),
+        backgroundColor: EcoAppColors.MAIN_DARK_COLOR,
         centerTitle: false,
-        elevation: 5,
+        elevation: 10,
         title: Text(
           widget.chat.store.publicName,
           style: GoogleFonts.montserrat(
-            fontWeight: FontWeight.w500
+            fontWeight: FontWeight.w500,
+            color: Colors.white
           ),
         ),
         leading: IconButton(
           icon: Icon(Icons.keyboard_arrow_left_rounded),
-          color: EcoAppColors.MAIN_COLOR,
+          color: Colors.white,
           iconSize: 40,
           onPressed: (){
             Navigator.pop(context);
           },
         ),
       ),
-      body: SafeArea(child: mainContent(context)),
-      bottomNavigationBar: EcoBottomNavigationBar(
+      body: mainContent(context)
+      /* bottomNavigationBar: EcoBottomNavigationBar(
         currentIndex: 0,
           onTap: (value){
         },
-      )
+      ) */
     );
   }
 
@@ -84,45 +86,57 @@ class _ChatViewState extends State<ChatView> {
     messagesWidget.add(SizedBox(height: 90,));
 
     final sendMessage = Container(
+      clipBehavior: Clip.antiAlias,
       padding: EdgeInsets.symmetric(
         horizontal: 10.0,
-        vertical: 5
+        vertical: 10.0
       ),
       decoration: BoxDecoration(
-        color: Colors.white,
-        boxShadow: [
-          BoxShadow(
-            color: Colors.black.withOpacity(0.25),
-            offset: Offset(1, 0),
-            blurRadius: 3
-          )
-        ]
+        //color: EcoAppColors.MAIN_DARK_COLOR,
       ),
-      child: Row(
-        children: [
-          Expanded(
-            child: TextField(
-              style: GoogleFonts.montserrat(),
-              decoration: InputDecoration(
-                border: OutlineInputBorder(
-                  borderRadius: BorderRadius.circular(20.0)
-                ),
-                hintText: 'Enviar mensaje',
-                contentPadding: EdgeInsets.symmetric(
-                  horizontal: 20.0,
-                  vertical: 5.0
+      child: BackdropFilter(
+        filter: new ImageFilter.blur(sigmaX: 5.0, sigmaY: 5.0),
+        child: SafeArea(
+          child: Row(
+            children: [
+              Expanded(
+                child: Container(
+                  decoration: BoxDecoration(
+                    color: Colors.white,
+                    borderRadius: BorderRadius.circular(20.0)
+                  ),
+                  child: TextField(
+                    style: GoogleFonts.montserrat(),
+                    decoration: InputDecoration(
+                      border: OutlineInputBorder(
+                        borderRadius: BorderRadius.circular(20.0)
+                      ),
+                      hintText: 'Enviar mensaje',
+                      contentPadding: EdgeInsets.symmetric(
+                        horizontal: 20.0,
+                        vertical: 5.0
+                      ),
+                    ),
+                  ),
                 ),
               ),
-            ),
+              SizedBox(width: 10.0,),
+              Container(
+                decoration: BoxDecoration(
+                  color: EcoAppColors.MAIN_COLOR,
+                  shape: BoxShape.circle
+                ),
+                child: IconButton(
+                  icon: Icon(
+                    Icons.send,
+                    color: Colors.white
+                  ), 
+                  onPressed: () => print('Send') // TODO: Send message
+                ),
+              ),
+            ],
           ),
-          IconButton(
-            icon: Icon(
-              Icons.send,
-              color: EcoAppColors.MAIN_COLOR,
-            ), 
-            onPressed: () => print('Send') // TODO: Send message
-          ),
-        ],
+        ),
       ),
     );
 
@@ -144,10 +158,10 @@ class _ChatViewState extends State<ChatView> {
 
     return Stack(
       children: [
-        scroll,
+        SafeArea(child: scroll),
         Align(
-          child: sendMessage,
           alignment: Alignment.bottomCenter,
+          child: sendMessage,
         )
       ],
     );

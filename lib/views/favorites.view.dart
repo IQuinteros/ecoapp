@@ -22,8 +22,8 @@ class FavoritesView extends StatelessWidget {
     final content = Column(
       children: [
         SearchBar(),
-        EcoAppTextStyle.getTitle(
-          'Mis favoritos',
+        EcoTitle(
+          text: 'Mis favoritos',
           leftButton: IconButton(
             icon: Icon(Icons.keyboard_arrow_left_rounded),
             color: EcoAppColors.MAIN_COLOR,

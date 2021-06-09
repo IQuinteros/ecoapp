@@ -29,7 +29,9 @@ class SearchBar extends StatelessWidget {
       onTap: (){
         showSearch(
           context: context, 
-          delegate: ArticleSearch(),
+          delegate: ArticleSearch(
+            
+          ),
           query: searching
         );
       },

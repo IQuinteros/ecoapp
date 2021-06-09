@@ -1,12 +1,11 @@
-import 'package:flutter/material.dart';
 import 'package:flutter_ecoapp/models/base.dart';
 
 class QuestionModel extends BaseModel
 {
-  String question;
-  DateTime date;
+  late String question;
+  late DateTime date;
 
-  AnswerModel? answer;
+  late AnswerModel? answer;
 
   QuestionModel({
     required int id,
@@ -14,6 +13,20 @@ class QuestionModel extends BaseModel
     required this.date,
     this.answer
   }) : super(id: id);
+
+  QuestionModel.fromJsonMap(Map<String, dynamic> json) : super(id: json['id']){
+    question            = json['question'];
+    answer              = json['answer'];
+    date                = json['date'];
+  }
+
+  @override
+  Map<String, dynamic> toJson() => {
+    'id'        : id,
+    'question'  : question,
+    'answer'    : answer,
+    'date'      : date
+  };
 }
 
 class AnswerModel extends BaseModel
@@ -26,4 +39,11 @@ class AnswerModel extends BaseModel
     required this.answer,
     required this.date,
   }) : super(id: id);
+
+  @override
+  Map<String, dynamic> toJson() => {
+    'id'      : id,
+    'answer'  : answer,
+    'date'    : date,
+  };
 }

@@ -1,4 +1,3 @@
-import 'package:flutter/material.dart';
 import 'package:flutter_ecoapp/models/article.dart';
 import 'package:flutter_ecoapp/models/base.dart';
 import 'package:flutter_ecoapp/models/district.dart';
@@ -8,8 +7,8 @@ import 'package:flutter_ecoapp/models/store.dart';
 
 class ChatModel extends BaseModel
 {
-  bool closed;
-  DateTime createdDate;
+  late bool closed;
+  late DateTime createdDate;
 
   List<MessageModel> _messages = [];
   List<MessageModel> get messages { // TODO: Connect to api - DEBUG
@@ -21,7 +20,7 @@ class ChatModel extends BaseModel
         date: DateTime.now(), 
         chat: this, 
         profile: ProfileModel(
-          bithday: DateTime.now(),
+          birthday: DateTime.now(),
           contactNumber: 123,
           createdDate: DateTime.now(),
           email: 'skdjfjadfs',
@@ -43,7 +42,7 @@ class ChatModel extends BaseModel
         date: DateTime.now(), 
         chat: this, 
         profile: ProfileModel(
-          bithday: DateTime.now(),
+          birthday: DateTime.now(),
           contactNumber: 123,
           createdDate: DateTime.now(),
           email: 'skdjfjadfs',
@@ -65,7 +64,7 @@ class ChatModel extends BaseModel
         date: DateTime.now(), 
         chat: this, 
         profile: ProfileModel(
-          bithday: DateTime.now(),
+          birthday: DateTime.now(),
           contactNumber: 123,
           createdDate: DateTime.now(),
           email: 'skdjfjadfs',
@@ -87,7 +86,7 @@ class ChatModel extends BaseModel
         date: DateTime.now(), 
         chat: this, 
         profile: ProfileModel(
-          bithday: DateTime.now(),
+          birthday: DateTime.now(),
           contactNumber: 123,
           createdDate: DateTime.now(),
           email: 'skdjfjadfs',
@@ -109,7 +108,7 @@ class ChatModel extends BaseModel
         date: DateTime.now(), 
         chat: this, 
         profile: ProfileModel(
-          bithday: DateTime.now(),
+          birthday: DateTime.now(),
           contactNumber: 123,
           createdDate: DateTime.now(),
           email: 'skdjfjadfs',
@@ -131,7 +130,7 @@ class ChatModel extends BaseModel
         date: DateTime.now(), 
         chat: this, 
         profile: ProfileModel(
-          bithday: DateTime.now(),
+          birthday: DateTime.now(),
           contactNumber: 123,
           createdDate: DateTime.now(),
           email: 'skdjfjadfs',
@@ -153,7 +152,7 @@ class ChatModel extends BaseModel
         date: DateTime.now(), 
         chat: this, 
         profile: ProfileModel(
-          bithday: DateTime.now(),
+          birthday: DateTime.now(),
           contactNumber: 123,
           createdDate: DateTime.now(),
           email: 'skdjfjadfs',
@@ -175,7 +174,7 @@ class ChatModel extends BaseModel
         date: DateTime.now(), 
         chat: this, 
         profile: ProfileModel(
-          bithday: DateTime.now(),
+          birthday: DateTime.now(),
           contactNumber: 123,
           createdDate: DateTime.now(),
           email: 'skdjfjadfs',
@@ -197,7 +196,7 @@ class ChatModel extends BaseModel
         date: DateTime.now(), 
         chat: this, 
         profile: ProfileModel(
-          bithday: DateTime.now(),
+          birthday: DateTime.now(),
           contactNumber: 123,
           createdDate: DateTime.now(),
           email: 'skdjfjadfs',
@@ -265,7 +264,19 @@ class ChatModel extends BaseModel
         )
       )
     ]
-  ); // TODO: Connect to api - DEBUG
+  );
+
+  ChatModel.fromJsonMap(Map<String, dynamic> json) : super(id: json['id']){
+    closed           = json['closed'];
+    createdDate      = json['createdDate'];
+  }
+
+  @override
+  Map<String, dynamic> toJson() => {
+    'id'          : id,
+    'closed'      : closed,
+    'createdDate' : createdDate
+  };
 
 
 }
@@ -291,4 +302,15 @@ class MessageModel extends BaseModel
   }) : super(id: id);
 
   bool get isOwner => owner != 'store';
+
+  @override
+  Map<String, dynamic> toJson() => {
+    'id': id,
+    'message': message,
+    'date': date,
+    'chat': chat,
+    'profile': profile,
+    'store': store,
+    'owner': owner,
+  };
 }

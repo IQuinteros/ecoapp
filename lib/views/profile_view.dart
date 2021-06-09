@@ -1,4 +1,7 @@
 import 'package:flutter/material.dart';
+import 'package:flutter_bloc/flutter_bloc.dart';
+import 'package:flutter_ecoapp/bloc/profile_bloc.dart';
+import 'package:flutter_ecoapp/models/profile.dart';
 import 'package:flutter_ecoapp/views/chats_view.dart';
 
 import 'package:flutter_ecoapp/views/style/colors.dart';
@@ -17,7 +20,8 @@ class ProfileView extends StatelessWidget {
     final column = Column(
       crossAxisAlignment: CrossAxisAlignment.start,
       children: [
-        EcoAppTextStyle.getTitle('Mi perfil',
+        EcoTitle(
+          text: 'Mi perfil',
           rightButton: IconButton(
             icon: Icon(Icons.sms_outlined), 
             color: EcoAppColors.MAIN_COLOR,
@@ -25,7 +29,7 @@ class ProfileView extends StatelessWidget {
             onPressed: () => Navigator.push(context, MaterialPageRoute(builder: (__) => ChatsView()))
           )
         ),
-        mainContent(context)
+        _MainContent()
       ],
     );
 
@@ -34,8 +38,18 @@ class ProfileView extends StatelessWidget {
       scrollDirection: Axis.vertical,
     );
   }
+}
 
-  Widget mainContent(BuildContext context){
+class _MainContent extends StatelessWidget {
+  const _MainContent({
+    Key? key,
+  }) : super(key: key);
+
+  @override
+  Widget build(BuildContext context) {
+
+    final profileBloc = BlocProvider.of<ProfileBloc>(context);
+
     return Container(
       margin: EdgeInsets.symmetric(
         horizontal: 5
@@ -54,7 +68,19 @@ class ProfileView extends StatelessWidget {
       child: Column(
         children: [
           ProfileCoverSection(),
-          ProfileButtonsSection()
+          StreamBuilder(
+            initialData: profileBloc.currentProfile,
+            stream: profileBloc.sessionStream,
+            builder: (BuildContext context, AsyncSnapshot<ProfileModel?> snapshot){
+              switch(snapshot.connectionState){
+                case ConnectionState.done:
+                case ConnectionState.active:
+                case ConnectionState.waiting:
+                  return ProfileButtonsSection(profile: snapshot.data);
+                default: return Center(child: CircularProgressIndicator());
+              }
+            }
+          )
         ],
       ),
     );

@@ -1,6 +1,5 @@
 import 'package:flutter/material.dart';
 import 'package:flutter_ecoapp/views/debug/debug.dart';
-import 'package:flutter_ecoapp/views/style/text_style.dart';
 import 'package:flutter_ecoapp/views/widgets/bottom_nav_bar.dart';
 import 'package:flutter_ecoapp/views/widgets/search_bar.dart';
 import 'package:google_fonts/google_fonts.dart';
@@ -49,6 +48,7 @@ class ResultView extends StatelessWidget {
             ],
           ),
         ),
+        SizedBox(height: 10.0),
         EcoAppDebug.getArticleItems()
       ],
     );

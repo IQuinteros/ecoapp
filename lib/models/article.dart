@@ -7,21 +7,21 @@ import 'package:flutter_ecoapp/models/store.dart';
 
 class ArticleModel extends BaseModel with TagModel
 {
-  String title;
-  String description;
-  double price;
+  late String title;
+  late String description;
+  late double price;
   double? pastPrice;
-  int stock;
-  DateTime createdDate;
-  DateTime lastUpdateDate;
-  bool enabled;
+  late int stock;
+  late DateTime createdDate;
+  late DateTime lastUpdateDate;
+  late bool enabled;
 
-  CategoryModel category;
-  List<PhotoModel> photos;
-  ArticleForm form;
+  late CategoryModel category;
+  late List<PhotoModel> photos;
+  late ArticleForm form;
   StoreModel? store;
-  List<QuestionModel> questions;
-  ArticleRating rating;
+  late List<QuestionModel> questions;
+  late ArticleRating rating;
 
   String _tag = '';
   set tag(String newTag) => _tag = this.id.toString() + this.title + newTag;
@@ -46,6 +46,40 @@ class ArticleModel extends BaseModel with TagModel
   }) : super(id: id){
     initTagging(newID: this.id, newTitle: this.title);
   }
+
+  ArticleModel.fromJsonMap(Map<String, dynamic> json) : super(id: json['id']){
+    title           = json['title'];
+    description     = json['description'];
+    price           = json['price'];
+    pastPrice       = json['pastPrice'];
+    stock           = json['stock'];
+    createdDate     = json['createdDate'];
+    lastUpdateDate  = json['lastUpdateDate'];
+    enabled         = json['enabled'];
+    photos          = json['photos'];
+    form            = json['form'];
+    category        = json['category'];
+    store           = json['store'];
+    questions       = json['questions'];
+    rating          = json['rating'];
+  }
+
+  @override
+  Map<String, dynamic> toJson() => {
+    'title'           : this.title,
+    'description'     : this.description,
+    'pastPrice'       : this.pastPrice,
+    'stock'           : this.stock,
+    'enabled'         : this.enabled,
+    'photos'          : this.photos,
+    'form'            : this.form,
+    'category'        : this.category,
+    'store'           : this.store,
+    'questions'       : this.questions,
+    'rating'          : this.rating,
+    'createdDate'     : this.createdDate,
+    'lastUpdateDate'  : this.lastUpdateDate,
+  };
   
 }
 
@@ -57,6 +91,12 @@ class PhotoModel extends BaseModel
     required int id,
     required this.photoUrl,
   }) : super(id: id);
+
+  @override
+  Map<String, dynamic> toJson() => {
+    'id'          : this.id,
+    'photoUrl'    : this.photoUrl,
+  };
 }
 
 class EcoIndicator{
@@ -125,4 +165,17 @@ class ArticleForm extends BaseModel
       isRecyclableProduct: isRecyclable
     );
   }
+
+  @override
+  Map<String, dynamic> toJson() => {
+    'id'                  : id,
+    'recycledMats'        : recycledMats,
+    'recycledMatsDetail'  : recycledMatsDetail,
+    'reuseTips'           : reuseTips,
+    'recycledProd'        : recycledProd,
+    'recycledProdDetail'  : recycledProdDetail,
+    'generalDetail'       : generalDetail,
+    'createdDate'         : createdDate,
+    'lastUpdateDate'      : lastUpdateDate,
+  };
 }

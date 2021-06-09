@@ -74,7 +74,7 @@ class _EcoTitle extends StatelessWidget {
         children: [
           Icon(
             Icons.eco,
-            color: EcoAppColors.MAIN_COLOR
+            color: EcoAppColors.MAIN_DARK_COLOR
           ),
           SizedBox(width: 15.0),
           Expanded(

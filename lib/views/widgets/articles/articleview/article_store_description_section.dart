@@ -49,7 +49,7 @@ class StoreDescriptionSection extends StatelessWidget {
         Text(
           store.publicName,
           style: GoogleFonts.montserrat(
-            color: EcoAppColors.MAIN_COLOR
+            color: EcoAppColors.MAIN_DARK_COLOR
           ),
         )
       ],

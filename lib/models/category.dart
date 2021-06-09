@@ -3,8 +3,8 @@ import 'package:flutter_ecoapp/models/base.dart';
 
 class CategoryModel extends BaseModel
 {
-  String title;
-  DateTime createdDate;
+  late String title;
+  late DateTime createdDate;
 
   CategoryModel({
     required int id,
@@ -30,4 +30,15 @@ class CategoryModel extends BaseModel
 
   @override
   String toString() => this.title;
+
+  CategoryModel.fromJsonMap(Map<String, dynamic> json) : super(id: json['id']){
+    title           = json['title'];
+    createdDate     = json['createdDate'];
+  }
+
+  @override
+  Map<String, dynamic> toJson() => {
+    'id': id,
+    'title': title,
+  };
 }
