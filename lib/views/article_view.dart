@@ -76,7 +76,9 @@ class _ArticleAppBar extends StatelessWidget {
             color: Colors.white,
           ),
           onPressed: (){
-            Share.share('¡Disponible en Ecomercio! ${article.title} a solo \$${CurrencyUtil.formatToCurrencyString(article.price.toInt())}');
+            Share.share(
+              '¡Disponible en Ecomercio! ${article.title} a solo \$${CurrencyUtil.formatToCurrencyString(article.price.toInt())}'
+            );
           },
         ),
         FavoriteButton(favorite: false, disabledColor: Colors.white,)

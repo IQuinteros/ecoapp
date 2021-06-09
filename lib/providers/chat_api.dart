@@ -8,3 +8,11 @@ class ChatAPI extends BaseAPI<ChatModel>{
     constructor: (data) => ChatModel.fromJsonMap(data)
   );
 }
+
+class MessageAPI extends BaseAPI<MessageModel>{
+  MessageAPI() : super(
+    baseUrl: 'message',
+    getJsonParams: (item) => item.toJson(),
+    constructor: (data) => MessageModel.fromJsonMap(data)
+  );
+}

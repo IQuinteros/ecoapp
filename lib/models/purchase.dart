@@ -106,13 +106,13 @@ class ArticleToPurchase extends BaseModel
   late PurchaseModel purchase;
   ArticleModel? article;
   StoreModel? store;
-  String title;
-  double unitPrice;
-  int quantity;
+  late String title;
+  late double unitPrice;
+  late int quantity;
 
   String? photoUrl;
 
-  ArticleForm form;
+  late ArticleForm form;
 
   ArticleToPurchase({
     required int id,
@@ -124,6 +124,27 @@ class ArticleToPurchase extends BaseModel
     this.photoUrl,
     required this.form
   }) : super(id: id);
+
+  ArticleToPurchase.fromJsonMap(Map<String, dynamic> json) : super(id: json['id']){
+    article             = json['article'];
+    store               = json['store'];
+    title               = json['title'];
+    unitPrice           = json['unit_price'];
+    quantity            = json['quantity'];
+    photoUrl            = json['photo_url'];
+    
+    form = ArticleForm(
+      id: 0,
+      generalDetail: json['general_detail'],
+      recycledMats: json['recycled_mats'],
+      recycledMatsDetail: json['recycled_mats_detail'],
+      reuseTips: json['reuse_tips'],
+      recycledProd: json['recycled_prod'],
+      recycledProdDetail: json['recycled_prod_detail'],
+      lastUpdateDate: DateTime.now(), // TODO: Same
+      createdDate: DateTime.now() // TODO: Maybe can be null
+    );
+  }
 
   bool get hasPhotoUrl => photoUrl != null && photoUrl!.isNotEmpty;
 

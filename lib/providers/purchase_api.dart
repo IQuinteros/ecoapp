@@ -8,3 +8,11 @@ class PurchaseAPI extends BaseAPI<PurchaseModel>{
     constructor: (data) => PurchaseModel.fromJsonMap(data)
   );
 }
+
+class ArticlePurchaseAPI extends BaseAPI<ArticleToPurchase>{
+  ArticlePurchaseAPI() : super(
+    baseUrl: 'article_purchase',
+    getJsonParams: (item) => item.toJson(),
+    constructor: (data) => ArticleToPurchase.fromJsonMap(data)
+  );
+}

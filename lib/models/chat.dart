@@ -283,23 +283,30 @@ class ChatModel extends BaseModel
 
 class MessageModel extends BaseModel
 {
-  String message;
-  DateTime date;
-  String owner;
+  late String message;
+  late DateTime date;
+  late String owner;
 
-  ChatModel chat;
-  ProfileModel profile;
-  StoreModel store;
+  ChatModel? chat;
+  ProfileModel? profile;
+  StoreModel? store;
 
   MessageModel({
     required int id,
     required this.message,
     required this.date,
-    required this.chat,
+    this.chat,
     required this.profile,
     required this.store,
     required this.owner
   }) : super(id: id);
+
+  MessageModel.fromJsonMap(Map<String, dynamic> json) : super(id: json['id']){
+    message           = json['message'];
+    date              = json['date'];
+    owner             = json['owner'];
+    chat              = json['chat']; // TODO: Profile and store can be stored in chat model and chat table
+  }
 
   bool get isOwner => owner != 'store';
 
