@@ -1,11 +1,14 @@
 import 'package:flutter_ecoapp/bloc/base_bloc.dart';
+import 'package:flutter_ecoapp/models/search.dart';
 import 'package:flutter_ecoapp/models/user.dart';
+import 'package:flutter_ecoapp/providers/search_api.dart';
 import 'package:flutter_ecoapp/providers/sqlite/user_local_api.dart';
 import 'package:flutter_ecoapp/providers/user_api.dart';
 
 class UserBloc extends BaseBloc<UserModel>{
 
   final userAPI = UserAPI();
+  final searchAPI = SearchAPI();
   final userLocalAPI = UserLocalAPI();
 
   UserBloc() : super(0);
@@ -38,6 +41,24 @@ class UserBloc extends BaseBloc<UserModel>{
     await userLocalAPI.insert(user);
   }
   
+  Future<SearchModel?> uploadNewSearch(String search) async {
+    UserModel? user = await getLinkedUser();
+    if(user == null) return null;
+
+    if(search.isEmpty) return null;
+
+    return await searchAPI.insert(
+      item: SearchModel(
+        id: 0, 
+        searchText: search, 
+        searchDate: DateTime.now()
+      ), 
+      additionalParams: {
+        'user': user.id
+      }
+    );
+  }
+
   @override
   Stream mapEventToState(event) {
     // TODO: implement mapEventToState
