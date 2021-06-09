@@ -18,7 +18,7 @@ class ProfileModel extends BaseModel
   late DateTime lastUpdateDate;
   late int rut;
   late String rutDv;
-  late int districtID;
+  int? districtID;
   
   DistrictModel? district;
   
@@ -34,7 +34,7 @@ class ProfileModel extends BaseModel
     required this.contactNumber,
     required this.birthday,
     required this.termsChecked,
-    required this.location,
+    this.location = '',
     required this.createdDate,
     required this.lastUpdateDate,
     required this.rut,

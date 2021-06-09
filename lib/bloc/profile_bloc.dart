@@ -63,7 +63,7 @@ class ProfileBloc extends BaseBloc<ProfileModel>{
     if(profiles.length > 0){
       await profileLocalAPI.clear();
       await profileLocalAPI.insert(profiles[0]);
-      _updateCurrentSession();
+      await _updateCurrentSession();
     }
   }
   
@@ -92,12 +92,15 @@ class ProfileBloc extends BaseBloc<ProfileModel>{
     if(currentProfile == null) return;
 
     final districts = await districtAPI.selectAll(
-      params: {'id': currentProfile!.districtID}
+      params: {'id': currentProfile!.districtID ?? 0}
     );
 
     if(districts.length > 0){
       currentProfile!.district = districts[0];
+      return;
     }
+
+    currentProfile!.district = null;
   }
 
   /// Can login?

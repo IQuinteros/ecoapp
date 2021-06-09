@@ -178,7 +178,7 @@ class _RegisterViewState extends State<RegisterView> {
               controller: controllers['date']!,
               validator: (value) => value!.isEmpty? 'Debe ingresar su fecha de nacimiento' : null
             ),
-            NormalInput(
+            /* NormalInput(
               header: 'Comuna', 
               hint: 'Ingresa tu comuna', 
               icon: Icons.location_on,
@@ -195,7 +195,7 @@ class _RegisterViewState extends State<RegisterView> {
               icon: Icons.location_on,
               controller: controllers['location']!,
               validator: (value) => value!.isEmpty? 'Debe ingresar su dirección' : null
-            ),
+            ), */
             Container(
               margin: EdgeInsets.symmetric(
                 horizontal: 40.0
@@ -227,7 +227,6 @@ class _RegisterViewState extends State<RegisterView> {
         birthday: birthday['birthday']!,
         createdDate: DateTime.now(),
         lastUpdateDate: DateTime.now(),
-        location: controllers['location']!.text,
         termsChecked: true
       );
 

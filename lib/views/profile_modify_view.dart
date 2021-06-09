@@ -87,8 +87,9 @@ class ProfileModifyView extends StatelessWidget {
     profile.email = controllers['email']!.text;
     profile.contactNumber = int.parse(controllers['phone']!.text);
     profile.location = controllers['location']!.text;
-    DistrictModel districtModel = district['district']!;
-    profile.districtID = districtModel.id;
+    DistrictModel? districtModel = district['district'];
+    if(districtModel != null)
+      profile.districtID = districtModel.id;
     profile.district = districtModel;
 
     final loading = AwesomeDialog(
@@ -264,14 +265,22 @@ class _ProfileModifyMainContent extends StatelessWidget {
                   selectedDistrict['district'] = profile.district;
                 },
                 controller: controllers['district']!,
-                validator: (value) => value!.isEmpty? 'Debe ingresar su comuna' : null
+                validator: (value) {
+                  return (controllers['location']!.text.isNotEmpty && value!.isEmpty)?
+                    'Debe ingresar su comuna' 
+                    : null;
+                }
               ),
               NormalInput(
                 header: 'Dirección', 
                 hint: 'Ingresa tu dirección', 
                 icon: Icons.location_on,
                 controller: controllers['location']!,
-                validator: (value) => value!.isEmpty? 'Debe ingresar su dirección' : null
+                validator: (value) {
+                  return (controllers['district']!.text.isNotEmpty&& value!.isEmpty)? 
+                    'Debe ingresar su dirección' 
+                    : null;
+                }
               ),
               Container(
                 margin: EdgeInsets.symmetric(
