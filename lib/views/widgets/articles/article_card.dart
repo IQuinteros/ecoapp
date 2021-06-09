@@ -184,10 +184,10 @@ class _ArticleCardState extends State<ArticleCard> {
             ScaffoldMessenger.of(context).showSnackBar(
               SnackBar(
                 content: Text(
-                  'El artículo no ha sido encontrado', // TODO: Open dialog with little information
+                  'El artículo no está disponible', // TODO: Open dialog with little information
                   style: GoogleFonts.montserrat(),
                 ),
-                backgroundColor: EcoAppColors.MAIN_COLOR,
+                backgroundColor: EcoAppColors.MAIN_DARK_COLOR,
                 duration: Duration(seconds: 2),
               ),
             );
