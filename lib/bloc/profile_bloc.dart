@@ -1,9 +1,15 @@
 import 'dart:async';
 
+import 'package:flutter/widgets.dart';
+import 'package:flutter_bloc/flutter_bloc.dart';
 import 'package:flutter_ecoapp/bloc/base_bloc.dart';
+import 'package:flutter_ecoapp/bloc/district_bloc.dart';
+import 'package:flutter_ecoapp/models/district.dart';
 import 'package:flutter_ecoapp/models/profile.dart';
+import 'package:flutter_ecoapp/providers/district_api.dart';
 import 'package:flutter_ecoapp/providers/profile_api.dart';
 import 'package:flutter_ecoapp/providers/sqlite/profile_local_api.dart';
+import 'package:path/path.dart';
 
 class ProfileBloc extends BaseBloc<ProfileModel>{
 
@@ -18,7 +24,7 @@ class ProfileBloc extends BaseBloc<ProfileModel>{
     await profileLocalAPI.initialize();
     // Get current getCurrentSession
     await _updateCurrentSession();
-    _updateCurrentSessionFromRemote();
+    await _updateCurrentSessionFromRemote();
   }
 
   /// Session streams  
@@ -44,6 +50,7 @@ class ProfileBloc extends BaseBloc<ProfileModel>{
     final profile = await _getCurrentSession();
     _sessionSink(profile);
     currentProfile = profile;
+    await loadDistrict();
     //_sessionStreamController.close();
   }
 
@@ -75,6 +82,21 @@ class ProfileBloc extends BaseBloc<ProfileModel>{
     }
     else{
       return null;
+    }
+  }
+
+  // Only for load district
+  final DistrictAPI districtAPI = DistrictAPI();
+  // Get district of profile
+  Future<void> loadDistrict() async{
+    if(currentProfile == null) return;
+
+    final districts = await districtAPI.selectAll(
+      params: {'id': currentProfile!.districtID}
+    );
+
+    if(districts.length > 0){
+      currentProfile!.district = districts[0];
     }
   }
 

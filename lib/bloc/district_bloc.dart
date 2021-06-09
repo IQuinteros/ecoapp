@@ -16,6 +16,18 @@ class DistrictBloc extends BaseBloc<DistrictModel>{
     return await districtAPI.selectAll();
   }
 
+  // Get district by id
+  Future<DistrictModel?> getDistrictById(int id) async
+  {
+    final districts = await districtAPI.selectAll(
+      params: {'id': id}
+    );
+
+    if(districts.length > 0) return districts[0];
+    
+    return null;
+  }
+
   @override
   Stream mapEventToState(event) {
     // TODO: implement mapEventToState

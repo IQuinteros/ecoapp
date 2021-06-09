@@ -4,6 +4,7 @@ import 'package:awesome_dialog/awesome_dialog.dart';
 import 'package:flutter/cupertino.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter_bloc/flutter_bloc.dart';
+import 'package:flutter_ecoapp/bloc/district_bloc.dart';
 import 'package:flutter_ecoapp/bloc/profile_bloc.dart';
 import 'package:flutter_ecoapp/models/district.dart';
 import 'package:flutter_ecoapp/models/profile.dart';
@@ -69,6 +70,7 @@ class ProfileModifyView extends StatelessWidget {
           controllers: controllers,
           profile: profileBloc.currentProfile!,
           updateProfile: (BuildContext context) => _updateProfile(context),
+          selectedDistrict: district,
         )
       ),
     );
@@ -87,6 +89,7 @@ class ProfileModifyView extends StatelessWidget {
     profile.location = controllers['location']!.text;
     DistrictModel districtModel = district['district']!;
     profile.districtID = districtModel.id;
+    profile.district = districtModel;
 
     final loading = AwesomeDialog(
       title: 'Actualizando datos',
@@ -130,15 +133,23 @@ class _ProfileModifyMainContent extends StatelessWidget {
     Key? key,
     required this.profile,
     required this.controllers,
-    required this.updateProfile
+    required this.updateProfile,
+    required this.selectedDistrict
   }) : super(key: key);
 
   final Map<String, TextEditingController> controllers;
   final ProfileModel profile;
   final Function(BuildContext) updateProfile;
+  final Map<String, DistrictModel?> selectedDistrict;
+
+  final Map<String, List<DistrictModel>>districts = {
+    'districts' : []
+  };
 
   @override
   Widget build(BuildContext context) {
+    final districtBloc = BlocProvider.of<DistrictBloc>(context);
+
     final content = SingleChildScrollView(
       child: SafeArea(
         child: Container(
@@ -233,15 +244,25 @@ class _ProfileModifyMainContent extends StatelessWidget {
               ),
               SizedBox(height: 20.0,),
               NormalInput(
+                future: districtBloc.getDistricts(),
                 header: 'Comuna', 
                 hint: 'Ingresa tu comuna', 
                 icon: Icons.location_on,
                 readOnly: true, // TODO: Change to true
-                onTap: () => selectDistrict(context,
+                onTap: () => selectDistrict(
+                  context,
                   onSelect: (district) {
                     controllers['district']!.text = district.name;
+                    selectedDistrict['district'] = district;
                   },
+                  districts: districts['districts']!,
                 ),
+                onDoneSnapshot: (List<DistrictModel>? data){
+                  districts['districts'] = data ?? [];
+                  if(profile.district != null)
+                    controllers['district']!.text = profile.district!.name;
+                  selectedDistrict['district'] = profile.district;
+                },
                 controller: controllers['district']!,
                 validator: (value) => value!.isEmpty? 'Debe ingresar su comuna' : null
               ),
@@ -309,8 +330,23 @@ class _ProfileModifyMainContent extends StatelessWidget {
 
     return content;
   }
+  
 
-  void selectDistrict(BuildContext context, {Function(DistrictModel district)? onSelect}) async {
+  void selectDistrict(
+    BuildContext context, 
+    {
+      Function(DistrictModel district)? onSelect,
+      List<DistrictModel> districts = const [],
+    }
+  ) async {
+    final districtsTiles = districts.map<_DistrictTile>((element) => _DistrictTile(
+      district: element,
+      onTap: (){
+        if(onSelect != null) onSelect(element);
+        Navigator.pop(context);
+      }
+    )).toList();
+
     showDialog(
       context: context, 
       builder: (__){
@@ -329,16 +365,9 @@ class _ProfileModifyMainContent extends StatelessWidget {
                   textAlign: TextAlign.center
                 ),
                 SizedBox(height: 10.0),
-                ListTile(
-                  title: Text(
-                    'Concepción',
-                    style: GoogleFonts.montserrat(),
-                  ),
-                  onTap: () {
-                    if(onSelect != null) onSelect(DistrictModel(id: 1, name: 'Concepción'));
-                    Navigator.pop(context);
-                  },
-                ),
+                Column(
+                  children: districtsTiles,
+                )
               ],
             ),
           ),
@@ -347,6 +376,28 @@ class _ProfileModifyMainContent extends StatelessWidget {
     );
   }
 
+}
+
+class _DistrictTile extends StatelessWidget {
+  const _DistrictTile({
+    Key? key,
+    required this.onTap,
+    required this.district
+  }) : super(key: key);
+
+  final Function() onTap;
+  final DistrictModel district;
+
+  @override
+  Widget build(BuildContext context) {
+    return ListTile(
+      title: Text(
+        district.name,
+        style: GoogleFonts.montserrat(),
+      ),
+      onTap: onTap
+    );
+  }
 }
 class _CloseSessionDialog extends StatefulWidget {
   const _CloseSessionDialog({ Key? key }) : super(key: key);

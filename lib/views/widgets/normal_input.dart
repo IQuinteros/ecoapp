@@ -1,7 +1,7 @@
 import 'package:flutter/material.dart';
 import 'package:google_fonts/google_fonts.dart';
 
-class NormalInput extends StatelessWidget {
+class NormalInput <T> extends StatelessWidget {
   const NormalInput({
     Key? key,
     required this.header,
@@ -14,7 +14,8 @@ class NormalInput extends StatelessWidget {
     this.controller, 
     this.validator, 
     this.isPassword = false,
-    this.future
+    this.future,
+    this.onDoneSnapshot
   }) : super(key: key);
 
   final String header;
@@ -27,7 +28,8 @@ class NormalInput extends StatelessWidget {
   final bool isPassword;
   final TextEditingController? controller;
   final String? Function(String?)? validator;
-  final Future? future;
+  final Future<T>? future;
+  final Function(T?)? onDoneSnapshot;
 
   @override
   Widget build(BuildContext context) {
@@ -35,18 +37,24 @@ class NormalInput extends StatelessWidget {
     if(future != null){
       return FutureBuilder(
         future: future,
-        builder: (BuildContext context, AsyncSnapshot snapshot){
+        builder: (BuildContext context, AsyncSnapshot<T> snapshot){
+          if(snapshot.connectionState == ConnectionState.done){
+            print(snapshot.data);
+            if(onDoneSnapshot != null) onDoneSnapshot!(snapshot.data);
+          }
+
           return _InputContent(
             controller: controller, 
             type: type, 
             readOnly: readOnly, 
             validator: validator, 
             isPassword: isPassword, 
-            hint: hint, 
-            header: header, 
+            hint: snapshot.connectionState == ConnectionState.done? hint : 'Cargando', 
+            header: snapshot.connectionState == ConnectionState.done? header : 'Cargando',
             icon: icon, 
             onTap: onTap, 
-            onChanged: onChanged
+            onChanged: onChanged,
+            enabled: snapshot.connectionState == ConnectionState.done,
           );
         }
       );
@@ -59,6 +67,7 @@ class NormalInput extends StatelessWidget {
         validator: validator, 
         isPassword: isPassword, 
         hint: hint, 
+        enabled: true,
         header: header, 
         icon: icon, 
         onTap: onTap, 
@@ -81,6 +90,7 @@ class _InputContent extends StatelessWidget {
     required this.icon,
     required this.onTap,
     required this.onChanged,
+    required this.enabled
   }) : super(key: key);
 
   final TextEditingController? controller;
@@ -93,6 +103,7 @@ class _InputContent extends StatelessWidget {
   final IconData icon;
   final Function()? onTap;
   final Function(String)? onChanged;
+  final bool? enabled;
 
   @override
   Widget build(BuildContext context) {
@@ -107,6 +118,7 @@ class _InputContent extends StatelessWidget {
         readOnly: readOnly,
         validator: validator,
         obscureText: isPassword,
+        enabled: enabled,
         decoration: InputDecoration(
           border: OutlineInputBorder(
             borderRadius: BorderRadius.circular(20.0)

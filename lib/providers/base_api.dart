@@ -23,6 +23,7 @@ abstract class BaseAPI<T extends BaseModel>{
   // Process Response
   Future<Map<String, dynamic>> _processResponse(Uri uri, Map<String, dynamic>? params) async{
     print('processing ${jsonEncode(params)}');
+    print('Uri: $uri');
     final resp = await http.post(
       uri,
       body: jsonEncode(params),

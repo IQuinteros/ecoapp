@@ -1,3 +1,6 @@
+import 'package:flutter/material.dart';
+import 'package:flutter_bloc/flutter_bloc.dart';
+import 'package:flutter_ecoapp/bloc/district_bloc.dart';
 import 'package:flutter_ecoapp/models/base.dart';
 import 'package:flutter_ecoapp/models/district.dart';
 import 'package:flutter_ecoapp/models/user.dart';
@@ -17,7 +20,8 @@ class ProfileModel extends BaseModel
   late String rutDv;
   late int districtID;
   
-  DistrictModel get district => DistrictModel(id: 1, name: 'Concepción');
+  DistrictModel? district;
+  
   UserModel get user => UserModel(id: 1, createdDate: DateTime.now());
 
   String get fullName => '$name $lastName';
@@ -49,7 +53,7 @@ class ProfileModel extends BaseModel
     lastUpdateDate  = DateTime.parse(json['last_update_date']);
     rut             = json['rut'];
     rutDv           = json['rut_cd'];
-    districtID      = json['district_id'];
+    districtID      = json['district_id'] ?? json['district'];
   }
 
   @override
@@ -61,7 +65,7 @@ class ProfileModel extends BaseModel
     'contact_number'   : this.contactNumber,
     'birthday'         : this.birthday.toString(),
     'terms_checked'    : this.termsChecked,
-    'district'          : this.district.id,
+    'district'          : this.districtID,
     'location'          : this.location,
     'rut'             : this.rut,
     'rut_cd'           : this.rutDv,
