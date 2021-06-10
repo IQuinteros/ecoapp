@@ -1,6 +1,9 @@
 import 'dart:math';
 
+import 'package:awesome_dialog/awesome_dialog.dart';
 import 'package:flutter/material.dart';
+import 'package:flutter_bloc/flutter_bloc.dart';
+import 'package:flutter_ecoapp/bloc/cart_bloc.dart';
 import 'package:flutter_ecoapp/models/article.dart';
 import 'package:flutter_ecoapp/utils/currency_util.dart';
 import 'package:flutter_ecoapp/views/article_view.dart';
@@ -12,8 +15,9 @@ import 'package:numberpicker/numberpicker.dart';
 class CartArticleCard extends StatefulWidget {
 
   final ArticleModel article;
+  final Function() onDelete;
 
-  const CartArticleCard({Key? key, required this.article}) : super(key: key);
+  const CartArticleCard({Key? key, required this.article, required this.onDelete}) : super(key: key);
 
   @override
   _CartArticleCardState createState() => _CartArticleCardState();
@@ -103,7 +107,25 @@ class _CartArticleCardState extends State<CartArticleCard> {
         foregroundColor: MaterialStateProperty.all(Colors.black54),
         textStyle: MaterialStateProperty.all(GoogleFonts.montserrat())
       ),
-      onPressed: () {},
+      onPressed: () {
+        // TODO: Delete article of cart
+        AwesomeDialog(
+          title: 'Eliminar artículo del carrito',
+          desc: 'Se eliminará este artículo del carrito. Lo puedes volver a agregar cuando quieras',
+          dialogType: DialogType.INFO, 
+          animType: AnimType.BOTTOMSLIDE,
+          context: context,
+          btnOkText: 'Volver',
+          btnCancelText: 'Eliminar',
+          btnOkOnPress: () {},
+          btnOkColor: Colors.black26,
+          //btnCancelColor: Colors.black26,
+          btnCancelOnPress: () {
+            _deleteArticleFromCart(context);
+          },
+          padding: EdgeInsets.symmetric(horizontal: 20.0, vertical: 10.0)
+        )..show();
+      },
     );
 
     final quantitySelector = Container(
@@ -193,6 +215,12 @@ class _CartArticleCardState extends State<CartArticleCard> {
       elevation: 10,
       enableDrag: false
     );
+  }
+
+  void _deleteArticleFromCart(BuildContext context) async {
+    final cartBloc = BlocProvider.of<CartBloc>(context);
+    await cartBloc.removeArticleToCart(widget.article);
+    widget.onDelete();
   }
 }
 

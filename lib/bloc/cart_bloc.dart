@@ -29,6 +29,12 @@ class CartBloc extends BaseBloc<CartArticleModel>{
     );
   }
 
+  Future<List<CartArticleModel>> getCartArticles() async {
+    // TODO: remove delayed
+    await Future.delayed(Duration(seconds: 2));
+    return await cartLocalAPI.select();
+  }
+
   Future<CartArticleModel?> addArticleToCart(ArticleModel article) async {
     final prelist = (await cartLocalAPI.select()).where((element) => element.articleId == article.id).toList();
     if(prelist.length > 0) return prelist[0];
