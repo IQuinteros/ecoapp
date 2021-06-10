@@ -304,24 +304,6 @@ class _ProfileModifyMainContent extends StatelessWidget {
                 ),
               ),
               SizedBox(height: 20.0,),
-              Divider(thickness: 1,),
-              Container(
-                margin: EdgeInsets.symmetric(
-                  horizontal: 40.0
-                ),
-                child: NormalButton(
-                  text: 'Cerrar sesión', 
-                  color: EcoAppColors.LEFT_BAR_COLOR,
-                  onPressed: () {
-                    showDialog(
-                      context: context, 
-                      builder: (__){
-                        return _CloseSessionDialog();
-                      }
-                    );
-                  }
-                ),
-              ),
             ],
           ),
         ),
@@ -406,46 +388,6 @@ class _DistrictTile extends StatelessWidget {
       ),
       onTap: onTap
     );
-  }
-}
-class _CloseSessionDialog extends StatefulWidget {
-  const _CloseSessionDialog({ Key? key }) : super(key: key);
-
-  @override
-  __CloseSessionDialogState createState() => __CloseSessionDialogState();
-}
-
-class __CloseSessionDialogState extends State<_CloseSessionDialog> {
-  bool working = false;
-
-  @override
-  Widget build(BuildContext context) {
-    return AlertDialog(
-      title: Text('Cerrar sesión'),
-      content: !working? Text('¿Quiere cerrar sesión?')
-        : Center(child: CircularProgressIndicator()),
-      actions: !working? [
-        TextButton(
-          onPressed: () => logout(context), 
-          child: Text('Cerrar sesión'),
-        ),
-        TextButton(
-          style: ButtonStyle(
-            backgroundColor: MaterialStateProperty.all(EcoAppColors.MAIN_COLOR),
-            foregroundColor: MaterialStateProperty.all(Colors.white)
-          ),
-          onPressed: () => Navigator.pop(context),
-          child: Text('Cancelar')
-        ),
-      ] : [],
-    );
-  }
-
-  void logout(BuildContext context){
-    setState(() => working = true);
-    final profileBloc = BlocProvider.of<ProfileBloc>(context);
-    final logout = profileBloc.logout();
-    logout.then((value) => Navigator.popUntil(context, ModalRoute.withName('/')));
   }
 }
 
