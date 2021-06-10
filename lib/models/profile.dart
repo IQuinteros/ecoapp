@@ -74,7 +74,7 @@ class ProfileModel extends BaseModel
     'rut_cd'           : this.rutDv,
     'creation_date'     : this.createdDate.toString(),
     'last_update_date'  : this.lastUpdateDate.toString(),
-    'user'              : this.userId,
+    'user_id'              : this.userId,
   };
 
   @override

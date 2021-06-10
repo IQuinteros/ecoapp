@@ -60,7 +60,7 @@ class ProfileBloc extends BaseBloc<ProfileModel>{
   /// Check user
   Future<bool> _checkUserFromCurrentUser() async {
     if(currentProfile == null) return await _tryCreateNewLocalUser();
-
+    print('NEW PROFILE: USER - ${currentProfile!.userId}');
     final users = await userAPI.selectAll(
       params: {
         'id': currentProfile!.userId
