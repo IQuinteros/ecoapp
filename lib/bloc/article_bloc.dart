@@ -18,8 +18,6 @@ class ArticleBloc extends BaseBloc<ArticleModel>{
   final storeAPI = StoreAPI();
   final articleFormAPI = ArticleFormAPI();
 
-  ArticleBloc(initialState) : super(initialState);
-
   @override
   Future<void> initializeBloc() async {
     return;
@@ -44,7 +42,7 @@ class ArticleBloc extends BaseBloc<ArticleModel>{
       'article': article.id,
       'profile': profile.id
     }
-  )) != null;
+  )).object != null;
 
   Future<List<QuestionModel>> getQuestionsFromArticle(ArticleModel article) async => await questionAPI.selectAll(params: {
     'article': article.id
@@ -60,7 +58,7 @@ class ArticleBloc extends BaseBloc<ArticleModel>{
       'article': article.id,
       'profile': profile.id
     }
-  )) != null;
+  )).object != null;
 
   Future<StoreModel?> getStoreOfArticle(ArticleModel article) async {
     final stores = await storeAPI.selectAll(params: {

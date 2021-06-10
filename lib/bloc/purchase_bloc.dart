@@ -8,8 +8,6 @@ class PurchaseBloc extends BaseBloc<PurchaseModel>{
   final PurchaseAPI purchaseAPI = PurchaseAPI();
   final articlePurchaseAPI = ArticlePurchaseAPI();
 
-  PurchaseBloc() : super(0);
-
   @override
   Future<void> initializeBloc() async {
     return;

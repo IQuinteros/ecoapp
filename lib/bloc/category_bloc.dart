@@ -6,8 +6,6 @@ class CategoryBloc extends BaseBloc<CategoryModel>{
 
   final categoryAPI = CategoryAPI();
 
-  CategoryBloc(initialState) : super(initialState);
-
   @override
   Future<void> initializeBloc() async {
     return;

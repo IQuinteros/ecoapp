@@ -11,8 +11,6 @@ class CartBloc extends BaseBloc<CartArticleModel>{
   final CartLocalAPI cartLocalAPI = CartLocalAPI();
   final ArticleAPI articleAPI = ArticleAPI();
 
-  CartBloc(initialState) : super(initialState);
-
   @override
   Future<void> initializeBloc() async {
     await cartLocalAPI.initialize();

@@ -16,8 +16,6 @@ class ProfileBloc extends BaseBloc<ProfileModel>{
   final ProfileAPI profileAPI = ProfileAPI();
   final ProfileLocalAPI profileLocalAPI = ProfileLocalAPI();
 
-  ProfileBloc() : super(0){
-  }
 
   @override
   Future<void> initializeBloc() async{

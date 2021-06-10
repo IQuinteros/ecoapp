@@ -12,8 +12,6 @@ class UserBloc extends BaseBloc<UserModel>{
   final searchAPI = SearchAPI();
   final userLocalAPI = UserLocalAPI();
 
-  UserBloc() : super(0);
-
   @override
   Future<void> initializeBloc() async {
     await userLocalAPI.initialize();

@@ -8,9 +8,6 @@ class DistrictBloc extends BaseBloc<DistrictModel>{
 
   final DistrictAPI districtAPI = DistrictAPI();
 
-  DistrictBloc() : super(0){
-  }
-
   @override
   Future<void> initializeBloc() async {
     return;

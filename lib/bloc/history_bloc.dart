@@ -9,8 +9,6 @@ class HistoryBloc extends BaseBloc<HistoryModel>{
   final historyAPI = HistoryAPI();
   final historyDetailAPI = HistoryDetailAPI();
 
-  HistoryBloc(initialState) : super(initialState);
-
   @override
   Future<void> initializeBloc() async {
     return;

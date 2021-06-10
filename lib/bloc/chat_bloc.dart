@@ -11,8 +11,6 @@ class ChatBloc extends BaseBloc<ChatModel>{
   final MessageAPI messageAPI = MessageAPI();
   final articlePurchaseAPI = ArticlePurchaseAPI();
 
-  ChatBloc() : super(0);
-
   @override
   Future<void> initializeBloc() async {
     return;
