@@ -1,4 +1,7 @@
 import 'package:flutter/material.dart';
+import 'package:flutter_bloc/flutter_bloc.dart';
+import 'package:flutter_ecoapp/bloc/app_bloc.dart';
+import 'package:flutter_ecoapp/bloc/cart_bloc.dart';
 import 'package:flutter_ecoapp/models/article.dart';
 import 'package:flutter_ecoapp/utils/currency_util.dart';
 import 'package:flutter_ecoapp/views/opinions_view.dart';
@@ -266,32 +269,7 @@ class _ArticleContent extends StatelessWidget {
       ),
     );
 
-    final btnAddToCart = Padding(
-      padding: EdgeInsets.symmetric(
-        horizontal: 20.0
-      ),
-      child: NormalButton(
-        text: 'Agregar al Carrito',
-        onPressed: () {
-          // TODO: Add cart system
-          showDialog(
-            context: context, 
-            builder: (BuildContext context){
-              return AlertDialog(
-                title: Text('Añadido al carrito'),
-                content: Text('${article.title} ha sido añadido exitósamente al carrito'),
-                actions: [
-                  TextButton(
-                    onPressed: () => Navigator.pop(context), 
-                    child: Text('Aceptar')
-                  )
-                ],
-              );
-            }
-          );
-        },
-      ),
-    );
+    final btnAddToCart = _AddToCartButton(article: article);
     
     return Column(
       children: [
@@ -319,6 +297,74 @@ class _ArticleContent extends StatelessWidget {
         QuestionsSection(article: article)
       ]
     );
+  }
+}
+
+class _AddToCartButton extends StatefulWidget {
+  const _AddToCartButton({
+    Key? key,
+    required this.article,
+  }) : super(key: key);
+
+  final ArticleModel article;
+
+  @override
+  __AddToCartButtonState createState() => __AddToCartButtonState();
+}
+
+class __AddToCartButtonState extends State<_AddToCartButton> {
+  @override
+  Widget build(BuildContext context) {
+    final cartBloc = BlocProvider.of<CartBloc>(context);
+    return Padding(
+      padding: EdgeInsets.symmetric(
+        horizontal: 20.0
+      ),
+      child: FutureBuilder(
+        future: cartBloc.articleExistsInCart(widget.article),
+        builder: (BuildContext context, AsyncSnapshot<bool> snapshot) {
+          switch(snapshot.connectionState){
+            case ConnectionState.done: 
+              return NormalButton(
+                text: !snapshot.data!? 'Agregar al Carrito' : 'Ver en carrito',
+                color: !snapshot.data!? EcoAppColors.MAIN_COLOR : Colors.lightGreen.shade50,
+                textColor: !snapshot.data!? Colors.white : EcoAppColors.MAIN_COLOR,
+                onPressed: () {
+                  setState(() {});
+                  !snapshot.data!? _addToCart(context) : _goToCartView(context);
+                }
+              );
+            default: return Center(child: CircularProgressIndicator());
+          }
+        }
+      ),
+    );
+  }
+
+  void _addToCart(BuildContext context) async {
+    final cartBloc = BlocProvider.of<CartBloc>(context);
+    final result = await cartBloc.addArticleToCart(widget.article);
+    if(result != null){
+      print(result.id);
+      print(result.articleId);
+    }
+
+    ScaffoldMessenger.of(context).removeCurrentSnackBar();
+    ScaffoldMessenger.of(context).showSnackBar(SnackBar(
+      content: Text('Producto añadido al carrito'),
+      backgroundColor: EcoAppColors.MAIN_DARK_COLOR,
+      action: SnackBarAction(
+        label: 'Ver carrito',
+        onPressed: () => _goToCartView(context),
+        textColor: EcoAppColors.ACCENT_COLOR,
+      ),
+    ));  
+  }
+
+  void _goToCartView(BuildContext context){
+    final appBloc = BlocProvider.of<AppBloc>(context);
+    Navigator.popUntil(context, ModalRoute.withName('/'));
+    appBloc.mainEcoNavBar.onTap(1);
   }
 }
 

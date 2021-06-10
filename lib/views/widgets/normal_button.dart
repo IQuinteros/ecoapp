@@ -6,10 +6,11 @@ class NormalButton extends StatelessWidget {
   final String text;
   final Color color;
   final Color textColor;
+  final Color? shadowColors;
   final Widget? leading;
   final Function()? onPressed;
 
-  const NormalButton({Key? key, required this.text, this.color = EcoAppColors.MAIN_COLOR, this.textColor = Colors.white, required this.onPressed, this.leading}) : super(key: key);
+  const NormalButton({Key? key, required this.text, this.color = EcoAppColors.MAIN_COLOR, this.textColor = Colors.white, required this.onPressed, this.leading, this.shadowColors}) : super(key: key);
 
   @override
   Widget build(BuildContext context) {
@@ -39,7 +40,9 @@ class NormalButton extends StatelessWidget {
           elevation: MaterialStateProperty.all(4.0),
           shape: MaterialStateProperty.all(RoundedRectangleBorder(borderRadius: BorderRadius.circular(10.0))),
           backgroundColor: MaterialStateProperty.all(color),
-          foregroundColor: MaterialStateProperty.all(textColor)
+          foregroundColor: MaterialStateProperty.all(textColor),
+          shadowColor: MaterialStateProperty.all(shadowColors),
+
         ),
         onPressed: onPressed,
       ),

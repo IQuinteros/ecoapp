@@ -30,13 +30,17 @@ class CartBloc extends BaseBloc<CartArticleModel>{
   }
 
   Future<CartArticleModel?> addArticleToCart(ArticleModel article) async {
+    final prelist = (await cartLocalAPI.select()).where((element) => element.articleId == article.id).toList();
+    if(prelist.length > 0) return prelist[0];
     await cartLocalAPI.insert(
       CartArticleModel(
         articleId: article.id,
         quantity: 1,
       )
     );
-    return (await cartLocalAPI.select()).where((element) => element.articleId == article.id).toList()[0];
+    final list = (await cartLocalAPI.select()).where((element) => element.articleId == article.id).toList(); 
+    if(list.length <= 0) return null;
+    return list[0];
   }
 
   Map<ArticleModel, Timer?> _updateArticleTimer = {};
@@ -58,6 +62,8 @@ class CartBloc extends BaseBloc<CartArticleModel>{
     if(list.length <= 0) return null;
     return list[0];
   }
+
+  Future<bool> articleExistsInCart(ArticleModel article) async => (await cartLocalAPI.select()).where((element) => element.articleId == article.id).length > 0;
 
   Future<void> removeArticleToCart(ArticleModel article) async {
     final list = (await cartLocalAPI.select()).where((element) => element.articleId == article.id).toList();
