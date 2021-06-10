@@ -120,6 +120,7 @@ class ProfileModifyView extends StatelessWidget {
       )..show();
     }
     else{
+      ScaffoldMessenger.of(context).removeCurrentSnackBar();
       ScaffoldMessenger.of(context).showSnackBar(SnackBar(
         content: Text('Ha ocurrido un error al guardar los cambios'),
         backgroundColor: EcoAppColors.LEFT_BAR_COLOR,

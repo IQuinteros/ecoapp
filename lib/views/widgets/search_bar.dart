@@ -1,6 +1,8 @@
 import 'package:flutter/material.dart';
 import 'package:flutter_bloc/flutter_bloc.dart';
 import 'package:flutter_ecoapp/bloc/app_bloc.dart';
+import 'package:flutter_ecoapp/bloc/profile_bloc.dart';
+import 'package:flutter_ecoapp/bloc/user_bloc.dart';
 import 'package:flutter_ecoapp/views/result_view.dart';
 import 'package:flutter_ecoapp/views/widgets/search/search_delegate.dart';
 import 'package:google_fonts/google_fonts.dart';
@@ -32,14 +34,15 @@ class SearchBar extends StatelessWidget {
       onTap: () async {
         var result = await showSearch(
           context: context, 
-          delegate: ArticleSearch(
-            
-          ),
+          delegate: ArticleSearch(),
           query: searching
         );
+        if(result == null) return;
+        uploadSearch(context, result);
         AppBloc appBloc = BlocProvider.of<AppBloc>(context);
+        Navigator.popUntil(context, ModalRoute.withName('/'));
         var value = await Navigator.push(context, MaterialPageRoute(builder: (__) => ResultView(searching: result,)));
-        appBloc.mainEcoNavBar.onTap(value);
+        if(value != null) appBloc.mainEcoNavBar.onTap(value);
       },
     );
 
@@ -62,5 +65,14 @@ class SearchBar extends StatelessWidget {
         ],
       )
     );
+  }
+
+  void uploadSearch(BuildContext context, String? result){
+    if(result != null && result.isNotEmpty){
+      // Upload search to database
+      final userBloc = BlocProvider.of<UserBloc>(context);
+      final profileBloc = BlocProvider.of<ProfileBloc>(context);
+      userBloc.uploadNewSearch(profileBloc.currentProfile, result);
+    }
   }
 }

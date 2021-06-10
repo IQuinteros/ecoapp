@@ -12,14 +12,14 @@ class SearchModel extends BaseModel
   }) : super(id: id);
 
   SearchModel.fromJsonMap(Map<String, dynamic> json) : super(id: json['id']){
-    searchText            = json['searchText'];
-    searchDate            = json['searchDate'];
+    searchText            = json['search_text'];
+    searchDate            = DateTime.parse(json['search_date']);
   }
 
   @override
   Map<String, dynamic> toJson() => {
     'id'          : id,
-    'searchText'  : searchText,
-    'searchDate'  : searchDate,
+    'search_text'  : searchText,
+    'search_date'  : searchDate.toString(),
   };
 }

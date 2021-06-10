@@ -87,7 +87,25 @@ class ProfileButtonsSection extends StatelessWidget {
   }
 
   void _logout(BuildContext context) async {
+    final loading = AwesomeDialog(
+      title: 'Cerrando sesión',
+      desc: 'Danos un momento',
+      dialogType: DialogType.NO_HEADER, 
+      animType: AnimType.BOTTOMSLIDE,
+      context: context,
+      dismissOnTouchOutside: false,
+      dismissOnBackKeyPress: false,
+      padding: EdgeInsets.symmetric(horizontal: 20.0, vertical: 10.0)
+    )..show();
+
     final profileBloc = BlocProvider.of<ProfileBloc>(context);
     await profileBloc.logout();
+
+    loading.dismiss();
+    ScaffoldMessenger.of(context).removeCurrentSnackBar();
+    ScaffoldMessenger.of(context).showSnackBar(SnackBar(
+      content: Text('Se ha cerrado la sesión'),
+      backgroundColor: EcoAppColors.LEFT_BAR_COLOR,
+    ));
   }
 }

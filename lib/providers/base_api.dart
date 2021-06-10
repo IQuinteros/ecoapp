@@ -49,12 +49,15 @@ abstract class BaseAPI<T extends BaseModel>{
   // Request
   Future<RequestResult> request(String subUrl, [Map<String, dynamic>? queryParams]) async{
     // HTTP for localhost, HTTPS for hosting
+    print('REQUEST: $subUrl; PARAMS: $queryParams');
     try{
       final url = Uri.http(_authority, '$_requests/$baseUrl' + '/$subUrl');
       final result = await _processResponse(url, queryParams);
-    return RequestResult(result['success'], result['data']);
+      return RequestResult(result['success'], result['data']);
     }
     catch(e, stacktrace){
+      print(e);
+      print(stacktrace);
       return RequestResult(false, []);
     }
   }
@@ -101,8 +104,9 @@ abstract class BaseAPI<T extends BaseModel>{
   // Insert method
   Future<InsertResult<T>> insert({required T item, String? customName, Map<String, dynamic> additionalParams = const {}}) async{
     final data = (await request(_getRequestUrl('insert', customName), getJsonParams(item)..addAll(additionalParams))).data;
-    if(data == null) return InsertResult<T>();
 
+    if(data == null) return InsertResult<T>();
+    
     if(data.length > 0){
       return InsertResult<T>(
         object: item..id = int.parse(data.toList()[0]),

@@ -1,9 +1,7 @@
 import 'package:flutter_ecoapp/bloc/base_bloc.dart';
-import 'package:flutter_ecoapp/models/article.dart';
-import 'package:flutter_ecoapp/models/history.dart';
+import 'package:flutter_ecoapp/models/profile.dart';
 import 'package:flutter_ecoapp/models/search.dart';
 import 'package:flutter_ecoapp/models/user.dart';
-import 'package:flutter_ecoapp/providers/history_api.dart';
 import 'package:flutter_ecoapp/providers/search_api.dart';
 import 'package:flutter_ecoapp/providers/sqlite/user_local_api.dart';
 import 'package:flutter_ecoapp/providers/user_api.dart';
@@ -21,7 +19,9 @@ class UserBloc extends BaseBloc<UserModel>{
     await userLocalAPI.initialize();
   }
 
-  Future<UserModel?> getLinkedUser() async {
+  Future<UserModel?> getLinkedUser(ProfileModel? profile) async {
+    if(profile != null && profile.user != null) return profile.user;
+
     final users = await userLocalAPI.select();
     if(users.length > 0)
       return users[0];
@@ -33,8 +33,8 @@ class UserBloc extends BaseBloc<UserModel>{
     await userLocalAPI.insert(user);
   }
   
-  Future<SearchModel?> uploadNewSearch(String search) async {
-    UserModel? user = await getLinkedUser();
+  Future<SearchModel?> uploadNewSearch(ProfileModel? profile, String search) async {
+    UserModel? user = await getLinkedUser(profile);
     if(user == null) return null;
 
     if(search.isEmpty) return null;
@@ -46,7 +46,7 @@ class UserBloc extends BaseBloc<UserModel>{
         searchDate: DateTime.now()
       ), 
       additionalParams: {
-        'user': user.id
+        'user_id': user.id
       }
     );
 
