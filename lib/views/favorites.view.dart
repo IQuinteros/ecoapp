@@ -12,7 +12,9 @@ class FavoritesView extends StatelessWidget {
       body: SafeArea(child: getContent(context)),
       bottomNavigationBar: EcoBottomNavigationBar(
         currentIndex: 0,
-          onTap: (value){
+        unselected: true,
+        onTap: (value){
+          Navigator.pop(context, value);
         },
       )
     );

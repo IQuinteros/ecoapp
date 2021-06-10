@@ -24,14 +24,13 @@ class ProfileButtonsSection extends StatelessWidget {
       child: Column(
         children: [
           Divider(thickness: 1),
-          ProfileButton(icon: Icons.history, title: 'Historial', onTap: (){
-            appBloc.mainEcoNavBar.onTap(2);
-          }),
-          Divider(thickness: 1),
           ProfileButton(
             icon: Icons.star_border_rounded, 
             title: 'Lista de favoritos', 
-            onTap: () => Navigator.push(context, MaterialPageRoute(builder: (__) => profile != null? FavoritesView() : LoginView())),
+            onTap: () async {
+              var value = await Navigator.push(context, MaterialPageRoute(builder: (__) => profile != null? FavoritesView() : LoginView()));
+              if(value != null) appBloc.mainEcoNavBar.onTap(value);
+            },
             subtitle: profile == null? Text(
               'Necesita iniciar sesión'
             ) : null
@@ -57,6 +56,10 @@ class ProfileButtonsSection extends StatelessWidget {
               'Necesita iniciar sesión'
             ) : null
           ),
+          Divider(thickness: 1),
+          ProfileButton(icon: Icons.exit_to_app_rounded, title: 'Cerrar sesión', onTap: (){
+            // TODO: Close session
+          }),
           SizedBox(height: 10.0),
         ],
       )
