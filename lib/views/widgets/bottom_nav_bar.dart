@@ -6,11 +6,23 @@ class EcoBottomNavigationBar extends StatelessWidget {
 
   final Function(int) onTap;
   final int currentIndex;
+  final bool unselected;
 
-  const EcoBottomNavigationBar({Key? key, required this.onTap, required this.currentIndex}) : super(key: key);
+  const EcoBottomNavigationBar({
+    Key? key, 
+    required this.onTap, 
+    required this.currentIndex,
+    this.unselected = false
+  }) : super(key: key);
 
   @override
   Widget build(BuildContext context) {
+    final commonIconTheme = IconThemeData(
+      opacity: 1,
+      size: 30,
+      color: Colors.white
+    );
+
     return Container(
       decoration: BoxDecoration(
         boxShadow: [
@@ -22,7 +34,16 @@ class EcoBottomNavigationBar extends StatelessWidget {
       ),
       child: BottomNavigationBar(
         backgroundColor: EcoAppColors.MAIN_COLOR,
-        selectedItemColor: EcoAppColors.ACCENT_COLOR,
+        unselectedIconTheme: IconThemeData(
+          opacity: 0.8,
+          size: 28,
+          color: Colors.white
+        ),
+        selectedIconTheme: !unselected? IconThemeData(
+          size: 33,
+          opacity: 1,
+          color: EcoAppColors.ACCENT_COLOR,
+        ) : commonIconTheme,
         unselectedItemColor: Colors.white,
         type: BottomNavigationBarType.fixed,
         elevation: 20.0,

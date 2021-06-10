@@ -33,7 +33,9 @@ class ChatsView extends StatelessWidget {
       body: SafeArea(child: mainContent(context)),
       bottomNavigationBar: EcoBottomNavigationBar(
         currentIndex: 0,
-          onTap: (value){
+        unselected: true,
+        onTap: (value){
+          Navigator.pop(context, value);
         },
       )
     );

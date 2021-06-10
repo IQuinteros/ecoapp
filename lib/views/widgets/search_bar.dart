@@ -1,4 +1,7 @@
 import 'package:flutter/material.dart';
+import 'package:flutter_bloc/flutter_bloc.dart';
+import 'package:flutter_ecoapp/bloc/app_bloc.dart';
+import 'package:flutter_ecoapp/views/result_view.dart';
 import 'package:flutter_ecoapp/views/widgets/search/search_delegate.dart';
 import 'package:google_fonts/google_fonts.dart';
 
@@ -26,14 +29,17 @@ class SearchBar extends StatelessWidget {
       ),
       controller: TextEditingController(text: searching),
       readOnly: true,
-      onTap: (){
-        showSearch(
+      onTap: () async {
+        var result = await showSearch(
           context: context, 
           delegate: ArticleSearch(
             
           ),
           query: searching
         );
+        AppBloc appBloc = BlocProvider.of<AppBloc>(context);
+        var value = await Navigator.push(context, MaterialPageRoute(builder: (__) => ResultView(searching: result,)));
+        appBloc.mainEcoNavBar.onTap(value);
       },
     );
 

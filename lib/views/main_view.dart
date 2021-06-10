@@ -1,11 +1,11 @@
 import 'package:flutter/material.dart';
+import 'package:flutter_bloc/flutter_bloc.dart';
+import 'package:flutter_ecoapp/bloc/app_bloc.dart';
 import 'package:flutter_ecoapp/views/cart_view.dart';
 import 'package:flutter_ecoapp/views/history_view.dart';
 import 'package:flutter_ecoapp/views/home_view.dart';
 import 'package:flutter_ecoapp/views/profile_view.dart';
 import 'package:flutter_ecoapp/views/widgets/bottom_nav_bar.dart';
-
-
 
 class MainView extends StatefulWidget {
 
@@ -19,9 +19,21 @@ class _MainViewState extends State<MainView> {
 
   @override
   Widget build(BuildContext context) {
+    final bottomNavBar = EcoBottomNavigationBar(
+      currentIndex: currentIndex,
+      onTap: (value){
+        setState(() {
+          currentIndex = value;
+        });
+      },
+    );
+
+    AppBloc appBloc = BlocProvider.of<AppBloc>(context);
+    appBloc.mainEcoNavBar = bottomNavBar;
+
     return Scaffold(
       body: SafeArea(child: getContent(context)),
-      bottomNavigationBar: getBottomNavigationBar(),
+      bottomNavigationBar: bottomNavBar
     );
   }
 
@@ -33,17 +45,6 @@ class _MainViewState extends State<MainView> {
       case 3: return ProfileView();
       default: return HomeView();
     }
-  }
-
-  Widget getBottomNavigationBar(){
-    return EcoBottomNavigationBar(
-      currentIndex: currentIndex,
-      onTap: (value){
-        setState(() {
-          currentIndex = value;
-        });
-      },
-    );
   }
   
 }

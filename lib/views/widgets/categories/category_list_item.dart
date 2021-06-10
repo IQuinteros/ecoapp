@@ -1,4 +1,6 @@
 import 'package:flutter/material.dart';
+import 'package:flutter_bloc/flutter_bloc.dart';
+import 'package:flutter_ecoapp/bloc/app_bloc.dart';
 import 'package:flutter_ecoapp/models/category.dart';
 import 'package:flutter_ecoapp/views/result_view.dart';
 import 'package:flutter_ecoapp/views/style/colors.dart';
@@ -11,6 +13,7 @@ class CategoryListItem extends StatelessWidget {
 
   @override
   Widget build(BuildContext context) {
+    AppBloc appBloc = BlocProvider.of<AppBloc>(context);
     return ListTile(
       contentPadding: EdgeInsets.symmetric(
         horizontal: 20.0
@@ -27,7 +30,10 @@ class CategoryListItem extends StatelessWidget {
         color: EcoAppColors.MAIN_DARK_COLOR,
       ),
       selectedTileColor: EcoAppColors.ACCENT_COLOR,
-      onTap: () => Navigator.push(context, MaterialPageRoute(builder: (__) => ResultView(searching: category.toString(),))),
+      onTap: () async {
+        var value = await Navigator.push(context, MaterialPageRoute(builder: (__) => ResultView(searching: category.toString(),)));
+        if(value != null) appBloc.mainEcoNavBar.onTap(value);
+      }
     );
   }
 }

@@ -14,7 +14,8 @@ class CategoriesView extends StatelessWidget {
       body: SafeArea(child: getContent(context)),
       bottomNavigationBar: EcoBottomNavigationBar(
         currentIndex: 0,
-          onTap: (value){
+        onTap: (value){
+          Navigator.pop(context,value);
         },
       )
     );
@@ -78,7 +79,10 @@ class _CategoryTile extends StatelessWidget {
         ]
       ),
       child: ListTile(
-        onTap: () => Navigator.push(context, MaterialPageRoute(builder: (__) => ResultView(searching: category.toString(),))),   
+        onTap: () async {
+          var value = await Navigator.push(context, MaterialPageRoute(builder: (context) => ResultView(searching: category.toString(),)));   
+          if(value != null) Navigator.pop(context, value);
+        },
         leading: Icon(
           category.getIcon(),
           color: EcoAppColors.MAIN_COLOR,

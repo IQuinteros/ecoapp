@@ -1,4 +1,6 @@
 import 'package:flutter/material.dart';
+import 'package:flutter_bloc/flutter_bloc.dart';
+import 'package:flutter_ecoapp/bloc/app_bloc.dart';
 import 'package:flutter_ecoapp/views/result_view.dart';
 import 'package:google_fonts/google_fonts.dart';
 
@@ -57,8 +59,8 @@ class ArticleSearch extends SearchDelegate {
         child: Text(selection),
       ),
     ); */
-    Navigator.pop(context);
-    Navigator.push(context, MaterialPageRoute(builder: (__) => ResultView(searching: selection,)));
+    close(context, query);   
+    print(query);
     return Container();
   }
 

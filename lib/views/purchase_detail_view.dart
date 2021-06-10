@@ -19,8 +19,10 @@ class PurchaseDetailView extends StatelessWidget {
       body: SafeArea(child: getContent(context)),
       bottomNavigationBar: EcoBottomNavigationBar(
         currentIndex: 0,
-          onTap: (value){
+        onTap: (value){
+          Navigator.pop(context, value);
         },
+        unselected: true,
       )
     );
   }

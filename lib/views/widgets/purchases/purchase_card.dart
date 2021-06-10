@@ -1,4 +1,6 @@
 import 'package:flutter/material.dart';
+import 'package:flutter_bloc/flutter_bloc.dart';
+import 'package:flutter_ecoapp/bloc/app_bloc.dart';
 import 'package:flutter_ecoapp/models/purchase.dart';
 import 'package:flutter_ecoapp/utils/currency_util.dart';
 import 'package:flutter_ecoapp/views/purchase_detail_view.dart';
@@ -31,7 +33,10 @@ class _PurchaseCardState extends State<PurchaseCard> {
           ),
       child: InkWell(
         borderRadius: BorderRadius.circular(20.0),
-        onTap: () => Navigator.push(context, MaterialPageRoute(builder: (__) => PurchaseDetailView(purchase: purchase))),
+        onTap: () async {
+          var value = await Navigator.push(context, MaterialPageRoute(builder: (__) => PurchaseDetailView(purchase: purchase)));
+          if(value != null) Navigator.pop(context, value);
+        },
         child: Container(
           decoration: BoxDecoration(
             color: Colors.white,
