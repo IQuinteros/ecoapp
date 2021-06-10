@@ -1,14 +1,13 @@
 import 'package:flutter_ecoapp/models/article.dart';
 import 'package:flutter_ecoapp/models/base.dart';
 
-class CartModel extends BaseModel
+class CartModel
 {
-  late List<ArticleModel> articles;
+  final List<ArticleModel> articles;
 
   CartModel({
-    required int id,
     this.articles = const [],
-  }) : super(id: id);
+  });
 
   double get totalPrice {
     double total = 0;
@@ -33,17 +32,27 @@ class CartModel extends BaseModel
 
     return toReturn;
   }
+}
 
-  CartModel.fromJsonMap(Map<String, dynamic> json) : super(id: json['id']){
-    articles = json['articles'] is List? 
-      json['articles'].map<ArticleModel>((Map<String, dynamic> e) => ArticleModel.fromJsonMap(e)) 
-      : [];
+class CartArticleModel extends BaseModel{
+  late int articleId;
+  late int quantity;
+
+  CartArticleModel({
+    required this.articleId,
+    required this.quantity
+  }) : super(id: 0);
+
+  CartArticleModel.fromJsonMap(Map<String, dynamic> json) : super(id: json['id']){
+    articleId = json['article_id'];
+    quantity  = json['quantity'];
   }
 
   @override
   Map<String, dynamic> toJson() => {
-    'id'        : id,
-    'articles'  : articles.map<Map<String, dynamic>>((e) => e.toJson()).toList()
+    //'id'            : null,
+    'article_id'    : articleId,
+    'quantity'      : quantity
   };
 
 }

@@ -241,13 +241,16 @@ class ProfileBloc extends BaseBloc<ProfileModel>{
   }
 
   final favoriteAPI = FavoriteAPI();
-  Map<ArticleModel, Timer?> favoriteTimer = {};
+  Map<ArticleModel, Timer?> _favoriteTimer = {};
   /// Mark as favorite
   void setFavoriteArticle(ArticleModel articleModel, bool newState, Function(bool) onReady) {
     articleModel.favorite = newState;
 
-    if(favoriteTimer[articleModel] != null) favoriteTimer[articleModel]!.cancel();
-    favoriteTimer[articleModel] = Timer(Duration(seconds: 5), () => _setFavoriteArticle(articleModel, onReady));
+    if(_favoriteTimer[articleModel] != null && _favoriteTimer[articleModel]!.isActive) _favoriteTimer[articleModel]!.cancel();
+    _favoriteTimer[articleModel] = Timer(Duration(seconds: 5), () {
+      _setFavoriteArticle(articleModel, onReady);
+      _favoriteTimer[articleModel] = null;
+    });
   }
 
   Future<void> _setFavoriteArticle(ArticleModel articleModel, Function(bool) onReady) async {
@@ -263,7 +266,7 @@ class ProfileBloc extends BaseBloc<ProfileModel>{
           article: articleModel, 
           createdDate: DateTime.now()
         )
-      )) != null);
+      )).object != null);
     }
     else{
       onReady(await favoriteAPI.delete(
