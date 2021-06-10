@@ -3,10 +3,13 @@ import 'package:flutter_ecoapp/bloc/base_bloc.dart';
 import 'package:flutter_ecoapp/models/article.dart';
 import 'package:flutter_ecoapp/models/favorite.dart';
 import 'package:flutter_ecoapp/models/profile.dart';
+import 'package:flutter_ecoapp/models/user.dart';
 import 'package:flutter_ecoapp/providers/district_api.dart';
 import 'package:flutter_ecoapp/providers/favorite_api.dart';
 import 'package:flutter_ecoapp/providers/profile_api.dart';
 import 'package:flutter_ecoapp/providers/sqlite/profile_local_api.dart';
+import 'package:flutter_ecoapp/providers/sqlite/user_local_api.dart';
+import 'package:flutter_ecoapp/providers/user_api.dart';
 
 class ProfileBloc extends BaseBloc<ProfileModel>{
 
@@ -14,13 +17,13 @@ class ProfileBloc extends BaseBloc<ProfileModel>{
   final ProfileLocalAPI profileLocalAPI = ProfileLocalAPI();
 
   ProfileBloc() : super(0){
-    initializeBloc();
   }
 
-  void initializeBloc() async{
+  @override
+  Future<void> initializeBloc() async{
     await profileLocalAPI.initialize();
+    await userLocalAPI.initialize();
     // Get current getCurrentSession
-    await _updateCurrentSession();
     await _updateCurrentSessionFromRemote();
   }
 
@@ -48,11 +51,74 @@ class ProfileBloc extends BaseBloc<ProfileModel>{
     _sessionSink(profile);
     currentProfile = profile;
     await loadDistrict();
+    await _checkUserFromCurrentUser();
     //_sessionStreamController.close();
+  }
+
+  final userAPI = UserAPI();
+  final userLocalAPI = UserLocalAPI();
+  /// Check user
+  Future<bool> _checkUserFromCurrentUser() async {
+    if(currentProfile == null) return await _tryCreateNewLocalUser();
+
+    final users = await userAPI.selectAll(
+      params: {
+        'id': currentProfile!.userId
+      }
+    );
+
+    if(users.length > 0){
+      // Load current profile user
+      currentProfile!.user = users[0];
+      // When currentProfile.user is loaded, widgets have to call to this. Otherwise, call to local user
+      return true;
+    }
+    else{
+      return await _tryCreateNewLocalUser();
+    }
+  }
+
+  Future<bool> _tryCreateNewLocalUser() async {
+    List<UserModel> users = await userLocalAPI.select();
+
+    if(users.length <= 0){
+      final result = await userAPI.insert(
+        item: UserModel(
+          id: 0, 
+          createdDate: DateTime.now()
+        )
+      );
+
+      if(result == null) return false;
+      
+      await userLocalAPI.clear();
+      await userLocalAPI.insert(result);
+    }
+    else{
+      final isInRemote = await userAPI.selectAll(
+        params: {
+          'id': users[0].id
+        }
+      );
+
+      if(isInRemote.length > 0){
+        return true;
+      }
+      else{
+        // TODO: FIRST CHECK IF THERE IS CONNECTION (CAN DELETE LOCAL USER WHEN IS DISCONNECTED)
+        //await userLocalAPI.delete(users[0].id);
+        //userAPI.ping((value) => print);
+        return true;
+      }
+    }
+
+    return true;
+    
   }
 
   /// Update current session with remote data
   Future<void> _updateCurrentSessionFromRemote() async {
+    await _updateCurrentSession();
     if(currentProfile == null) return;
 
     final profiles = await profileAPI.selectAll(params: {'id': currentProfile!.id});
@@ -60,7 +126,6 @@ class ProfileBloc extends BaseBloc<ProfileModel>{
     if(profiles.length > 0){
       await profileLocalAPI.clear();
       await profileLocalAPI.insert(profiles[0]);
-      await _updateCurrentSession();
     }
   }
   
@@ -131,11 +196,19 @@ class ProfileBloc extends BaseBloc<ProfileModel>{
     )) != null;
   }
 
-  /// Register profile
+  /// Register profile (TODO: Check for upload local user) SOLUTION: When user is used, create new
   Future<bool> signup(ProfileModel profile, String newPassword) async {
-    ProfileModel? result = await profileAPI.insert(
+    List<UserModel> users = await userLocalAPI.select();
+
+    if(users.length > 0){
+      profile.userId = users[0].id;
+    }
+
+    final result = await profileAPI.insert(
       item: profile,
-      additionalParams: {'passwords': newPassword}
+      additionalParams: {
+        'passwords': newPassword,
+      }
     );
 
     if(result != null){
@@ -193,8 +266,8 @@ class ProfileBloc extends BaseBloc<ProfileModel>{
           article: articleModel, 
           createdDate: DateTime.now()
         ),
-        additionalParams: {
-          'user': currentProfile!.user.id
+        params: {
+          'user': currentProfile!.userId
         }
       ));
     }

@@ -9,6 +9,11 @@ class AppBloc extends BaseBloc<CartModel>{
   late EcoBottomNavigationBar mainEcoNavBar;
 
   @override
+  Future<void> initializeBloc() async {
+    return;
+  }
+
+  @override
   Stream mapEventToState(event) {
     // TODO: implement mapEventToState
     throw UnimplementedError();

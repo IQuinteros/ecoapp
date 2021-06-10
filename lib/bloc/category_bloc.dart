@@ -8,6 +8,11 @@ class CategoryBloc extends BaseBloc<CategoryModel>{
 
   CategoryBloc(initialState) : super(initialState);
 
+  @override
+  Future<void> initializeBloc() async {
+    return;
+  }
+
   Future<List<CategoryModel>> getCategories(String search) async => await categoryAPI.selectAll();
   
   @override

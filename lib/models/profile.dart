@@ -19,10 +19,12 @@ class ProfileModel extends BaseModel
   late int rut;
   late String rutDv;
   int? districtID;
+
+  late int userId;
   
   DistrictModel? district;
   
-  UserModel get user => UserModel(id: 1, createdDate: DateTime.now());
+  UserModel? user;
 
   String get fullName => '$name $lastName';
 
@@ -54,6 +56,7 @@ class ProfileModel extends BaseModel
     rut             = json['rut'];
     rutDv           = json['rut_cd'];
     districtID      = json['district_id'] ?? json['district'];
+    userId          = json['user_id'];
   }
 
   @override
@@ -71,7 +74,7 @@ class ProfileModel extends BaseModel
     'rut_cd'           : this.rutDv,
     'creation_date'     : this.createdDate.toString(),
     'last_update_date'  : this.lastUpdateDate.toString(),
-    'user'              : this.user.id,
+    'user'              : this.userId,
   };
 
   @override

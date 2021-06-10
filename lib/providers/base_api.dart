@@ -2,14 +2,15 @@
 import 'dart:async';
 import 'dart:convert';
 
+import 'package:dart_ping/dart_ping.dart';
 import 'package:http/http.dart' as http;
 import 'package:flutter_ecoapp/models/base.dart';
 
 abstract class BaseAPI<T extends BaseModel>{
 
   // Hosting: ecomercioweb.000webhostapp.com
-  static const String _authority = 'ecomercioweb.000webhostapp.com';
-  static const String _requests = 'api/requests';
+  static const String _authority = 'localhost';
+  static const String _requests = 'ecoweb/api/requests';
 
   final String baseUrl;
   Map<String, dynamic> Function(T) getJsonParams;
@@ -48,7 +49,7 @@ abstract class BaseAPI<T extends BaseModel>{
   Future<RequestResult> request(String subUrl, [Map<String, dynamic>? queryParams]) async{
     // HTTP for localhost, HTTPS for hosting
     try{
-      final url = Uri.https(_authority, '$_requests/$baseUrl' + '/$subUrl');
+      final url = Uri.http(_authority, '$_requests/$baseUrl' + '/$subUrl');
       final result = await _processResponse(url, queryParams);
     return RequestResult(result['success'], result['data']);
     }
@@ -97,10 +98,29 @@ abstract class BaseAPI<T extends BaseModel>{
   }
 
   // Insert method
-  Future<T?> insert({required T item, String? customName, Map<String, dynamic> additionalParams = const {}}) async => (await request(_getRequestUrl('insert', customName), getJsonParams(item)..addAll(additionalParams))).success? item : null;
+  Future<T?> insert({required T item, String? customName, Map<String, dynamic> additionalParams = const {}}) async{
+    final data = (await request(_getRequestUrl('insert', customName), getJsonParams(item)..addAll(additionalParams))).data;
+    if(data == null) return null;
+
+    if(data.length > 0){
+      return item..id = int.parse(data.toList()[0]);
+    }
+
+    return null;
+  }
 
   // Delete method
-  Future<bool> delete({required T item, String? customName, Map<String, dynamic> additionalParams = const {}}) async => (await request(_getRequestUrl('delete', customName), getJsonParams(item)..addAll(additionalParams))).success;
+  Future<bool> delete({required T item, String? customName, Map<String, dynamic> params = const {}}) async => (await request(_getRequestUrl('delete', customName), getJsonParams(item)..addAll(params))).success;
+
+  // Ping
+  void ping(Function(bool) result){
+    final ping = Ping('google.com', count: 5);
+
+    // Begin ping process and listen for output
+    ping.stream.listen((event) {
+      print(event);
+    });
+  }
 
 }
 

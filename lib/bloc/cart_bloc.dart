@@ -7,6 +7,11 @@ class CartBloc extends BaseBloc<CartModel>{
   final CartLocalAPI cartLocalAPI = CartLocalAPI();
 
   CartBloc(initialState) : super(initialState);
+
+  @override
+  Future<void> initializeBloc() async {
+    await cartLocalAPI.initialize();
+  }
   
   @override
   Stream mapEventToState(event) {

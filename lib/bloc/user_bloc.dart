@@ -16,20 +16,9 @@ class UserBloc extends BaseBloc<UserModel>{
 
   UserBloc() : super(0);
 
-  Future<void> initUser() async {
-    final users = await userLocalAPI.select();
-
-    if(users.length > 0) return;
-
-    final result = await userAPI.insert(item: UserModel(
-      id: 0,
-      createdDate: DateTime.now()
-    ));
-
-    if(result != null){
-      await userLocalAPI.clear();
-      await userLocalAPI.insert(result);
-    }
+  @override
+  Future<void> initializeBloc() async {
+    await userLocalAPI.initialize();
   }
 
   Future<UserModel?> getLinkedUser() async {
@@ -50,7 +39,7 @@ class UserBloc extends BaseBloc<UserModel>{
 
     if(search.isEmpty) return null;
 
-    return await searchAPI.insert(
+    final result = await searchAPI.insert(
       item: SearchModel(
         id: 0, 
         searchText: search, 
@@ -60,6 +49,11 @@ class UserBloc extends BaseBloc<UserModel>{
         'user': user.id
       }
     );
+
+    if(result == null) return null;
+
+    return result;
+    
   }
 
   final historyAPI = HistoryAPI();

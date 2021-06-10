@@ -20,6 +20,11 @@ class ArticleBloc extends BaseBloc<ArticleModel>{
 
   ArticleBloc(initialState) : super(initialState);
 
+  @override
+  Future<void> initializeBloc() async {
+    return;
+  }
+
   Future<List<ArticleModel>> getArticlesFromSearch(String search, UserModel user) async => await articleAPI.selectAll(params: {
     'search': search,
     'user': user.id

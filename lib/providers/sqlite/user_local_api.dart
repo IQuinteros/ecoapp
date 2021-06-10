@@ -6,7 +6,7 @@ class UserLocalAPI extends BaseLocalAPI<UserModel>{
   UserLocalAPI() : super(
     constructor: (value) => UserModel.fromJsonMap(value),
     toMapFunction: (item) => item.toSqliteParams(),
-    params: 'id INTEGER PRIMARY KEY, created_date TEXT',
+    params: 'id INTEGER PRIMARY KEY, creation_date TEXT',
     tableName: 'user'
   );
 

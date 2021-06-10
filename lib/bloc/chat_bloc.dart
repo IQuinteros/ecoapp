@@ -13,6 +13,11 @@ class ChatBloc extends BaseBloc<ChatModel>{
 
   ChatBloc() : super(0);
 
+  @override
+  Future<void> initializeBloc() async {
+    return;
+  }
+
   Future<ChatModel?> getChatFromPurchase(PurchaseModel purchase) async {
     final chats = await chatAPI.selectAll(
       params: {
@@ -45,6 +50,7 @@ class ChatBloc extends BaseBloc<ChatModel>{
       )) != null;
     }
     else{
+
       final newChat = await chatAPI.insert(
         item: ChatModel(
           id: 0, 
@@ -65,9 +71,8 @@ class ChatBloc extends BaseBloc<ChatModel>{
           }
         )) != null;
       }
-      else{
-        return false;
-      }
+        
+      return false;
     }
   }
 

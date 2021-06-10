@@ -6,8 +6,6 @@ import 'package:flutter_ecoapp/bloc/app_bloc.dart';
 import 'package:flutter_ecoapp/bloc/district_bloc.dart';
 import 'package:flutter_ecoapp/bloc/profile_bloc.dart';
 import 'package:flutter_ecoapp/bloc/user_bloc.dart';
-import 'package:flutter_ecoapp/models/profile.dart';
-import 'package:flutter_ecoapp/providers/sqlite/profile_local_api.dart';
 import 'package:flutter_ecoapp/views/categories_view.dart';
 import 'package:flutter_ecoapp/views/login_view.dart';
 import 'package:flutter_ecoapp/views/main_view.dart';

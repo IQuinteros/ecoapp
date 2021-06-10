@@ -10,12 +10,12 @@ class UserModel extends BaseModel
   }) : super(id: id);
 
   UserModel.fromJsonMap(Map<String, dynamic> json) : super(id: json['id']){
-    createdDate            = DateTime.parse(json['created_date']);
+    createdDate            = DateTime.parse(json['creation_date']);
   }
 
   @override
   Map<String, dynamic> toJson() => {
     'id'          : id,
-    'created_date' : createdDate.toString()
+    'creation_date' : createdDate.toString()
   };
 }

@@ -11,6 +11,11 @@ class DistrictBloc extends BaseBloc<DistrictModel>{
   DistrictBloc() : super(0){
   }
 
+  @override
+  Future<void> initializeBloc() async {
+    return;
+  }
+
   /// Get districts
   Future<List<DistrictModel>> getDistricts() async {
     return await districtAPI.selectAll();

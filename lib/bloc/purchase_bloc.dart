@@ -10,6 +10,11 @@ class PurchaseBloc extends BaseBloc<PurchaseModel>{
 
   PurchaseBloc() : super(0);
 
+  @override
+  Future<void> initializeBloc() async {
+    return;
+  }
+
   Future<List<PurchaseModel>> getPurchases(ProfileModel profile) async => await purchaseAPI.selectAll(params: {
     'profile': profile.id
   });

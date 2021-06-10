@@ -65,10 +65,13 @@ dependencies:
   # Number picker
   numberpicker: ^2.1.1
 
+  # Ping connection
+  dart_ping: ^6.0.0
+
   # Splash screen
   flutter_native_splash: ^1.1.8+4
 
-  # HTML
+  # HTTP
   http: ^0.13.3
 
 dev_dependencies:
