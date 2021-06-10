@@ -21,7 +21,7 @@ class UserBloc extends BaseBloc<UserModel>{
 
   Future<UserModel?> getLinkedUser(ProfileModel? profile) async {
     if(profile != null && profile.user != null) return profile.user;
-
+    
     final users = await userLocalAPI.select();
     if(users.length > 0)
       return users[0];

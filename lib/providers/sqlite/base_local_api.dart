@@ -7,7 +7,7 @@ import 'package:sqflite/sqflite.dart';
 import 'package:flutter/widgets.dart';
 
 abstract class BaseLocalAPI <T extends BaseModel>{
-  late Future<Database> database;
+  Future<Database>? database;
   final String tableName;
   final String params;
 
@@ -42,7 +42,8 @@ abstract class BaseLocalAPI <T extends BaseModel>{
   }
 
   Future<void> update(T item) async {
-    final db = await database;
+    if(database == null) await initialize();
+    final db = await database!;
 
     try{
       await db.update(
@@ -63,7 +64,8 @@ abstract class BaseLocalAPI <T extends BaseModel>{
   }
 
   Future<void> delete(int id) async {
-    final db = await database;
+    if(database == null) await initialize();
+    final db = await database!;
 
     try{
       await db.delete(
@@ -78,7 +80,8 @@ abstract class BaseLocalAPI <T extends BaseModel>{
   }
 
   Future<void> insert(T item) async {
-    final db = await database;
+    if(database == null) await initialize();
+    final db = await database!;
 
     try{
       await db.insert(
@@ -93,7 +96,8 @@ abstract class BaseLocalAPI <T extends BaseModel>{
   }
   
   Future<List<T>> select() async {
-    final db = await database;
+    if(database == null) await initialize();
+    final db = await database!;
 
     final List<Map<String, dynamic>> maps = await db.query(tableName);
 

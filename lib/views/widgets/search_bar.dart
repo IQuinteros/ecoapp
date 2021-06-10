@@ -50,7 +50,7 @@ class SearchBar extends StatelessWidget {
       icon: Icon(Icons.filter_list_outlined), 
       onPressed: (){}
     );
-
+    
     return Container(
       margin: EdgeInsets.only(
         top: 10.0,

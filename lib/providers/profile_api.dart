@@ -23,7 +23,11 @@ class ProfileAPI extends BaseAPI<ProfileModel>{
     if(result.object != null){
       if(result.hasData){
         try{
-          result.object!.userId = int.parse(result.additionalData[1]);
+          if(result.additionalData[1] is int)
+            result.object!.userId = result.additionalData[1];
+          else
+            result.object!.userId = int.tryParse(result.additionalData[1]) ?? result.additionalData[1];
+          
         }
         catch(e, stacktrace) {
           print(e);

@@ -95,13 +95,19 @@ class ProfileBloc extends BaseBloc<ProfileModel>{
       await userLocalAPI.insert(result.object!);
     }
     else{
-      final isInRemote = await userAPI.selectAll(
+      // User stored in local database
+      final remoteUser = await userAPI.selectAll(
         params: {
           'id': users[0].id
         }
       );
 
-      if(isInRemote.length > 0){
+      if(remoteUser.length > 0){
+        // Check for users without linked profile
+        if(remoteUser[0].haveProfile != null && remoteUser[0].haveProfile!){
+          await userLocalAPI.clear();
+          return await _tryCreateNewLocalUser();
+        }
         return true;
       }
       else{
