@@ -3,6 +3,7 @@ import 'dart:async';
 import 'dart:convert';
 
 import 'package:dart_ping/dart_ping.dart';
+import 'package:flutter/material.dart';
 import 'package:http/http.dart' as http;
 import 'package:flutter_ecoapp/models/base.dart';
 
@@ -98,15 +99,18 @@ abstract class BaseAPI<T extends BaseModel>{
   }
 
   // Insert method
-  Future<T?> insert({required T item, String? customName, Map<String, dynamic> additionalParams = const {}}) async{
+  Future<InsertResult<T>> insert({required T item, String? customName, Map<String, dynamic> additionalParams = const {}}) async{
     final data = (await request(_getRequestUrl('insert', customName), getJsonParams(item)..addAll(additionalParams))).data;
-    if(data == null) return null;
+    if(data == null) return InsertResult<T>();
 
     if(data.length > 0){
-      return item..id = int.parse(data.toList()[0]);
+      return InsertResult<T>(
+        object: item..id = int.parse(data.toList()[0]),
+        additionalData: data.toList()
+      );
     }
 
-    return null;
+    return InsertResult();
   }
 
   // Delete method
@@ -131,4 +135,16 @@ class RequestResult{
   final Iterable? data;
 
   RequestResult(this.success, this.data);
+}
+
+class InsertResult <T>{
+  final T? object;
+  final List additionalData;
+
+  bool get hasData => additionalData.length > 0;
+
+  InsertResult({
+    this.object, 
+    this.additionalData = const []
+  });
 }

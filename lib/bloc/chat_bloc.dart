@@ -47,7 +47,7 @@ class ChatBloc extends BaseBloc<ChatModel>{
     if(chat != null){
       return (await messageAPI.insert(
         item: message,
-      )) != null;
+      )).object != null;
     }
     else{
 
@@ -63,13 +63,13 @@ class ChatBloc extends BaseBloc<ChatModel>{
         }
       );
 
-      if(newChat != null){
+      if(newChat.object != null){
         return (await messageAPI.insert(
           item: message,
           additionalParams: {
-            'chat': newChat.id
+            'chat': newChat.object!.id
           }
-        )) != null;
+        )).object != null;
       }
         
       return false;

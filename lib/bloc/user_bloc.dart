@@ -50,9 +50,7 @@ class UserBloc extends BaseBloc<UserModel>{
       }
     );
 
-    if(result == null) return null;
-
-    return result;
+    return result.object;
     
   }
 

@@ -89,10 +89,10 @@ class ProfileBloc extends BaseBloc<ProfileModel>{
         )
       );
 
-      if(result == null) return false;
+      if(result.object == null) return false;
       
       await userLocalAPI.clear();
-      await userLocalAPI.insert(result);
+      await userLocalAPI.insert(result.object!);
     }
     else{
       final isInRemote = await userAPI.selectAll(
@@ -211,13 +211,13 @@ class ProfileBloc extends BaseBloc<ProfileModel>{
       }
     );
 
-    if(result != null){
+    if(result.object != null){
       await profileLocalAPI.clear();
-      await profileLocalAPI.insert(result);
+      await profileLocalAPI.insert(result.object!);
       await _updateCurrentSession();
     }
 
-    return result != null;
+    return result.object != null;
 
   }
 
