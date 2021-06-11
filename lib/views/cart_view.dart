@@ -26,6 +26,8 @@ class _CartViewState extends State<CartView> {
     return getContent(context);
   }
 
+  int loadedElements = 0;
+  int _deletedElements = 0;
   Widget getContent(BuildContext context){
 
     final cartBloc = BlocProvider.of<CartBloc>(context);
@@ -68,12 +70,16 @@ class _CartViewState extends State<CartView> {
                 continue display;
               display:
               case ConnectionState.done:
+
+                loadedElements = cartBloc.loadedArticles.length;
                 
                 cartArticles.addAll(cartBloc.loadedArticles.map<Widget>((e) => CartArticleCard(
                   key: Key('cart_article${e.id}${e.articleId}'),
                   article: e.article!,
                   initialQuantity: e.quantity,
-                  onDelete: () => {}//_resetState(),
+                  onDelete: () {
+                    if(cartBloc.loadedArticles.length <= 0) _resetState();
+                  }//_resetState(),
                 )).toList());
 
                 if(snapshot.connectionState == ConnectionState.done && snapshot.data!.length <= 0){

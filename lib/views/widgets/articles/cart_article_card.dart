@@ -30,12 +30,6 @@ class _CartArticleCardState extends State<CartArticleCard> {
   bool _deleted = false;
 
   @override
-  void initState() { 
-    super.initState();
-    print('INIT STATE');
-  }
-
-  @override
   Widget build(BuildContext context) {
     if(_quantity == null) _quantity = widget.initialQuantity;
     final image = Image(
