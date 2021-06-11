@@ -3,10 +3,14 @@ import 'dart:ui';
 import 'package:flutter/material.dart';
 import 'package:flutter_bloc/flutter_bloc.dart';
 import 'package:flutter_ecoapp/bloc/cart_bloc.dart';
+import 'package:flutter_ecoapp/bloc/profile_bloc.dart';
 import 'package:flutter_ecoapp/models/article.dart';
 import 'package:flutter_ecoapp/models/cart.dart';
+import 'package:flutter_ecoapp/views/login_view.dart';
+import 'package:flutter_ecoapp/views/style/colors.dart';
 
 import 'package:flutter_ecoapp/views/style/text_style.dart';
+import 'package:flutter_ecoapp/views/summary_view.dart';
 import 'package:flutter_ecoapp/views/widgets/articles/cart_article_card.dart';
 import 'package:flutter_ecoapp/views/widgets/articles/mini_eco_indicator.dart';
 import 'package:flutter_ecoapp/views/widgets/normal_button.dart';
@@ -142,7 +146,9 @@ class _CartViewState extends State<CartView> {
                 ),
                 child: NormalButton(
                   text: 'Reservar pedido', 
-                  onPressed: (){}
+                  onPressed: (){
+                    _buy(context);
+                  }
                 ),
               ),
             ),
@@ -153,4 +159,38 @@ class _CartViewState extends State<CartView> {
   }
 
   void _resetState() => setState(() {});
+
+  void _buy(BuildContext context){
+    final cartBloc = BlocProvider.of<CartBloc>(context);
+    
+    if(cartBloc.loadedArticles.length <= 0){
+      ScaffoldMessenger.of(context).removeCurrentSnackBar();
+      ScaffoldMessenger.of(context).showSnackBar(SnackBar(
+        content: Text('No hay artículos en el carrito para comprar'),
+        backgroundColor: EcoAppColors.MAIN_DARK_COLOR,
+        behavior: SnackBarBehavior.floating,
+      ));
+    }
+    
+    final profileBloc = BlocProvider.of<ProfileBloc>(context);
+    if(profileBloc.currentProfile == null) {
+      displayProfileMessage(context);
+      return;
+    }
+    
+    Navigator.push(context, MaterialPageRoute(builder: (__) => SummaryView()));
+  }
+
+  void displayProfileMessage(BuildContext context){
+    ScaffoldMessenger.of(context).removeCurrentSnackBar();
+    ScaffoldMessenger.of(context).showSnackBar(SnackBar(
+      content: Text('Debe iniciar sesión para marcar el artículo como favorito'),
+      backgroundColor: EcoAppColors.MAIN_DARK_COLOR,
+      action: SnackBarAction(
+        label: "Iniciar sesión",
+        textColor: EcoAppColors.ACCENT_COLOR,
+        onPressed: () => Navigator.push(context, MaterialPageRoute(builder: (__) => LoginView())),
+      ),
+    ));
+  }
 }

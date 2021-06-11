@@ -10,17 +10,13 @@ class ArticleSearch extends SearchDelegate {
     String hintText = 'Buscar artículos',
   }) : super(
     searchFieldLabel: hintText,
-    searchFieldStyle: GoogleFonts.montserrat(),
-    textInputAction: TextInputAction.search
+    textInputAction: TextInputAction.search,
+    searchFieldDecorationTheme: InputDecorationTheme(
+      hintStyle: GoogleFonts.montserrat()
+    )
   );
 
   String selection = '';
-
-  @override
-  ThemeData appBarTheme(BuildContext context) {
-    final ThemeData theme = Theme.of(context);
-    return theme;
-  }
 
   @override
   List<Widget> buildActions(BuildContext context) {
@@ -66,7 +62,21 @@ class ArticleSearch extends SearchDelegate {
 
   @override
   Widget buildSuggestions(BuildContext context) {
-    return Container();
+    // TODO: Load history
+    return ListView(
+      children: [
+        ListTile(
+          leading: Icon(
+            Icons.history
+          ),
+          title: Text(
+            'Búsqueda',
+            style: GoogleFonts.montserrat(),
+          ),
+          onTap: () => close(context, 'Búsqueda'),
+        ),
+      ],
+    );
   }
 
   

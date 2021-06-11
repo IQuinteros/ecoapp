@@ -109,7 +109,7 @@ class _ArticleAppBar extends StatelessWidget {
         background: Hero( 
           tag: article.tag,
           child: Image(
-            image: NetworkImage(article.photos[0].photoUrl),
+            image: NetworkImage(article.photos.length > 0? article.photos[0].photoUrl : 'https://picsum.photos/500/400'),
             height: 120,
             width: 120,
             fit: BoxFit.cover,
