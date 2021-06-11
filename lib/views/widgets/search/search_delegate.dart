@@ -1,6 +1,9 @@
 import 'package:flutter/material.dart';
 import 'package:flutter_bloc/flutter_bloc.dart';
 import 'package:flutter_ecoapp/bloc/app_bloc.dart';
+import 'package:flutter_ecoapp/bloc/profile_bloc.dart';
+import 'package:flutter_ecoapp/bloc/user_bloc.dart';
+import 'package:flutter_ecoapp/models/search.dart';
 import 'package:flutter_ecoapp/views/result_view.dart';
 import 'package:google_fonts/google_fonts.dart';
 
@@ -62,20 +65,46 @@ class ArticleSearch extends SearchDelegate {
 
   @override
   Widget buildSuggestions(BuildContext context) {
-    // TODO: Load history
+    final userBloc = BlocProvider.of<UserBloc>(context);
+
+    /* return FutureBuilder(
+      future: userBloc.getSearchOfUser(profileBloc.currentProfile),
+      initialData: <SearchModel>[],
+      builder: (BuildContext context, AsyncSnapshot<List<SearchModel>> snapshot){
+        switch(snapshot.connectionState){            
+          case ConnectionState.done:
+            return _searchsToList(snapshot.data!, context);
+          default: return LinearProgressIndicator();
+        }
+      }
+    ); */
+    return _searchsToList(userBloc.searchModels, context);
+    
+  }
+
+  Widget _searchsToList(List<SearchModel> searchs, BuildContext context){
+    searchs = searchs.where((element) => element.searchText.contains(query)).toList();
+    List<SearchModel> finalSearch = [];
+    searchs.forEach((element) { 
+      bool contains = false;
+      finalSearch.forEach((inFinal) => contains = inFinal.searchText.toLowerCase() == element.searchText.toLowerCase());
+      if(!contains)
+        finalSearch.add(element);
+    });
+
+    List<Widget> tiles = finalSearch.map((e) => ListTile(
+      leading: Icon(
+        Icons.history
+      ),
+      title: Text(
+        e.searchText,
+        style: GoogleFonts.montserrat(),
+      ),
+      onTap: () => close(context, e.searchText),
+    )).toList();
+
     return ListView(
-      children: [
-        ListTile(
-          leading: Icon(
-            Icons.history
-          ),
-          title: Text(
-            'Búsqueda',
-            style: GoogleFonts.montserrat(),
-          ),
-          onTap: () => close(context, 'Búsqueda'),
-        ),
-      ],
+      children: tiles
     );
   }
 

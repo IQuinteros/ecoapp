@@ -30,6 +30,20 @@ class UserBloc extends BaseBloc<UserModel>{
     await userLocalAPI.clear();
     await userLocalAPI.insert(user);
   }
+
+  List<SearchModel> searchModels = [];
+
+  Future<List<SearchModel>> getSearchOfUser(ProfileModel? profile) async {
+    UserModel? user = await getLinkedUser(profile);
+    if(user == null) return [];
+
+    searchModels = await searchAPI.selectAll(
+      params: {
+        'user_id': user.id
+      }
+    );
+    return searchModels;
+  }
   
   Future<SearchModel?> uploadNewSearch(ProfileModel? profile, String search) async {
     UserModel? user = await getLinkedUser(profile);
@@ -47,7 +61,7 @@ class UserBloc extends BaseBloc<UserModel>{
         'user_id': user.id
       }
     );
-
+    await getSearchOfUser(profile);
     return result.object;
     
   }

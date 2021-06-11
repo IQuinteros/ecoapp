@@ -16,13 +16,18 @@ class ProfileBloc extends BaseBloc<ProfileModel>{
   final ProfileAPI profileAPI = ProfileAPI();
   final ProfileLocalAPI profileLocalAPI = ProfileLocalAPI();
 
+  final Function(ProfileModel?)? onFinishInitializing;
+
+  ProfileBloc({this.onFinishInitializing});
 
   @override
   Future<void> initializeBloc() async{
+    //print(StackTrace.current);
     await profileLocalAPI.initialize();
     await userLocalAPI.initialize();
     // Get current getCurrentSession
     await _updateCurrentSessionFromRemote();
+    if(onFinishInitializing != null) onFinishInitializing!(currentProfile);
   }
 
   /// Session streams  
