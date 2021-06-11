@@ -1,3 +1,5 @@
+import 'dart:ui';
+
 import 'package:flutter/material.dart';
 import 'package:flutter_bloc/flutter_bloc.dart';
 import 'package:flutter_ecoapp/bloc/cart_bloc.dart';
@@ -12,6 +14,7 @@ import 'package:flutter_ecoapp/views/debug/debug.dart';
 import 'package:flutter_ecoapp/views/style/text_style.dart';
 import 'package:flutter_ecoapp/views/widgets/articles/cart_article_card.dart';
 import 'package:flutter_ecoapp/views/widgets/articles/mini_eco_indicator.dart';
+import 'package:flutter_ecoapp/views/widgets/normal_button.dart';
 import 'package:flutter_ecoapp/views/widgets/search_bar.dart';
 import 'package:google_fonts/google_fonts.dart';
 
@@ -48,54 +51,27 @@ class _CartViewState extends State<CartView> {
           ),
         ),
         FutureBuilder(
-          future: cartBloc.getCartArticles(),
-          builder: (BuildContext context, AsyncSnapshot<List<CartArticleModel>> snapshot){
+          future: cartBloc.loadCart(),
+          initialData: cartBloc.loadedArticles,
+          builder: (BuildContext context, AsyncSnapshot<List<ArticleModel>> snapshot){
+            List<Widget> cartArticles = [];
             switch(snapshot.connectionState){
+              case ConnectionState.waiting:
+              case ConnectionState.active:
+                cartArticles.add(LinearProgressIndicator());
+                cartArticles.add(SizedBox(height: 10.0));
+                continue display;
+              display:
               case ConnectionState.done:
-                 List<CartArticleCard> cartArticles = snapshot.data!.map<CartArticleCard>((e) => CartArticleCard(
-                  article: ArticleModel(
-                    id: e.articleId,
-                    title: 'Article id: ${e.articleId}',
-                    category: CategoryModel(id: 1, title: '', createdDate: DateTime.now()),
-                    description: 'Large description',
-                    createdDate: DateTime.now(),
-                    enabled: true,
-                    form: ArticleForm(
-                      id: 1, 
-                      createdDate: DateTime.now(), 
-                      lastUpdateDate: DateTime.now(),
-                      generalDetail: '',
-                      recycledMats: '',
-                      recycledMatsDetail: '',
-                      recycledProd: '',
-                      recycledProdDetail: '',
-                      reuseTips: ''
-                    ),
-                    lastUpdateDate: DateTime.now(),
-                    price: 200,
-                    rating: ArticleRating(
-                      opinions: []
-                    ),
-                    stock: 2,
-                    pastPrice: 200,
-                    store: StoreModel(
-                      contactNumber: 1,
-                      createdDate: DateTime.now(),
-                      description: '',
-                      district: DistrictModel(id: 1, name: 'Penco'),
-                      email: '',
-                      enabled: true,
-                      id: 1,
-                      lastUpdateDate: DateTime.now(),
-                      location: '',
-                      publicName: 'TEST',
-                      rut: 2,
-                      rutDv: ''
-                    )
-                  ),
+                print(snapshot.data!.length);
+                
+                cartArticles.addAll(snapshot.data!.map<CartArticleCard>((e) => CartArticleCard(
+                  article: e,
                   onDelete: () => setState(() {}),
-                )).toList();
+                )).toList());
 
+                cartArticles.add(SizedBox(height: 100.0));
+                
                 final content = Column(
                   children: cartArticles
                 );
@@ -107,22 +83,16 @@ class _CartViewState extends State<CartView> {
                   right: 20.0
                 ),
                 child: Column(
-                  crossAxisAlignment: CrossAxisAlignment.center,
+                  crossAxisAlignment: CrossAxisAlignment.stretch,
                   mainAxisAlignment: MainAxisAlignment.center,
                   children: [
                     LinearProgressIndicator(),
                     SizedBox(height: 40.0),
-                    Row(
-                      mainAxisSize: MainAxisSize.max,
-                      mainAxisAlignment: MainAxisAlignment.center,
-                      children: [
-                        Text(
-                          'Estamos actualizando tus artículos',
-                          style: GoogleFonts.montserrat(),
-                          textAlign: TextAlign.center,
-                        ),
-                      ]
-                    ),                  
+                    Text(
+                      'Estamos actualizando tus artículos',
+                      style: GoogleFonts.montserrat(),
+                      textAlign: TextAlign.center,
+                    ),                 
                   ],
                 ),
               );
@@ -132,9 +102,43 @@ class _CartViewState extends State<CartView> {
       ],
     );
 
-    return SingleChildScrollView(
-      child: column,
-      scrollDirection: Axis.vertical,
+    return Stack(
+      children: [
+        Column(
+          children: [
+            Expanded(
+              child: SingleChildScrollView(
+                child: column,
+                scrollDirection: Axis.vertical,
+              ),
+            ),
+          ],
+        ),
+        Align(
+          alignment: Alignment.bottomCenter,
+          child: Container(
+            clipBehavior: Clip.antiAlias,
+            decoration: BoxDecoration(),
+            padding: EdgeInsets.symmetric(
+              horizontal: 20.0,
+              vertical: 10.0
+            ),
+            child: BackdropFilter(
+              filter: ImageFilter.blur(sigmaX: 5.0, sigmaY: 5.0),
+              child: Container(
+                height: 50.0,
+                constraints: BoxConstraints(
+                  minHeight: 50.0
+                ),
+                child: NormalButton(
+                text: 'Reservar pedido', 
+                onPressed: (){}
+                ),
+              ),
+            ),
+          ),
+        )
+      ]
     );
   }
 }

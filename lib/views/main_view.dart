@@ -1,6 +1,7 @@
 import 'package:flutter/material.dart';
 import 'package:flutter_bloc/flutter_bloc.dart';
 import 'package:flutter_ecoapp/bloc/app_bloc.dart';
+import 'package:flutter_ecoapp/bloc/cart_bloc.dart';
 import 'package:flutter_ecoapp/views/cart_view.dart';
 import 'package:flutter_ecoapp/views/history_view.dart';
 import 'package:flutter_ecoapp/views/home_view.dart';
@@ -30,6 +31,9 @@ class _MainViewState extends State<MainView> {
 
     AppBloc appBloc = BlocProvider.of<AppBloc>(context);
     appBloc.mainEcoNavBar = bottomNavBar;
+
+    CartBloc cartBloc = BlocProvider.of<CartBloc>(context);
+    cartBloc.loadCart();
 
     return Scaffold(
       body: SafeArea(child: getContent(context)),

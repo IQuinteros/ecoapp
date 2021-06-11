@@ -359,6 +359,8 @@ class __AddToCartButtonState extends State<_AddToCartButton> {
         textColor: EcoAppColors.ACCENT_COLOR,
       ),
     ));  
+
+    cartBloc.loadCart();
   }
 
   void _goToCartView(BuildContext context){

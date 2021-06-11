@@ -3,6 +3,10 @@ import 'dart:async';
 import 'package:flutter_ecoapp/bloc/base_bloc.dart';
 import 'package:flutter_ecoapp/models/article.dart';
 import 'package:flutter_ecoapp/models/cart.dart';
+import 'package:flutter_ecoapp/models/category.dart';
+import 'package:flutter_ecoapp/models/district.dart';
+import 'package:flutter_ecoapp/models/opinion.dart';
+import 'package:flutter_ecoapp/models/store.dart';
 import 'package:flutter_ecoapp/providers/article_api.dart';
 import 'package:flutter_ecoapp/providers/sqlite/cart_local_api.dart';
 
@@ -16,17 +20,63 @@ class CartBloc extends BaseBloc<CartArticleModel>{
     await cartLocalAPI.initialize();
   }
 
-  Future<CartModel> getCart() async {
+  List<ArticleModel> loadedArticles = [];
+
+  Future<List<ArticleModel>> loadCart() async {
     List<CartArticleModel> articles = await cartLocalAPI.select();
-    List<ArticleModel> articleModels = await articleAPI.selectAll(
+
+    // TODO: Connect with API
+    /* List<ArticleModel> articleModels = await articleAPI.selectAll(
       params: {
         'ids': _getIdsFromArticles(articles)
       }
-    );
+    ); */
+    List<ArticleModel> articlesModelsDEBUG = articles.map<ArticleModel>((e) => ArticleModel(
+      id: e.articleId,
+      title: 'Article id: ${e.articleId}',
+      category: CategoryModel(id: 1, title: '', createdDate: DateTime.now()),
+      description: 'Large description',
+      createdDate: DateTime.now(),
+      enabled: true,
+      form: ArticleForm(
+        id: 1, 
+        createdDate: DateTime.now(), 
+        lastUpdateDate: DateTime.now(),
+        generalDetail: '',
+        recycledMats: '',
+        recycledMatsDetail: '',
+        recycledProd: '',
+        recycledProdDetail: '',
+        reuseTips: ''
+      ),
+      lastUpdateDate: DateTime.now(),
+      price: 200,
+      rating: ArticleRating(
+        opinions: []
+      ),
+      stock: 2,
+      pastPrice: 200,
+      store: StoreModel(
+        contactNumber: 1,
+        createdDate: DateTime.now(),
+        description: '',
+        district: DistrictModel(id: 1, name: 'Penco'),
+        email: '',
+        enabled: true,
+        id: 1,
+        lastUpdateDate: DateTime.now(),
+        location: '',
+        publicName: 'TEST',
+        rut: 2,
+        rutDv: ''
+      )
+    )).toList();
 
-    return CartModel(
-      articles: articleModels
-    );
+    await Future.delayed(Duration(seconds: 2));
+    loadedArticles = articlesModelsDEBUG;
+    print('LOADED: ${loadedArticles.length}');
+
+    return articlesModelsDEBUG;
   }
 
   Future<List<CartArticleModel>> getCartArticles() async {
@@ -64,7 +114,7 @@ class CartBloc extends BaseBloc<CartArticleModel>{
     await cartLocalAPI.update(
       item..quantity = quantity
     );
-    final list = (await cartLocalAPI.select()).where((element) => element.articleId == article.id).toList(); 
+    final list = (await cartLocalAPI.select()).where((element) => element.articleId == article.id).toList();
     if(list.length <= 0) return null;
     return list[0];
   }

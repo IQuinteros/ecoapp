@@ -26,6 +26,7 @@ class CartArticleCard extends StatefulWidget {
 class _CartArticleCardState extends State<CartArticleCard> {
 
   int quantity = 1;
+  bool isVisible = true;
 
   @override
   Widget build(BuildContext context) {
@@ -191,14 +192,17 @@ class _CartArticleCardState extends State<CartArticleCard> {
       }
     );
 
-    return Container(
-      margin: EdgeInsets.symmetric(
-        horizontal: 10.0
-      ),
-      child: InkWell(
-        child: layout,
-        borderRadius: BorderRadius.circular(20.0),
-        onTap: () => Navigator.push(context, MaterialPageRoute(builder: (__) => ArticleView(article: widget.article))),
+    return Visibility(
+      visible: isVisible,
+      child: Container(
+        margin: EdgeInsets.symmetric(
+          horizontal: 10.0
+        ),
+        child: InkWell(
+          child: layout,
+          borderRadius: BorderRadius.circular(20.0),
+          onTap: () => Navigator.push(context, MaterialPageRoute(builder: (__) => ArticleView(article: widget.article))),
+        ),
       ),
     );
   }
@@ -220,6 +224,10 @@ class _CartArticleCardState extends State<CartArticleCard> {
   void _deleteArticleFromCart(BuildContext context) async {
     final cartBloc = BlocProvider.of<CartBloc>(context);
     await cartBloc.removeArticleToCart(widget.article);
+    setState(() {
+      this.isVisible = false;
+    });
+    // TODO: Remove an article, generate two removes (visually)
     widget.onDelete();
   }
 }
