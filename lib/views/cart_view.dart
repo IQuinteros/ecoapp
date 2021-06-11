@@ -54,14 +54,16 @@ class _CartViewState extends State<CartView> {
               case ConnectionState.waiting:
               case ConnectionState.active:
                 cartArticles.add(LinearProgressIndicator());
-                cartArticles.add(SizedBox(height: 13.0));
-                cartArticles.add(
-                  Text(
-                    'Estamos actualizando tus artículos',
-                    style: GoogleFonts.montserrat(),
-                    textAlign: TextAlign.center,
-                  ),  
-                );
+                if(cartBloc.loadedArticles.length <= 0){
+                  cartArticles.add(SizedBox(height: 13.0));
+                  cartArticles.add(
+                    Text(
+                      'Estamos actualizando tus artículos',
+                      style: GoogleFonts.montserrat(),
+                      textAlign: TextAlign.center,
+                    ),  
+                  );
+                }
                 cartArticles.add(SizedBox(height: 20.0));
                 continue display;
               display:

@@ -112,6 +112,7 @@ class CartBloc extends BaseBloc<CartArticleModel>{
       )
     );
     final list = (await cartLocalAPI.select()).where((element) => element.articleId == article.id).toList(); 
+    print('ADDED $article');
     if(list.length <= 0) return null;
     return list[0];
   }
