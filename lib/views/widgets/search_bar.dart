@@ -5,6 +5,7 @@ import 'package:flutter_ecoapp/bloc/profile_bloc.dart';
 import 'package:flutter_ecoapp/bloc/user_bloc.dart';
 import 'package:flutter_ecoapp/views/result_view.dart';
 import 'package:flutter_ecoapp/views/widgets/search/search_delegate.dart';
+import 'package:flutter_ecoapp/views/widgets/search/search_filter.dart';
 import 'package:google_fonts/google_fonts.dart';
 
 class SearchBar extends StatelessWidget {
@@ -48,7 +49,17 @@ class SearchBar extends StatelessWidget {
 
     final filterButton = IconButton(
       icon: Icon(Icons.filter_list_outlined), 
-      onPressed: (){}
+      onPressed: (){
+        showDialog(
+          context: context, 
+          builder: (BuildContext context){
+            return Dialog(
+              elevation: 10,
+              child: SearchFilter(),
+            );
+          }
+        );
+      }
     );
     
     return Container(
