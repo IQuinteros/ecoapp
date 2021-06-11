@@ -59,43 +59,54 @@ class _CartViewState extends State<CartView> {
               case ConnectionState.waiting:
               case ConnectionState.active:
                 cartArticles.add(LinearProgressIndicator());
-                cartArticles.add(SizedBox(height: 10.0));
+                cartArticles.add(SizedBox(height: 13.0));
+                cartArticles.add(
+                  Text(
+                    'Estamos actualizando tus artículos',
+                    style: GoogleFonts.montserrat(),
+                    textAlign: TextAlign.center,
+                  ),  
+                );
+                cartArticles.add(SizedBox(height: 20.0));
                 continue display;
               display:
               case ConnectionState.done:
-                print(snapshot.data!.length);
                 
-                cartArticles.addAll(snapshot.data!.map<CartArticleCard>((e) => CartArticleCard(
+                cartArticles.addAll(cartBloc.loadedArticles.map<Widget>((e) => CartArticleCard(
+                  key: Key('cart_article${e.id}'),
                   article: e,
-                  onDelete: () => setState(() {}),
+                  onDelete: () => _resetState(),
                 )).toList());
 
+                cartArticles.forEach((element) { 
+                  if(element is CartArticleCard){
+                  }
+                });
+
+                if(snapshot.connectionState == ConnectionState.done && snapshot.data!.length <= 0){
+                  cartArticles.add(SizedBox(height: 15.0));
+                  cartArticles.add(
+                    Row(
+                      mainAxisSize: MainAxisSize.max,
+                      mainAxisAlignment: MainAxisAlignment.center,
+                      children: [
+                        Text(
+                          'Aún no tienes artículos en tu carrito',
+                          style: GoogleFonts.montserrat(),
+                          textAlign: TextAlign.center,
+                        ),
+                      ],
+                    )
+                  );
+                }
+
                 cartArticles.add(SizedBox(height: 100.0));
-                
+
                 final content = Column(
                   children: cartArticles
                 );
                 return content;
-              default: return Container(
-                margin: EdgeInsets.only(
-                  top: 10.0,
-                  left: 20.0,
-                  right: 20.0
-                ),
-                child: Column(
-                  crossAxisAlignment: CrossAxisAlignment.stretch,
-                  mainAxisAlignment: MainAxisAlignment.center,
-                  children: [
-                    LinearProgressIndicator(),
-                    SizedBox(height: 40.0),
-                    Text(
-                      'Estamos actualizando tus artículos',
-                      style: GoogleFonts.montserrat(),
-                      textAlign: TextAlign.center,
-                    ),                 
-                  ],
-                ),
-              );
+              default: return Container();
             }
           }
         )
@@ -141,4 +152,6 @@ class _CartViewState extends State<CartView> {
       ]
     );
   }
+
+  void _resetState() => setState(() {});
 }

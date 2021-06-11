@@ -25,8 +25,8 @@ class CartArticleCard extends StatefulWidget {
 
 class _CartArticleCardState extends State<CartArticleCard> {
 
-  int quantity = 1;
-  bool isVisible = true;
+  int _quantity = 1;
+  bool _deleted = false;
 
   @override
   Widget build(BuildContext context) {
@@ -109,7 +109,6 @@ class _CartArticleCardState extends State<CartArticleCard> {
         textStyle: MaterialStateProperty.all(GoogleFonts.montserrat())
       ),
       onPressed: () {
-        // TODO: Delete article of cart
         AwesomeDialog(
           title: 'Eliminar artículo del carrito',
           desc: 'Se eliminará este artículo del carrito. Lo puedes volver a agregar cuando quieras',
@@ -142,7 +141,7 @@ class _CartArticleCardState extends State<CartArticleCard> {
             children: [
               Expanded(child: Container()),
               Text(
-                quantity.toString(),
+                _quantity.toString(),
                 style: GoogleFonts.montserrat(),
                 textAlign: TextAlign.end,
               ),
@@ -193,7 +192,7 @@ class _CartArticleCardState extends State<CartArticleCard> {
     );
 
     return Visibility(
-      visible: isVisible,
+      visible: !_deleted,
       child: Container(
         margin: EdgeInsets.symmetric(
           horizontal: 10.0
@@ -212,8 +211,8 @@ class _CartArticleCardState extends State<CartArticleCard> {
       context: context,
       builder: (BuildContext context){
         return _QuantitySelector(
-          onChanged: (value) => setState(() => quantity = value),
-          initialValue: quantity,
+          onChanged: (value) => setState(() => _quantity = value),
+          initialValue: _quantity,
         );
       },
       elevation: 10,
@@ -223,12 +222,12 @@ class _CartArticleCardState extends State<CartArticleCard> {
 
   void _deleteArticleFromCart(BuildContext context) async {
     final cartBloc = BlocProvider.of<CartBloc>(context);
-    await cartBloc.removeArticleToCart(widget.article);
     setState(() {
-      this.isVisible = false;
-    });
-    // TODO: Remove an article, generate two removes (visually)
+      _deleted = true;
+    }); 
+    await cartBloc.removeArticleToCart(widget.article);
     widget.onDelete();
+    
   }
 }
 
