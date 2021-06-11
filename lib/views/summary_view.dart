@@ -48,7 +48,7 @@ class SummaryView extends StatelessWidget {
     final loadedArticles = cartBloc.loadedArticles;
 
     CartModel cart = CartModel(
-      articles: loadedArticles.map<ArticleModel>((e) => e.article!).toList()
+      articles: loadedArticles
     );
 
     final profileBloc = BlocProvider.of<ProfileBloc>(context);

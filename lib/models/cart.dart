@@ -3,7 +3,7 @@ import 'package:flutter_ecoapp/models/base.dart';
 
 class CartModel
 {
-  final List<ArticleModel> articles;
+  final List<CartArticleModel> articles;
 
   CartModel({
     this.articles = const [],
@@ -11,7 +11,11 @@ class CartModel
 
   double get totalPrice {
     double total = 0;
-    articles.forEach((element) { total += element.price; });
+    articles.forEach((element) { 
+      if(element.article != null){
+        total += element.article!.price * element.quantity; 
+      }
+    });
     return total;
   }
 
@@ -22,12 +26,14 @@ class CartModel
       isRecyclableProduct: false
     );
     articles.forEach((element) { 
-      if(element.form.getIndicator().hasRecycledMaterials)
-        toReturn.hasRecycledMaterials = true;
-      if(element.form.getIndicator().hasReuseTips)
-        toReturn.hasReuseTips = true;
-      if(element.form.getIndicator().isRecyclableProduct)
-        toReturn.isRecyclableProduct = true;
+      if(element.article != null){
+        if(element.article!.form.getIndicator().hasRecycledMaterials)
+          toReturn.hasRecycledMaterials = true;
+        if(element.article!.form.getIndicator().hasReuseTips)
+          toReturn.hasReuseTips = true;
+        if(element.article!.form.getIndicator().isRecyclableProduct)
+          toReturn.isRecyclableProduct = true;
+      }
     });
 
     return toReturn;
