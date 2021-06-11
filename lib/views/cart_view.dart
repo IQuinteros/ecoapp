@@ -76,12 +76,6 @@ class _CartViewState extends State<CartView> {
                   onDelete: () => {}//_resetState(),
                 )).toList());
 
-                cartArticles.forEach((element) { 
-                  if(element is CartArticleCard){
-                    print('initial quantity: ${element.initialQuantity}');
-                  }
-                });
-
                 if(snapshot.connectionState == ConnectionState.done && snapshot.data!.length <= 0){
                   cartArticles.add(SizedBox(height: 15.0));
                   cartArticles.add(

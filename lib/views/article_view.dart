@@ -329,9 +329,9 @@ class __AddToCartButtonState extends State<_AddToCartButton> {
                 text: !snapshot.data!? 'Agregar al Carrito' : 'Ver en carrito',
                 color: !snapshot.data!? EcoAppColors.MAIN_COLOR : Colors.lightGreen.shade50,
                 textColor: !snapshot.data!? Colors.white : EcoAppColors.MAIN_COLOR,
-                onPressed: () {
+                onPressed: () async {
+                  !snapshot.data!? await _addToCart(context) : _goToCartView(context);
                   setState(() {});
-                  !snapshot.data!? _addToCart(context) : _goToCartView(context);
                 }
               );
             default: return Center(child: CircularProgressIndicator());
@@ -341,7 +341,7 @@ class __AddToCartButtonState extends State<_AddToCartButton> {
     );
   }
 
-  void _addToCart(BuildContext context) async {
+  Future<void> _addToCart(BuildContext context) async {
     final cartBloc = BlocProvider.of<CartBloc>(context);
     final result = await cartBloc.addArticleToCart(widget.article);
     if(result != null){
