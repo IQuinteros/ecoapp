@@ -37,10 +37,12 @@ class CartModel
 class CartArticleModel extends BaseModel{
   late int articleId;
   late int quantity;
+  ArticleModel? article;
 
   CartArticleModel({
     required this.articleId,
-    required this.quantity
+    required this.quantity,
+    this.article
   }) : super(id: 0);
 
   CartArticleModel.fromJsonMap(Map<String, dynamic> json) : super(id: json['id']){

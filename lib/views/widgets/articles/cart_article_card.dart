@@ -16,8 +16,9 @@ class CartArticleCard extends StatefulWidget {
 
   final ArticleModel article;
   final Function() onDelete;
+  final int initialQuantity;
 
-  const CartArticleCard({Key? key, required this.article, required this.onDelete}) : super(key: key);
+  const CartArticleCard({Key? key, required this.article, required this.onDelete, required this.initialQuantity}) : super(key: key);
 
   @override
   _CartArticleCardState createState() => _CartArticleCardState();
@@ -25,11 +26,18 @@ class CartArticleCard extends StatefulWidget {
 
 class _CartArticleCardState extends State<CartArticleCard> {
 
-  int _quantity = 1;
+  int? _quantity;
   bool _deleted = false;
 
   @override
+  void initState() { 
+    super.initState();
+    print('INIT STATE');
+  }
+
+  @override
   Widget build(BuildContext context) {
+    if(_quantity == null) _quantity = widget.initialQuantity;
     final image = Image(
       image: NetworkImage('https://picsum.photos/500/300'),
       height: 120,
@@ -206,18 +214,25 @@ class _CartArticleCardState extends State<CartArticleCard> {
     );
   }
 
+  int _tempQuantity = 1;
   void selectQuantity(BuildContext context) async {
     await showModalBottomSheet(
       context: context,
       builder: (BuildContext context){
         return _QuantitySelector(
-          onChanged: (value) => setState(() => _quantity = value),
-          initialValue: _quantity,
+          onChanged: (value) {
+            _tempQuantity = value;
+          },
+          initialValue: _quantity!,
         );
       },
       elevation: 10,
       enableDrag: false
     );
+    
+    final cartBloc = BlocProvider.of<CartBloc>(context);
+    await cartBloc.updateArticleToCart(widget.article, _tempQuantity);
+    setState(() => _quantity = _tempQuantity);
   }
 
   void _deleteArticleFromCart(BuildContext context) async {
@@ -227,7 +242,6 @@ class _CartArticleCardState extends State<CartArticleCard> {
     }); 
     await cartBloc.removeArticleToCart(widget.article);
     widget.onDelete();
-    
   }
 }
 

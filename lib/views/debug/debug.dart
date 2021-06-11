@@ -506,10 +506,12 @@ class EcoAppDebug{
         CartArticleCard(
           article: _articles[0],
           onDelete: (){},
+          initialQuantity: 1,
         ),
         CartArticleCard(
           article: _articles[1],
           onDelete: (){},
+          initialQuantity: 1,
         ),
       ],
     );

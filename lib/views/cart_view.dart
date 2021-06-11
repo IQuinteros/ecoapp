@@ -5,12 +5,7 @@ import 'package:flutter_bloc/flutter_bloc.dart';
 import 'package:flutter_ecoapp/bloc/cart_bloc.dart';
 import 'package:flutter_ecoapp/models/article.dart';
 import 'package:flutter_ecoapp/models/cart.dart';
-import 'package:flutter_ecoapp/models/category.dart';
-import 'package:flutter_ecoapp/models/district.dart';
-import 'package:flutter_ecoapp/models/opinion.dart';
-import 'package:flutter_ecoapp/models/store.dart';
 
-import 'package:flutter_ecoapp/views/debug/debug.dart';
 import 'package:flutter_ecoapp/views/style/text_style.dart';
 import 'package:flutter_ecoapp/views/widgets/articles/cart_article_card.dart';
 import 'package:flutter_ecoapp/views/widgets/articles/mini_eco_indicator.dart';
@@ -53,7 +48,7 @@ class _CartViewState extends State<CartView> {
         FutureBuilder(
           future: cartBloc.loadCart(),
           initialData: cartBloc.loadedArticles,
-          builder: (BuildContext context, AsyncSnapshot<List<ArticleModel>> snapshot){
+          builder: (BuildContext context, AsyncSnapshot<List<CartArticleModel>> snapshot){
             List<Widget> cartArticles = [];
             switch(snapshot.connectionState){
               case ConnectionState.waiting:
@@ -73,13 +68,15 @@ class _CartViewState extends State<CartView> {
               case ConnectionState.done:
                 
                 cartArticles.addAll(cartBloc.loadedArticles.map<Widget>((e) => CartArticleCard(
-                  key: Key('cart_article${e.id}'),
-                  article: e,
-                  onDelete: () => _resetState(),
+                  key: Key('cart_article${e.id}${e.articleId}'),
+                  article: e.article!,
+                  initialQuantity: e.quantity,
+                  onDelete: () => {}//_resetState(),
                 )).toList());
 
                 cartArticles.forEach((element) { 
                   if(element is CartArticleCard){
+                    print('initial quantity: ${element.initialQuantity}');
                   }
                 });
 
@@ -142,8 +139,8 @@ class _CartViewState extends State<CartView> {
                   minHeight: 50.0
                 ),
                 child: NormalButton(
-                text: 'Reservar pedido', 
-                onPressed: (){}
+                  text: 'Reservar pedido', 
+                  onPressed: (){}
                 ),
               ),
             ),
