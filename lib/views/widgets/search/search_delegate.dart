@@ -66,19 +66,22 @@ class ArticleSearch extends SearchDelegate {
   @override
   Widget buildSuggestions(BuildContext context) {
     final userBloc = BlocProvider.of<UserBloc>(context);
+    final profileBloc = BlocProvider.of<ProfileBloc>(context);
 
-    /* return FutureBuilder(
-      future: userBloc.getSearchOfUser(profileBloc.currentProfile),
-      initialData: <SearchModel>[],
-      builder: (BuildContext context, AsyncSnapshot<List<SearchModel>> snapshot){
-        switch(snapshot.connectionState){            
-          case ConnectionState.done:
-            return _searchsToList(snapshot.data!, context);
-          default: return LinearProgressIndicator();
-        }
-      }
-    ); */
-    return _searchsToList(userBloc.searchModels, context);
+    if(userBloc.searchModels.length <= 0){
+      return FutureBuilder(
+        future: userBloc.getSearchOfUser(profileBloc.currentProfile),
+        initialData: <SearchModel>[],
+        builder: (BuildContext context, AsyncSnapshot<List<SearchModel>> snapshot){
+          switch(snapshot.connectionState){            
+            case ConnectionState.done:
+              return _searchsToList(snapshot.data!, context);
+            default: return LinearProgressIndicator();
+          }
+      });
+    } else{
+      return _searchsToList(userBloc.searchModels, context);
+    }    
     
   }
 
@@ -87,9 +90,11 @@ class ArticleSearch extends SearchDelegate {
     List<SearchModel> finalSearch = [];
     searchs.forEach((element) { 
       bool contains = false;
-      finalSearch.forEach((inFinal) => contains = inFinal.searchText.toLowerCase() == element.searchText.toLowerCase());
-      if(!contains)
-        finalSearch.add(element);
+      finalSearch.forEach((inFinal) {
+        if(inFinal.searchText.toLowerCase() == element.searchText.toLowerCase()) contains = true;
+      });
+
+      if(!contains) finalSearch.add(element);
     });
 
     List<Widget> tiles = finalSearch.map((e) => ListTile(

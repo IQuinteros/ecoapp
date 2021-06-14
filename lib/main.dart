@@ -27,12 +27,7 @@ class MyApp extends StatelessWidget {
     final content = MultiBlocProvider(
       providers: [
         BlocProvider<ProfileBloc>(
-          create: (__) => ProfileBloc(
-            onFinishInitializing: (profile){
-              final userBloc = BlocProvider.of<UserBloc>(context);
-              userBloc.getSearchOfUser(profile); // TODO: Fix error. Called from parent (Parent is creating blocs. So parent doesn't have blocs)
-            }
-          ),
+          create: (__) => ProfileBloc(),
         ),
         BlocProvider<DistrictBloc>(
           create: (BuildContext context) => DistrictBloc(),

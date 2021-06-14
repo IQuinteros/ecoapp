@@ -10,7 +10,7 @@ import 'package:flutter_ecoapp/models/base.dart';
 abstract class BaseAPI<T extends BaseModel>{
 
   // Hosting: ecomercioweb.000webhostapp.com
-  static const String _authority = 'localhost';
+  static const String _authority = 'localhost:8888';
   static const String _requests = 'ecoweb/api/requests';
 
   final String baseUrl;
