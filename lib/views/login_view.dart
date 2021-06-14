@@ -2,6 +2,7 @@ import 'package:awesome_dialog/awesome_dialog.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter_bloc/flutter_bloc.dart';
 import 'package:flutter_ecoapp/bloc/profile_bloc.dart';
+import 'package:flutter_ecoapp/bloc/user_bloc.dart';
 import 'package:flutter_ecoapp/models/profile.dart';
 import 'package:flutter_ecoapp/views/style/colors.dart';
 import 'package:flutter_ecoapp/views/widgets/bottom_nav_bar.dart';
@@ -148,6 +149,9 @@ class LoginView extends StatelessWidget {
         )..show();
       }
       else{
+        final userBloc = BlocProvider.of<UserBloc>(context);
+        userBloc.clearSearchs();
+
         Navigator.pop(context);
         ScaffoldMessenger.of(context).showSnackBar(SnackBar(
           backgroundColor: EcoAppColors.MAIN_DARK_COLOR,

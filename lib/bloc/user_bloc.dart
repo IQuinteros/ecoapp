@@ -33,6 +33,8 @@ class UserBloc extends BaseBloc<UserModel>{
 
   List<SearchModel> searchModels = [];
 
+  void clearSearchs() => searchModels = [];
+
   Future<List<SearchModel>> getSearchOfUser(ProfileModel? profile) async {
     UserModel? user = await getLinkedUser(profile);
     if(user == null) return [];

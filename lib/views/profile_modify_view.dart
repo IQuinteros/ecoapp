@@ -8,6 +8,7 @@ import 'package:flutter_ecoapp/bloc/district_bloc.dart';
 import 'package:flutter_ecoapp/bloc/profile_bloc.dart';
 import 'package:flutter_ecoapp/models/district.dart';
 import 'package:flutter_ecoapp/models/profile.dart';
+import 'package:flutter_ecoapp/utils/email_util.dart';
 import 'package:flutter_ecoapp/views/profile_modify_pass_view.dart';
 import 'package:flutter_ecoapp/views/style/colors.dart';
 import 'package:flutter_ecoapp/views/widgets/normal_button.dart';
@@ -15,6 +16,7 @@ import 'package:flutter_ecoapp/views/widgets/normal_input.dart';
 import 'package:google_fonts/google_fonts.dart';
 
 class ProfileModifyView extends StatelessWidget {
+  
 
   final controllers = {
     'name': TextEditingController(),
@@ -194,7 +196,14 @@ class _ProfileModifyMainContent extends StatelessWidget {
                 icon: Icons.mail,
                 type: TextInputType.emailAddress,
                 controller: controllers['email']!,
-                validator: (value) => value!.isEmpty? 'Debe ingresar su email' : null
+                validator: (value) {
+                  if(value!.isEmpty) 
+                    return 'Debe ingresar su email';
+                  if(!TextValidationUtil.validateEmail(value))
+                    return 'Debe ser un email válido';
+                  return null;
+                },
+                readOnly: true,
               ),
               NormalInput(
                 header: 'Teléfono - Celular', 

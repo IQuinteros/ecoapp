@@ -1,6 +1,7 @@
 import 'package:awesome_dialog/awesome_dialog.dart';
 import 'package:flutter/cupertino.dart';
 import 'package:flutter/material.dart';
+import 'package:flutter/services.dart';
 import 'package:flutter_bloc/flutter_bloc.dart';
 import 'package:flutter_ecoapp/bloc/profile_bloc.dart';
 import 'package:flutter_ecoapp/models/profile.dart';
@@ -114,7 +115,7 @@ class _RegisterViewState extends State<RegisterView> {
               hint: 'Ingresa tus nombres', 
               icon: Icons.person,
               controller: controllers['name']!,
-              validator: (value) => value!.isEmpty? 'Debe ingresar su nombre' : null,
+              validator: (value) => value!.isEmpty? 'Debe ingresar su nombre' : null, // TODO: Add validation with length
             ),
             NormalInput(
               header: 'Apellidos', 
@@ -132,7 +133,7 @@ class _RegisterViewState extends State<RegisterView> {
               validator: (value) {
                 if(value!.isEmpty) 
                   return 'Debe ingresar su email';
-                if(!EmailUtil.validateEmail(value))
+                if(!TextValidationUtil.validateEmail(value))
                   return 'Debe ser un email válido';
                 
                 return emailValidation;
@@ -145,7 +146,15 @@ class _RegisterViewState extends State<RegisterView> {
               icon: Icons.person,
               type: TextInputType.number,
               controller: controllers['rut']!,
-              validator: (value) => value!.isEmpty? 'Debe ingresar su rut' : null
+              validator: (value) {
+                if(value!.isEmpty) 
+                  return 'Debe ingresar su rut';
+                return null;
+              },
+              inputFormatters: [
+                FilteringTextInputFormatter.digitsOnly,
+              ],
+              maxLength: 10
             ),
             NormalInput(
               header: 'Teléfono - Celular', 
@@ -153,7 +162,11 @@ class _RegisterViewState extends State<RegisterView> {
               icon: Icons.phone,
               type: TextInputType.phone,
               controller: controllers['phone']!,
-              validator: (value) => value!.isEmpty? 'Debe ingresar su número de contacto' : null
+              validator: (value) => value!.isEmpty? 'Debe ingresar su número de contacto' : null,
+              inputFormatters: [
+                FilteringTextInputFormatter.digitsOnly
+              ],
+              maxLength: 9,
             ),
             NormalInput(
               header: 'Fecha de nacimiento', 

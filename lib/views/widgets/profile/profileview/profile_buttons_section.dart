@@ -3,6 +3,7 @@ import 'package:flutter/material.dart';
 import 'package:flutter_bloc/flutter_bloc.dart';
 import 'package:flutter_ecoapp/bloc/app_bloc.dart';
 import 'package:flutter_ecoapp/bloc/profile_bloc.dart';
+import 'package:flutter_ecoapp/bloc/user_bloc.dart';
 import 'package:flutter_ecoapp/models/profile.dart';
 import 'package:flutter_ecoapp/views/favorites.view.dart';
 import 'package:flutter_ecoapp/views/login_view.dart';
@@ -100,6 +101,9 @@ class ProfileButtonsSection extends StatelessWidget {
 
     final profileBloc = BlocProvider.of<ProfileBloc>(context);
     await profileBloc.logout();
+
+    final userBloc = BlocProvider.of<UserBloc>(context);
+    userBloc.clearSearchs();
 
     loading.dismiss();
     ScaffoldMessenger.of(context).removeCurrentSnackBar();

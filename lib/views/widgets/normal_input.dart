@@ -1,4 +1,5 @@
 import 'package:flutter/material.dart';
+import 'package:flutter/services.dart';
 import 'package:google_fonts/google_fonts.dart';
 
 class NormalInput <T> extends StatelessWidget {
@@ -15,7 +16,9 @@ class NormalInput <T> extends StatelessWidget {
     this.validator, 
     this.isPassword = false,
     this.future,
-    this.onDoneSnapshot
+    this.onDoneSnapshot,
+    this.inputFormatters,
+    this.maxLength
   }) : super(key: key);
 
   final String header;
@@ -30,6 +33,8 @@ class NormalInput <T> extends StatelessWidget {
   final String? Function(String?)? validator;
   final Future<T>? future;
   final Function(T?)? onDoneSnapshot;
+  final List<TextInputFormatter>? inputFormatters;
+  final int? maxLength;
 
   @override
   Widget build(BuildContext context) {
@@ -53,8 +58,10 @@ class NormalInput <T> extends StatelessWidget {
             header: snapshot.connectionState == ConnectionState.done? header : 'Cargando',
             icon: icon, 
             onTap: onTap, 
+            inputFormatters: inputFormatters,
             onChanged: onChanged,
             enabled: snapshot.connectionState == ConnectionState.done,
+            maxLength: maxLength
           );
         }
       );
@@ -71,7 +78,9 @@ class NormalInput <T> extends StatelessWidget {
         header: header, 
         icon: icon, 
         onTap: onTap, 
-        onChanged: onChanged
+        inputFormatters: inputFormatters,
+        onChanged: onChanged,
+        maxLength: maxLength
       );
     }
   }
@@ -90,7 +99,9 @@ class _InputContent extends StatelessWidget {
     required this.icon,
     required this.onTap,
     required this.onChanged,
-    required this.enabled
+    required this.enabled,
+    required this.inputFormatters,
+    required this.maxLength
   }) : super(key: key);
 
   final TextEditingController? controller;
@@ -104,6 +115,8 @@ class _InputContent extends StatelessWidget {
   final Function()? onTap;
   final Function(String)? onChanged;
   final bool? enabled;
+  final List<TextInputFormatter>? inputFormatters;
+  final int? maxLength;
 
   @override
   Widget build(BuildContext context) {
@@ -113,6 +126,8 @@ class _InputContent extends StatelessWidget {
       ),
       child: TextFormField(
         controller: controller,
+        inputFormatters: inputFormatters,
+        maxLength: maxLength,
         keyboardType: type,
         style: GoogleFonts.montserrat(),
         readOnly: readOnly,
