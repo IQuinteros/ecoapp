@@ -3,6 +3,7 @@ import 'package:flutter_bloc/flutter_bloc.dart';
 import 'package:flutter_ecoapp/bloc/article_bloc.dart';
 import 'package:flutter_ecoapp/models/article.dart';
 import 'package:flutter_ecoapp/models/store.dart';
+import 'package:flutter_ecoapp/views/store_view.dart';
 import 'package:flutter_ecoapp/views/style/colors.dart';
 import 'package:flutter_ecoapp/views/widgets/normal_button.dart';
 import 'package:flutter_ecoapp/views/widgets/stars_row.dart';
@@ -22,6 +23,7 @@ class StoreDescriptionSection extends StatelessWidget {
   Widget build(BuildContext context) {
 
     store.tag = 'article-description';
+    print('STORE DESCRP: $store');
 
     final storeLogo = Column(
       children: [
@@ -80,7 +82,7 @@ class StoreDescriptionSection extends StatelessWidget {
         Row(
           mainAxisAlignment: MainAxisAlignment.end,
           children: [
-            Text('4.2', style: GoogleFonts.montserrat(), textAlign: TextAlign.end,),
+            Text('4.2', style: GoogleFonts.montserrat(), textAlign: TextAlign.end,), // TODO: Add rating view
             StarsRow(rating: 2,)
           ],
         ),
@@ -115,7 +117,7 @@ class StoreDescriptionSection extends StatelessWidget {
           NormalButton(
             text: 'Ver más datos del vendedor', 
             onPressed: (){
-              Navigator.pushNamed(context, 'store', arguments: article.store);
+              Navigator.push(context, MaterialPageRoute(builder: (__) => StoreView(store: store)));
             }
           )
         ],

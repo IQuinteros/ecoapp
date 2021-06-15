@@ -55,7 +55,6 @@ class MyApp extends StatelessWidget {
           initialRoute: '/',
           routes: {
             '/': (BuildContext context) => MainView(),
-            'store': (BuildContext context) => StoreView(),
             'login': (BuildContext context) => LoginView(),
             'register': (BuildContext context) => RegisterView(),
             'categories': (BuildContext context) => CategoriesView()

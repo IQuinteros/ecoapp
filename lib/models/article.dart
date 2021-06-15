@@ -67,6 +67,17 @@ class ArticleModel extends BaseModel with TagModel
     rating          = json['rating'] ?? ArticleRating(opinions: []);
     favorite        = json['favorite_id'];
     storeId         = json['store_id'];
+    form            = ArticleForm(
+      id:                 json['article_form_id'], 
+      createdDate:        DateTime.parse(json['from_creation_date']), 
+      lastUpdateDate:     DateTime.parse(json['form_last_update_date']),
+      generalDetail:      json['general_detail'],
+      recycledMats:       json['recycled_mats'],
+      recycledMatsDetail: json['recycled_mats_detail'],
+      recycledProd:       json['recycled_prod'],
+      recycledProdDetail: json['recycled_prod_detail'],
+      reuseTips:          json['reuse_tips']
+    );
     initTagging(newID: this.id, newTitle: this.title);
   }
 

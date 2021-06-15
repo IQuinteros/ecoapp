@@ -20,15 +20,21 @@ class StoreCoverSection extends StatelessWidget {
       margin: EdgeInsets.symmetric(
         vertical: 20.0
       ),
-      child: Text(
-        store.description,
-        style: GoogleFonts.montserrat(),
+      child: Row(
+        mainAxisSize: MainAxisSize.max,
+        children: [
+          Text(
+            store.description,
+            style: GoogleFonts.montserrat(),
+          ),
+        ],
       )
     );
 
     final rating = Container(
       padding: EdgeInsets.symmetric(
-        horizontal: 60.0
+        horizontal: 60.0,
+        vertical: 10.0
       ),
       child: Column(
         children: [
@@ -59,6 +65,7 @@ class StoreCoverSection extends StatelessWidget {
 
     final ratingGesture = InkWell(
       child: rating,
+      borderRadius: BorderRadius.circular(10.0),
       onTap: () => Navigator.push(
         context, 
         MaterialPageRoute(
@@ -76,13 +83,15 @@ class StoreCoverSection extends StatelessWidget {
         children: [
           EcoCover(
             image: NetworkImage(store.photoUrl),
-            title: '',//'${store.location}, ${store.district.name}',
+            title: '${store.location}, ${store.district.name}',
             subtitle: 'Ventas concretadas: 17.350',
             miniContent: 'Creado el ${store.createdDate.day}/${store.createdDate.month}/${store.createdDate.year}',
           ),
           SizedBox(height: 10.0),
           Divider(thickness: 1,),
           description,
+          //Divider(),
+          SizedBox(height: 10.0),
           ratingGesture,
         ],
       ),

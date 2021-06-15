@@ -8,16 +8,19 @@ import 'package:google_fonts/google_fonts.dart';
 
 class StoreView extends StatelessWidget {
 
+  final StoreModel store;
+
+  const StoreView({Key? key, required this.store}) : super(key: key);
+
   @override
-  Widget build(BuildContext context) {
-    final StoreModel? store = ModalRoute.of(context)!.settings.arguments as StoreModel;
+  Widget build(BuildContext context) {    
     return Scaffold(
       appBar: AppBar(
         backgroundColor: Colors.transparent,
         centerTitle: false,
         elevation: 0,
         title: Text(
-          store!.publicName,
+          store.publicName,
           style: GoogleFonts.montserrat(
             fontWeight: FontWeight.w500
           ),

@@ -62,11 +62,7 @@ class _FeaturedProductState extends State<FeaturedProduct> {
     );
 
     final ecoIndicator = MiniEcoIndicator(
-      ecoIndicator: EcoIndicator(
-        hasRecycledMaterials: Random().nextBool(),
-        hasReuseTips: Random().nextBool(),
-        isRecyclableProduct: Random().nextBool()
-      ),
+      ecoIndicator: widget.article.form.getIndicator()
     );
 
     final titleText = Text(
