@@ -4,27 +4,27 @@ import 'package:flutter_ecoapp/models/base.dart';
 class HistoryModel extends BaseModel
 {
   late DateTime createdDate;
-  late ArticleModel article;
+  late int articleId;
   late bool deleted;
 
   HistoryModel({
     required int id,
-    required this.article,
+    required this.articleId,
     required this.createdDate,
     required this.deleted
   }) : super(id: id);
 
   HistoryModel.fromJsonMap(Map<String, dynamic> json) : super(id: json['id']){
     createdDate           = json['created_date'];
-    article               = json['article'];
+    articleId             = json['article_id'];
     deleted               = json['article'];
   }
 
   @override
   Map<String, dynamic> toJson() => {
-    'id'            : id,
-    'article'       : article,
-    'created_date'   : createdDate
+    'id'              : id,
+    'article_id'      : articleId,
+    'created_date'    : createdDate.toString()
   };
 }
 
@@ -47,7 +47,7 @@ class HistoryDetailModel extends BaseModel
   @override
   Map<String, dynamic> toJson() => {
     'id'      : id,
-    'date'    : date,
+    'date'    : date.toString(),
     'history_id': history.id
   };
 }

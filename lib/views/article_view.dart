@@ -6,6 +6,9 @@ import 'package:flutter_bloc/flutter_bloc.dart';
 import 'package:flutter_ecoapp/bloc/app_bloc.dart';
 import 'package:flutter_ecoapp/bloc/article_bloc.dart';
 import 'package:flutter_ecoapp/bloc/cart_bloc.dart';
+import 'package:flutter_ecoapp/bloc/history_bloc.dart';
+import 'package:flutter_ecoapp/bloc/profile_bloc.dart';
+import 'package:flutter_ecoapp/bloc/user_bloc.dart';
 import 'package:flutter_ecoapp/models/article.dart';
 import 'package:flutter_ecoapp/models/store.dart';
 import 'package:flutter_ecoapp/utils/currency_util.dart';
@@ -37,6 +40,13 @@ class ArticleView extends StatelessWidget {
   }
 
   Widget getContent(BuildContext context){
+    final historyBloc = BlocProvider.of<HistoryBloc>(context);
+    final profileBloc = BlocProvider.of<ProfileBloc>(context);
+    final userBloc = BlocProvider.of<UserBloc>(context);
+    userBloc.getLinkedUser(profileBloc.currentProfile).then((value) {
+      if(value != null) historyBloc.addToHistory(user: value, article: article);
+    });    
+
     return CustomScrollView(
       slivers: [
         _ArticleAppBar(article: article),

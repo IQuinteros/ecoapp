@@ -24,8 +24,8 @@ class HistoryBloc extends BaseBloc<HistoryModel>{
   Future<bool> addToHistory({required UserModel user, required ArticleModel article}) async {
     List<HistoryModel> history = await historyAPI.selectAll(
       params: {
-        'article': article.id,
-        'user': user.id
+        'article_id': article.id,
+        'user_id': user.id
       }
     );
 
@@ -37,12 +37,12 @@ class HistoryBloc extends BaseBloc<HistoryModel>{
       );
       return (await historyDetailAPI.insert(
         item: newHistoryDetail,
-      )) != null;
+      )).object != null;
     }
     else{
       HistoryModel newHistory = HistoryModel(
         id: 0,
-        article: article,
+        articleId: article.id,
         deleted: false,
         createdDate: DateTime.now()
       );
@@ -50,9 +50,9 @@ class HistoryBloc extends BaseBloc<HistoryModel>{
       return (await historyAPI.insert(
         item: newHistory,
         additionalParams: {
-          'user': user.id
+          'user_id': user.id
         }
-      )) != null;
+      )).object != null;
     }
 
     
