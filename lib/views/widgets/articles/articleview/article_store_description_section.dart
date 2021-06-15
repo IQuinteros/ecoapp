@@ -86,7 +86,7 @@ class StoreDescriptionSection extends StatelessWidget {
         ),
         SizedBox(height: 10.0),
         Text(
-          '',//'${store.location}, ${store.district.name}',
+          '${store.location}, ${store.district.name}',
           style: GoogleFonts.montserrat(
             fontWeight: FontWeight.w500
           ),

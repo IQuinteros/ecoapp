@@ -17,8 +17,8 @@ class StoreModel extends BaseModel with TagModel
   late bool enabled;   
   late DateTime createdDate;
   late DateTime lastUpdateDate;
-  late int districtId;
-  //late DistrictModel district;
+
+  late DistrictModel district;
 
   StoreModel({
     required int id,
@@ -121,7 +121,10 @@ class StoreModel extends BaseModel with TagModel
     enabled             = json['enabled'] != 0;
     createdDate         = DateTime.parse(json['creation_date']);
     lastUpdateDate      = DateTime.parse(json['last_update_date']);
-    districtId          = json['district_id'];
+    district            = DistrictModel(
+      id:                 json['district_id'], 
+      name:               json['district_name']
+    );
     initTagging(newID: this.id, newTitle: this.publicName);
   }
 

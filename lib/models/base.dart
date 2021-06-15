@@ -14,8 +14,8 @@ abstract class BaseModel{
 
 abstract class TagModel{
 
-  late int _id;
-  late String _title;
+  late int _id = 0;
+  late String _title = '';
 
   @protected
   void initTagging({required int newID, required String newTitle}){
