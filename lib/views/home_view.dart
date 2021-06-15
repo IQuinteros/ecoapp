@@ -7,6 +7,7 @@ import 'package:flutter_ecoapp/models/article.dart';
 import 'package:flutter_ecoapp/views/debug/debug.dart';
 import 'package:flutter_ecoapp/views/favorites.view.dart';
 import 'package:flutter_ecoapp/views/style/text_style.dart';
+import 'package:flutter_ecoapp/views/widgets/articles/article_card.dart';
 import 'package:flutter_ecoapp/views/widgets/categories/category_box.dart';
 import 'package:flutter_ecoapp/views/widgets/categories/category_list_item.dart';
 import 'package:flutter_ecoapp/views/widgets/home/featured_product.dart';
@@ -25,7 +26,6 @@ class HomeView extends StatelessWidget {
 
   Widget getContent(BuildContext context){
     final articleBloc = BlocProvider.of<ArticleBloc>(context);
-    articleBloc.getArticlesFromSearch("").then((value) => print(value));
 
     final futureScrollable = FutureBuilder(
       future: articleBloc.getArticlesFromSearch(""),
@@ -54,7 +54,7 @@ class HomeView extends StatelessWidget {
                 builder: SwiperPagination.rect
               ),
             );
-          default: return CircularProgressIndicator();
+          default: return Center(child: CircularProgressIndicator());
         }
       },
     );
@@ -117,7 +117,21 @@ class HomeView extends StatelessWidget {
       }
     );
 
-    final historyList = EcoAppDebug.getArticleItems(initialId: 1);
+    final historyList = FutureBuilder(
+      future: articleBloc.getArticlesFromSearch(""),
+      initialData: <ArticleModel>[],
+      builder: (BuildContext context, AsyncSnapshot<List<ArticleModel>> snapshot) {
+        switch(snapshot.connectionState){
+          case ConnectionState.done:
+            if(!snapshot.hasData) return Container();
+            return Column(
+              children: snapshot.data!.map<ArticleCard>((element) => ArticleCard(article: element,)).toList(),
+            );
+          default: return CircularProgressIndicator();
+        }
+      }
+    );
+
     final favoriteList = EcoAppDebug.getArticleItems(initialId: 5);
 
     final column = Column(
