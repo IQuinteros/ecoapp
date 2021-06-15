@@ -58,7 +58,7 @@ class CartBloc extends BaseBloc<CartArticleModel>{
             contactNumber: 1,
             createdDate: DateTime.now(),
             description: '',
-            district: DistrictModel(id: 1, name: 'Penco'),
+            //district: DistrictModel(id: 1, name: 'Penco'),
             email: '',
             enabled: true,
             id: 1,

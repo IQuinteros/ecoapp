@@ -76,7 +76,7 @@ class StoreCoverSection extends StatelessWidget {
         children: [
           EcoCover(
             image: NetworkImage(store.photoUrl),
-            title: '${store.location}, ${store.district.name}',
+            title: '',//'${store.location}, ${store.district.name}',
             subtitle: 'Ventas concretadas: 17.350',
             miniContent: 'Creado el ${store.createdDate.day}/${store.createdDate.month}/${store.createdDate.year}',
           ),

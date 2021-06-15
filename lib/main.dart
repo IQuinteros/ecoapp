@@ -3,6 +3,7 @@ import 'package:flutter/gestures.dart';
 import 'package:flutter/widgets.dart';
 import 'package:flutter_bloc/flutter_bloc.dart';
 import 'package:flutter_ecoapp/bloc/app_bloc.dart';
+import 'package:flutter_ecoapp/bloc/article_bloc.dart';
 import 'package:flutter_ecoapp/bloc/cart_bloc.dart';
 import 'package:flutter_ecoapp/bloc/district_bloc.dart';
 import 'package:flutter_ecoapp/bloc/profile_bloc.dart';
@@ -40,6 +41,9 @@ class MyApp extends StatelessWidget {
         ),
         BlocProvider<CartBloc>(
           create: (BuildContext context) => CartBloc(),
+        ),
+        BlocProvider<ArticleBloc>(
+          create: (BuildContext context) => ArticleBloc(),
         ),
       ],
       child: MaterialApp(

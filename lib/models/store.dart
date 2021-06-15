@@ -17,8 +17,8 @@ class StoreModel extends BaseModel with TagModel
   late bool enabled;   
   late DateTime createdDate;
   late DateTime lastUpdateDate;
-
-  late DistrictModel district;
+  late int districtId;
+  //late DistrictModel district;
 
   StoreModel({
     required int id,
@@ -33,7 +33,7 @@ class StoreModel extends BaseModel with TagModel
     required this.enabled,
     required this.createdDate,
     required this.lastUpdateDate,
-    required this.district
+    //required this.district
   }) : super(id: id){
     initTagging(newID: this.id, newTitle: this.publicName);
   }
@@ -110,35 +110,36 @@ class StoreModel extends BaseModel with TagModel
   List<OpinionModel> get allOpinions => articles.map((e) => e.rating.opinions).toList().fold([], (value, element) => value + element);
 
   StoreModel.fromJsonMap(Map<String, dynamic> json) : super(id: json['id']){
-    publicName          = json['publicName'];
+    publicName          = json['public_name'];
     description         = json['description'];
-    photoUrl            = json['photoUrl'];
+    photoUrl            = json['photo_url'] ?? 'https://seeklogo.com/images/F/facebook-marketplace-logo-46A976DABC-seeklogo.com.png';
     email               = json['email'];
-    contactNumber       = json['contactNumber'];
+    contactNumber       = json['contact_number'];
     location            = json['location'];
     rut                 = json['rut'];
-    rutDv               = json['rutDv'];
-    enabled             = json['enabled'];
-    createdDate         = json['createdDate'];
-    lastUpdateDate      = json['lastUpdateDate'];
-    district            = json['district'];
+    rutDv               = json['rut_cd'].toString();
+    enabled             = json['enabled'] != 0;
+    createdDate         = DateTime.parse(json['creation_date']);
+    lastUpdateDate      = DateTime.parse(json['last_update_date']);
+    districtId          = json['district_id'];
+    initTagging(newID: this.id, newTitle: this.publicName);
   }
 
   @override
   Map<String, dynamic> toJson() => {
     'id'            : id,
-    'publicName'    : publicName,
+    'public_name'    : publicName,
     'description'   : description,
-    'photoUrl'      : photoUrl,
+    'photo_url'      : photoUrl,
     'email'         : email,
-    'contactNumber' : contactNumber,
+    'contact_number' : contactNumber,
     'location'      : location,
     'rut'           : rut,
-    'rutDv'         : rutDv,
+    'rut_cd'         : rutDv,
     'enabled'       : enabled,
-    'createdDate'   : createdDate,
-    'lastUpdateDate': lastUpdateDate,
-    'district'      : district,
+    'created_date'   : createdDate,
+    'last_update__date': lastUpdateDate,
+    //'district'      : district,
   };
 
 }

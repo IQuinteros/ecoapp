@@ -1,9 +1,15 @@
 import 'package:flutter/material.dart';
+import 'package:flutter_bloc/flutter_bloc.dart';
+import 'package:flutter_ecoapp/bloc/article_bloc.dart';
+import 'package:flutter_ecoapp/bloc/profile_bloc.dart';
+import 'package:flutter_ecoapp/bloc/user_bloc.dart';
+import 'package:flutter_ecoapp/models/article.dart';
 import 'package:flutter_ecoapp/views/debug/debug.dart';
 import 'package:flutter_ecoapp/views/favorites.view.dart';
 import 'package:flutter_ecoapp/views/style/text_style.dart';
 import 'package:flutter_ecoapp/views/widgets/categories/category_box.dart';
 import 'package:flutter_ecoapp/views/widgets/categories/category_list_item.dart';
+import 'package:flutter_ecoapp/views/widgets/home/featured_product.dart';
 
 import 'package:flutter_ecoapp/views/widgets/mini_button.dart';
 import 'package:flutter_ecoapp/views/widgets/search_bar.dart';
@@ -18,24 +24,45 @@ class HomeView extends StatelessWidget {
   }
 
   Widget getContent(BuildContext context){
-    final featuredProducts = EcoAppDebug.getFeaturedProducts();
+    final articleBloc = BlocProvider.of<ArticleBloc>(context);
+    articleBloc.getArticlesFromSearch("").then((value) => print(value));
 
-    final scrollable = Container(
+    final futureScrollable = FutureBuilder(
+      future: articleBloc.getArticlesFromSearch(""),
+      initialData: <ArticleModel>[],
+      builder: (BuildContext context, AsyncSnapshot<List<ArticleModel>> snapshot) {
+        switch(snapshot.connectionState){
+          case ConnectionState.done:
+            if(!snapshot.hasData) return Icon(Icons.error);
+            return Swiper(
+              itemCount: snapshot.data!.length,
+              itemBuilder: (BuildContext context, int index){
+                try{
+                  final product = FeaturedProduct(article: snapshot.data![index]);
+                  return product;
+                }catch(e, stacktrace){
+                  print(e);
+                  print(stacktrace);
+                }
+                return Container();
+              },
+              loop: false,
+              viewportFraction: 0.9,
+              scale: 0.9,
+              autoplay: true,
+              pagination: new SwiperPagination(
+                builder: SwiperPagination.rect
+              ),
+            );
+          default: return CircularProgressIndicator();
+        }
+      },
+    );
+
+    final futureContainer = Container(
       width: MediaQuery.of(context).size.width,
       height: 290.0,
-      child: Swiper(
-        itemCount: featuredProducts.length,
-        itemBuilder: (BuildContext context, int index){
-          return featuredProducts[index];
-        },
-        loop: false,
-        viewportFraction: 0.9,
-        scale: 0.9,
-        autoplay: true,
-        pagination: new SwiperPagination(
-          builder: SwiperPagination.rect
-        ),
-      ),
+      child: futureScrollable,
       margin: EdgeInsets.only(
         top: 20.0
       ),
@@ -98,7 +125,7 @@ class HomeView extends StatelessWidget {
       children: [
         SearchBar(),
         EcoTitle(text: 'Productos Destacados'),
-        scrollable,
+        futureContainer,
         EcoTitle(
           text: 'Categorías',
           rightButton: MiniButton(

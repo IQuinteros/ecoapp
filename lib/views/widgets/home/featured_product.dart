@@ -23,7 +23,10 @@ class _FeaturedProductState extends State<FeaturedProduct> {
   Widget build(BuildContext context) {
     widget.article.tag = 'featured-card';
 
-    print(widget.article.tag);
+    ImageProvider<Object> imageData = AssetImage('assets/png/no-image.png');
+    if(widget.article.photos.length > 0)
+       NetworkImage(widget.article.photos[0].photoUrl);
+
     final image = Hero(
       tag: widget.article.tag,
       child: Container(
@@ -42,7 +45,7 @@ class _FeaturedProductState extends State<FeaturedProduct> {
           bottom: 0.0
         ),
         child: Image(
-          image: NetworkImage(widget.article.photos[0].photoUrl),
+          image: imageData,
           width: MediaQuery.of(context).size.width,
           height: 200.0,
           fit: BoxFit.cover,

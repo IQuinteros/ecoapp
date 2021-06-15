@@ -9,12 +9,13 @@ class ArticleModel extends BaseModel with TagModel
 {
   late String title;
   late String description;
-  late double price;
-  double? pastPrice;
+  late int price;
+  int? pastPrice;
   late int stock;
   late DateTime createdDate;
   late DateTime lastUpdateDate;
   late bool enabled;
+  late int storeId;
 
   late CategoryModel category;
   late List<PhotoModel> photos;
@@ -58,13 +59,15 @@ class ArticleModel extends BaseModel with TagModel
     createdDate     = json['createdDate'];
     lastUpdateDate  = json['lastUpdateDate'];
     enabled         = json['enabled'];
-    photos          = json['photos'];
-    form            = json['form'];
+    photos          = json['photos'] ?? const [];
+    form            = json['form'] ?? ArticleForm(id: 0, createdDate: DateTime.now(), lastUpdateDate: DateTime.now());
     category        = json['category'];
     store           = json['store'];
-    questions       = json['questions'];
-    rating          = json['rating'];
+    questions       = json['questions'] ?? const [];
+    rating          = json['rating'] ?? ArticleRating(opinions: []);
     favorite        = json['favorite_id'];
+    storeId         = json['store_id'];
+    initTagging(newID: this.id, newTitle: this.title);
   }
 
   @override
@@ -82,6 +85,7 @@ class ArticleModel extends BaseModel with TagModel
     'rating'          : this.rating,
     'createdDate'     : this.createdDate,
     'lastUpdateDate'  : this.lastUpdateDate,
+    'store_id'        : this.storeId
   };
   
 }

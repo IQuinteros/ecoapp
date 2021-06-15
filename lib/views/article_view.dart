@@ -1,8 +1,13 @@
+import 'dart:async';
+
+import 'package:flutter/foundation.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter_bloc/flutter_bloc.dart';
 import 'package:flutter_ecoapp/bloc/app_bloc.dart';
+import 'package:flutter_ecoapp/bloc/article_bloc.dart';
 import 'package:flutter_ecoapp/bloc/cart_bloc.dart';
 import 'package:flutter_ecoapp/models/article.dart';
+import 'package:flutter_ecoapp/models/store.dart';
 import 'package:flutter_ecoapp/utils/currency_util.dart';
 import 'package:flutter_ecoapp/views/opinions_view.dart';
 import 'package:flutter_ecoapp/views/style/colors.dart';
@@ -58,6 +63,7 @@ class _ArticleAppBar extends StatelessWidget {
 
   @override
   Widget build(BuildContext context) {
+
     return SliverAppBar(
       elevation: 10.0,
       backgroundColor: EcoAppColors.MAIN_DARK_COLOR,
@@ -156,17 +162,34 @@ class _ArticleMainContent extends StatelessWidget {
   }
 }
 
-
 class _ArticleContent extends StatelessWidget {
-  const _ArticleContent({
+
+  _ArticleContent({
     Key? key,
     required this.article,
   }) : super(key: key);
 
   final ArticleModel article;
+  
+
+  /// Session streams  
+  final _storeController = StreamController<StoreModel?>.broadcast();
+
+  Function(StoreModel?) get _storeSink => _storeController.sink.add;
+  Stream<StoreModel?> get storeStream => _storeController.stream;
+
+  void disposeStreams(){
+    _storeController.close();
+  }
 
   @override
   Widget build(BuildContext context) {
+    final articleBloc = BlocProvider.of<ArticleBloc>(context);
+
+    articleBloc.getStoreOfArticle(article).then((value) {
+      _storeSink(value);
+      disposeStreams();
+    });
 
     final title = Padding(
       padding: EdgeInsets.symmetric(
@@ -239,34 +262,45 @@ class _ArticleContent extends StatelessWidget {
       ),
     );
 
-    final storeText = InkWell(
-      onTap: () => print('Go to store'), // TODO: Go to store
-      child: Padding(
-        padding: EdgeInsets.symmetric(
-          horizontal: 20.0
-        ),
-        child: Container(
-          width: double.infinity,
-          child: RichText(
-            textScaleFactor: MediaQuery.of(context).textScaleFactor,
-            text: TextSpan(
-              text: 'Vendido por ',
-              style: GoogleFonts.montserrat(
-                color: Colors.black,
-                fontSize: 15
-              ),
-              children: [
-                TextSpan(
-                  text: '${article.store!.publicName}',
-                  style: GoogleFonts.montserrat(
-                    color: EcoAppColors.MAIN_COLOR
+    final storeText = StreamBuilder(
+      stream: storeStream,
+      initialData: null,
+      builder: (BuildContext context, AsyncSnapshot<StoreModel?> snapshot){
+        switch(snapshot.connectionState){
+          case ConnectionState.done:
+            if(!snapshot.hasData) return Container();
+            return InkWell(
+              onTap: () => print('Go to store'), // TODO: Go to store
+              child: Padding(
+                padding: EdgeInsets.symmetric(
+                  horizontal: 20.0
+                ),
+                child: Container(
+                  width: double.infinity,
+                  child: RichText(
+                    textScaleFactor: MediaQuery.of(context).textScaleFactor,
+                    text: TextSpan(
+                      text: 'Vendido por ',
+                      style: GoogleFonts.montserrat(
+                        color: Colors.black,
+                        fontSize: 15
+                      ),
+                      children: [
+                        TextSpan(
+                          text: snapshot.data!.publicName,//'${article.store!.publicName}',
+                          style: GoogleFonts.montserrat(
+                            color: EcoAppColors.MAIN_COLOR
+                          ),
+                        )
+                      ]
+                    ),
                   ),
                 )
-              ]
-            ),
-          ),
-        )
-      ),
+              ),
+            );
+          default: return CircularProgressIndicator();
+        }
+      },
     );
 
     final btnAddToCart = _AddToCartButton(article: article);
@@ -292,7 +326,17 @@ class _ArticleContent extends StatelessWidget {
         Divider(thickness: 1,),
         EcoDetailSection(article: article),
         Divider(thickness: 1,),
-        StoreDescriptionSection(article: article),
+        StreamBuilder( 
+          stream: storeStream, 
+          builder: (BuildContext context, AsyncSnapshot<StoreModel?> snapshot){
+            switch(snapshot.connectionState){
+              case ConnectionState.done:
+                if(snapshot.data != null) return StoreDescriptionSection(article: article, store: snapshot.data!);
+                  return CircularProgressIndicator();
+              default: return CircularProgressIndicator();
+            }            
+          }
+        ),
         Divider(thickness: 1,),
         QuestionsSection(article: article)
       ]

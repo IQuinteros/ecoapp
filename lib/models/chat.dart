@@ -236,7 +236,7 @@ class ChatModel extends BaseModel
     enabled: true, 
     createdDate: createdDate, 
     lastUpdateDate: createdDate, 
-    district: DistrictModel(id: 1, name: 'Penco')
+    //district: DistrictModel(id: 1, name: 'Penco')
   ); // TODO: Conenct to api - DEBUG
 
   PurchaseModel get linkedPurchase => PurchaseModel(
