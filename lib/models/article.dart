@@ -60,24 +60,15 @@ class ArticleModel extends BaseModel with TagModel
     lastUpdateDate  = json['lastUpdateDate'];
     enabled         = json['enabled'];
     photos          = json['photos'] ?? const [];
-    form            = json['form'] ?? ArticleForm(id: 0, createdDate: DateTime.now(), lastUpdateDate: DateTime.now());
-    category        = json['category'];
-    store           = json['store'];
-    questions       = json['questions'] ?? const [];
+    category        = CategoryModel.fromJsonMap(json['category']);
+    store           = StoreModel.fromJsonMap(json['store']);
+
+    // Create questions
+    questions       = json['questions'].map<QuestionModel>((e) => QuestionModel.fromJsonMap(e)).toList() ?? const [];
     rating          = json['rating'] ?? ArticleRating(opinions: []);
     favorite        = json['favorite_id'];
     storeId         = json['store_id'];
-    form            = ArticleForm(
-      id:                 json['article_form_id'], 
-      createdDate:        DateTime.parse(json['from_creation_date']), 
-      lastUpdateDate:     DateTime.parse(json['form_last_update_date']),
-      generalDetail:      json['general_detail'],
-      recycledMats:       json['recycled_mats'],
-      recycledMatsDetail: json['recycled_mats_detail'],
-      recycledProd:       json['recycled_prod'],
-      recycledProdDetail: json['recycled_prod_detail'],
-      reuseTips:          json['reuse_tips']
-    );
+    form            = ArticleForm.fromJsonMap(json['form']);
     initTagging(newID: this.id, newTitle: this.title);
   }
 
@@ -178,8 +169,8 @@ class ArticleForm extends BaseModel
     reuseTips             = json['reuse_tips'];
     recycledProd          = json['recycled_prod'];
     recycledProdDetail    = json['recycled_prod_detail'];
-    createdDate           = json['created_date'];
-    lastUpdateDate        = json['last_update_date'];
+    createdDate           = DateTime.parse(json['creation_date']);
+    lastUpdateDate        = DateTime.parse(json['last_update_date']);
     generalDetail         = json['general_detail'];
   }
 

@@ -50,7 +50,12 @@ class StoreView extends StatelessWidget {
           children: [
             StoreCoverSection(store: store),
             Divider(thickness: 1,),
-            SearchBar(),
+            Container(
+              margin: EdgeInsets.symmetric(
+                horizontal: 10.0
+              ),
+              child: SearchBar()
+            ),
             SizedBox(height: 20.0),
             FutureArticles(
               notFoundMessage: 'La tienda aún no tiene artículos publicados', 

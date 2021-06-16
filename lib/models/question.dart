@@ -16,8 +16,8 @@ class QuestionModel extends BaseModel
 
   QuestionModel.fromJsonMap(Map<String, dynamic> json) : super(id: json['id']){
     question            = json['question'];
-    answer              = json['answer'];
-    date                = json['date'];
+    answer              = json['answer'] != null? AnswerModel.fromJsonMap(json['answer']) : null;
+    date                = DateTime.parse(json['creation_date']);
   }
 
   @override
@@ -31,14 +31,19 @@ class QuestionModel extends BaseModel
 
 class AnswerModel extends BaseModel
 {
-  String answer;
-  DateTime date;
+  late String answer;
+  late DateTime date;
 
   AnswerModel({
     required int id,
     required this.answer,
     required this.date,
   }) : super(id: id);
+
+  AnswerModel.fromJsonMap(Map<String, dynamic> json) : super(id: json['id']){
+    answer              = json['answer'];
+    date                = DateTime.parse(json['creation_date']);
+  }
 
   @override
   Map<String, dynamic> toJson() => {

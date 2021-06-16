@@ -33,7 +33,7 @@ class CategoryModel extends BaseModel
 
   CategoryModel.fromJsonMap(Map<String, dynamic> json) : super(id: json['id']){
     title           = json['title'];
-    createdDate     = json['createdDate'];
+    createdDate     = DateTime.parse(json['creation_date']);
   }
 
   @override
