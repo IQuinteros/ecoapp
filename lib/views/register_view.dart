@@ -67,11 +67,6 @@ class _RegisterViewState extends State<RegisterView> {
           child: mainContent(context)
         ),
       ),
-      bottomNavigationBar: EcoBottomNavigationBar(
-        currentIndex: 0,
-        onTap: (value){
-        },
-      )
     );
   }
 

@@ -43,12 +43,7 @@ class LoginView extends StatelessWidget {
           },
         ),
       ),
-      body: SafeArea(child: Form(key: _formKey, child: mainContent(context))),
-      bottomNavigationBar: EcoBottomNavigationBar(
-        currentIndex: 0,
-          onTap: (value){
-        },
-      )
+      body: SafeArea(child: Center(child: Form(key: _formKey, child: mainContent(context)))),
     );
   }
 
@@ -61,6 +56,20 @@ class LoginView extends StatelessWidget {
         ),
         child: Column(
           children: [
+            Text(
+              '¡Bienvenido!',
+              style: GoogleFonts.montserrat(
+                fontSize: 20.0,
+                fontWeight: FontWeight.w600
+              ),
+            ),
+            SizedBox(height: 20.0),
+            Text(
+              'Inicia sesión y disfruta la experiencia completa de comprar en ECOmercio',
+              style: GoogleFonts.montserrat(),
+              textAlign: TextAlign.center
+            ),
+            SizedBox(height: 20.0),
             NormalInput(
               header: 'Email', 
               hint: 'Ingresa tu email', 

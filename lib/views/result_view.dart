@@ -63,6 +63,7 @@ class ResultView extends StatelessWidget {
         FutureArticles(
           future: articleBloc.getArticlesFromSearch(searching ?? ''), 
           notFoundMessage: 'No se han encontrado artículos para tu búsqueda :c',
+          recommended: true,
         )
       ],
     );
