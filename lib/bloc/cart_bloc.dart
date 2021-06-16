@@ -24,76 +24,27 @@ class CartBloc extends BaseBloc<CartArticleModel>{
 
   Future<List<CartArticleModel>> loadCart({bool onlyLocal = false}) async {
     List<CartArticleModel> articles = await cartLocalAPI.select();
+    await loadRemoteArticles(articles); // TODO: replace for load remote articles
 
-    List<CartArticleModel> articlesModelsDEBUG = articles.map<CartArticleModel>(
-      (e) => CartArticleModel(
-        articleId: e.articleId, 
-        quantity: e.quantity,
-        article: ArticleModel(
-          id: e.articleId,
-          title: 'Article id: ${e.articleId}',
-          category: CategoryModel(id: 1, title: '', createdDate: DateTime.now()),
-          description: 'Large description',
-          createdDate: DateTime.now(),
-          enabled: true,
-          form: ArticleForm(
-            id: 1, 
-            createdDate: DateTime.now(), 
-            lastUpdateDate: DateTime.now(),
-            generalDetail: '',
-            recycledMats: '',
-            recycledMatsDetail: '',
-            recycledProd: '',
-            recycledProdDetail: '',
-            reuseTips: ''
-          ),
-          lastUpdateDate: DateTime.now(),
-          price: 200,
-          rating: ArticleRating(
-            opinions: []
-          ),
-          stock: 2,
-          pastPrice: 200,
-          store: StoreModel(
-            contactNumber: 1,
-            createdDate: DateTime.now(),
-            description: '',
-            //district: DistrictModel(id: 1, name: 'Penco'),
-            email: '',
-            enabled: true,
-            id: 1,
-            lastUpdateDate: DateTime.now(),
-            location: '',
-            publicName: 'TEST',
-            rut: 2,
-            rutDv: ''
-          )
-        )
-      )
-    ).toList();
-
-    if(!onlyLocal) await Future.delayed(Duration(seconds: 2)); // TODO: replace for load remote articles
-    loadedArticles = articlesModelsDEBUG;
-    loadedArticles.forEach((element) => print('${element.articleId}: ${element.quantity}'));
-
-    return articlesModelsDEBUG;
+    return loadedArticles;
   }
 
-  Future<void> loadRemoteArticles() async {
+  Future<void> loadRemoteArticles(List<CartArticleModel> cartArticles) async {
     List<ArticleModel> articleModels = await articleAPI.selectAll(
       params: {
-        'ids': _getIdsFromArticles(loadedArticles)
+        'id_list': _getIdsFromArticles(cartArticles)
       }
     );
 
     // Update articles
     articleModels.forEach((remoteArticle) { 
-      loadedArticles.forEach((loadedArticle) {
+      cartArticles.forEach((loadedArticle) {
         if(remoteArticle.id == loadedArticle.articleId){
           loadedArticle.article = remoteArticle;
         }
       });
     });
+    loadedArticles = cartArticles;
   }
 
   Future<List<CartArticleModel>> getCartArticles() async {
