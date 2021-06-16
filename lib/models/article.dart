@@ -65,7 +65,7 @@ class ArticleModel extends BaseModel with TagModel
 
     // Create questions
     questions       = json['questions'].map<QuestionModel>((e) => QuestionModel.fromJsonMap(e)).toList() ?? const [];
-    rating          = json['rating'] ?? ArticleRating(opinions: []);
+    rating          = ArticleRating(opinions: json['opinions'].map<OpinionModel>((e) => OpinionModel.fromJsonMap(e)).toList());
     favorite        = json['favorite_id'];
     storeId         = json['store_id'];
     form            = ArticleForm.fromJsonMap(json['form']);

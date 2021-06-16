@@ -41,6 +41,9 @@ class OpinionsView extends StatelessWidget {
   }
 
   Widget mainContent(BuildContext context){
+    ImageProvider<Object> imageData = AssetImage('assets/png/no-image.png');
+    if(article.photos.length > 0) imageData = NetworkImage(article.photos[0].photoUrl);
+
     return SingleChildScrollView(
       child: Container(
         margin: EdgeInsets.symmetric(
@@ -51,7 +54,7 @@ class OpinionsView extends StatelessWidget {
           child: Column(
             children: [
               EcoCover(
-                image: NetworkImage(article.photos[0].photoUrl),
+                image: imageData,
                 title: article.title,
                 subtitle: '${article.rating.count.toString()} opiniones',
                 size: 80
