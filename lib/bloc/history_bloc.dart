@@ -61,8 +61,6 @@ class HistoryBloc extends BaseBloc<HistoryModel>{
       return (await historyDetailAPI.insert(
         item: newHistoryDetail,
       )).object != null;
-
-      
     }
     else{
       HistoryModel newHistory = HistoryModel(

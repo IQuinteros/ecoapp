@@ -11,6 +11,7 @@ import 'package:flutter_ecoapp/views/debug/debug.dart';
 import 'package:flutter_ecoapp/views/style/colors.dart';
 import 'package:flutter_ecoapp/views/style/text_style.dart';
 import 'package:flutter_ecoapp/views/widgets/articles/article_card.dart';
+import 'package:flutter_ecoapp/views/widgets/articles/future_articles.dart';
 import 'package:flutter_ecoapp/views/widgets/search_bar.dart';
 import 'package:google_fonts/google_fonts.dart';
 
@@ -62,6 +63,11 @@ class _HistorySectionState extends State<HistorySection> {
       builder: (BuildContext context, AsyncSnapshot<UserModel?> snapshot){
         switch(snapshot.connectionState){
           case ConnectionState.done:
+            return FutureArticles(
+              notFoundMessage: 'No hay artículos en el historial', 
+              future: historyBloc.getHistory(user: snapshot.data!),
+              onLongPress: (e) => _askDelete(e),
+            );
             return FutureBuilder(
               future: historyBloc.getHistory(user: snapshot.data!),
               builder: (context, AsyncSnapshot<List<ArticleModel>> snapshot) {

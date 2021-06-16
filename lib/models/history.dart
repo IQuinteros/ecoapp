@@ -24,7 +24,8 @@ class HistoryModel extends BaseModel
   Map<String, dynamic> toJson() => {
     'id'              : id,
     'article_id'      : articleId,
-    'created_date'    : createdDate.toString()
+    'created_date'    : createdDate.toString(),
+    'deleted'         : deleted
   };
 }
 

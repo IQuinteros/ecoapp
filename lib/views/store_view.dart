@@ -1,7 +1,10 @@
 import 'package:flutter/material.dart';
+import 'package:flutter_bloc/flutter_bloc.dart';
+import 'package:flutter_ecoapp/bloc/article_bloc.dart';
 import 'package:flutter_ecoapp/models/store.dart';
 import 'package:flutter_ecoapp/views/debug/debug.dart';
 import 'package:flutter_ecoapp/views/style/colors.dart';
+import 'package:flutter_ecoapp/views/widgets/articles/future_articles.dart';
 import 'package:flutter_ecoapp/views/widgets/search_bar.dart';
 import 'package:flutter_ecoapp/views/widgets/store/storeview/store_cover_section.dart';
 import 'package:google_fonts/google_fonts.dart';
@@ -39,6 +42,8 @@ class StoreView extends StatelessWidget {
   }
 
   Widget mainContent(BuildContext context, StoreModel store){
+    final articleBloc = BlocProvider.of<ArticleBloc>(context);
+
     return SingleChildScrollView(
       child: SafeArea(
         child: Column(
@@ -47,7 +52,10 @@ class StoreView extends StatelessWidget {
             Divider(thickness: 1,),
             SearchBar(),
             SizedBox(height: 20.0),
-            EcoAppDebug.getArticleItems(initialId: 1)
+            FutureArticles(
+              notFoundMessage: 'La tienda aún no tiene artículos publicados', 
+              future:  articleBloc.getArticlesOfStore(store),
+            )
           ],
         ),
       ),

@@ -6,6 +6,7 @@ import 'package:flutter_ecoapp/bloc/user_bloc.dart';
 import 'package:flutter_ecoapp/models/article.dart';
 import 'package:flutter_ecoapp/views/debug/debug.dart';
 import 'package:flutter_ecoapp/views/widgets/articles/article_card.dart';
+import 'package:flutter_ecoapp/views/widgets/articles/future_articles.dart';
 import 'package:flutter_ecoapp/views/widgets/bottom_nav_bar.dart';
 import 'package:flutter_ecoapp/views/widgets/search_bar.dart';
 import 'package:google_fonts/google_fonts.dart';
@@ -59,29 +60,9 @@ class ResultView extends StatelessWidget {
           ),
         ),
         SizedBox(height: 10.0),
-        FutureBuilder(
-          future: articleBloc.getArticlesFromSearch(searching ?? ''),
-          builder: (BuildContext context, AsyncSnapshot<List<ArticleModel>> snapshot){
-            switch(snapshot.connectionState){
-              case ConnectionState.done:
-                if(!snapshot.hasData) return Container();
-                if(snapshot.data!.length <= 0) return Container(
-                  padding: EdgeInsets.symmetric(
-                    horizontal: 20.0,
-                    vertical: 10.0
-                  ),
-                  child: Text(
-                    'No se han encontrado artículos sd afasdf asdf para tu búsqueda :c',
-                    style: GoogleFonts.montserrat(), 
-                  ),
-                );
-
-                return Column(
-                  children: snapshot.data!.map<ArticleCard>((e) => ArticleCard(article: e)).toList()
-                );
-              default: return LinearProgressIndicator();
-            }
-          },
+        FutureArticles(
+          future: articleBloc.getArticlesFromSearch(searching ?? ''), 
+          notFoundMessage: 'No se han encontrado artículos para tu búsqueda :c',
         )
       ],
     );
@@ -93,3 +74,4 @@ class ResultView extends StatelessWidget {
   }
 
 }
+

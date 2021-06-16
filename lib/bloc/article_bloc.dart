@@ -28,6 +28,10 @@ class ArticleBloc extends BaseBloc<ArticleModel>{
     //TODO: 'user': user.id (Para devolver si es favorito o no)
   });
 
+  Future<List<ArticleModel>> getArticlesOfStore(StoreModel store) async => await articleAPI.selectAll(params: {
+    'id_store': store.id
+  });
+
   Future<List<OpinionModel>> getOpinionsFromArticle(ArticleModel article) async => await opinionAPI.selectAll(params: {
     'article': article.id
   });
