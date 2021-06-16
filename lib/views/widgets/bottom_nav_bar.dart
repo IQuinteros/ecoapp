@@ -36,18 +36,18 @@ class EcoBottomNavigationBar extends StatelessWidget {
         backgroundColor: EcoAppColors.MAIN_COLOR,
         unselectedIconTheme: IconThemeData(
           opacity: 0.8,
-          size: 28,
+          size: 23,
           color: Colors.white
         ),
         selectedIconTheme: !unselected? IconThemeData(
-          size: 33,
+          size: 28,
           opacity: 1,
           color: EcoAppColors.ACCENT_COLOR,
         ) : commonIconTheme,
         unselectedItemColor: Colors.white,
         type: BottomNavigationBarType.fixed,
         elevation: 20.0,
-        iconSize: 30.0,
+        iconSize: 25.0,
         showSelectedLabels: false,
         showUnselectedLabels: false,
         selectedLabelStyle: GoogleFonts.montserrat(),

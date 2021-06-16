@@ -6,6 +6,7 @@ import 'package:flutter_ecoapp/bloc/user_bloc.dart';
 import 'package:flutter_ecoapp/models/article.dart';
 import 'package:flutter_ecoapp/views/debug/debug.dart';
 import 'package:flutter_ecoapp/views/favorites.view.dart';
+import 'package:flutter_ecoapp/views/history_view.dart';
 import 'package:flutter_ecoapp/views/style/text_style.dart';
 import 'package:flutter_ecoapp/views/widgets/articles/article_card.dart';
 import 'package:flutter_ecoapp/views/widgets/categories/category_box.dart';
@@ -117,20 +118,7 @@ class HomeView extends StatelessWidget {
       }
     );
 
-    final historyList = FutureBuilder(
-      future: articleBloc.getArticlesFromSearch(""),
-      initialData: <ArticleModel>[],
-      builder: (BuildContext context, AsyncSnapshot<List<ArticleModel>> snapshot) {
-        switch(snapshot.connectionState){
-          case ConnectionState.done:
-            if(!snapshot.hasData) return Container();
-            return Column(
-              children: snapshot.data!.map<ArticleCard>((element) => ArticleCard(article: element,)).toList(),
-            );
-          default: return CircularProgressIndicator();
-        }
-      }
-    );
+    final historyList = HistorySection();
 
     final favoriteList = EcoAppDebug.getArticleItems(initialId: 5);
 
@@ -163,7 +151,8 @@ class HomeView extends StatelessWidget {
             action: (){},
           )
         ),
-        historyList
+        historyList,
+        SizedBox(height: 40.0)
       ],
     );
 

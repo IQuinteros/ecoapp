@@ -12,13 +12,14 @@ class ArticleCard extends StatefulWidget {
   final String? title;
   final EcoIndicator? ecoIndicator;
   final double? price;
+  final Function()? onLongPress;
 
   final bool favorite;
   final String extraTag;
 
-  const ArticleCard({Key? key, required this.article, this.favorite = false, this.ecoIndicator, this.price, this.title, this.extraTag = ''}) : super(key: key);
+  const ArticleCard({Key? key, required this.article, this.favorite = false, this.ecoIndicator, this.price, this.title, this.onLongPress, this.extraTag = ''}) : super(key: key);
 
-  const ArticleCard.fromPurchase({Key? key, this.article, this.favorite = false, required this.title, required this.ecoIndicator, required this.price, this.extraTag = ''}): super(key: key);
+  const ArticleCard.fromPurchase({Key? key, this.article, this.favorite = false, required this.title, this.onLongPress, required this.ecoIndicator, required this.price, this.extraTag = ''}): super(key: key);
 
   @override
   _ArticleCardState createState() => _ArticleCardState();
@@ -137,7 +138,9 @@ class _ArticleCardState extends State<ArticleCard> {
 
     // TODO: Add quantity
     final card = Card(
+      elevation: 0,
       margin: EdgeInsets.zero,
+      color: Colors.transparent,
       clipBehavior: Clip.antiAlias,
       shape: RoundedRectangleBorder(
         borderRadius: BorderRadius.circular(20.0)
@@ -158,42 +161,50 @@ class _ArticleCardState extends State<ArticleCard> {
       duration: Duration(milliseconds: 100),
       decoration: BoxDecoration(
         borderRadius: BorderRadius.circular(20.0),
-        boxShadow: [
+         boxShadow: [
           BoxShadow(
             offset: Offset(0, 1),
             blurRadius: blurRadius,
             spreadRadius: 2.0,
             color: Colors.black.withOpacity(shadowOpacity)
           ),
-        ]
+        ] 
       ),
+      clipBehavior: Clip.antiAlias,
       margin: EdgeInsets.only(
         left: 10.0,
         right: 10.0,
         bottom: 8.0
       ),
-      child: InkWell(
-        child: card,
-        borderRadius: BorderRadius.circular(20.0),
-        onTap: (){
-          if(widget.article != null)
-            Navigator.push(context, MaterialPageRoute(builder: (__) => ArticleView(article: widget.article!,)));
-          else
-          {
-            ScaffoldMessenger.of(context).removeCurrentSnackBar();
-            ScaffoldMessenger.of(context).showSnackBar(
-              SnackBar(
-                content: Text(
-                  'El artículo no está disponible', // TODO: Open dialog with little information
-                  style: GoogleFonts.montserrat(),
-                ),
-                backgroundColor: EcoAppColors.MAIN_DARK_COLOR,
-                duration: Duration(seconds: 2),
-              ),
-            );
-          }
-        },
-        onHover: onHover
+      child: Container(
+        color: Colors.white,
+        child: Material(
+          color: Colors.transparent,
+          child: InkWell(
+            child: card,
+            borderRadius: BorderRadius.circular(20.0),
+            onLongPress: widget.onLongPress,
+            onTap: (){
+              if(widget.article != null)
+                Navigator.push(context, MaterialPageRoute(builder: (__) => ArticleView(article: widget.article!,)));
+              else
+              {
+                ScaffoldMessenger.of(context).removeCurrentSnackBar();
+                ScaffoldMessenger.of(context).showSnackBar(
+                  SnackBar(
+                    content: Text(
+                      'El artículo no está disponible', // TODO: Open dialog with little information
+                      style: GoogleFonts.montserrat(),
+                    ),
+                    backgroundColor: EcoAppColors.MAIN_DARK_COLOR,
+                    duration: Duration(seconds: 2),
+                  ),
+                );
+              }
+            },
+            onHover: onHover
+          ),
+        ),
       ),
     );
   }
