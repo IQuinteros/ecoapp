@@ -2,23 +2,32 @@ import 'package:flutter_ecoapp/bloc/base_bloc.dart';
 import 'package:flutter_ecoapp/models/article.dart';
 import 'package:flutter_ecoapp/models/history.dart';
 import 'package:flutter_ecoapp/models/user.dart';
+import 'package:flutter_ecoapp/providers/article_api.dart';
 import 'package:flutter_ecoapp/providers/history_api.dart';
 
 class HistoryBloc extends BaseBloc<HistoryModel>{
 
   final historyAPI = HistoryAPI();
   final historyDetailAPI = HistoryDetailAPI();
+  final articleAPI = ArticleAPI();
 
   @override
   Future<void> initializeBloc() async {
     return;
   }
   
-  Future<List<HistoryModel>> getHistory({required UserModel user, bool includeDeleted = false}) async {
-    return await historyAPI.selectAll(params: {
-      'user': user.id,
-      'include_deleted': includeDeleted
-    });
+  Future<List<ArticleModel>> getHistory({required UserModel user, bool includeDeleted = false}) async {
+    final histories = await historyAPI.selectAll(params: {
+      'user_id': user.id,
+    }..addAll(includeDeleted? {} : {'deleted' : 0}));
+
+    final articles = await articleAPI.selectAll(
+      params: {
+        'id_list': histories.map((e) => e.articleId).toList()
+      }
+    );
+
+    return articles;
   }
 
   Future<bool> addToHistory({required UserModel user, required ArticleModel article}) async {

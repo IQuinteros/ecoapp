@@ -17,7 +17,7 @@ class HistoryModel extends BaseModel
   HistoryModel.fromJsonMap(Map<String, dynamic> json) : super(id: json['id']){
     createdDate           = json['created_date'];
     articleId             = json['article_id'];
-    deleted               = json['article'];
+    deleted               = json['deleted'] != 0;
   }
 
   @override
