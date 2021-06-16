@@ -3,6 +3,7 @@ import 'package:flutter_ecoapp/models/base.dart';
 import 'package:flutter_ecoapp/models/category.dart';
 import 'package:flutter_ecoapp/models/district.dart';
 import 'package:flutter_ecoapp/models/opinion.dart';
+import 'package:flutter_ecoapp/models/question.dart';
 
 class StoreModel extends BaseModel with TagModel
 {
@@ -19,6 +20,8 @@ class StoreModel extends BaseModel with TagModel
   late DateTime lastUpdateDate;
 
   late DistrictModel district;
+
+  late ArticleRating rating;
 
   StoreModel({
     required int id,
@@ -125,6 +128,7 @@ class StoreModel extends BaseModel with TagModel
       id:                 json['district_id'], 
       name:               json['district_name']
     );
+    rating              = ArticleRating(opinions: json['opinions'].map<OpinionModel>((e) => OpinionModel.fromJsonMap(e)).toList());
     initTagging(newID: this.id, newTitle: this.publicName);
   }
 

@@ -49,14 +49,14 @@ class StoreCoverSection extends StatelessWidget {
             mainAxisSize: MainAxisSize.min,
             children: [
               Text(
-                '4.2',
+                store.rating.avgRating.toStringAsPrecision(2),
                 style: GoogleFonts.montserrat(
                   fontWeight: FontWeight.w500,
                   fontSize: 15
                 ),
               ),
               SizedBox(width: 20.0),
-              StarsRow(rating: 4.2,)
+              StarsRow(rating: store.rating.avgRating,)
             ],
           )
         ],

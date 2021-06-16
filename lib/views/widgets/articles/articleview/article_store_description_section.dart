@@ -82,8 +82,8 @@ class StoreDescriptionSection extends StatelessWidget {
         Row(
           mainAxisAlignment: MainAxisAlignment.end,
           children: [
-            Text('4.2', style: GoogleFonts.montserrat(), textAlign: TextAlign.end,), // TODO: Add rating view
-            StarsRow(rating: 2,)
+            Text(store.rating.avgRating.toStringAsPrecision(2), style: GoogleFonts.montserrat(), textAlign: TextAlign.end,), // TODO: Add rating view
+            StarsRow(rating: store.rating.avgRating,)
           ],
         ),
         SizedBox(height: 10.0),

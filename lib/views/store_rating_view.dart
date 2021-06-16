@@ -54,13 +54,13 @@ class StoreRatingView extends StatelessWidget {
               EcoCover(
                 image: NetworkImage(store.photoUrl),
                 title: store.publicName,
-                subtitle: '',//'${store.location}, ${store.district}',
+                subtitle: '${store.location}, ${store.district}',
                 miniContent: 'x valoraciones',
               ),
               SizedBox(height: 10.0,),
               Divider(thickness: 1,),
               EcoItemsList<OpinionModel>(
-                elements: store.allOpinions,
+                elements: store.rating.opinions,
                 forEachElementWidget: (value) => OpinionTile(opinion: value, displayArticle: true)
               ) 
             ],

@@ -11,7 +11,6 @@ class StarsRow extends StatelessWidget {
     List<Widget> stars = [];
     
     //int ratingCeil = rating.ceil();
-
     for(int i = 0; i < 5; i++){
       stars.add(getStar(filled: rating - i));
     }

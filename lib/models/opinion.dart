@@ -49,7 +49,7 @@ class ArticleRating{
   double get avgRating{
     double sum = 0;
     opinions.forEach((element) { sum += element.rating; });
-    return sum/opinions.length;
+    return opinions.length > 0? sum/opinions.length : 0;
   }
 
 }

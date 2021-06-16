@@ -6,11 +6,13 @@ class EcoItemsList<T extends BaseModel> extends StatelessWidget {
   const EcoItemsList({
     Key? key,
     required this.elements, 
-    required this.forEachElementWidget
+    required this.forEachElementWidget,
+    this.noElementsText = 'No hay artículos para mostrar'
   }) : super(key: key);
 
   final List<T> elements;
   final Widget Function(T) forEachElementWidget;
+  final String noElementsText;
 
   @override
   Widget build(BuildContext context) {
@@ -30,7 +32,7 @@ class EcoItemsList<T extends BaseModel> extends StatelessWidget {
           mainAxisSize: MainAxisSize.max,
           children: [
             Text(
-              'No hay artículos para mostrar',
+              noElementsText,
               textAlign: TextAlign.center,
               style: GoogleFonts.montserrat(
                 fontStyle: FontStyle.italic

@@ -231,7 +231,7 @@ class _ArticleContent extends StatelessWidget {
             StarsRow(rating: article.rating.avgRating),
             SizedBox(width: 10.0),
             Text(
-              '${article.rating.count} opiniones',
+              article.rating.count > 0? '${article.rating.count} ${article.rating.count > 1? 'opiniones' : 'opinión'}' : 'Sin opiniones aún',
               style: GoogleFonts.montserrat(
                 color: EcoAppColors.MAIN_COLOR
               ),

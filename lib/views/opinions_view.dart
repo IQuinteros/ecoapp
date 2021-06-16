@@ -63,7 +63,8 @@ class OpinionsView extends StatelessWidget {
               Divider(thickness: 1,),
               EcoItemsList<OpinionModel>(
                 elements: article.rating.opinions,
-                forEachElementWidget: (value) => OpinionTile(opinion: value,)
+                forEachElementWidget: (value) => OpinionTile(opinion: value,),
+                noElementsText: 'No hay opiniones para mostrar',
               )
             ],
           ),
