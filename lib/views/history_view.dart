@@ -12,13 +12,25 @@ import 'package:flutter_ecoapp/views/style/colors.dart';
 import 'package:flutter_ecoapp/views/style/text_style.dart';
 import 'package:flutter_ecoapp/views/widgets/articles/article_card.dart';
 import 'package:flutter_ecoapp/views/widgets/articles/future_articles.dart';
+import 'package:flutter_ecoapp/views/widgets/index_app_bar.dart';
 import 'package:flutter_ecoapp/views/widgets/search_bar.dart';
 import 'package:google_fonts/google_fonts.dart';
 
 class HistoryView extends StatelessWidget {
   @override
   Widget build(BuildContext context) {
-    return getContent(context);
+    return CustomScrollView(
+      slivers: [
+        IndexAppBar(),
+        SliverList(
+          delegate: SliverChildListDelegate(
+            [
+              getContent(context)
+            ]
+          ),
+        )
+      ],
+    );
   }
 
   Widget getContent(BuildContext context){
@@ -27,7 +39,6 @@ class HistoryView extends StatelessWidget {
     final content = Column(
       crossAxisAlignment: CrossAxisAlignment.stretch,
       children: [
-        SearchBar(),
         EcoTitle(
           text: 'Mi Historial',
         ),
@@ -67,45 +78,6 @@ class _HistorySectionState extends State<HistorySection> {
               notFoundMessage: 'No hay artículos en el historial', 
               future: historyBloc.getHistory(user: snapshot.data!),
               onLongPress: (e) => _askDelete(e),
-            );
-            return FutureBuilder(
-              future: historyBloc.getHistory(user: snapshot.data!),
-              builder: (context, AsyncSnapshot<List<ArticleModel>> snapshot) {
-                if(!snapshot.hasData) return Container();
-                switch(snapshot.connectionState){
-                  case ConnectionState.done:
-                    if(snapshot.data!.length <= 0) return Column(
-                      children: [
-                        Divider(thickness: 1,),
-                        Container(
-                          padding: EdgeInsets.symmetric(
-                            horizontal: 20.0,
-                            vertical: 20.0
-                          ),
-                          child: Row(
-                            mainAxisSize: MainAxisSize.max,
-                            children: [
-                              Spacer(),
-                              Text(
-                                'No hay artículos en el historial',
-                                style: GoogleFonts.montserrat(),
-                                textAlign: TextAlign.center,
-                              ),
-                              Spacer(),
-                            ],
-                          ),
-                        ),
-                      ],
-                    );
-                    return Column(
-                      children: snapshot.data!.map<Widget>((e) => ArticleCard(
-                        article: e,
-                        onLongPress: () => _askDelete(e)
-                      )).toList(),
-                    );
-                  default: return LinearProgressIndicator();
-                }
-              },
             );
           default: return LinearProgressIndicator();
         }

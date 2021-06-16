@@ -7,11 +7,13 @@ import 'package:flutter_ecoapp/models/article.dart';
 import 'package:flutter_ecoapp/views/debug/debug.dart';
 import 'package:flutter_ecoapp/views/favorites.view.dart';
 import 'package:flutter_ecoapp/views/history_view.dart';
+import 'package:flutter_ecoapp/views/style/colors.dart';
 import 'package:flutter_ecoapp/views/style/text_style.dart';
 import 'package:flutter_ecoapp/views/widgets/articles/article_card.dart';
 import 'package:flutter_ecoapp/views/widgets/categories/category_box.dart';
 import 'package:flutter_ecoapp/views/widgets/categories/category_list_item.dart';
 import 'package:flutter_ecoapp/views/widgets/home/featured_product.dart';
+import 'package:flutter_ecoapp/views/widgets/index_app_bar.dart';
 
 import 'package:flutter_ecoapp/views/widgets/mini_button.dart';
 import 'package:flutter_ecoapp/views/widgets/search_bar.dart';
@@ -22,7 +24,19 @@ class HomeView extends StatelessWidget {
 
   @override
   Widget build(BuildContext context) {
-    return getContent(context);
+    return CustomScrollView(
+      slivers: [
+        IndexAppBar(),
+        SliverList(
+          delegate: SliverChildListDelegate(
+            [
+              getContent(context)
+            ]
+          ),
+        )
+      ],
+    );
+    
   }
 
   Widget getContent(BuildContext context){
@@ -125,7 +139,6 @@ class HomeView extends StatelessWidget {
     final column = Column(
       crossAxisAlignment: CrossAxisAlignment.start,
       children: [
-        SearchBar(),
         EcoTitle(text: 'Productos Destacados'),
         futureContainer,
         EcoTitle(

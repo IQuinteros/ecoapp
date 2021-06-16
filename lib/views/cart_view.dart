@@ -13,6 +13,7 @@ import 'package:flutter_ecoapp/views/style/text_style.dart';
 import 'package:flutter_ecoapp/views/summary_view.dart';
 import 'package:flutter_ecoapp/views/widgets/articles/cart_article_card.dart';
 import 'package:flutter_ecoapp/views/widgets/articles/mini_eco_indicator.dart';
+import 'package:flutter_ecoapp/views/widgets/index_app_bar.dart';
 import 'package:flutter_ecoapp/views/widgets/normal_button.dart';
 import 'package:flutter_ecoapp/views/widgets/search_bar.dart';
 import 'package:google_fonts/google_fonts.dart';
@@ -27,7 +28,48 @@ class CartView extends StatefulWidget {
 class _CartViewState extends State<CartView> {
   @override
   Widget build(BuildContext context) {
-    return getContent(context);
+    return Stack(
+      children: [
+        CustomScrollView(
+          slivers: [
+            IndexAppBar(),
+            SliverList(
+              delegate: SliverChildListDelegate(
+                [
+                  getContent(context)
+                ]
+              ),
+            )
+          ],
+        ),
+        Align(
+          alignment: Alignment.bottomCenter,
+          child: Container(
+            clipBehavior: Clip.antiAlias,
+            decoration: BoxDecoration(),
+            padding: EdgeInsets.symmetric(
+              horizontal: 20.0,
+              vertical: 10.0
+            ),
+            child: BackdropFilter(
+              filter: ImageFilter.blur(sigmaX: 5.0, sigmaY: 5.0),
+              child: Container(
+                height: 50.0,
+                constraints: BoxConstraints(
+                  minHeight: 50.0
+                ),
+                child: NormalButton(
+                  text: 'Reservar pedido', 
+                  onPressed: (){
+                    _buy(context);
+                  }
+                ),
+              ),
+            ),
+          ),
+        )
+      ],
+    );
   }
 
   int loadedElements = 0;
@@ -40,7 +82,6 @@ class _CartViewState extends State<CartView> {
     final column = Column(
       crossAxisAlignment: CrossAxisAlignment.start,
       children: [
-        SearchBar(),
         EcoTitle(
           text: 'Carrito',
           rightButton: MiniEcoIndicator( // TODO: Only debug indicator
@@ -116,45 +157,9 @@ class _CartViewState extends State<CartView> {
       ],
     );
 
-    return Stack(
-      children: [
-        Column(
-          children: [
-            Expanded(
-              child: SingleChildScrollView(
-                child: column,
-                scrollDirection: Axis.vertical,
-              ),
-            ),
-          ],
-        ),
-        Align(
-          alignment: Alignment.bottomCenter,
-          child: Container(
-            clipBehavior: Clip.antiAlias,
-            decoration: BoxDecoration(),
-            padding: EdgeInsets.symmetric(
-              horizontal: 20.0,
-              vertical: 10.0
-            ),
-            child: BackdropFilter(
-              filter: ImageFilter.blur(sigmaX: 5.0, sigmaY: 5.0),
-              child: Container(
-                height: 50.0,
-                constraints: BoxConstraints(
-                  minHeight: 50.0
-                ),
-                child: NormalButton(
-                  text: 'Reservar pedido', 
-                  onPressed: (){
-                    _buy(context);
-                  }
-                ),
-              ),
-            ),
-          ),
-        )
-      ]
+    return SingleChildScrollView(
+      child: column,
+      scrollDirection: Axis.vertical,
     );
   }
 
