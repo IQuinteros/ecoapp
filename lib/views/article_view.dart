@@ -272,45 +272,34 @@ class _ArticleContent extends StatelessWidget {
       ),
     );
 
-    final storeText = StreamBuilder(
-      stream: storeStream,
-      initialData: null,
-      builder: (BuildContext context, AsyncSnapshot<StoreModel?> snapshot){
-        switch(snapshot.connectionState){
-          case ConnectionState.done:
-            if(!snapshot.hasData) return Container();
-            return InkWell(
-              onTap: () => print('Go to store'), // TODO: Go to store
-              child: Padding(
-                padding: EdgeInsets.symmetric(
-                  horizontal: 20.0
-                ),
-                child: Container(
-                  width: double.infinity,
-                  child: RichText(
-                    textScaleFactor: MediaQuery.of(context).textScaleFactor,
-                    text: TextSpan(
-                      text: 'Vendido por ',
-                      style: GoogleFonts.montserrat(
-                        color: Colors.black,
-                        fontSize: 15
-                      ),
-                      children: [
-                        TextSpan(
-                          text: snapshot.data!.publicName,//'${article.store!.publicName}',
-                          style: GoogleFonts.montserrat(
-                            color: EcoAppColors.MAIN_COLOR
-                          ),
-                        )
-                      ]
-                    ),
+    final storeText = InkWell(
+      onTap: () => print('Go to store'), // TODO: Go to store
+      child: Padding(
+        padding: EdgeInsets.symmetric(
+          horizontal: 20.0
+        ),
+        child: Container(
+          width: double.infinity,
+          child: RichText(
+            textScaleFactor: MediaQuery.of(context).textScaleFactor,
+            text: TextSpan(
+              text: 'Vendido por ',
+              style: GoogleFonts.montserrat(
+                color: Colors.black,
+                fontSize: 15
+              ),
+              children: [
+                TextSpan(
+                  text: article.store!.publicName,//'${article.store!.publicName}',
+                  style: GoogleFonts.montserrat(
+                    color: EcoAppColors.MAIN_COLOR
                   ),
                 )
-              ),
-            );
-          default: return CircularProgressIndicator();
-        }
-      },
+              ]
+            ),
+          ),
+        )
+      ),
     );
 
     final btnAddToCart = _AddToCartButton(article: article);
@@ -336,17 +325,7 @@ class _ArticleContent extends StatelessWidget {
         Divider(thickness: 1,),
         EcoDetailSection(article: article),
         Divider(thickness: 1,),
-        StreamBuilder( 
-          stream: storeStream, 
-          builder: (BuildContext context, AsyncSnapshot<StoreModel?> snapshot){
-            switch(snapshot.connectionState){
-              case ConnectionState.done:
-                if(snapshot.data != null) return StoreDescriptionSection(article: article, store: snapshot.data!);
-                  return CircularProgressIndicator();
-              default: return CircularProgressIndicator();
-            }            
-          }
-        ),
+        StoreDescriptionSection(article: article, store: article.store!),
         Divider(thickness: 1,),
         QuestionsSection(article: article)
       ]
