@@ -8,6 +8,7 @@ import 'package:flutter_ecoapp/models/article.dart';
 import 'package:flutter_ecoapp/models/history.dart';
 import 'package:flutter_ecoapp/models/user.dart';
 import 'package:flutter_ecoapp/views/debug/debug.dart';
+import 'package:flutter_ecoapp/views/style/colors.dart';
 import 'package:flutter_ecoapp/views/style/text_style.dart';
 import 'package:flutter_ecoapp/views/widgets/articles/article_card.dart';
 import 'package:flutter_ecoapp/views/widgets/search_bar.dart';
@@ -40,11 +41,16 @@ class HistoryView extends StatelessWidget {
   }
 }
 
-class HistorySection extends StatelessWidget {
+class HistorySection extends StatefulWidget {
   const HistorySection({
     Key? key,
   }) : super(key: key);
 
+  @override
+  _HistorySectionState createState() => _HistorySectionState();
+}
+
+class _HistorySectionState extends State<HistorySection> {
   @override
   Widget build(BuildContext context) {
     final profileBloc = BlocProvider.of<ProfileBloc>(context);
@@ -88,24 +94,7 @@ class HistorySection extends StatelessWidget {
                     return Column(
                       children: snapshot.data!.map<Widget>((e) => ArticleCard(
                         article: e,
-                        onLongPress: (){
-                          AwesomeDialog(
-                            title: 'Eliminar artículo del historial',
-                            desc: 'Se eliminará este artículo del historial. Aparecerá aquí denuevo si vuelves a visitar el mismo artículo',
-                            dialogType: DialogType.INFO, 
-                            animType: AnimType.BOTTOMSLIDE,
-                            context: context,
-                            btnOkText: 'Volver',
-                            btnCancelText: 'Eliminar',
-                            btnOkOnPress: () {},
-                            btnOkColor: Colors.black26,
-                            //btnCancelColor: Colors.black26,
-                            btnCancelOnPress: () {
-                              
-                            },
-                            padding: EdgeInsets.symmetric(horizontal: 20.0, vertical: 10.0)
-                          )..show();
-                        },
+                        onLongPress: () => _askDelete(e)
                       )).toList(),
                     );
                   default: return LinearProgressIndicator();
@@ -116,5 +105,38 @@ class HistorySection extends StatelessWidget {
         }
       },
     );
+  }
+
+  void _askDelete(ArticleModel article) {
+    AwesomeDialog(
+      title: 'Eliminar artículo del historial',
+      desc: 'Se eliminará este artículo del historial. Aparecerá aquí denuevo si vuelves a visitar el mismo artículo',
+      dialogType: DialogType.INFO, 
+      animType: AnimType.BOTTOMSLIDE,
+      context: context,
+      btnOkText: 'Volver',
+      btnCancelText: 'Eliminar',
+      btnOkOnPress: () {},
+      btnOkColor: Colors.black26,
+      //btnCancelColor: Colors.black26,
+      btnCancelOnPress: () => _deleteHistory(article),
+      padding: EdgeInsets.symmetric(horizontal: 20.0, vertical: 10.0)
+    )..show();
+  }
+
+  void _deleteHistory(ArticleModel article) async {
+    final profileBloc = BlocProvider.of<ProfileBloc>(context);
+    final userBloc = BlocProvider.of<UserBloc>(context);
+    final historyBloc = BlocProvider.of<HistoryBloc>(context);
+
+    final user = await userBloc.getLinkedUser(profileBloc.currentProfile);
+    if(user != null) await historyBloc.deleteHistory(article, user);
+
+    ScaffoldMessenger.of(context).removeCurrentSnackBar();
+    ScaffoldMessenger.of(context).showSnackBar(SnackBar(
+      content: Text('Artículo eliminado del historial'),
+      backgroundColor: EcoAppColors.LEFT_BAR_COLOR,
+    ));
+    setState(() {});
   }
 }
