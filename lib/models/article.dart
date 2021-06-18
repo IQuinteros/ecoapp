@@ -54,12 +54,12 @@ class ArticleModel extends BaseModel with TagModel
     title           = json['title'];
     description     = json['description'];
     price           = json['price'];
-    pastPrice       = json['pastPrice'];
+    pastPrice       = json['past_price'];
     stock           = json['stock'];
-    createdDate     = json['createdDate'];
-    lastUpdateDate  = json['lastUpdateDate'];
+    createdDate     = DateTime.parse(json['creation_date']);
+    lastUpdateDate  = DateTime.parse(json['last_update_date']);
     enabled         = json['enabled'];
-    photos          = json['photos'] ?? const [];
+    photos          = json['photos'].map<PhotoModel>((e) => PhotoModel.fromJsonMap(e)).toList() ?? const [];
     category        = CategoryModel.fromJsonMap(json['category']);
     store           = StoreModel.fromJsonMap(json['store']);
 
@@ -94,12 +94,16 @@ class ArticleModel extends BaseModel with TagModel
 
 class PhotoModel extends BaseModel
 {
-  String photoUrl;
+  late String photoUrl;
 
   PhotoModel({
     required int id,
     required this.photoUrl,
   }) : super(id: id);
+
+  PhotoModel.fromJsonMap(Map<String, dynamic> json) : super(id: json['id']){
+    photoUrl          = json['photo'];
+  }
 
   @override
   Map<String, dynamic> toJson() => {

@@ -24,8 +24,9 @@ class _FeaturedProductState extends State<FeaturedProduct> {
     widget.article.tag = 'featured-card';
 
     ImageProvider<Object> imageData = AssetImage('assets/png/no-image.png');
+
     if(widget.article.photos.length > 0)
-       NetworkImage(widget.article.photos[0].photoUrl);
+       imageData = NetworkImage(widget.article.photos[0].photoUrl);
 
     final image = Hero(
       tag: widget.article.tag,
