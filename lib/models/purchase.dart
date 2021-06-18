@@ -8,7 +8,7 @@ class PurchaseModel extends BaseModel
   late int total;
   late DateTime createdDate;
 
-  late InfoPurchaseModel info;
+  late InfoPurchaseModel? info;
 
   late List<ArticleToPurchase> articles;
   ChatModel? chat;
@@ -42,7 +42,7 @@ class PurchaseModel extends BaseModel
   Map<StoreModel?, List<ArticleToPurchase>> get storeSortedArticles{
     Map<StoreModel?, List<ArticleToPurchase>> toReturn = {};
     articles.forEach((element) { 
-      StoreModel? storeToUpdate = element.article != null? element.article!.store : element.store;
+      StoreModel? storeToUpdate = element.store;
       toReturn.update(storeToUpdate, (value) => value + [element], ifAbsent: () => [element]);
     }); 
     return toReturn;
@@ -54,9 +54,9 @@ class PurchaseModel extends BaseModel
   PurchaseModel.fromJsonMap(Map<String, dynamic> json) : super(id: json['id']){
     total               = json['total'];
     createdDate         = DateTime.parse(json['creation_date']);
-    info                = json['info'];
-    articles            = json['articles'] ?? const [];
-    chat                = ChatModel.fromJsonMap(json['chat'], purchase: this);
+    info                = json['info'] != null? InfoPurchaseModel.fromJsonMap(json['info']) : null;
+    articles            = json['articles'].map<ArticleToPurchase>((e) => ArticleToPurchase.fromJsonMap(e)).toList() ?? const [];
+    chat                = json['chat'] != null? ChatModel.fromJsonMap(json['chat'], purchase: this) : null;
   }
 
   @override
@@ -71,10 +71,10 @@ class PurchaseModel extends BaseModel
 
 class InfoPurchaseModel extends BaseModel
 {
-  String names;
-  String location;
-  String contactNumber;
-  String district;
+  late String names;
+  late String location;
+  late String contactNumber;
+  late String district;
 
   InfoPurchaseModel({
     required int id,
@@ -83,6 +83,13 @@ class InfoPurchaseModel extends BaseModel
     required this.contactNumber,
     required this.district,
   }) : super(id: id);
+
+  InfoPurchaseModel.fromJsonMap(Map<String, dynamic> json) : super(id: json['id']){
+    names               = json['names'];
+    location            = json['location'];
+    contactNumber       = json['contact_number'];
+    district            = json['district'];
+  }
 
   @override
   Map<String, dynamic> toJson() => {
@@ -98,10 +105,10 @@ class InfoPurchaseModel extends BaseModel
 class ArticleToPurchase extends BaseModel
 {
   late PurchaseModel purchase;
-  ArticleModel? article;
+  late int? articleId;
   StoreModel? store;
   late String title;
-  late double unitPrice;
+  late int unitPrice;
   late int quantity;
 
   String? photoUrl;
@@ -110,7 +117,7 @@ class ArticleToPurchase extends BaseModel
 
   ArticleToPurchase({
     required int id,
-    this.article,
+    this.articleId,
     this.store,
     required this.title,
     required this.unitPrice,
@@ -120,7 +127,7 @@ class ArticleToPurchase extends BaseModel
   }) : super(id: id);
 
   ArticleToPurchase.fromJsonMap(Map<String, dynamic> json) : super(id: json['id']){
-    article             = json['article'];
+    articleId           = json['article_id'];
     store               = json['store'];
     title               = json['title'];
     unitPrice           = json['unit_price'];
@@ -129,12 +136,12 @@ class ArticleToPurchase extends BaseModel
     
     form = ArticleForm(
       id: 0,
-      generalDetail: json['general_detail'],
-      recycledMats: json['recycled_mats'],
-      recycledMatsDetail: json['recycled_mats_detail'],
-      reuseTips: json['reuse_tips'],
-      recycledProd: json['recycled_prod'],
-      recycledProdDetail: json['recycled_prod_detail'],
+      generalDetail: json['general_detail'] ?? '',
+      recycledMats: json['recycled_mats'] ?? '',
+      recycledMatsDetail: json['recycled_mats_detail'] ?? '',
+      reuseTips: json['reuse_tips'] ?? '',
+      recycledProd: json['recycled_prod'] ?? '',
+      recycledProdDetail: json['recycled_prod_detail'] ?? '',
       lastUpdateDate: DateTime.now(), // TODO: Same
       createdDate: DateTime.now() // TODO: Maybe can be null
     );
@@ -145,7 +152,7 @@ class ArticleToPurchase extends BaseModel
   @override
   Map<String, dynamic> toJson() => {
     'id'        : id,
-    'article'   : article,
+    'article_id': articleId,
     'store'     : store,
     'title'     : title,
     'unitPrice' : unitPrice,

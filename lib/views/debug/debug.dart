@@ -52,7 +52,7 @@ class EcoAppDebug{
           title: 'Jamón', 
           unitPrice: 123, 
           quantity: 12,
-          article: _articles[0],
+          articleId: 0,
           form: ArticleForm.infoPurchase(
             id: 1,
             generalDetail: '',
@@ -68,7 +68,7 @@ class EcoAppDebug{
           title: 'Jamón', 
           unitPrice: 123, 
           quantity: 12,
-          article: _articles[0],
+          articleId: 0,
           form: ArticleForm.infoPurchase(
             id: 1,
             generalDetail: '',
@@ -85,7 +85,7 @@ class EcoAppDebug{
           title: 'Correa', 
           unitPrice: 432, 
           quantity: 2,
-          article: _articles[1],
+          articleId: 0,
           photoUrl: 'https://picsum.photos/500/400',
           form: ArticleForm.infoPurchase(
             id: 1,
@@ -116,7 +116,7 @@ class EcoAppDebug{
           title: 'Correa', 
           unitPrice: 432, 
           quantity: 2,
-          article: _articles[1],
+          articleId: 0,
           photoUrl: 'https://picsum.photos/500/400',
           form: ArticleForm.infoPurchase(
             id: 1,

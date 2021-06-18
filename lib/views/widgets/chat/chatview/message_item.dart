@@ -5,12 +5,16 @@ class MessageItem extends StatefulWidget {
     Key? key, 
     required this.isOwner,
     required this.content,
-    this.margin = 10
+    this.margin = 10,
+    this.onTap,
+    this.onLongPress
   }) : super(key: key);
 
   final bool isOwner;
   final Widget content;
   final double margin;
+  final Function()? onTap;
+  final Function()? onLongPress;
 
   @override
   _MessageItemState createState() => _MessageItemState();
@@ -26,7 +30,8 @@ class _MessageItemState extends State<MessageItem> {
         top: widget.margin,
       ),
       child: GestureDetector(
-        onTap: () {}, // TODO: Go to purchase
+        onTap: widget.onTap,
+        onLongPress: widget.onLongPress,
         child: Card(
           margin: EdgeInsets.zero,
           shape: RoundedRectangleBorder(borderRadius: BorderRadius.circular(20.0)),

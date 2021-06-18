@@ -168,14 +168,14 @@ class ArticleForm extends BaseModel
   }): super(id: id);
 
   ArticleForm.fromJsonMap(Map<String, dynamic> json) : super(id: json['id']){
-    recycledMats          = json['recycled_mats'];
-    recycledMatsDetail    = json['recycled_mats_detail'];
-    reuseTips             = json['reuse_tips'];
-    recycledProd          = json['recycled_prod'];
-    recycledProdDetail    = json['recycled_prod_detail'];
+    recycledMats          = json['recycled_mats'] ?? '';
+    recycledMatsDetail    = json['recycled_mats_detail'] ?? '';
+    reuseTips             = json['reuse_tips'] ?? '';
+    recycledProd          = json['recycled_prod'] ?? '';
+    recycledProdDetail    = json['recycled_prod_detail'] ?? '';
     createdDate           = DateTime.parse(json['creation_date']);
     lastUpdateDate        = DateTime.parse(json['last_update_date']);
-    generalDetail         = json['general_detail'];
+    generalDetail         = json['general_detail'] ?? '';
   }
 
   EcoIndicator getIndicator(){

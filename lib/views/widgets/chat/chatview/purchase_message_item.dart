@@ -1,5 +1,6 @@
 import 'package:flutter/material.dart';
 import 'package:flutter_ecoapp/models/purchase.dart';
+import 'package:flutter_ecoapp/views/purchase_detail_view.dart';
 import 'package:flutter_ecoapp/views/widgets/chat/chatview/message_item.dart';
 import 'package:google_fonts/google_fonts.dart';
 
@@ -70,7 +71,8 @@ class PurchaseMessageItem extends StatelessWidget {
           info
         ],
       ),
-      isOwner: false
+      isOwner: false,
+      onTap: () => Navigator.push(context, MaterialPageRoute(builder: (__) => PurchaseDetailView(purchase: purchase,))),
     );
   }
 }
