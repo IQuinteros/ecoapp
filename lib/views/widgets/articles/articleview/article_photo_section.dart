@@ -1,5 +1,6 @@
 import 'package:flutter/material.dart';
 import 'package:flutter_ecoapp/models/article.dart';
+import 'package:flutter_ecoapp/views/image_view.dart';
 
 class PhotoSection extends StatelessWidget {
   const PhotoSection({
@@ -37,16 +38,20 @@ class PhotoSection extends StatelessWidget {
     );
   }
 
-  List<Widget> getPhotoItems() => article.photos.map<Widget>((element) => _PhotoItem(photoUrl: element.photoUrl)).toList();
+  List<Widget> getPhotoItems() => article.photos.map<Widget>((element) => _PhotoItem(photoUrl: element.photoUrl, index: article.photos.indexOf(element), article: article,)).toList();
 }
 
 class _PhotoItem extends StatelessWidget {
   const _PhotoItem({
     Key? key,
     required this.photoUrl,
+    required this.index,
+    required this.article
   }) : super(key: key);
 
   final String photoUrl;
+  final ArticleModel article;
+  final int index;
 
   @override
   Widget build(BuildContext context) {
@@ -70,7 +75,7 @@ class _PhotoItem extends StatelessWidget {
           fit: BoxFit.cover,
         ),
       ),
-      onTap: (){},
+      onTap: () => Navigator.push(context, MaterialPageRoute(builder: (__) => ImageView(photos: article.photos, initialIndex: index, title: article.title,))),
     );
   }
 }
