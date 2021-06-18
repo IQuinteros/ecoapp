@@ -74,6 +74,8 @@ class ChatBloc extends BaseBloc<ChatModel>{
     }
   }
 
+  Future<List<ChatModel>> getProfileChats(ProfileModel profile) => chatAPI.selectAll(params: {'profile_id': profile.id});
+
   Future<List<ArticleToPurchase>> getArticlesFromPurchase(PurchaseModel purchase) async => await articlePurchaseAPI.selectAll(
     params: {
       'purchase': purchase.id

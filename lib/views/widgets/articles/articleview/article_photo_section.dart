@@ -12,15 +12,16 @@ class PhotoSection extends StatelessWidget {
 
   @override
   Widget build(BuildContext context) {
-    if(article.photos.length <= 0)
+    if(article.photos.length <= 1)
       return Container();
 
     return Container(
       height: 100,
       margin: EdgeInsets.only(
-        bottom: 10.0
+        bottom: 20.0
       ),
       child: SingleChildScrollView(
+        clipBehavior: Clip.none,
         scrollDirection: Axis.horizontal,
         child: Container(
           constraints: BoxConstraints(
@@ -30,8 +31,9 @@ class PhotoSection extends StatelessWidget {
             horizontal: 20.0
           ),
           child: Row(
+            crossAxisAlignment: CrossAxisAlignment.center,
             mainAxisAlignment: MainAxisAlignment.start,
-            children: getPhotoItems(),
+            children: getPhotoItems().sublist(1, getPhotoItems().length),
           ),
         ),
       ),
@@ -57,6 +59,7 @@ class _PhotoItem extends StatelessWidget {
   Widget build(BuildContext context) {
     return GestureDetector(
       child: Container(
+        clipBehavior: Clip.antiAlias,
         margin: EdgeInsets.only(
           right: 10.0
         ),
@@ -67,7 +70,8 @@ class _PhotoItem extends StatelessWidget {
               blurRadius: 5,
               spreadRadius: 1
             )
-          ]
+          ],
+          borderRadius: BorderRadius.circular(5)
         ),
         child: Image(
           image: NetworkImage(photoUrl),

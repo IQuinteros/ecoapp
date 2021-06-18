@@ -14,7 +14,7 @@ class PurchaseMessageItem extends StatelessWidget {
   @override
   Widget build(BuildContext context) {
     ImageProvider<Object> imgData;
-    if(purchase.articles[0].hasPhotoUrl){
+    if(purchase.articles.length > 0 && purchase.articles[0].hasPhotoUrl){
       imgData = NetworkImage(purchase.articles[0].photoUrl!);
     }
     else{

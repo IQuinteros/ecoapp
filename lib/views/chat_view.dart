@@ -29,7 +29,7 @@ class _ChatViewState extends State<ChatView> {
         centerTitle: false,
         elevation: 10,
         title: Text(
-          widget.chat.store.publicName,
+          widget.chat.store?.publicName ?? 'Tienda desconocida',
           style: GoogleFonts.montserrat(
             fontWeight: FontWeight.w500,
             color: Colors.white
@@ -45,11 +45,6 @@ class _ChatViewState extends State<ChatView> {
         ),
       ),
       body: mainContent(context)
-      /* bottomNavigationBar: EcoBottomNavigationBar(
-        currentIndex: 0,
-          onTap: (value){
-        },
-      ) */
     );
   }
 
@@ -59,7 +54,7 @@ class _ChatViewState extends State<ChatView> {
     List<Widget> messagesWidget = messages.map<Widget>((e) { 
       Widget message = MessageItem(
         content: Column(
-          crossAxisAlignment: e.isOwner? CrossAxisAlignment.end : CrossAxisAlignment.start,
+          crossAxisAlignment: !e.fromStore? CrossAxisAlignment.end : CrossAxisAlignment.start,
           children: [
             Text(
               e.message,
@@ -75,14 +70,14 @@ class _ChatViewState extends State<ChatView> {
             )
           ],
         ), 
-        isOwner: e.isOwner,
-        margin: tempIsOwner == e.isOwner? 5 : 15
+        isOwner: !e.fromStore,
+        margin: tempIsOwner == !e.fromStore? 5 : 15
       );
-      tempIsOwner = e.isOwner;
+      tempIsOwner = !e.fromStore;
       return message;
     }).toList();
 
-    messagesWidget.insert(0, PurchaseMessageItem(purchase: widget.chat.linkedPurchase));
+    messagesWidget.insert(0, PurchaseMessageItem(purchase: widget.chat.purchase!)); // TODO:
     messagesWidget.add(SizedBox(height: 90,));
 
     final sendMessage = Container(

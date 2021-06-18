@@ -5,12 +5,13 @@ import 'package:flutter_ecoapp/models/store.dart';
 
 class PurchaseModel extends BaseModel
 {
-  late double total;
+  late int total;
   late DateTime createdDate;
 
   late InfoPurchaseModel info;
 
   late List<ArticleToPurchase> articles;
+  ChatModel? chat;
 
   PurchaseModel({
     required int id,
@@ -47,22 +48,15 @@ class PurchaseModel extends BaseModel
     return toReturn;
   }
 
-  ChatModel get chat {  // TODO: Connect with api
-    return ChatModel(
-      id: 1,
-      createdDate: createdDate,
-      closed: false
-    );
-  }
-
   double get realTotal => articles.fold<double>(0, (double value, element) => value += (element.unitPrice * element.quantity));
   double get discount => (realTotal - total) / realTotal * 100;
 
   PurchaseModel.fromJsonMap(Map<String, dynamic> json) : super(id: json['id']){
     total               = json['total'];
-    createdDate         = json['createdDate'];
+    createdDate         = DateTime.parse(json['creation_date']);
     info                = json['info'];
-    articles            = json['articles'];
+    articles            = json['articles'] ?? const [];
+    chat                = ChatModel.fromJsonMap(json['chat'], purchase: this);
   }
 
   @override

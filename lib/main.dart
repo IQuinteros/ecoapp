@@ -5,9 +5,11 @@ import 'package:flutter_bloc/flutter_bloc.dart';
 import 'package:flutter_ecoapp/bloc/app_bloc.dart';
 import 'package:flutter_ecoapp/bloc/article_bloc.dart';
 import 'package:flutter_ecoapp/bloc/cart_bloc.dart';
+import 'package:flutter_ecoapp/bloc/chat_bloc.dart';
 import 'package:flutter_ecoapp/bloc/district_bloc.dart';
 import 'package:flutter_ecoapp/bloc/history_bloc.dart';
 import 'package:flutter_ecoapp/bloc/profile_bloc.dart';
+import 'package:flutter_ecoapp/bloc/purchase_bloc.dart';
 import 'package:flutter_ecoapp/bloc/user_bloc.dart';
 import 'package:flutter_ecoapp/views/categories_view.dart';
 import 'package:flutter_ecoapp/views/login_view.dart';
@@ -48,6 +50,12 @@ class MyApp extends StatelessWidget {
         ),
         BlocProvider<HistoryBloc>(
           create: (BuildContext context) => HistoryBloc(),
+        ),
+        BlocProvider<ChatBloc>(
+          create: (BuildContext context) => ChatBloc(),
+        ),
+        BlocProvider<PurchaseBloc>(
+          create: (BuildContext context) => PurchaseBloc(),
         ),
       ],
       child: MaterialApp(

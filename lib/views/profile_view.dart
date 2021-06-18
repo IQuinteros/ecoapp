@@ -22,22 +22,42 @@ class ProfileView extends StatelessWidget {
 
   Widget getContent(BuildContext context){
     AppBloc appBloc = BlocProvider.of<AppBloc>(context);
+    final profileBloc = BlocProvider.of<ProfileBloc>(context);
 
     final column = Column(
       crossAxisAlignment: CrossAxisAlignment.start,
       children: [
-        EcoTitle(
-          text: 'Mi perfil',
-          rightButton: IconButton(
-            icon: Icon(Icons.sms_outlined), 
-            color: EcoAppColors.MAIN_COLOR,
-            iconSize: 35,
-            onPressed: () async {
-              var value = await Navigator.push(context, MaterialPageRoute(builder: (__) => ChatsView()));
-              if(value != null) appBloc.mainEcoNavBar.onTap(value);
+        StreamBuilder(
+            initialData: profileBloc.currentProfile,
+            stream: profileBloc.sessionStream,
+            builder: (BuildContext context, AsyncSnapshot<ProfileModel?> snapshot){
+              switch(snapshot.connectionState){
+                case ConnectionState.done:
+                case ConnectionState.active:
+                case ConnectionState.waiting:
+                  return getTitle(context, () async {
+                    if(!snapshot.hasData || snapshot.data == null){
+                      ScaffoldMessenger.of(context).removeCurrentSnackBar();
+                      ScaffoldMessenger.of(context).showSnackBar(SnackBar(
+                        content: Text('Para ver tus conversaciones, primero inicia sesión'),
+                        backgroundColor: EcoAppColors.MAIN_DARK_COLOR,
+                      ));
+                    } else{
+                      var value = await Navigator.push(context, MaterialPageRoute(builder: (__) => ChatsView()));
+                      if(value != null) appBloc.mainEcoNavBar.onTap(value);
+                    }
+                  });
+                default: return getTitle(context, () {
+                  ScaffoldMessenger.of(context).removeCurrentSnackBar();
+                  ScaffoldMessenger.of(context).showSnackBar(SnackBar(
+                    content: Text('Cargando'),
+                    backgroundColor: EcoAppColors.MAIN_DARK_COLOR,
+                  ));
+                });
+              }
             }
-          )
         ),
+        
         _MainContent()
       ],
     );
@@ -45,6 +65,18 @@ class ProfileView extends StatelessWidget {
     return SingleChildScrollView(
       child: column,
       scrollDirection: Axis.vertical,
+    );
+  }
+
+  Widget getTitle(BuildContext context, Function() onTap){
+    return EcoTitle(
+      text: 'Mi perfil',
+      rightButton: IconButton(
+        icon: Icon(Icons.sms_outlined), 
+        color: EcoAppColors.MAIN_COLOR,
+        iconSize: 35,
+        onPressed: onTap
+      )
     );
   }
 }

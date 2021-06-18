@@ -10,213 +10,10 @@ class ChatModel extends BaseModel
   late bool closed;
   late DateTime createdDate;
   late int profileId;
-  late int storeId;
+  late StoreModel? store;
+  late PurchaseModel? purchase;
 
-  List<MessageModel> _messages = [];
-  List<MessageModel> get messages { // TODO: Connect to api - DEBUG
-    // Load messages
-    _messages.addAll([
-      MessageModel(
-        id: id, 
-        message: 'Hola hola sdfkjdsf', 
-        date: DateTime.now(), 
-        chat: this, 
-        profile: ProfileModel(
-          birthday: DateTime.now(),
-          contactNumber: 123,
-          createdDate: DateTime.now(),
-          email: 'skdjfjadfs',
-          id: 2,
-          lastName: 'sadjksdjafk',
-          lastUpdateDate: DateTime.now(),
-          location: ' jsadfjdasksf a',
-          name: ' kasdkjadfsk ',
-          rut: 234234,
-          rutDv: '4',
-          termsChecked: true
-        ), 
-        store: store, 
-        owner: 'profile'
-      ),
-      MessageModel(
-        id: id, 
-        message: 'Hola hola jaja buena buena sdfkjdsf', 
-        date: DateTime.now(), 
-        chat: this, 
-        profile: ProfileModel(
-          birthday: DateTime.now(),
-          contactNumber: 123,
-          createdDate: DateTime.now(),
-          email: 'skdjfjadfs',
-          id: 2,
-          lastName: 'sadjksdjafk',
-          lastUpdateDate: DateTime.now(),
-          location: ' jsadfjdasksf a',
-          name: ' kasdkjadfsk ',
-          rut: 234234,
-          rutDv: '4',
-          termsChecked: true
-        ), 
-        store: store, 
-        owner: 'store'
-      ),
-      MessageModel(
-        id: id, 
-        message: 'ahh chaochao sdfkjdsf', 
-        date: DateTime.now(), 
-        chat: this, 
-        profile: ProfileModel(
-          birthday: DateTime.now(),
-          contactNumber: 123,
-          createdDate: DateTime.now(),
-          email: 'skdjfjadfs',
-          id: 2,
-          lastName: 'sadjksdjafk',
-          lastUpdateDate: DateTime.now(),
-          location: ' jsadfjdasksf a',
-          name: ' kasdkjadfsk ',
-          rut: 234234,
-          rutDv: '4',
-          termsChecked: true
-        ), 
-        store: store, 
-        owner: 'profile'
-      ),
-      MessageModel(
-        id: id, 
-        message: 'Hola hola sdfkjdsf', 
-        date: DateTime.now(), 
-        chat: this, 
-        profile: ProfileModel(
-          birthday: DateTime.now(),
-          contactNumber: 123,
-          createdDate: DateTime.now(),
-          email: 'skdjfjadfs',
-          id: 2,
-          lastName: 'sadjksdjafk',
-          lastUpdateDate: DateTime.now(),
-          location: ' jsadfjdasksf a',
-          name: ' kasdkjadfsk ',
-          rut: 234234,
-          rutDv: '4',
-          termsChecked: true
-        ), 
-        store: store, 
-        owner: 'profile'
-      ),
-      MessageModel(
-        id: id, 
-        message: 'Hola hola jaja buena buena sdfkjdsf', 
-        date: DateTime.now(), 
-        chat: this, 
-        profile: ProfileModel(
-          birthday: DateTime.now(),
-          contactNumber: 123,
-          createdDate: DateTime.now(),
-          email: 'skdjfjadfs',
-          id: 2,
-          lastName: 'sadjksdjafk',
-          lastUpdateDate: DateTime.now(),
-          location: ' jsadfjdasksf a',
-          name: ' kasdkjadfsk ',
-          rut: 234234,
-          rutDv: '4',
-          termsChecked: true
-        ), 
-        store: store, 
-        owner: 'store'
-      ),
-      MessageModel(
-        id: id, 
-        message: 'ahh chaochao sdfkjdsf', 
-        date: DateTime.now(), 
-        chat: this, 
-        profile: ProfileModel(
-          birthday: DateTime.now(),
-          contactNumber: 123,
-          createdDate: DateTime.now(),
-          email: 'skdjfjadfs',
-          id: 2,
-          lastName: 'sadjksdjafk',
-          lastUpdateDate: DateTime.now(),
-          location: ' jsadfjdasksf a',
-          name: ' kasdkjadfsk ',
-          rut: 234234,
-          rutDv: '4',
-          termsChecked: true
-        ), 
-        store: store, 
-        owner: 'profile'
-      ),
-      MessageModel(
-        id: id, 
-        message: 'Hola hola sdfkjdsf', 
-        date: DateTime.now(), 
-        chat: this, 
-        profile: ProfileModel(
-          birthday: DateTime.now(),
-          contactNumber: 123,
-          createdDate: DateTime.now(),
-          email: 'skdjfjadfs',
-          id: 2,
-          lastName: 'sadjksdjafk',
-          lastUpdateDate: DateTime.now(),
-          location: ' jsadfjdasksf a',
-          name: ' kasdkjadfsk ',
-          rut: 234234,
-          rutDv: '4',
-          termsChecked: true
-        ), 
-        store: store, 
-        owner: 'profile'
-      ),
-      MessageModel(
-        id: id, 
-        message: 'Hola hola jaja buena buena sdfkjdsf', 
-        date: DateTime.now(), 
-        chat: this, 
-        profile: ProfileModel(
-          birthday: DateTime.now(),
-          contactNumber: 123,
-          createdDate: DateTime.now(),
-          email: 'skdjfjadfs',
-          id: 2,
-          lastName: 'sadjksdjafk',
-          lastUpdateDate: DateTime.now(),
-          location: ' jsadfjdasksf a',
-          name: ' kasdkjadfsk ',
-          rut: 234234,
-          rutDv: '4',
-          termsChecked: true
-        ), 
-        store: store, 
-        owner: 'store'
-      ),
-      MessageModel(
-        id: id, 
-        message: 'ahh chaochao sdfkjdsf', 
-        date: DateTime.now(), 
-        chat: this, 
-        profile: ProfileModel(
-          birthday: DateTime.now(),
-          contactNumber: 123,
-          createdDate: DateTime.now(),
-          email: 'skdjfjadfs',
-          id: 2,
-          lastName: 'sadjksdjafk',
-          lastUpdateDate: DateTime.now(),
-          location: ' jsadfjdasksf a',
-          name: ' kasdkjadfsk ',
-          rut: 234234,
-          rutDv: '4',
-          termsChecked: true
-        ), 
-        store: store, 
-        owner: 'profile'
-      )
-    ]);
-    return _messages;
-  }
+  late List<MessageModel> messages;
 
   ChatModel({
     required int id,
@@ -224,55 +21,12 @@ class ChatModel extends BaseModel
     required this.createdDate,
   }) : super(id: id);
 
-  StoreModel get store => StoreModel(
-    id: 1, 
-    publicName: 'dfdsfgs', 
-    description: 'fgdgdgsgds', 
-    email: 'dfsfgsfg', 
-    contactNumber: 123123, 
-    location: 'fsgfsfgs', 
-    rut: 234234, 
-    rutDv: 's', 
-    enabled: true, 
-    createdDate: createdDate, 
-    lastUpdateDate: createdDate, 
-    //district: DistrictModel(id: 1, name: 'Penco')
-  ); // TODO: Conenct to api - DEBUG
-
-  PurchaseModel get linkedPurchase => PurchaseModel(
-    id: id, 
-    total: 23445, 
-    createdDate: createdDate, 
-    info: InfoPurchaseModel(
-      contactNumber: '38289243',
-      district: 'Penco',
-      id: 1,
-      location: 'dfgkdgf',
-      names: ' askjjkadfs'
-    ), articles: [
-      ArticleToPurchase(
-        id: id, 
-        title: 'Un artículo a', 
-        unitPrice: 12015, 
-        quantity: 2,
-        form: ArticleForm.infoPurchase(
-          id: 1,
-          generalDetail: '',
-          recycledMats: 'sjadsf',
-          recycledMatsDetail: 'sfkjasdkf',
-          recycledProd: '',
-          recycledProdDetail: '',
-          reuseTips: 'dsafjdsafjk'
-        )
-      )
-    ]
-  );
-
-  ChatModel.fromJsonMap(Map<String, dynamic> json) : super(id: json['id']){
-    closed           = json['closed'];
-    createdDate      = json['created_date'];
+  ChatModel.fromJsonMap(Map<String, dynamic> json, {this.purchase}) : super(id: json['id']){
+    closed           = json['closed'] != 0;
+    createdDate      = DateTime.parse(json['creation_date']);
     profileId        = json['profile_id'];
-    storeId          = json['store_id'];
+    store            = StoreModel.fromJsonMap(json['store']);
+    messages         = json['messages'].map<MessageModel>((e) => MessageModel.fromJsonMap(e)).toList() ?? const [];
   }
 
   @override
@@ -281,7 +35,7 @@ class ChatModel extends BaseModel
     'closed'      : closed,
     'created_date': createdDate,
     'profile_id'  : profileId,
-    'store_id'    : storeId
+    'store_id'    : store?.id ?? 0
   };
 
 
@@ -291,39 +45,28 @@ class MessageModel extends BaseModel
 {
   late String message;
   late DateTime date;
-  late String owner;
+  late bool fromStore;
 
   ChatModel? chat;
-  ProfileModel? profile;
-  StoreModel? store;
 
   MessageModel({
     required int id,
     required this.message,
     required this.date,
     this.chat,
-    required this.profile,
-    required this.store,
-    required this.owner
+    required this.fromStore
   }) : super(id: id);
 
   MessageModel.fromJsonMap(Map<String, dynamic> json) : super(id: json['id']){
     message           = json['message'];
-    date              = json['date'];
-    owner             = json['owner'];
-    chat              = json['chat']; // TODO: Profile and store can be stored in chat model and chat table
+    date              = DateTime.parse(json['creation_date']);
+    fromStore         = json['from_store'] != 0;
   }
-
-  bool get isOwner => owner != 'store';
 
   @override
   Map<String, dynamic> toJson() => {
     'id': id,
     'message': message,
-    'date': date,
-    'chat': chat,
-    'profile': profile,
-    'store': store,
-    'owner': owner,
+    'date': date
   };
 }

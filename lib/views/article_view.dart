@@ -12,6 +12,7 @@ import 'package:flutter_ecoapp/bloc/user_bloc.dart';
 import 'package:flutter_ecoapp/models/article.dart';
 import 'package:flutter_ecoapp/models/store.dart';
 import 'package:flutter_ecoapp/utils/currency_util.dart';
+import 'package:flutter_ecoapp/views/image_view.dart';
 import 'package:flutter_ecoapp/views/opinions_view.dart';
 import 'package:flutter_ecoapp/views/style/colors.dart';
 import 'package:flutter_ecoapp/views/widgets/articles/articleview/article_description_section.dart';
@@ -122,14 +123,17 @@ class _ArticleAppBar extends StatelessWidget {
           StretchMode.blurBackground,
           StretchMode.fadeTitle,
         ],
-        background: Hero( 
-          tag: article.tag,
-          child: Image(
-            image: NetworkImage(article.photos.length > 0? article.photos[0].photoUrl : 'https://picsum.photos/500/400'),
-            height: 120,
-            width: 120,
-            fit: BoxFit.cover,
-          )
+        background: GestureDetector(
+          child: Hero( 
+            tag: article.tag,
+            child: Image(
+              image: NetworkImage(article.photos.length > 0? article.photos[0].photoUrl : 'https://picsum.photos/500/400'),
+              height: 120,
+              width: 120,
+              fit: BoxFit.cover,
+            )
+          ),
+          onTap: () => Navigator.push(context, MaterialPageRoute(builder: (__) => ImageView(photos: article.photos, title: article.title,))),
         ),
       ),
     );

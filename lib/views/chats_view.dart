@@ -1,5 +1,10 @@
 import 'package:flutter/material.dart';
+import 'package:flutter_bloc/flutter_bloc.dart';
+import 'package:flutter_ecoapp/bloc/chat_bloc.dart';
+import 'package:flutter_ecoapp/bloc/profile_bloc.dart';
+import 'package:flutter_ecoapp/bloc/purchase_bloc.dart';
 import 'package:flutter_ecoapp/models/chat.dart';
+import 'package:flutter_ecoapp/models/purchase.dart';
 import 'package:flutter_ecoapp/views/chat_view.dart';
 import 'package:flutter_ecoapp/views/style/colors.dart';
 import 'package:flutter_ecoapp/views/widgets/bottom_nav_bar.dart';
@@ -60,6 +65,9 @@ class _ChatList extends StatelessWidget {
 
   @override
   Widget build(BuildContext context) {
+    final purchaseBloc = BlocProvider.of<PurchaseBloc>(context);
+    final profileBloc = BlocProvider.of<ProfileBloc>(context);
+
     return Container(
       decoration: BoxDecoration(
         color: Colors.white,
@@ -75,12 +83,17 @@ class _ChatList extends StatelessWidget {
         vertical: 20.0,
         horizontal: 10
       ),
-      child: Column(
-        children: [
-          _ChatItem(chat: ChatModel(id: 1, closed: false, createdDate: DateTime.now())),
-          Divider(thickness: 1),
-          _ChatItem(chat: ChatModel(id: 1, closed: false, createdDate: DateTime.now()))
-        ],
+      child: FutureBuilder(
+        future: purchaseBloc.getPurchases(profileBloc.currentProfile!),
+        builder: (context, AsyncSnapshot<List<PurchaseModel>> snapshot){
+          switch(snapshot.connectionState){
+            case ConnectionState.done:
+              return Column(
+                children: snapshot.data!.where((element) => element.chat != null).map<_ChatItem>((e) => _ChatItem(chat: e.chat!)).toList()
+              );
+            default: return CircularProgressIndicator();
+          }
+        }
       ),
     );
   }
@@ -110,7 +123,7 @@ class _ChatItem extends StatelessWidget {
         ]
       ),
       child: Image(
-        image: NetworkImage(chat.store.photoUrl),
+        image: (NetworkImage(chat.store?.photoUrl??'')), // TODO: 
         fit: BoxFit.cover,
       ),
     );
@@ -120,14 +133,14 @@ class _ChatItem extends StatelessWidget {
         crossAxisAlignment: CrossAxisAlignment.start,
         children: [
           Text(
-            chat.store.publicName,
+            chat.store?.publicName ?? 'Tienda desconocida',
             style: GoogleFonts.montserrat(
               fontWeight: FontWeight.w500
             ),
             textAlign: TextAlign.start,
           ),
           Text(
-            chat.store.publicName,
+            chat.store?.publicName ?? 'Tienda desconocida',
             style: GoogleFonts.montserrat(),
             textAlign: TextAlign.start,
           ),
