@@ -250,7 +250,7 @@ class ProfileBloc extends BaseBloc<ProfileModel>{
     articleModel.favorite = newState;
 
     if(_favoriteTimer[articleModel] != null && _favoriteTimer[articleModel]!.isActive) _favoriteTimer[articleModel]!.cancel();
-    _favoriteTimer[articleModel] = Timer(Duration(seconds: 5), () {
+    _favoriteTimer[articleModel] = Timer(Duration(seconds: 1), () {
       _setFavoriteArticle(articleModel, onReady);
       _favoriteTimer[articleModel] = null;
     });
@@ -282,7 +282,7 @@ class ProfileBloc extends BaseBloc<ProfileModel>{
           createdDate: DateTime.now()
         ),
         params: {
-          'profile_id': currentProfile!.userId
+          'profile_id': currentProfile!.id
         }
       ));
     }
