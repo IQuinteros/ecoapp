@@ -114,6 +114,7 @@ class ArticleToPurchase extends BaseModel
   String? photoUrl;
 
   late ArticleForm form;
+  late ArticleModel article;
 
   ArticleToPurchase({
     required int id,
@@ -128,6 +129,7 @@ class ArticleToPurchase extends BaseModel
 
   ArticleToPurchase.fromJsonMap(Map<String, dynamic> json) : super(id: json['id']){
     articleId           = json['article_id'];
+    article             = ArticleModel.fromJsonMap(json['article']);
     store               = json['store'];
     title               = json['title'];
     unitPrice           = json['unit_price'];

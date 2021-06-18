@@ -136,7 +136,7 @@ class _StoreList extends StatelessWidget {
   @override
   Widget build(BuildContext context) {
     List<Widget> articlesToDisplay = articles.map<Widget>((e) => ArticleCard.fromPurchase(
-      //article: e.article,
+      article: e.article,
       ecoIndicator: e.form.getIndicator(),
       price: e.unitPrice.toDouble(),
       title: e.title,

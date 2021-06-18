@@ -1,5 +1,6 @@
 import 'package:flutter/material.dart';
 import 'package:flutter_bloc/flutter_bloc.dart';
+import 'package:flutter_ecoapp/bloc/profile_bloc.dart';
 import 'package:flutter_ecoapp/bloc/purchase_bloc.dart';
 import 'package:flutter_ecoapp/models/purchase.dart';
 import 'package:flutter_ecoapp/views/debug/debug.dart';
@@ -24,11 +25,9 @@ class PurchasesView extends StatelessWidget {
   }
 
   Widget getContent(BuildContext context){
-    List<PurchaseModel> purchases = EcoAppDebug.purchases; // Get purchases
-    //final purchaseBloc = BlocProvider.of<PurchaseBloc>(context);
-    //purchaseBloc.getPurchases(profile);
+    final purchaseBloc = BlocProvider.of<PurchaseBloc>(context);
+    final profileBloc = BlocProvider.of<ProfileBloc>(context);
 
-    List<Widget> purchasesWidget = purchases.map<Widget>((e) => PurchaseCard(purchase: e)).toList();
 
     final content = Column(
       children: [
@@ -44,7 +43,16 @@ class PurchasesView extends StatelessWidget {
             },
           ),
         ),
-        Column(children: purchasesWidget,)
+        FutureBuilder(
+          future: purchaseBloc.getPurchases(profileBloc.currentProfile!),
+          builder: (context, AsyncSnapshot<List<PurchaseModel>> snapshot){
+            switch(snapshot.connectionState){
+              case ConnectionState.done:
+                return Column(children: snapshot.data!.map<Widget>((e) => PurchaseCard(purchase: e)).toList(),);
+              default: return Center(child: CircularProgressIndicator(),);
+            }
+          }
+        )
       ],
     );
 
