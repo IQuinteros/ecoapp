@@ -1,4 +1,6 @@
 import 'package:flutter/material.dart';
+import 'package:flutter_bloc/flutter_bloc.dart';
+import 'package:flutter_ecoapp/bloc/profile_bloc.dart';
 import 'package:flutter_ecoapp/models/article.dart';
 import 'package:flutter_ecoapp/utils/currency_util.dart';
 import 'package:flutter_ecoapp/views/article_view.dart';
@@ -14,12 +16,11 @@ class ArticleCard extends StatefulWidget {
   final double? price;
   final Function()? onLongPress;
 
-  final bool favorite;
   final String extraTag;
 
-  const ArticleCard({Key? key, required this.article, this.favorite = false, this.ecoIndicator, this.price, this.title, this.onLongPress, this.extraTag = ''}) : super(key: key);
+  const ArticleCard({Key? key, required this.article, this.ecoIndicator, this.price, this.title, this.onLongPress, this.extraTag = ''}) : super(key: key);
 
-  const ArticleCard.fromPurchase({Key? key, this.article, this.favorite = false, required this.title, this.onLongPress, required this.ecoIndicator, required this.price, this.extraTag = ''}): super(key: key);
+  const ArticleCard.fromPurchase({Key? key, this.article, required this.title, this.onLongPress, required this.ecoIndicator, required this.price, this.extraTag = ''}): super(key: key);
 
   @override
   _ArticleCardState createState() => _ArticleCardState();
@@ -31,6 +32,7 @@ class _ArticleCardState extends State<ArticleCard> {
   double shadowOpacity = 0.20;
   @override
   Widget build(BuildContext context) {
+    final profileBloc = BlocProvider.of<ProfileBloc>(context);
 
     if(widget.article != null)
       widget.article!.tag = 'article-card-${widget.extraTag}';
@@ -79,8 +81,8 @@ class _ArticleCardState extends State<ArticleCard> {
             maxLines: 3,
           ),
         ),
-        FavoriteButton(
-          favorite: widget.favorite,
+        widget.article != null? FavoriteButton(
+          favorite: widget.article!.favorite,
           canChangeState: () {
             if(widget.article == null){
               ScaffoldMessenger.of(context).removeCurrentSnackBar();
@@ -94,7 +96,13 @@ class _ArticleCardState extends State<ArticleCard> {
               return true;
             }
           },
-        )
+          onChanged: (value){
+            // Add favorite
+            if(widget.article != null){
+              profileBloc.setFavoriteArticle(widget.article!, value, (ready) {});
+            }
+          },
+        ) : Container()
       ],
     );
 

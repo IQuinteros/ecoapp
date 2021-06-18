@@ -1,6 +1,7 @@
 import 'package:flutter/material.dart';
 import 'package:flutter_bloc/flutter_bloc.dart';
 import 'package:flutter_ecoapp/bloc/article_bloc.dart';
+import 'package:flutter_ecoapp/bloc/profile_bloc.dart';
 import 'package:flutter_ecoapp/models/article.dart';
 import 'package:flutter_ecoapp/views/widgets/articles/article_card.dart';
 import 'package:google_fonts/google_fonts.dart';
@@ -23,6 +24,7 @@ class FutureArticles <T> extends StatelessWidget {
   Widget build(BuildContext context) {
 
     final articleBloc = BlocProvider.of<ArticleBloc>(context);
+    final profileBloc = BlocProvider.of<ProfileBloc>(context);
     
     return FutureBuilder(
       future: future,
@@ -64,7 +66,7 @@ class FutureArticles <T> extends StatelessWidget {
                     SizedBox(height: 20.0),
                     FutureArticles(
                       notFoundMessage: '', 
-                      future: articleBloc.getArticlesFromSearch(''), 
+                      future: articleBloc.getArticlesFromSearch('', profile: profileBloc.currentProfile), 
                       recommended: false
                     ),
                   ],

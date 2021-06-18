@@ -41,9 +41,10 @@ class HomeView extends StatelessWidget {
 
   Widget getContent(BuildContext context){
     final articleBloc = BlocProvider.of<ArticleBloc>(context);
+    final profileBloc = BlocProvider.of<ProfileBloc>(context);
 
     final futureScrollable = FutureBuilder(
-      future: articleBloc.getArticlesFromSearch(""),
+      future: articleBloc.getArticlesFromSearch("", profile: profileBloc.currentProfile),
       initialData: <ArticleModel>[],
       builder: (BuildContext context, AsyncSnapshot<List<ArticleModel>> snapshot) {
         switch(snapshot.connectionState){

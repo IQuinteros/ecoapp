@@ -74,7 +74,7 @@ class _ArticleAppBar extends StatelessWidget {
 
   @override
   Widget build(BuildContext context) {
-
+    final profileBloc = BlocProvider.of<ProfileBloc>(context);
     return SliverAppBar(
       elevation: 10.0,
       backgroundColor: EcoAppColors.MAIN_DARK_COLOR,
@@ -101,7 +101,12 @@ class _ArticleAppBar extends StatelessWidget {
             );
           },
         ),
-        FavoriteButton(favorite: false, disabledColor: Colors.white,)
+        FavoriteButton(favorite: article.favorite, disabledColor: Colors.white,
+          onChanged: (value){
+            // Add favorite
+            profileBloc.setFavoriteArticle(article, value, (ready) {});
+          },
+        )
       ],
       title: Text(
         article.title,

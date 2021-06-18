@@ -266,20 +266,23 @@ class ProfileBloc extends BaseBloc<ProfileModel>{
       onReady((await favoriteAPI.insert(
         item: FavoriteModel(
           id: 0, 
-          article: articleModel, 
+          articleId: articleModel.id, 
           createdDate: DateTime.now()
-        )
+        ),
+        additionalParams: {
+          'profile_id': currentProfile!.id
+        }
       )).object != null);
     }
     else{
       onReady(await favoriteAPI.delete(
         item: FavoriteModel(
           id: 0, 
-          article: articleModel, 
+          articleId: articleModel.id, 
           createdDate: DateTime.now()
         ),
         params: {
-          'user': currentProfile!.userId
+          'profile_id': currentProfile!.userId
         }
       ));
     }

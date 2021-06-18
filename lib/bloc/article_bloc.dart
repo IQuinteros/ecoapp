@@ -23,10 +23,9 @@ class ArticleBloc extends BaseBloc<ArticleModel>{
     return;
   }
 
-  Future<List<ArticleModel>> getArticlesFromSearch(String search) async => await articleAPI.selectAll(params: {
+  Future<List<ArticleModel>> getArticlesFromSearch(String search, {required ProfileModel? profile}) async => await articleAPI.selectAll(params: {
     'search': search,
-    //TODO: 'user': user.id (Para devolver si es favorito o no)
-  });
+  }..addAll( profile != null? {'profile_id': profile.id} : {}));
 
   Future<List<ArticleModel>> getArticlesOfStore(StoreModel store) async => await articleAPI.selectAll(params: {
     'id_store': store.id

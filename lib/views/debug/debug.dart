@@ -281,7 +281,6 @@ class EcoAppDebug{
               createdDate: DateTime.now()
             )
           ),
-          favorite: true,
         ),
         ArticleCard(
           article: ArticleModel(
@@ -313,7 +312,6 @@ class EcoAppDebug{
               createdDate: DateTime.now()
             )
           ),
-          favorite: false,
         ),
         ArticleCard(
           article: ArticleModel(
@@ -346,7 +344,6 @@ class EcoAppDebug{
               createdDate: DateTime.now()
             )
           ),
-          favorite: true,
         ),
         ArticleCard(
           article: ArticleModel(
@@ -378,7 +375,6 @@ class EcoAppDebug{
               createdDate: DateTime.now()
             )
           ),
-          favorite: false,
         ),
         ArticleCard(
           article: ArticleModel(
@@ -407,7 +403,6 @@ class EcoAppDebug{
               createdDate: DateTime.now()
             )
           ),
-          favorite: false,
         ),
         ArticleCard(
           article: ArticleModel(
@@ -438,7 +433,6 @@ class EcoAppDebug{
               createdDate: DateTime.now()
             )
           ),
-          favorite: false,
         ),
       ],
     );

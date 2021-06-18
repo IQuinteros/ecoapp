@@ -62,11 +62,11 @@ class ArticleModel extends BaseModel with TagModel
     photos          = json['photos'].map<PhotoModel>((e) => PhotoModel.fromJsonMap(e)).toList() ?? const [];
     category        = CategoryModel.fromJsonMap(json['category']);
     store           = StoreModel.fromJsonMap(json['store']);
+    favorite        = json['favorite'] ?? false;
 
     // Create questions
     questions       = json['questions'].map<QuestionModel>((e) => QuestionModel.fromJsonMap(e)).toList() ?? const [];
     rating          = ArticleRating(opinions: json['opinions'].map<OpinionModel>((e) => OpinionModel.fromJsonMap(e)).toList());
-    favorite        = json['favorite_id'];
     storeId         = json['store_id'];
     form            = ArticleForm.fromJsonMap(json['form']);
     initTagging(newID: this.id, newTitle: this.title);

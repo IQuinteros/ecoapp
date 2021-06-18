@@ -76,7 +76,7 @@ class _HistorySectionState extends State<HistorySection> {
           case ConnectionState.done:
             return FutureArticles(
               notFoundMessage: 'No hay artículos en el historial', 
-              future: historyBloc.getHistory(user: snapshot.data!),
+              future: historyBloc.getHistory(user: snapshot.data!, profile: profileBloc.currentProfile),
               onLongPress: (e) => _askDelete(e),
             );
           default: return LinearProgressIndicator();

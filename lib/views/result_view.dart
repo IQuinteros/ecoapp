@@ -33,6 +33,7 @@ class ResultView extends StatelessWidget {
 
   Widget getContent(BuildContext context){
     final articleBloc = BlocProvider.of<ArticleBloc>(context);
+    final profileBloc = BlocProvider.of<ProfileBloc>(context);
 
     final content = Column(
       children: [
@@ -61,7 +62,7 @@ class ResultView extends StatelessWidget {
         ),
         SizedBox(height: 10.0),
         FutureArticles(
-          future: articleBloc.getArticlesFromSearch(searching ?? ''), 
+          future: articleBloc.getArticlesFromSearch(searching ?? '', profile: profileBloc.currentProfile), 
           notFoundMessage: 'No se han encontrado artículos para tu búsqueda :c',
           recommended: true,
         )
