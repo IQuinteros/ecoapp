@@ -28,6 +28,8 @@ class CartView extends StatefulWidget {
 class _CartViewState extends State<CartView> {
   @override
   Widget build(BuildContext context) {
+    final cartBloc = BlocProvider.of<CartBloc>(context);
+
     return Stack(
       children: [
         CustomScrollView(
@@ -62,7 +64,8 @@ class _CartViewState extends State<CartView> {
                   text: 'Reservar pedido', 
                   onPressed: (){
                     _buy(context);
-                  }
+                  },
+                  visible: cartBloc.loadedArticles.length > 0,
                 ),
               ),
             ),
@@ -175,6 +178,7 @@ class _CartViewState extends State<CartView> {
         backgroundColor: EcoAppColors.MAIN_DARK_COLOR,
         behavior: SnackBarBehavior.floating,
       ));
+      return;
     }
     
     final profileBloc = BlocProvider.of<ProfileBloc>(context);

@@ -40,6 +40,21 @@ class PurchaseModel extends BaseModel
 
   Map<StoreModel?, List<ArticleToPurchase>> get storeSortedArticles{
     Map<StoreModel?, List<ArticleToPurchase>> toReturn = {};
+    List<StoreModel?> stores = [];
+
+    articles = articles.map((e) {
+      bool found = false;
+      stores.forEach((element) {
+        if(element?.id == e.store?.id){
+          found = true;
+          e.store = element;
+        }
+      });
+      if(!found) stores.add(e.store);
+      return e;
+    }).toList();
+
+
     articles.forEach((element) { 
       StoreModel? storeToUpdate = element.store;
       toReturn.update(storeToUpdate, (value) => value + [element], ifAbsent: () => [element]);
@@ -61,9 +76,9 @@ class PurchaseModel extends BaseModel
   Map<String, dynamic> toJson() => {
     'id'          : id,
     'total'       : total,
-    'createdDate' : createdDate,
-    'info'        : info,
-    'articles'    : articles
+    'creation_date' : createdDate.toString(),
+    'info'        : info!.toJson(),
+    'articles'    : articles.map((e) => e.toJson()).toList()
   };
 }
 
@@ -94,7 +109,7 @@ class InfoPurchaseModel extends BaseModel
     'id'            : id,
     'names'         : names,
     'location'      : location,
-    'contactNumber' : contactNumber,
+    'contact_number' : contactNumber,
     'district'      : district
   };
 
@@ -112,7 +127,7 @@ class ArticleToPurchase extends BaseModel
   String? photoUrl;
 
   late ArticleForm form;
-  late ArticleModel article;
+  late ArticleModel? article;
 
   ArticleToPurchase({
     required int id,
@@ -127,7 +142,7 @@ class ArticleToPurchase extends BaseModel
 
   ArticleToPurchase.fromJsonMap(Map<String, dynamic> json) : super(id: json['id']){
     articleId           = json['article_id'];
-    article             = ArticleModel.fromJsonMap(json['article']);
+    article             = json['article'] != null? ArticleModel.fromJsonMap(json['article']) : null;
     store               = StoreModel.fromJsonMap(json['store']);
     title               = json['title'];
     unitPrice           = json['unit_price'];
@@ -153,12 +168,16 @@ class ArticleToPurchase extends BaseModel
   Map<String, dynamic> toJson() => {
     'id'        : id,
     'article_id': articleId,
-    'store'     : store,
+    'store_id'     : store?.id ?? 0,
     'title'     : title,
-    'unitPrice' : unitPrice,
+    'unit_price' : unitPrice,
     'quantity'  : quantity,
-    'photoUrl'  : photoUrl,
-    'form'      : form,
-
+    'photo_url'  : photoUrl,
+    'general_detail': form.generalDetail,
+    'recycled_mats': form.recycledMats,
+    'recycled_mats_detail': form.recycledMatsDetail,
+    'reuse_tips': form.reuseTips,
+    'recycled_prod': form.recycledProd,
+    'recycled_prod_detail': form.recycledProdDetail,
   };
 }

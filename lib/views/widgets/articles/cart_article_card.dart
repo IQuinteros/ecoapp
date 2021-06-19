@@ -31,9 +31,15 @@ class _CartArticleCardState extends State<CartArticleCard> {
 
   @override
   Widget build(BuildContext context) {
+    
     if(_quantity == null) _quantity = widget.initialQuantity;
+    
+    ImageProvider<Object> imageData = AssetImage('assets/png/no-image.png');
+    if(widget.article.photos.length > 0)
+      imageData = NetworkImage(widget.article.photos[0].photoUrl);
+
     final image = Image(
-      image: NetworkImage('https://picsum.photos/500/300'),
+      image: imageData,
       height: 120,
       width: 120,
       fit: BoxFit.cover,

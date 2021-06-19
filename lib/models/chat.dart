@@ -9,7 +9,6 @@ class ChatModel extends BaseModel
 {
   late bool closed;
   late DateTime createdDate;
-  late int profileId;
   late StoreModel? store;
   late PurchaseModel purchase;
 
@@ -19,13 +18,14 @@ class ChatModel extends BaseModel
     required int id,
     required this.closed,
     required this.createdDate,
+    required this.purchase,
+    required this.store
   }) : super(id: id);
 
   ChatModel.fromJsonMap(Map<String, dynamic> json) : super(id: json['id']){
     closed           = json['closed'] != 0;
     createdDate      = DateTime.parse(json['creation_date']);
-    profileId        = json['profile_id'];
-    store            = StoreModel.fromJsonMap(json['store']);
+    store            = json['store'] != null? StoreModel.fromJsonMap(json['store']) : null;
     messages         = json['messages'].map<MessageModel>((e) => MessageModel.fromJsonMap(e)).toList() ?? const [];
     purchase         = PurchaseModel.fromJsonMap(json['purchase']);
   }
@@ -35,7 +35,7 @@ class ChatModel extends BaseModel
     'id'          : id,
     'closed'      : closed,
     'creation_date': createdDate.toString(),
-    'profile_id'  : profileId,
+    'purchase_id' : purchase.id,
     'store_id'    : store?.id ?? 0
   };
 

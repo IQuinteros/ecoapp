@@ -2,6 +2,7 @@ import 'package:flutter_ecoapp/bloc/base_bloc.dart';
 import 'package:flutter_ecoapp/models/chat.dart';
 import 'package:flutter_ecoapp/models/profile.dart';
 import 'package:flutter_ecoapp/models/purchase.dart';
+import 'package:flutter_ecoapp/models/store.dart';
 import 'package:flutter_ecoapp/providers/chat_api.dart';
 import 'package:flutter_ecoapp/providers/purchase_api.dart';
 
@@ -35,20 +36,21 @@ class ChatBloc extends BaseBloc<ChatModel>{
     }
   );
 
-  Future<bool> sendMessage({
+  Future<SendMessageResult> sendMessage({
     required MessageModel message,
     required ProfileModel profile,
-    required PurchaseModel purchase
+    required PurchaseModel purchase,
+    StoreModel? store,
   }) async {
     final chat = await getChatFromPurchase(purchase);
 
     if(chat != null){
-      return (await messageAPI.insert(
+      return SendMessageResult(result: (await messageAPI.insert(
         item: message,
         additionalParams: {
           'chat_id': chat.id
         }
-      )).object != null;
+      )).object != null, isNewChat: false);
     }
     else{
 
@@ -56,24 +58,22 @@ class ChatBloc extends BaseBloc<ChatModel>{
         item: ChatModel(
           id: 0, 
           closed: false, 
-          createdDate: DateTime.now()
+          createdDate: DateTime.now(),
+          purchase: purchase,
+          store: store
         ),
-        additionalParams: {
-          'purchase_id': purchase.id,
-          'profile_id': profile.id
-        }
       );
 
       if(newChat.object != null){
-        return (await messageAPI.insert(
+        return SendMessageResult(result: (await messageAPI.insert(
           item: message,
           additionalParams: {
             'chat_id': newChat.object!.id
           }
-        )).object != null;
+        )).object != null, isNewChat: true);
       }
         
-      return false;
+      return SendMessageResult(result: false, isNewChat: false);
     }
   }
 
@@ -84,4 +84,11 @@ class ChatBloc extends BaseBloc<ChatModel>{
     // TODO: implement mapEventToState
     throw UnimplementedError();
   }
+}
+
+class SendMessageResult{
+  final bool result;
+  final bool isNewChat;
+
+  SendMessageResult({required this.result, required this.isNewChat});
 }

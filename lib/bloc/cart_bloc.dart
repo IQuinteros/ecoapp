@@ -99,6 +99,11 @@ class CartBloc extends BaseBloc<CartArticleModel>{
     await loadCart(onlyLocal: true);
   }
 
+  Future<void> clearCart() async{
+    await cartLocalAPI.clear();
+    await loadCart();
+  }
+
   List<int> _getIdsFromArticles(List<CartArticleModel> articles) => articles.map<int>((e) => e.articleId).toList();
   
   @override

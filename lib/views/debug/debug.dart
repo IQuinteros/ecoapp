@@ -86,7 +86,6 @@ class EcoAppDebug{
           unitPrice: 432, 
           quantity: 2,
           articleId: 0,
-          photoUrl: 'https://picsum.photos/500/400',
           form: ArticleForm.infoPurchase(
             id: 1,
             generalDetail: '',
@@ -117,7 +116,6 @@ class EcoAppDebug{
           unitPrice: 432, 
           quantity: 2,
           articleId: 0,
-          photoUrl: 'https://picsum.photos/500/400',
           form: ArticleForm.infoPurchase(
             id: 1,
             generalDetail: '',
@@ -147,7 +145,6 @@ class EcoAppDebug{
           title: 'Jojo', 
           unitPrice: 12312, 
           quantity: 4,
-          photoUrl: 'https://picsum.photos/500/400',
           form: ArticleForm.infoPurchase(
             id: 1,
             generalDetail: '',

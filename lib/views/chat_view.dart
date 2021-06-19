@@ -107,6 +107,20 @@ class _ChatViewState extends State<ChatView> {
 
     final scrollController = ScrollController(initialScrollOffset: messages.length * 80);
 
+    final scroll = SingleChildScrollView(
+      dragStartBehavior: DragStartBehavior.down,
+      controller: scrollController,
+      child: Container(
+        margin: EdgeInsets.symmetric(
+          horizontal: 10
+        ),
+        child: Column(
+          crossAxisAlignment: CrossAxisAlignment.stretch,
+          children: messagesWidget,
+        ),
+      ),
+    );
+
     final sendMessage = Container(
       clipBehavior: Clip.antiAlias,
       padding: EdgeInsets.symmetric(
@@ -155,7 +169,7 @@ class _ChatViewState extends State<ChatView> {
                     color: Colors.white
                   ), 
                   onPressed: () async { 
-                    await chatBloc.sendMessage(
+                    final result = await chatBloc.sendMessage(
                       message: MessageModel(
                         message: widget.messageController.text,
                         date: DateTime.now(),
@@ -164,28 +178,23 @@ class _ChatViewState extends State<ChatView> {
                         chat: chatToUse
                       ), 
                       profile: profileBloc.currentProfile!, 
-                      purchase: chatToUse?.purchase ?? widget.purchase!
+                      purchase: chatToUse?.purchase ?? widget.purchase!,
+                      store: chatToUse?.store ?? widget.store
                     );
-                    await updateChat(context, chatToUse, () => scrollController.jumpTo(messages.length * 50));
+                    if(result.result){
+                      widget.messageController.text = '';
+                      if(result.isNewChat){
+                        await updateChat(context, chatToUse, (){});
+                      }
+                      else{
+                        await updateChat(context, chatToUse, () => scrollController.jumpTo(messages.length * 50));
+                      }
+                    }
                   }
                 ),
               ),
             ],
           ),
-        ),
-      ),
-    );
-
-    final scroll = SingleChildScrollView(
-      dragStartBehavior: DragStartBehavior.down,
-      controller: scrollController,
-      child: Container(
-        margin: EdgeInsets.symmetric(
-          horizontal: 10
-        ),
-        child: Column(
-          crossAxisAlignment: CrossAxisAlignment.stretch,
-          children: messagesWidget,
         ),
       ),
     );

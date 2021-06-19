@@ -4,6 +4,7 @@ import 'package:flutter_bloc/flutter_bloc.dart';
 import 'package:flutter_ecoapp/bloc/app_bloc.dart';
 import 'package:flutter_ecoapp/bloc/cart_bloc.dart';
 import 'package:flutter_ecoapp/bloc/profile_bloc.dart';
+import 'package:flutter_ecoapp/bloc/purchase_bloc.dart';
 import 'package:flutter_ecoapp/models/article.dart';
 import 'package:flutter_ecoapp/models/cart.dart';
 import 'package:flutter_ecoapp/utils/currency_util.dart';
@@ -241,28 +242,56 @@ class SummaryView extends StatelessWidget {
         Container(
           child: NormalButton(
             text: 'Procesar pedido', 
-            onPressed: (){
+            onPressed: () async {
               final appBloc = BlocProvider.of<AppBloc>(context);  
 
-              // TODO: API Purchase
-              AwesomeDialog(
-                title: 'Pedido exitoso',
-                desc: 'Has realizado tu pedido exitósamente :)',
-                dialogType: DialogType.SUCCES, 
+              final loading = AwesomeDialog(
+                title: 'Procesando pedido',
+                desc: 'Estamos enviando tu pedido al vendedor',
+                dialogType: DialogType.NO_HEADER, 
                 animType: AnimType.BOTTOMSLIDE,
                 context: context,
-                btnOkText: 'Aceptar',
-                btnOkOnPress: () {
-                  Navigator.popUntil(context, ModalRoute.withName('/'));
-                  appBloc.mainEcoNavBar.onTap(0);
-                },
-                onDissmissCallback: (__) {
-                  Navigator.popUntil(context, ModalRoute.withName('/'));
-                  appBloc.mainEcoNavBar.onTap(0);
-                },
+                dismissOnTouchOutside: false,
+                dismissOnBackKeyPress: false,
                 padding: EdgeInsets.symmetric(horizontal: 20.0, vertical: 10.0)
               )..show();
-              // TODO: Clean cart
+
+              final purchaseBloc = BlocProvider.of<PurchaseBloc>(context);
+              final result = await purchaseBloc.newPurchase(cart, profileBloc.currentProfile!);
+
+              loading.dismiss();
+
+              if(result){
+                cartBloc.clearCart();
+                AwesomeDialog(
+                  title: 'Pedido exitoso',
+                  desc: 'Has realizado tu pedido exitósamente :)',
+                  dialogType: DialogType.SUCCES, 
+                  animType: AnimType.BOTTOMSLIDE,
+                  context: context,
+                  btnOkText: 'Aceptar',
+                  btnOkOnPress: () {
+                    Navigator.popUntil(context, ModalRoute.withName('/'));
+                    appBloc.mainEcoNavBar.onTap(0);
+                  },
+                  onDissmissCallback: (__) {
+                    Navigator.popUntil(context, ModalRoute.withName('/'));
+                    appBloc.mainEcoNavBar.onTap(0);
+                  },
+                  padding: EdgeInsets.symmetric(horizontal: 20.0, vertical: 10.0)
+                )..show();
+              }
+              else{
+                AwesomeDialog(
+                  title: 'Algo ha fallado',
+                  desc: 'Oh no. Por favor, intenta nuevamente',
+                  dialogType: DialogType.ERROR, 
+                  animType: AnimType.BOTTOMSLIDE,
+                  context: context,
+                  btnOkText: 'Aceptar',
+                  padding: EdgeInsets.symmetric(horizontal: 20.0, vertical: 10.0)
+                )..show();
+              }
             },
           ),
           margin: EdgeInsets.symmetric(
