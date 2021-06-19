@@ -49,7 +49,6 @@ class FavoritesView extends StatelessWidget {
 
     return CustomScrollView(
       slivers: [
-        IndexAppBar(),
         SliverList(
           delegate: SliverChildListDelegate(
             [

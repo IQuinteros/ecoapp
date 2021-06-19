@@ -11,8 +11,8 @@ class IndexAppBar extends StatelessWidget {
   Widget build(BuildContext context) {
 
     return SliverAppBar(
-      elevation: 10.0,
-      backgroundColor: Colors.white,
+      elevation: 2.0,
+      backgroundColor: Theme.of(context).canvasColor,
       foregroundColor: Colors.white,
       floating: true,
       pinned: false,
@@ -20,6 +20,8 @@ class IndexAppBar extends StatelessWidget {
       stretch: false,
       forceElevated: true,
       snap: true,
+      leading: Container(),
+      leadingWidth: 0,
     );
   }
 }
