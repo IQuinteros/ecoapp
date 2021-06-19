@@ -93,6 +93,7 @@ class RegisterPassView extends StatelessWidget {
                   ? 'Debe tener mínimo 6 caracteres'
                   : null,
               isPassword: true,
+              maxLines: 1,
             ),
             NormalInput(
               header: 'Repetir contraseña', 
@@ -108,6 +109,7 @@ class RegisterPassView extends StatelessWidget {
                 
                 return null;
               },
+              maxLines: 1,
               isPassword: true,
             ),
             Container(

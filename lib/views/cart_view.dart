@@ -193,7 +193,7 @@ class _CartViewState extends State<CartView> {
   void displayProfileMessage(BuildContext context){
     ScaffoldMessenger.of(context).removeCurrentSnackBar();
     ScaffoldMessenger.of(context).showSnackBar(SnackBar(
-      content: Text('Debe iniciar sesión para marcar el artículo como favorito'),
+      content: Text('Debe iniciar sesión para reservar el pedido'),
       backgroundColor: EcoAppColors.MAIN_DARK_COLOR,
       action: SnackBarAction(
         label: "Iniciar sesión",

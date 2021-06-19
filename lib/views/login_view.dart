@@ -89,6 +89,7 @@ class LoginView extends StatelessWidget {
                 ? 'Debe ingresar su contraseña'
                 : null,
               isPassword: true,
+              maxLines: 1,
             ),
             Container(
               margin: EdgeInsets.symmetric(
