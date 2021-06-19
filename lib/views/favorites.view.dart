@@ -1,8 +1,12 @@
 import 'package:flutter/material.dart';
+import 'package:flutter_bloc/flutter_bloc.dart';
+import 'package:flutter_ecoapp/bloc/profile_bloc.dart';
 import 'package:flutter_ecoapp/views/debug/debug.dart';
 import 'package:flutter_ecoapp/views/style/colors.dart';
 import 'package:flutter_ecoapp/views/style/text_style.dart';
+import 'package:flutter_ecoapp/views/widgets/articles/future_articles.dart';
 import 'package:flutter_ecoapp/views/widgets/bottom_nav_bar.dart';
+import 'package:flutter_ecoapp/views/widgets/index_app_bar.dart';
 import 'package:flutter_ecoapp/views/widgets/search_bar.dart';
 
 class FavoritesView extends StatelessWidget {
@@ -21,9 +25,10 @@ class FavoritesView extends StatelessWidget {
   }
 
   Widget getContent(BuildContext context){
+    final profileBloc = BlocProvider.of<ProfileBloc>(context);
+
     final content = Column(
       children: [
-        SearchBar(),
         EcoTitle(
           text: 'Mis favoritos',
           leftButton: IconButton(
@@ -35,13 +40,27 @@ class FavoritesView extends StatelessWidget {
             },
           ),
         ),
-        EcoAppDebug.getArticleItems()
+        FutureArticles(
+          notFoundMessage: 'No tienes artículos en "Favoritos"', 
+          future: profileBloc.getFavoriteArticles()
+        )
       ],
     );
 
-    return SingleChildScrollView(
-      child: content,
-      scrollDirection: Axis.vertical,
+    return CustomScrollView(
+      slivers: [
+        IndexAppBar(),
+        SliverList(
+          delegate: SliverChildListDelegate(
+            [
+              SingleChildScrollView(
+                child: content,
+                scrollDirection: Axis.vertical,
+              )
+            ]
+          ),
+        )
+      ],
     );
   }
 }

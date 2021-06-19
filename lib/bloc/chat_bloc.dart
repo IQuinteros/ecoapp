@@ -19,7 +19,7 @@ class ChatBloc extends BaseBloc<ChatModel>{
   Future<ChatModel?> getChatFromPurchase(PurchaseModel purchase) async {
     final chats = await chatAPI.selectAll(
       params: {
-        'purchase': purchase.id
+        'purchase_id': purchase.id
       }
     );
 
@@ -45,6 +45,9 @@ class ChatBloc extends BaseBloc<ChatModel>{
     if(chat != null){
       return (await messageAPI.insert(
         item: message,
+        additionalParams: {
+          'chat_id': chat.id
+        }
       )).object != null;
     }
     else{
@@ -56,8 +59,8 @@ class ChatBloc extends BaseBloc<ChatModel>{
           createdDate: DateTime.now()
         ),
         additionalParams: {
-          'purchase': purchase.id,
-          'profile': profile.id
+          'purchase_id': purchase.id,
+          'profile_id': profile.id
         }
       );
 
@@ -65,7 +68,7 @@ class ChatBloc extends BaseBloc<ChatModel>{
         return (await messageAPI.insert(
           item: message,
           additionalParams: {
-            'chat': newChat.object!.id
+            'chat_id': newChat.object!.id
           }
         )).object != null;
       }
@@ -75,12 +78,6 @@ class ChatBloc extends BaseBloc<ChatModel>{
   }
 
   Future<List<ChatModel>> getProfileChats(ProfileModel profile) => chatAPI.selectAll(params: {'profile_id': profile.id});
-
-  Future<List<ArticleToPurchase>> getArticlesFromPurchase(PurchaseModel purchase) async => await articlePurchaseAPI.selectAll(
-    params: {
-      'purchase': purchase.id
-    }
-  );
   
   @override
   Stream mapEventToState(event) {

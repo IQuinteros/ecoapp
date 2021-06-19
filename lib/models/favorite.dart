@@ -5,6 +5,7 @@ class FavoriteModel extends BaseModel
 {
   late DateTime createdDate;
   late int articleId;
+  late ArticleModel article;
 
   FavoriteModel({
     required int id,
@@ -15,6 +16,7 @@ class FavoriteModel extends BaseModel
   FavoriteModel.fromJsonMap(Map<String, dynamic> json) : super(id: json['id']){
     createdDate           = DateTime.parse(json['creation_date']);
     articleId               = json['article_id'];
+    article               = ArticleModel.fromJsonMap(json['article'])..favorite = true;
   }
 
   @override

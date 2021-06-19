@@ -1,4 +1,8 @@
 import 'package:flutter/material.dart';
+import 'package:flutter_bloc/flutter_bloc.dart';
+import 'package:flutter_ecoapp/bloc/chat_bloc.dart';
+import 'package:flutter_ecoapp/bloc/purchase_bloc.dart';
+import 'package:flutter_ecoapp/models/chat.dart';
 import 'package:flutter_ecoapp/models/purchase.dart';
 import 'package:flutter_ecoapp/models/store.dart';
 import 'package:flutter_ecoapp/views/chat_view.dart';
@@ -135,6 +139,9 @@ class _StoreList extends StatelessWidget {
 
   @override
   Widget build(BuildContext context) {
+
+    final chatBloc = BlocProvider.of<ChatBloc>(context);
+
     List<Widget> articlesToDisplay = articles.map<Widget>((e) => ArticleCard.fromPurchase(
       article: e.article,
       ecoIndicator: e.form.getIndicator(),
@@ -179,18 +186,27 @@ class _StoreList extends StatelessWidget {
                   ),
                 ),
                 Expanded(child: Container()),
-                store != null? IconButton(
-                  icon: Icon(
-                    Icons.sms_rounded,
-                    color: EcoAppColors.MAIN_COLOR,
-                  ), 
-                  onPressed: () {},
-                  /* onPressed: () => Navigator.push(
-                      context, 
-                      MaterialPageRoute(
-                        builder: (__) => ChatView(chat: purchase.chat!,)
-                      )
-                  ) */
+                store != null? FutureBuilder(
+                  future: chatBloc.getChatFromPurchase(purchase),
+                  builder: (context, AsyncSnapshot<ChatModel?> snapshot){
+                    switch(snapshot.connectionState){
+                      case ConnectionState.done:
+                        return IconButton(
+                          icon: Icon(
+                            Icons.sms_rounded,
+                            color: EcoAppColors.MAIN_COLOR,
+                          ), 
+                          onPressed: () => Navigator.push(
+                              context, 
+                              MaterialPageRoute(
+                                builder: (__) => ChatView(chat: snapshot.data,)
+                              )
+                          ) 
+                        );
+                      default: return CircularProgressIndicator();
+                    }
+                    
+                  }
                 ) : Container()
               ],
             ),

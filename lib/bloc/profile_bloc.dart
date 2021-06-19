@@ -287,6 +287,13 @@ class ProfileBloc extends BaseBloc<ProfileModel>{
       ));
     }
   }
+
+  Future<List<ArticleModel>> getFavoriteArticles() async {
+    if(currentProfile == null) return const [];
+    return (await favoriteAPI.selectAll(params: {
+      'profile_id': currentProfile!.id
+    })).map((e) => e.article).toList();
+  }
   
   @override
   Stream mapEventToState(event) {

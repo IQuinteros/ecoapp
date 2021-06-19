@@ -11,7 +11,7 @@ class ChatModel extends BaseModel
   late DateTime createdDate;
   late int profileId;
   late StoreModel? store;
-  late PurchaseModel? purchase;
+  late PurchaseModel purchase;
 
   late List<MessageModel> messages;
 
@@ -21,7 +21,7 @@ class ChatModel extends BaseModel
     required this.createdDate,
   }) : super(id: id);
 
-  ChatModel.fromJsonMap(Map<String, dynamic> json, {this.purchase}) : super(id: json['id']){
+  ChatModel.fromJsonMap(Map<String, dynamic> json) : super(id: json['id']){
     closed           = json['closed'] != 0;
     createdDate      = DateTime.parse(json['creation_date']);
     profileId        = json['profile_id'];
@@ -34,7 +34,7 @@ class ChatModel extends BaseModel
   Map<String, dynamic> toJson() => {
     'id'          : id,
     'closed'      : closed,
-    'created_date': createdDate,
+    'creation_date': createdDate.toString(),
     'profile_id'  : profileId,
     'store_id'    : store?.id ?? 0
   };
@@ -68,6 +68,7 @@ class MessageModel extends BaseModel
   Map<String, dynamic> toJson() => {
     'id': id,
     'message': message,
-    'date': date
+    'date': date.toString(),
+    'from_store': fromStore? 1 : 0
   };
 }

@@ -2,7 +2,12 @@ import 'dart:ui';
 
 import 'package:flutter/gestures.dart';
 import 'package:flutter/material.dart';
+import 'package:flutter_bloc/flutter_bloc.dart';
+import 'package:flutter_ecoapp/bloc/chat_bloc.dart';
+import 'package:flutter_ecoapp/bloc/profile_bloc.dart';
 import 'package:flutter_ecoapp/models/chat.dart';
+import 'package:flutter_ecoapp/models/purchase.dart';
+import 'package:flutter_ecoapp/models/store.dart';
 import 'package:flutter_ecoapp/views/style/colors.dart';
 import 'package:flutter_ecoapp/views/widgets/chat/chatview/message_item.dart';
 import 'package:flutter_ecoapp/views/widgets/chat/chatview/purchase_message_item.dart';
@@ -10,9 +15,14 @@ import 'package:google_fonts/google_fonts.dart';
 
 class ChatView extends StatefulWidget {
 
-  final ChatModel chat;
+  final ChatModel? chat;
 
-  ChatView({Key? key, required this.chat}) : super(key: key);
+  final StoreModel? store;
+  final PurchaseModel? purchase;
+
+  final TextEditingController messageController = TextEditingController();
+
+  ChatView({Key? key, required this.chat, this.store, this.purchase}) : super(key: key);
 
   @override
   _ChatViewState createState() => _ChatViewState();
@@ -29,7 +39,7 @@ class _ChatViewState extends State<ChatView> {
         centerTitle: false,
         elevation: 10,
         title: Text(
-          widget.chat.store?.publicName ?? 'Tienda desconocida',
+          widget.store?.publicName ?? widget.chat!.store?.publicName ?? 'Tienda desconocida',
           style: GoogleFonts.montserrat(
             fontWeight: FontWeight.w500,
             color: Colors.white
@@ -49,7 +59,10 @@ class _ChatViewState extends State<ChatView> {
   }
 
   Widget mainContent(BuildContext context){
-    List<MessageModel> messages = widget.chat.messages;
+    final chatBloc = BlocProvider.of<ChatBloc>(context);
+    final profileBloc = BlocProvider.of<ProfileBloc>(context);
+
+    List<MessageModel> messages = widget.chat?.messages ?? const [];
     bool tempIsOwner = false;
     List<Widget> messagesWidget = messages.map<Widget>((e) { 
       Widget message = MessageItem(
@@ -77,7 +90,8 @@ class _ChatViewState extends State<ChatView> {
       return message;
     }).toList();
 
-    messagesWidget.insert(0, PurchaseMessageItem(purchase: widget.chat.purchase!)); // TODO:
+    if(widget.chat != null)
+    messagesWidget.insert(0, PurchaseMessageItem(chat: widget.chat!)); // TODO:
     messagesWidget.add(SizedBox(height: 90,));
 
     final sendMessage = Container(
@@ -101,6 +115,7 @@ class _ChatViewState extends State<ChatView> {
                     borderRadius: BorderRadius.circular(20.0)
                   ),
                   child: TextField(
+                    controller: widget.messageController,
                     style: GoogleFonts.montserrat(),
                     decoration: InputDecoration(
                       border: OutlineInputBorder(
@@ -126,7 +141,17 @@ class _ChatViewState extends State<ChatView> {
                     Icons.send,
                     color: Colors.white
                   ), 
-                  onPressed: () => print('Send') // TODO: Send message
+                  onPressed: () => chatBloc.sendMessage(
+                    message: MessageModel(
+                      message: widget.messageController.text,
+                      date: DateTime.now(),
+                      fromStore: false,
+                      id: 0,
+                      chat: widget.chat
+                    ), 
+                    profile: profileBloc.currentProfile!, 
+                    purchase: widget.chat?.purchase ?? widget.purchase!
+                  )// TODO: Send message
                 ),
               ),
             ],
