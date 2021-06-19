@@ -199,7 +199,11 @@ class _StoreList extends StatelessWidget {
                           onPressed: () => Navigator.push(
                               context, 
                               MaterialPageRoute(
-                                builder: (__) => ChatView(chat: snapshot.data,)
+                                builder: (__) => ChatView(
+                                  chat: snapshot.data,
+                                  store: snapshot.data != null? null : store,
+                                  purchase: snapshot.data != null? null : purchase,
+                                )
                               )
                           ) 
                         );

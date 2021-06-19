@@ -1,3 +1,4 @@
+import 'dart:async';
 import 'dart:ui';
 
 import 'package:flutter/gestures.dart';
@@ -30,8 +31,19 @@ class ChatView extends StatefulWidget {
 
 class _ChatViewState extends State<ChatView> {
 
+  ChatModel? refreshChat;
+  bool firstRun = false;
+
   @override
   Widget build(BuildContext context) {
+
+    ChatModel? chatToUse = refreshChat ?? widget.chat;
+
+    if(chatToUse != null){
+      Timer(Duration(seconds: 8), () async {
+        await updateChat(context, chatToUse);
+      });
+    }
 
     return Scaffold(
       appBar: AppBar(
@@ -39,7 +51,7 @@ class _ChatViewState extends State<ChatView> {
         centerTitle: false,
         elevation: 10,
         title: Text(
-          widget.store?.publicName ?? widget.chat!.store?.publicName ?? 'Tienda desconocida',
+          widget.store?.publicName ?? chatToUse!.store?.publicName ?? 'Tienda desconocida',
           style: GoogleFonts.montserrat(
             fontWeight: FontWeight.w500,
             color: Colors.white
@@ -54,15 +66,15 @@ class _ChatViewState extends State<ChatView> {
           },
         ),
       ),
-      body: mainContent(context)
+      body: mainContent(context, chatToUse)
     );
   }
 
-  Widget mainContent(BuildContext context){
+  Widget mainContent(BuildContext context, ChatModel? chatToUse){
     final chatBloc = BlocProvider.of<ChatBloc>(context);
     final profileBloc = BlocProvider.of<ProfileBloc>(context);
 
-    List<MessageModel> messages = widget.chat?.messages ?? const [];
+    List<MessageModel> messages = chatToUse?.messages ?? const [];
     bool tempIsOwner = false;
     List<Widget> messagesWidget = messages.map<Widget>((e) { 
       Widget message = MessageItem(
@@ -90,9 +102,10 @@ class _ChatViewState extends State<ChatView> {
       return message;
     }).toList();
 
-    if(widget.chat != null)
-    messagesWidget.insert(0, PurchaseMessageItem(chat: widget.chat!)); // TODO:
+    if(chatToUse != null) messagesWidget.insert(0, PurchaseMessageItem(chat: chatToUse));
     messagesWidget.add(SizedBox(height: 90,));
+
+    final scrollController = ScrollController(initialScrollOffset: messages.length * 80);
 
     final sendMessage = Container(
       clipBehavior: Clip.antiAlias,
@@ -141,17 +154,20 @@ class _ChatViewState extends State<ChatView> {
                     Icons.send,
                     color: Colors.white
                   ), 
-                  onPressed: () => chatBloc.sendMessage(
-                    message: MessageModel(
-                      message: widget.messageController.text,
-                      date: DateTime.now(),
-                      fromStore: false,
-                      id: 0,
-                      chat: widget.chat
-                    ), 
-                    profile: profileBloc.currentProfile!, 
-                    purchase: widget.chat?.purchase ?? widget.purchase!
-                  )// TODO: Send message
+                  onPressed: () async { 
+                    await chatBloc.sendMessage(
+                      message: MessageModel(
+                        message: widget.messageController.text,
+                        date: DateTime.now(),
+                        fromStore: false,
+                        id: 0,
+                        chat: chatToUse
+                      ), 
+                      profile: profileBloc.currentProfile!, 
+                      purchase: chatToUse?.purchase ?? widget.purchase!
+                    );
+                    await updateChat(context, chatToUse, () => scrollController.jumpTo(messages.length * 50));
+                  }
                 ),
               ),
             ],
@@ -162,9 +178,7 @@ class _ChatViewState extends State<ChatView> {
 
     final scroll = SingleChildScrollView(
       dragStartBehavior: DragStartBehavior.down,
-      controller: ScrollController(
-        initialScrollOffset: messages.length * 80
-      ),
+      controller: scrollController,
       child: Container(
         margin: EdgeInsets.symmetric(
           horizontal: 10
@@ -178,12 +192,70 @@ class _ChatViewState extends State<ChatView> {
 
     return Stack(
       children: [
-        SafeArea(child: scroll),
+        SafeArea(
+          child: chatToUse != null? RefreshIndicator(
+            child: scroll,
+            onRefresh: () async => await updateChat(context, chatToUse)
+          ) : _NoChatView(store: widget.store, purchase: widget.purchase,)
+        ),
         Align(
           alignment: Alignment.bottomCenter,
           child: sendMessage,
         )
       ],
+    );
+  }
+
+  Future<void> updateChat(BuildContext context, ChatModel? chatToUse, [Function()? onSetState]) async {
+    final chatBloc = BlocProvider.of<ChatBloc>(context);
+    refreshChat = await chatBloc.getChatFromPurchase(chatToUse?.purchase ?? widget.purchase!);
+
+    if(widget.chat != null && refreshChat != null){
+      widget.chat!.messages = refreshChat!.messages;
+    }
+
+    setState(() {
+      onSetState?.call();
+    });
+  }
+}
+
+class _NoChatView extends StatelessWidget {
+  const _NoChatView({
+    Key? key,
+    required this.store,
+    required this.purchase
+  }) : super(key: key);
+
+  final StoreModel? store;
+  final PurchaseModel? purchase;
+
+  @override
+  Widget build(BuildContext context) {
+    return Center(
+      child: Container(
+        child: Column(
+          children: [
+            Spacer(),
+            Text(
+              'No has iniciado una conversación con ${store?.publicName ?? "el vendedor"}',
+              style: GoogleFonts.montserrat(
+                fontWeight: FontWeight.w500,
+                fontSize: 18
+              ),
+              textAlign: TextAlign.center,
+            ),
+            SizedBox(height: 20),
+            Text(
+              'Haz preguntas sobre tu compra #${purchase?.id ?? "0"}. Inicia el chat escribiendo un mensaje para tu vendedor',
+              style: GoogleFonts.montserrat(
+              ),
+              textAlign: TextAlign.center,
+            ),
+            Spacer(),
+          ],
+        ),
+      ),
     );
   }
 }

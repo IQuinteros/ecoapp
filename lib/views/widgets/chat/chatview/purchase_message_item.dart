@@ -46,14 +46,14 @@ class PurchaseMessageItem extends StatelessWidget {
         crossAxisAlignment: CrossAxisAlignment.start,
         children: [
           Text(
-            '${chat.purchase!.articles.length} artículos',
+            '${chat.purchase.articles.length} artículos',
             style: GoogleFonts.montserrat(
               fontWeight: FontWeight.w500
             ),
             textAlign: TextAlign.start
           ),
           Text(
-            'Comprado: ${chat.purchase!.createdDate.day}/${chat.purchase!.createdDate.month}/${chat.purchase!.createdDate.year}',
+            'Comprado: ${chat.purchase.createdDate.day}/${chat.purchase.createdDate.month}/${chat.purchase.createdDate.year}',
             style: GoogleFonts.montserrat(
               fontWeight: FontWeight.w300,
               fontSize: 12
@@ -73,7 +73,7 @@ class PurchaseMessageItem extends StatelessWidget {
         ],
       ),
       isOwner: false,
-      onTap: () => Navigator.push(context, MaterialPageRoute(builder: (__) => PurchaseDetailView(purchase: chat.purchase!,))),
+      onTap: () => Navigator.push(context, MaterialPageRoute(builder: (__) => PurchaseDetailView(purchase: chat.purchase,))),
     );
   }
 }
