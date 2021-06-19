@@ -1,15 +1,21 @@
 import 'package:flutter/material.dart';
 import 'package:flutter_bloc/flutter_bloc.dart';
+import 'package:flutter_ecoapp/bloc/article_bloc.dart';
 import 'package:flutter_ecoapp/bloc/chat_bloc.dart';
+import 'package:flutter_ecoapp/bloc/profile_bloc.dart';
 import 'package:flutter_ecoapp/bloc/purchase_bloc.dart';
 import 'package:flutter_ecoapp/models/chat.dart';
+import 'package:flutter_ecoapp/models/opinion.dart';
 import 'package:flutter_ecoapp/models/purchase.dart';
 import 'package:flutter_ecoapp/models/store.dart';
+import 'package:flutter_ecoapp/utils/currency_util.dart';
 import 'package:flutter_ecoapp/views/chat_view.dart';
+import 'package:flutter_ecoapp/views/opinions_view.dart';
 import 'package:flutter_ecoapp/views/style/colors.dart';
 import 'package:flutter_ecoapp/views/style/text_style.dart';
 import 'package:flutter_ecoapp/views/widgets/articles/article_card.dart';
 import 'package:flutter_ecoapp/views/widgets/bottom_nav_bar.dart';
+import 'package:flutter_ecoapp/views/widgets/normal_button.dart';
 import 'package:google_fonts/google_fonts.dart';
 
 class PurchaseDetailView extends StatelessWidget {
@@ -148,6 +154,23 @@ class _StoreList extends StatelessWidget {
       price: e.unitPrice.toDouble(),
       title: e.title,
       extraTag: 'purchase-list-${e.id}',
+      onLongPress: (){
+        if(e.article != null){
+          showModalBottomSheet(
+            context: context, 
+            builder: (BuildContext context){
+              return _ModalArticleOptions(articlePurchase: e);
+            }
+          );
+        }
+        else {
+          ScaffoldMessenger.of(context).removeCurrentSnackBar();
+          ScaffoldMessenger.of(context).showSnackBar(SnackBar(
+            content: Text('Artículo no encontrado'),
+            backgroundColor: EcoAppColors.MAIN_DARK_COLOR,
+          ));
+        }
+      },
     )).toList();
 
     Function()? onTap;
@@ -220,6 +243,72 @@ class _StoreList extends StatelessWidget {
             children: articlesToDisplay,
           )
         ],
+      ),
+    );
+  }
+}
+
+class _ModalArticleOptions extends StatelessWidget {
+  const _ModalArticleOptions({ Key? key, required this.articlePurchase }) : super(key: key);
+
+  final ArticleToPurchase articlePurchase;
+
+  @override
+  Widget build(BuildContext context) {
+    final articleBloc = BlocProvider.of<ArticleBloc>(context);
+    final profileBloc = BlocProvider.of<ProfileBloc>(context);
+
+    return Container(
+      padding: EdgeInsets.symmetric(
+        horizontal: 20.0,
+        vertical: 20.0
+      ),
+      child: SafeArea(
+        child: Column(
+          mainAxisSize: MainAxisSize.min,
+          crossAxisAlignment: CrossAxisAlignment.stretch,
+          children: [
+            Row(
+              children: [
+                Text(
+                  articlePurchase.title,
+                  style: GoogleFonts.montserrat(
+                    fontWeight: FontWeight.w500,
+                    fontSize: 18
+                  )
+                ),
+              ],
+            ),
+            SizedBox(height: 10.0,),
+            Text(
+              CurrencyUtil.formatToCurrencyString(articlePurchase.unitPrice, symbol: '\$') + ' x ${articlePurchase.quantity} unidades',
+              style: GoogleFonts.montserrat()
+            ),
+            SizedBox(height: 20.0,),
+            FutureBuilder(
+              future: articleBloc.getOpinionsFromArticle(articlePurchase.article!, profileBloc.currentProfile),
+              builder: (BuildContext context, AsyncSnapshot<List<OpinionModel>> snapshot){
+                switch(snapshot.connectionState){
+                  case ConnectionState.done:
+                    bool found = snapshot.data!.length > 0;
+                    return NormalButton(
+                      text: found? 'Ver reseña' : 'Añadir reseña', 
+                      onPressed: (){
+                        if(found){
+                          Navigator.push(context, MaterialPageRoute(builder: (__) => OpinionsView(article: articlePurchase.article!)));
+                        }
+                        else{
+                          // TODO: New review
+                        }
+                      }
+                    );
+                  default: return Center(child: CircularProgressIndicator());
+                }
+                
+              }
+            ),
+          ],
+        ),
       ),
     );
   }

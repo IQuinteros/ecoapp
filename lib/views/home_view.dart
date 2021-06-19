@@ -10,6 +10,7 @@ import 'package:flutter_ecoapp/views/history_view.dart';
 import 'package:flutter_ecoapp/views/style/colors.dart';
 import 'package:flutter_ecoapp/views/style/text_style.dart';
 import 'package:flutter_ecoapp/views/widgets/articles/article_card.dart';
+import 'package:flutter_ecoapp/views/widgets/articles/future_articles.dart';
 import 'package:flutter_ecoapp/views/widgets/categories/category_box.dart';
 import 'package:flutter_ecoapp/views/widgets/categories/category_list_item.dart';
 import 'package:flutter_ecoapp/views/widgets/home/featured_product.dart';
@@ -135,7 +136,10 @@ class HomeView extends StatelessWidget {
 
     final historyList = HistorySection();
 
-    final favoriteList = EcoAppDebug.getArticleItems(initialId: 5);
+    final favoriteList = FutureArticles(
+      notFoundMessage: '', 
+      future: articleBloc.getArticlesFromSearch('', profile: profileBloc.currentProfile)
+    );
 
     final column = Column(
       crossAxisAlignment: CrossAxisAlignment.start,
@@ -151,11 +155,7 @@ class HomeView extends StatelessWidget {
         ),
         categoryView,
         EcoTitle(
-          text: 'Favoritos',
-          rightButton: MiniButton(
-            text: 'Ver mas',
-            action: () => Navigator.push(context, MaterialPageRoute(builder: (__) => FavoritesView())),
-          )
+          text: 'Novedades',
         ),
         favoriteList,
         EcoTitle(

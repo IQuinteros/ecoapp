@@ -79,7 +79,7 @@ class _ArticleAppBar extends StatelessWidget {
       elevation: 10.0,
       backgroundColor: EcoAppColors.MAIN_DARK_COLOR,
       foregroundColor: Colors.white,
-      expandedHeight: 250.0,
+      expandedHeight: article.photos.length > 0? 250.0 : null,
       floating: false,
       pinned: true,
       leading: IconButton(
@@ -132,7 +132,7 @@ class _ArticleAppBar extends StatelessWidget {
           child: Hero( 
             tag: article.tag,
             child: Image(
-              image: NetworkImage(article.photos.length > 0? article.photos[0].photoUrl : 'https://picsum.photos/500/400'),
+              image: NetworkImage(article.photos.length > 0? article.photos[0].photoUrl : ''),
               height: 120,
               width: 120,
               fit: BoxFit.cover,
