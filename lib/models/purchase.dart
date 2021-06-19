@@ -11,7 +11,6 @@ class PurchaseModel extends BaseModel
   late InfoPurchaseModel? info;
 
   late List<ArticleToPurchase> articles;
-  ChatModel? chat;
 
   PurchaseModel({
     required int id,
@@ -56,7 +55,6 @@ class PurchaseModel extends BaseModel
     createdDate         = DateTime.parse(json['creation_date']);
     info                = json['info'] != null? InfoPurchaseModel.fromJsonMap(json['info']) : null;
     articles            = json['articles'].map<ArticleToPurchase>((e) => ArticleToPurchase.fromJsonMap(e)).toList() ?? const [];
-    chat                = json['chat'] != null? ChatModel.fromJsonMap(json['chat'], purchase: this) : null;
   }
 
   @override
@@ -130,7 +128,7 @@ class ArticleToPurchase extends BaseModel
   ArticleToPurchase.fromJsonMap(Map<String, dynamic> json) : super(id: json['id']){
     articleId           = json['article_id'];
     article             = ArticleModel.fromJsonMap(json['article']);
-    store               = json['store'];
+    store               = StoreModel.fromJsonMap(json['store']);
     title               = json['title'];
     unitPrice           = json['unit_price'];
     quantity            = json['quantity'];

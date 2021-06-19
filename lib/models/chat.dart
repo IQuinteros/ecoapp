@@ -27,6 +27,7 @@ class ChatModel extends BaseModel
     profileId        = json['profile_id'];
     store            = StoreModel.fromJsonMap(json['store']);
     messages         = json['messages'].map<MessageModel>((e) => MessageModel.fromJsonMap(e)).toList() ?? const [];
+    purchase         = PurchaseModel.fromJsonMap(json['purchase']);
   }
 
   @override

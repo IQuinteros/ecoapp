@@ -65,8 +65,8 @@ class _ChatList extends StatelessWidget {
 
   @override
   Widget build(BuildContext context) {
-    final purchaseBloc = BlocProvider.of<PurchaseBloc>(context);
     final profileBloc = BlocProvider.of<ProfileBloc>(context);
+    final chatBloc = BlocProvider.of<ChatBloc>(context);
 
     return Container(
       decoration: BoxDecoration(
@@ -84,12 +84,12 @@ class _ChatList extends StatelessWidget {
         horizontal: 10
       ),
       child: FutureBuilder(
-        future: purchaseBloc.getPurchases(profileBloc.currentProfile!),
-        builder: (context, AsyncSnapshot<List<PurchaseModel>> snapshot){
+        future: chatBloc.getProfileChats(profileBloc.currentProfile!),
+        builder: (context, AsyncSnapshot<List<ChatModel>> snapshot){
           switch(snapshot.connectionState){
             case ConnectionState.done:
               return Column(
-                children: snapshot.data!.where((element) => element.chat != null).map<_ChatItem>((e) => _ChatItem(chat: e.chat!)).toList()
+                children: snapshot.data!.map<_ChatItem>((e) => _ChatItem(chat: e)).toList()
               );
             default: return CircularProgressIndicator();
           }

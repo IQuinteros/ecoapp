@@ -184,12 +184,13 @@ class _StoreList extends StatelessWidget {
                     Icons.sms_rounded,
                     color: EcoAppColors.MAIN_COLOR,
                   ), 
-                  onPressed: () => Navigator.push(
+                  onPressed: () {},
+                  /* onPressed: () => Navigator.push(
                       context, 
                       MaterialPageRoute(
                         builder: (__) => ChatView(chat: purchase.chat!,)
                       )
-                  )
+                  ) */
                 ) : Container()
               ],
             ),
