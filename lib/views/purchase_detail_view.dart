@@ -10,6 +10,7 @@ import 'package:flutter_ecoapp/models/purchase.dart';
 import 'package:flutter_ecoapp/models/store.dart';
 import 'package:flutter_ecoapp/utils/currency_util.dart';
 import 'package:flutter_ecoapp/views/chat_view.dart';
+import 'package:flutter_ecoapp/views/new_opinion_view.dart';
 import 'package:flutter_ecoapp/views/opinions_view.dart';
 import 'package:flutter_ecoapp/views/style/colors.dart';
 import 'package:flutter_ecoapp/views/style/text_style.dart';
@@ -298,7 +299,7 @@ class _ModalArticleOptions extends StatelessWidget {
                           Navigator.push(context, MaterialPageRoute(builder: (__) => OpinionsView(article: articlePurchase.article!)));
                         }
                         else{
-                          // TODO: New review
+                          Navigator.push(context, MaterialPageRoute(builder: (__) => NewOpinionView(articlePurchase: articlePurchase)));
                         }
                       }
                     );

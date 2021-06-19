@@ -34,7 +34,7 @@ class OpinionModel extends BaseModel
     'rating'    : rating,
     'title'     : title,
     'content'   : content,
-    'date'      : date,
+    'date'      : date.toString(),
   };
 }
 

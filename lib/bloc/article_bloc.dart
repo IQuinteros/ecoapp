@@ -42,8 +42,8 @@ class ArticleBloc extends BaseBloc<ArticleModel>{
   }) async => (await opinionAPI.insert(
     item: opinion,
     additionalParams: {
-      'article': article.id,
-      'profile': profile.id
+      'article_id': article.id,
+      'profile_id': profile.id
     }
   )).object != null;
 

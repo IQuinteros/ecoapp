@@ -18,7 +18,8 @@ class NormalInput <T> extends StatelessWidget {
     this.future,
     this.onDoneSnapshot,
     this.inputFormatters,
-    this.maxLength
+    this.maxLength,
+    this.maxLines
   }) : super(key: key);
 
   final String header;
@@ -35,6 +36,7 @@ class NormalInput <T> extends StatelessWidget {
   final Function(T?)? onDoneSnapshot;
   final List<TextInputFormatter>? inputFormatters;
   final int? maxLength;
+  final int? maxLines;
 
   @override
   Widget build(BuildContext context) {
@@ -61,7 +63,8 @@ class NormalInput <T> extends StatelessWidget {
             inputFormatters: inputFormatters,
             onChanged: onChanged,
             enabled: snapshot.connectionState == ConnectionState.done,
-            maxLength: maxLength
+            maxLength: maxLength,
+            maxLines: maxLines
           );
         }
       );
@@ -80,7 +83,8 @@ class NormalInput <T> extends StatelessWidget {
         onTap: onTap, 
         inputFormatters: inputFormatters,
         onChanged: onChanged,
-        maxLength: maxLength
+        maxLength: maxLength,
+        maxLines: maxLines
       );
     }
   }
@@ -101,7 +105,8 @@ class _InputContent extends StatelessWidget {
     required this.onChanged,
     required this.enabled,
     required this.inputFormatters,
-    required this.maxLength
+    required this.maxLength,
+    required this.maxLines
   }) : super(key: key);
 
   final TextEditingController? controller;
@@ -117,6 +122,7 @@ class _InputContent extends StatelessWidget {
   final bool? enabled;
   final List<TextInputFormatter>? inputFormatters;
   final int? maxLength;
+  final int? maxLines;
 
   @override
   Widget build(BuildContext context) {
@@ -141,14 +147,15 @@ class _InputContent extends StatelessWidget {
           hintText: hint,
           contentPadding: EdgeInsets.symmetric(
             horizontal: 20.0,
-            vertical: 5.0
+            vertical: 15.0
           ),
           floatingLabelBehavior: FloatingLabelBehavior.auto,
           labelText: header,
-          prefixIcon: Icon(icon)
+          prefixIcon: Icon(icon),
         ),
         onTap: onTap,
         onChanged: onChanged,
+        maxLines: maxLines,
       ),
     );
   }
