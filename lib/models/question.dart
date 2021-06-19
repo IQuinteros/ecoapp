@@ -25,7 +25,7 @@ class QuestionModel extends BaseModel
     'id'        : id,
     'question'  : question,
     'answer'    : answer,
-    'date'      : date
+    'date'      : date.toString()
   };
 }
 

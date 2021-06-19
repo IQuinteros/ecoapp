@@ -96,7 +96,7 @@ class _NewOpinionViewState extends State<NewOpinionView> {
                   controller: titleController,
                   type: TextInputType.text,
                   maxLength: 50,
-                  validator: (value) => value != null && value.isEmpty? 'Tu reseña necesita una pequeña opinión' : null,
+                  validator: (value) => value == null || value.isEmpty? 'Tu reseña necesita una pequeña opinión' : null,
                 ),
                 NormalInput(
                   header: 'Detalles (opcional)', 
