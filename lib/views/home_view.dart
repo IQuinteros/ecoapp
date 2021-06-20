@@ -2,6 +2,7 @@ import 'dart:async';
 
 import 'package:flutter/material.dart';
 import 'package:flutter_bloc/flutter_bloc.dart';
+import 'package:flutter_ecoapp/bloc/app_bloc.dart';
 import 'package:flutter_ecoapp/bloc/article_bloc.dart';
 import 'package:flutter_ecoapp/bloc/profile_bloc.dart';
 import 'package:flutter_ecoapp/bloc/user_bloc.dart';
@@ -53,6 +54,7 @@ class _HomeViewState extends State<HomeView> {
   Widget getContent(BuildContext context){
     final articleBloc = BlocProvider.of<ArticleBloc>(context);
     final profileBloc = BlocProvider.of<ProfileBloc>(context);
+    final appBloc = BlocProvider.of<AppBloc>(context);
 
     final futureScrollable = FutureBuilder(
       future: articleBloc.getArticlesFromSearch("", profile: profileBloc.currentProfile),
@@ -144,9 +146,15 @@ class _HomeViewState extends State<HomeView> {
       }
     );
 
-    final historyList = HistorySection();
+    final favoritesList = FutureArticles(
+      notFoundMessage: 'No tienes artículos en "Favoritos"', 
+      getFuture: (loaded) => profileBloc.getFavoriteArticles(
+        quantity: 5
+      ),
+      clearOnRefresh: true,
+    );
 
-    final favoriteList = FutureArticles(
+    final mainListArticles = FutureArticles(
       notFoundMessage: '', 
       getFuture: (loaded) => articleBloc.getArticlesFromSearch('', 
         profile: profileBloc.currentProfile,
@@ -171,15 +179,18 @@ class _HomeViewState extends State<HomeView> {
         EcoTitle(
           text: 'Novedades',
         ),
-        favoriteList,
-        EcoTitle(
-          text: 'Historial',
+        mainListArticles,
+        profileBloc.currentProfile != null? EcoTitle(
+          text: 'Favoritos',
           rightButton: MiniButton(
             text: 'Ver mas',
-            action: (){},
+            action: () async {
+              var value = await Navigator.push(context, MaterialPageRoute(builder: (__) => FavoritesView()));
+              if(value != null) appBloc.mainEcoNavBar.onTap(value);
+            },
           )
-        ),
-        historyList,
+        ) : Container(),
+        profileBloc.currentProfile != null? favoritesList : Container(),
         SizedBox(height: 40.0)
       ],
     );
