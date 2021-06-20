@@ -37,12 +37,16 @@ class _ChatViewState extends State<ChatView> {
   @override
   Widget build(BuildContext context) {
 
+    final chatBloc = BlocProvider.of<ChatBloc>(context);
+
     ChatModel? chatToUse = refreshChat ?? widget.chat;
 
     if(chatToUse != null){
       Timer(Duration(seconds: 8), () async {
         await updateChat(context, chatToUse);
       });
+
+      chatBloc.updateLastSeenDate(chatToUse);
     }
 
     return Scaffold(

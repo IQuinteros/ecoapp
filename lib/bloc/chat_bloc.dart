@@ -40,6 +40,10 @@ class ChatBloc extends BaseBloc<ChatModel>{
     return messageAPI.delete(item: message);
   }
 
+  Future<bool> updateLastSeenDate(ChatModel chat) async {
+    return (await chatAPI.update(item: chat, customName: 'update_date')) != null;
+  }
+
   Future<SendMessageResult> sendMessage({
     required MessageModel message,
     required ProfileModel profile,
