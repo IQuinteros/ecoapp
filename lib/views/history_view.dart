@@ -16,20 +16,28 @@ import 'package:flutter_ecoapp/views/widgets/index_app_bar.dart';
 import 'package:flutter_ecoapp/views/widgets/search_bar.dart';
 import 'package:google_fonts/google_fonts.dart';
 
-class HistoryView extends StatelessWidget {
+class HistoryView extends StatefulWidget {
+  @override
+  _HistoryViewState createState() => _HistoryViewState();
+}
+
+class _HistoryViewState extends State<HistoryView> {
   @override
   Widget build(BuildContext context) {
-    return CustomScrollView(
-      slivers: [
-        IndexAppBar(),
-        SliverList(
-          delegate: SliverChildListDelegate(
-            [
-              getContent(context)
-            ]
-          ),
-        )
-      ],
+    return RefreshIndicator(
+      child: CustomScrollView(
+        slivers: [
+          IndexAppBar(),
+          SliverList(
+            delegate: SliverChildListDelegate(
+              [
+                getContent(context)
+              ]
+            ),
+          )
+        ],
+      ),
+      onRefresh: () => Future.delayed(Duration(milliseconds: 100), () => setState(() {})),
     );
   }
 

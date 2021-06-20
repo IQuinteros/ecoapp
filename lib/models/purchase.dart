@@ -68,7 +68,7 @@ class PurchaseModel extends BaseModel
   PurchaseModel.fromJsonMap(Map<String, dynamic> json) : super(id: json['id']){
     total               = json['total'];
     createdDate         = DateTime.parse(json['creation_date']);
-    info                = json['info'] != null? InfoPurchaseModel.fromJsonMap(json['info']) : null;
+    info                = json['info_purchase'] != null? InfoPurchaseModel.fromJsonMap(json['info_purchase']) : null;
     articles            = json['articles'].map<ArticleToPurchase>((e) => ArticleToPurchase.fromJsonMap(e)).toList() ?? const [];
   }
 
@@ -100,7 +100,7 @@ class InfoPurchaseModel extends BaseModel
   InfoPurchaseModel.fromJsonMap(Map<String, dynamic> json) : super(id: json['id']){
     names               = json['names'];
     location            = json['location'];
-    contactNumber       = json['contact_number'];
+    contactNumber       = json['contact_number'].toString();
     district            = json['district'];
   }
 

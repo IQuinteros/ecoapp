@@ -1,3 +1,5 @@
+import 'dart:async';
+
 import 'package:flutter/material.dart';
 import 'package:flutter_bloc/flutter_bloc.dart';
 import 'package:flutter_ecoapp/bloc/article_bloc.dart';
@@ -21,21 +23,29 @@ import 'package:flutter_ecoapp/views/widgets/search_bar.dart';
 import 'package:flutter_swiper_null_safety/flutter_swiper_null_safety.dart';
 
 
-class HomeView extends StatelessWidget {
+class HomeView extends StatefulWidget {
 
   @override
+  _HomeViewState createState() => _HomeViewState();
+}
+
+class _HomeViewState extends State<HomeView> {
+  @override
   Widget build(BuildContext context) {
-    return CustomScrollView(
-      slivers: [
-        IndexAppBar(),
-        SliverList(
-          delegate: SliverChildListDelegate(
-            [
-              getContent(context)
-            ]
-          ),
-        )
-      ],
+    return RefreshIndicator(
+      child: CustomScrollView(
+        slivers: [
+          IndexAppBar(),
+          SliverList(
+            delegate: SliverChildListDelegate(
+              [
+                getContent(context)
+              ]
+            ),
+          )
+        ],
+      ),
+      onRefresh: () => Future.delayed(Duration(milliseconds: 100), () => setState(() {})),
     );
     
   }

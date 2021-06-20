@@ -12,12 +12,17 @@ import 'package:flutter_ecoapp/views/widgets/index_app_bar.dart';
 import 'package:flutter_ecoapp/views/widgets/search_bar.dart';
 import 'package:google_fonts/google_fonts.dart';
 
-class ResultView extends StatelessWidget {
+class ResultView extends StatefulWidget {
 
   final String? searching;
 
   const ResultView({Key? key, this.searching}) : super(key: key);
 
+  @override
+  _ResultViewState createState() => _ResultViewState();
+}
+
+class _ResultViewState extends State<ResultView> {
   @override
   Widget build(BuildContext context) {
     return Scaffold(
@@ -40,7 +45,7 @@ class ResultView extends StatelessWidget {
       children: [
         Container(
           margin: EdgeInsets.symmetric(
-            vertical: 10.0,
+            vertical: 20.0,
             horizontal: 20.0
           ),
           child: Row(
@@ -48,7 +53,7 @@ class ResultView extends StatelessWidget {
             children: [
               Expanded(
                 child: Text(
-                  "Resultados de la búsqueda: '$searching'",
+                  "Resultados de la búsqueda: '${widget.searching}'",
                   style: GoogleFonts.montserrat(
                     fontWeight: FontWeight.w300
                   ),
@@ -58,32 +63,33 @@ class ResultView extends StatelessWidget {
             ],
           ),
         ),
-        SizedBox(height: 10.0),
         FutureArticles(
-          future: articleBloc.getArticlesFromSearch(searching ?? '', profile: profileBloc.currentProfile), 
+          future: articleBloc.getArticlesFromSearch(widget.searching ?? '', profile: profileBloc.currentProfile), 
           notFoundMessage: 'No se han encontrado artículos para tu búsqueda :c',
           recommended: true,
         )
       ],
     );
 
-    return CustomScrollView(
-      slivers: [
-        IndexAppBar(searching: searching,),
-        SliverList(
-          delegate: SliverChildListDelegate(
-            [
-              SingleChildScrollView(
-                child: content,
-                scrollDirection: Axis.vertical,
-              )
-            ]
-          ),
-        )
-      ],
+    return RefreshIndicator(
+      child: CustomScrollView(
+        slivers: [
+          IndexAppBar(searching: widget.searching,),
+          SliverList(
+            delegate: SliverChildListDelegate(
+              [
+                SingleChildScrollView(
+                  child: content,
+                  scrollDirection: Axis.vertical,
+                )
+              ]
+            ),
+          )
+        ],
+      ),
+      onRefresh: () => Future.delayed(Duration(milliseconds: 100), () => setState(() {})),
     );
 
   }
-
 }
 

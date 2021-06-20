@@ -9,7 +9,12 @@ import 'package:flutter_ecoapp/views/widgets/bottom_nav_bar.dart';
 import 'package:flutter_ecoapp/views/widgets/index_app_bar.dart';
 import 'package:flutter_ecoapp/views/widgets/search_bar.dart';
 
-class FavoritesView extends StatelessWidget {
+class FavoritesView extends StatefulWidget {
+  @override
+  _FavoritesViewState createState() => _FavoritesViewState();
+}
+
+class _FavoritesViewState extends State<FavoritesView> {
   @override
   Widget build(BuildContext context) {
     return Scaffold(
@@ -47,19 +52,22 @@ class FavoritesView extends StatelessWidget {
       ],
     );
 
-    return CustomScrollView(
-      slivers: [
-        SliverList(
-          delegate: SliverChildListDelegate(
-            [
-              SingleChildScrollView(
-                child: content,
-                scrollDirection: Axis.vertical,
-              )
-            ]
-          ),
-        )
-      ],
+    return RefreshIndicator(
+      child: CustomScrollView(
+        slivers: [
+          SliverList(
+            delegate: SliverChildListDelegate(
+              [
+                SingleChildScrollView(
+                  child: content,
+                  scrollDirection: Axis.vertical,
+                )
+              ]
+            ),
+          )
+        ],
+      ),
+      onRefresh: () => Future.delayed(Duration(milliseconds: 100), () => setState(() {})),
     );
   }
 }

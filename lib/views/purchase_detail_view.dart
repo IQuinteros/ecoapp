@@ -95,36 +95,78 @@ class _SummaryItem extends StatelessWidget {
           Row(
             children: [
               Text(
-                'Total: ${purchase.total}',
+                'Total: ${CurrencyUtil.formatToCurrencyString(purchase.total.toInt(), symbol: '\$')}',
                 style: GoogleFonts.montserrat(
                   fontWeight: FontWeight.w500,
                   fontSize: 18
                 ),
               ),
               SizedBox(width: 20.0),
-              Expanded(
-                              child: Text(
-                  '${purchase.realTotal}',
+              purchase.total != purchase.realTotal? Expanded(
+                child: Text(
+                  CurrencyUtil.formatToCurrencyString(purchase.realTotal.toInt(), symbol: '\$'),
                   style: GoogleFonts.montserrat(
                     fontWeight: FontWeight.w300,
                     fontSize: 16,
                     decoration: TextDecoration.lineThrough
                   ),
                 ),
-              ),
+              ) : Container(),
             ],
           ),
           SizedBox(height: 10,),
-          Text(
+          purchase.discount != 0? Text(
             'Descuento: ${purchase.discount.toStringAsFixed(1)}%',
             style: GoogleFonts.montserrat(
               fontWeight: FontWeight.w400,
             ),
-          ),
+          ) : Container(),
           SizedBox(height: 10,),
           Text(
             'Fecha de compra: ${purchase.createdDate.day}/${purchase.createdDate.month}/${purchase.createdDate.year}',
             style: GoogleFonts.montserrat(),
+          ),
+          SizedBox(height: 10,),
+          Divider(thickness: 1,),
+          SizedBox(height: 10,),
+          Text(
+            'Información de envío',
+            style: GoogleFonts.montserrat(
+              fontWeight: FontWeight.w500,
+              fontSize: 18
+            ),
+          ),
+          SizedBox(height: 10,),
+          Text(
+            'Nombre: ' + (purchase.info?.names ?? 'Sin información'),
+            style: GoogleFonts.montserrat(
+              fontStyle: (purchase.info == null || purchase.info!.names.isEmpty)? FontStyle.italic : FontStyle.normal,
+              fontWeight: (purchase.info == null || purchase.info!.names.isEmpty)? FontWeight.w300 : FontWeight.w400
+            ),
+          ),
+          SizedBox(height: 10,),
+          Text(
+            'Contacto: ' + (purchase.info?.contactNumber ?? 'Sin información'),
+            style: GoogleFonts.montserrat(
+              fontStyle: (purchase.info == null || purchase.info!.contactNumber.isEmpty)? FontStyle.italic : FontStyle.normal,
+              fontWeight: (purchase.info == null || purchase.info!.contactNumber.isEmpty)? FontWeight.w300 : FontWeight.w400
+            ),
+          ),
+          SizedBox(height: 10,),
+          Text(
+            'Dirección: ' + (purchase.info?.location ?? 'Sin información'),
+            style: GoogleFonts.montserrat(
+              fontStyle: (purchase.info == null || purchase.info!.location.isEmpty)? FontStyle.italic : FontStyle.normal,
+              fontWeight: (purchase.info == null || purchase.info!.location.isEmpty)? FontWeight.w300 : FontWeight.w400
+            ),
+          ),
+          SizedBox(height: 10,),
+          Text(
+            'Comuna: ' + (purchase.info?.district ?? 'Sin información'),
+            style: GoogleFonts.montserrat(
+              fontStyle: (purchase.info == null || purchase.info!.district.isEmpty)? FontStyle.italic : FontStyle.normal,
+              fontWeight: (purchase.info == null || purchase.info!.district.isEmpty)? FontWeight.w300 : FontWeight.w400
+            ),
           ),
           // TODO: Check requirements
         ],
