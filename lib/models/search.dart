@@ -1,4 +1,5 @@
 import 'package:flutter_ecoapp/models/base.dart';
+import 'package:flutter_ecoapp/models/district.dart';
 
 class SearchModel extends BaseModel
 {
@@ -22,4 +23,18 @@ class SearchModel extends BaseModel
     'search_text'  : searchText,
     'search_date'  : searchDate.toString(),
   };
+}
+
+class SearchFilterModel{
+  final String? category;
+  final int? minPrice;
+  final int? maxPrice;
+  final DistrictModel? district;
+
+  Map<String, dynamic> toMap() => {}..addAll(category != null? {'category': category} : {})
+    ..addAll(minPrice != null? {'min_price': minPrice} : {})
+    ..addAll(maxPrice != null? {'max_price': maxPrice} : {})
+    ..addAll(district != null? {'district_id': district?.id} : {});
+
+  SearchFilterModel({this.category, this.minPrice, this.maxPrice, this.district});
 }

@@ -7,12 +7,24 @@ import 'package:flutter_ecoapp/views/widgets/normal_input.dart';
 import 'package:google_fonts/google_fonts.dart';
 
 class DistrictInput extends StatelessWidget {
-  DistrictInput({ Key? key, required this.selectedDistrict, this.profile }) : super(key: key);
+  DistrictInput({ 
+    Key? key, 
+    required this.selectedDistrict, 
+    this.validationMessage = 'Debe ingresar su comuna', 
+    this.optional = false, 
+    this.validate = true, 
+    this.initialDistrict, 
+    this.hint = 'Ingresa tu comuna'
+  }) : super(key: key);
 
   final controller = TextEditingController();
+  final String validationMessage;
+  final bool validate;
+  final bool optional;
+  final String hint;
 
-  final Function(DistrictModel) selectedDistrict;
-  final ProfileModel? profile;
+  final Function(DistrictModel?) selectedDistrict;
+  final DistrictModel? initialDistrict;
   
   final Map<String, List<DistrictModel>>districts = {
     'districts' : []
@@ -24,41 +36,45 @@ class DistrictInput extends StatelessWidget {
 
     return NormalInput(
       future: districtBloc.getDistricts(),
+      initialData: districtBloc.loadedDistricts,
       header: 'Comuna', 
-      hint: 'Ingresa tu comuna', 
+      hint: hint, 
       icon: Icons.location_on,
       readOnly: true, 
       onTap: () => selectDistrict(
         context,
         onSelect: (district) {
-          controller.text = district.name;
+          controller.text = district?.name ?? '';
           selectedDistrict(district);
         },
         districts: districts['districts']!,
       ),
-      onDoneSnapshot: (List<DistrictModel>? data){
+      onDoneSnapshot: (List<DistrictModel>? data, bool stillLoading){
         districts['districts'] = data ?? [];
-        if(profile != null && profile!.district != null){
-          controller.text = profile!.district!.name;
-          selectedDistrict(profile!.district!);
-        }
+        controller.text = initialDistrict?.name ?? '';
+        if(initialDistrict != null) selectedDistrict(initialDistrict!);
       },
       controller: controller,
-      validator: (value) => value == null || value.isEmpty? 'Debe ingresar su comuna' : null
+      validator: validate? (value) => value == null || value.isEmpty? validationMessage : null : null
     );
   }
 
   void selectDistrict(
     BuildContext context, 
     {
-      Function(DistrictModel district)? onSelect,
+      Function(DistrictModel? district)? onSelect,
       List<DistrictModel> districts = const [],
     }
   ) async {
-    final districtsTiles = districts.map<_DistrictTile>((element) => _DistrictTile(
+    final tempDistricts = [];
+    tempDistricts.addAll(districts);
+    if(optional){
+      tempDistricts.insert(0, DistrictModel(id: 0, name: 'Sin seleccionar'));
+    }
+    final districtsTiles = tempDistricts.map<_DistrictTile>((element) => _DistrictTile(
       district: element,
       onTap: (){
-        if(onSelect != null) onSelect(element);
+        onSelect?.call(element.id <= 0? null : element);
         Navigator.pop(context);
       }
     )).toList();

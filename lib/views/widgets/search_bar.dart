@@ -49,16 +49,8 @@ class SearchBar extends StatelessWidget {
 
     final filterButton = IconButton(
       icon: Icon(Icons.filter_list_outlined), 
-      onPressed: (){
-        showDialog(
-          context: context, 
-          builder: (BuildContext context){
-            return Dialog(
-              elevation: 10,
-              child: SearchFilter(),
-            );
-          }
-        );
+      onPressed: () async {
+        await SearchFilter.openSearchFilter(context: context);
       }
     );
     

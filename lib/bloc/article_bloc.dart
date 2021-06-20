@@ -3,6 +3,7 @@ import 'package:flutter_ecoapp/models/article.dart';
 import 'package:flutter_ecoapp/models/opinion.dart';
 import 'package:flutter_ecoapp/models/profile.dart';
 import 'package:flutter_ecoapp/models/question.dart';
+import 'package:flutter_ecoapp/models/search.dart';
 import 'package:flutter_ecoapp/models/store.dart';
 import 'package:flutter_ecoapp/models/user.dart';
 import 'package:flutter_ecoapp/providers/article_api.dart';
@@ -23,11 +24,15 @@ class ArticleBloc extends BaseBloc<ArticleModel>{
     return;
   }
 
-  Future<List<ArticleModel>> getArticlesFromSearch(String search, {required ProfileModel? profile, int initial = 0, int quantity = 20}) async => await articleAPI.selectAll(params: {
+  SearchFilterModel currentSearchFilter = SearchFilterModel();
+
+  Future<List<ArticleModel>> getArticlesFromSearch(String search, {required ProfileModel? profile, int initial = 0, int quantity = 20, bool useFilter = false}) async => await articleAPI.selectAll(params: {
     'search': search,
     'initial_number': initial,
     'quantity': quantity
-  }..addAll( profile != null? {'profile_id': profile.id} : {}));
+  }..addAll( profile != null? {'profile_id': profile.id} : {})..addAll(
+    useFilter? currentSearchFilter.toMap() : {}
+  ));
 
   Future<List<ArticleModel>> getArticlesOfStore(StoreModel store) async => await articleAPI.selectAll(params: {
     'id_store': store.id

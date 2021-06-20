@@ -251,7 +251,7 @@ class _ProfileModifyMainContent extends StatelessWidget {
               SizedBox(height: 20.0,),
               DistrictInput(
                 selectedDistrict: (value) => selectedDistrict['district'] = value,
-                profile: profile,
+                initialDistrict: profile.district,
               ),
               NormalInput(
                 header: 'Dirección', 

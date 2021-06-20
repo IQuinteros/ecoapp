@@ -113,27 +113,4 @@ class ArticleSearch extends SearchDelegate {
     );
   }
 
-  
-  /*
-  @override
-  Widget buildSuggestions(BuildContext context) {
-    // Suggestions when user write
-    final suggestedList = query.isEmpty? recentMovies
-      : movies.where((element) => element.toLowerCase().startsWith(query.toLowerCase())).toList();
-
-    return ListView.builder(
-      itemCount: suggestedList.length,
-      itemBuilder: (context, i){
-        return ListTile(
-          leading: Icon(Icons.movie),
-          title: Text(suggestedList[i]),
-          onTap: (){ 
-            selection = suggestedList[i];
-            showResults(context);
-          },
-        );
-      }
-    );
-  }*/
-
 }

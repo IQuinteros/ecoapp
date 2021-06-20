@@ -68,7 +68,8 @@ class _ResultViewState extends State<ResultView> {
           getFuture: (loaded) { print('LOADED: ${loaded.length}'); return articleBloc.getArticlesFromSearch(
             widget.searching ?? '', 
             profile: profileBloc.currentProfile,
-            initial: loaded.length
+            initial: loaded.length,
+            useFilter: true
           );}, 
           notFoundMessage: 'No se han encontrado artículos para tu búsqueda :c',
           recommended: true,
