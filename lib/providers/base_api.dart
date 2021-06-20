@@ -10,14 +10,14 @@ import 'package:flutter_ecoapp/models/base.dart';
 abstract class BaseAPI<T extends BaseModel>{
 
   // Hosting: ecomercioweb.000webhostapp.com
-  static const String _authority = 'localhost:8888';
-  static const String _requests = 'ecoweb/api/requests';
+  static const String _authority = 'ecomercioweb.000webhostapp.com';//'localhost:8888';
+  static const String _requests = 'api/requests';
 
   final String baseUrl;
   Map<String, dynamic> Function(T) getJsonParams;
   T Function(Map<String, dynamic>) constructor;
   
-  final bool DEBUG = false;
+  final bool DEBUG = true;
 
   BaseAPI({required this.baseUrl, required this.getJsonParams, required this.constructor});
 
@@ -52,7 +52,7 @@ abstract class BaseAPI<T extends BaseModel>{
     // HTTP for localhost, HTTPS for hosting
     if(DEBUG) print('REQUEST: $subUrl; PARAMS: $queryParams');
     try{
-      final url = Uri.http(_authority, '$_requests/$baseUrl' + '/$subUrl');
+      final url = Uri.https(_authority, '$_requests/$baseUrl' + '/$subUrl');
       final result = await _processResponse(url, queryParams);
       return RequestResult(result['success'], result['data']);
     }
