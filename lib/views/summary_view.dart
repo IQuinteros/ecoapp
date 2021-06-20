@@ -170,23 +170,6 @@ class SummaryView extends StatelessWidget {
             SizedBox(width: 20.0),
             Expanded(
               child: Text(
-                'Dirección: ${profileBloc.currentProfile!.location}',
-                style: GoogleFonts.montserrat(
-                ),
-                textAlign: TextAlign.start,
-              ),
-            ),
-            SizedBox(width: 20.0),
-          ],
-        ),
-        SizedBox(height: 10),
-        Row(
-          mainAxisSize: MainAxisSize.max,
-          mainAxisAlignment: MainAxisAlignment.start,
-          children: [
-            SizedBox(width: 20.0),
-            Expanded(
-              child: Text(
                 'Sellos amigables: ',
                 style: GoogleFonts.montserrat(
                 ),
