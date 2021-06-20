@@ -91,7 +91,10 @@ class _ChatList extends StatelessWidget {
               return Column(
                 children: snapshot.data!.map<_ChatItem>((e) => _ChatItem(chat: e)).toList()
               );
-            default: return CircularProgressIndicator();
+            default: return Container(
+              padding: EdgeInsets.symmetric(vertical: 10.0),
+              child: Center(child: CircularProgressIndicator())
+            );
           }
         }
       ),

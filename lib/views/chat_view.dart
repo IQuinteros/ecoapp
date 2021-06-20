@@ -191,9 +191,13 @@ class _ChatViewState extends State<ChatView> {
                     color: Colors.white
                   ), 
                   onPressed: () async { 
+                    String message = widget.messageController.text;
+                    widget.messageController.text = '';
+                    if(message.isEmpty) return;
+
                     final result = await chatBloc.sendMessage(
                       message: MessageModel(
-                        message: widget.messageController.text,
+                        message: message,
                         date: DateTime.now(),
                         fromStore: false,
                         id: 0,
@@ -204,13 +208,15 @@ class _ChatViewState extends State<ChatView> {
                       store: chatToUse?.store ?? widget.store
                     );
                     if(result.result){
-                      widget.messageController.text = '';
                       if(result.isNewChat){
                         await updateChat(context, chatToUse, (){});
                       }
                       else{
                         await updateChat(context, chatToUse, () => scrollController.jumpTo(messages.length * 50));
                       }
+                    }
+                    else{
+                      widget.messageController.text = message;
                     }
                   }
                 ),
@@ -328,7 +334,7 @@ class _ModalMessageOptions extends StatelessWidget {
           children: [
             TextButton(
               onPressed: () async {
-                await chatBloc.deleteMessage(message);
+                chatBloc.deleteMessage(message);
                 onDelete();
               }, 
               child: Text(
