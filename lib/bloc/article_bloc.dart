@@ -31,6 +31,17 @@ class ArticleBloc extends BaseBloc<ArticleModel>{
     'id_store': store.id
   });
 
+  Future<ArticleModel?> getArticleFromId(int id) async {
+    final result = await articleAPI.selectAll(params: {
+      'id': id,
+    });
+
+    if(result.length > 0){
+      return result[0];
+    }
+    return null;
+  }
+
   Future<List<OpinionModel>> getOpinionsFromArticle(ArticleModel article, ProfileModel? profile) async => await opinionAPI.selectAll(params: {
     'article_id': article.id
   }..addAll(profile != null? {'profile_id': profile.id} : {}));

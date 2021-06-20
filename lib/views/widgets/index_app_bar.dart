@@ -3,9 +3,10 @@ import 'package:flutter_ecoapp/views/widgets/search_bar.dart';
 
 class IndexAppBar extends StatelessWidget {
   const IndexAppBar({
-    Key? key,
+    Key? key, this.searching,
   }) : super(key: key);
 
+  final String? searching;
 
   @override
   Widget build(BuildContext context) {
@@ -16,7 +17,7 @@ class IndexAppBar extends StatelessWidget {
       foregroundColor: Colors.white,
       floating: true,
       pinned: false,
-      title: SearchBar(),
+      title: SearchBar(searching: searching),
       stretch: false,
       forceElevated: true,
       snap: true,

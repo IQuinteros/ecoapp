@@ -4,6 +4,7 @@ import 'package:flutter_ecoapp/views/result_view.dart';
 import 'package:flutter_ecoapp/views/style/colors.dart';
 import 'package:flutter_ecoapp/views/style/text_style.dart';
 import 'package:flutter_ecoapp/views/widgets/bottom_nav_bar.dart';
+import 'package:flutter_ecoapp/views/widgets/index_app_bar.dart';
 import 'package:flutter_ecoapp/views/widgets/search_bar.dart';
 import 'package:google_fonts/google_fonts.dart';
 
@@ -11,7 +12,21 @@ class CategoriesView extends StatelessWidget {
   @override
   Widget build(BuildContext context) {
     return Scaffold(
-      body: SafeArea(child: getContent(context)),
+      body:  CustomScrollView(
+        slivers: [
+          IndexAppBar(),
+          SliverList(
+            delegate: SliverChildListDelegate(
+              [
+                SafeArea(
+                  child: getContent(context),
+                  top: false,
+                )
+              ]
+            ),
+          )
+        ],
+      ),
       bottomNavigationBar: EcoBottomNavigationBar(
         currentIndex: 0,
         onTap: (value){
@@ -24,7 +39,6 @@ class CategoriesView extends StatelessWidget {
   Widget getContent(BuildContext context){
     final content = Column(
       children: [
-        SearchBar(),
         EcoTitle(
           text: 'Categorías',
           leftButton: IconButton(

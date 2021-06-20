@@ -8,6 +8,7 @@ import 'package:flutter_ecoapp/views/debug/debug.dart';
 import 'package:flutter_ecoapp/views/widgets/articles/article_card.dart';
 import 'package:flutter_ecoapp/views/widgets/articles/future_articles.dart';
 import 'package:flutter_ecoapp/views/widgets/bottom_nav_bar.dart';
+import 'package:flutter_ecoapp/views/widgets/index_app_bar.dart';
 import 'package:flutter_ecoapp/views/widgets/search_bar.dart';
 import 'package:google_fonts/google_fonts.dart';
 
@@ -37,9 +38,6 @@ class ResultView extends StatelessWidget {
 
     final content = Column(
       children: [
-        SearchBar(
-          searching: searching,
-        ),
         Container(
           margin: EdgeInsets.symmetric(
             vertical: 10.0,
@@ -69,10 +67,22 @@ class ResultView extends StatelessWidget {
       ],
     );
 
-    return SingleChildScrollView(
-      child: content,
-      scrollDirection: Axis.vertical,
+    return CustomScrollView(
+      slivers: [
+        IndexAppBar(searching: searching,),
+        SliverList(
+          delegate: SliverChildListDelegate(
+            [
+              SingleChildScrollView(
+                child: content,
+                scrollDirection: Axis.vertical,
+              )
+            ]
+          ),
+        )
+      ],
     );
+
   }
 
 }

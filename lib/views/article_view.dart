@@ -27,14 +27,23 @@ import 'package:flutter_ecoapp/views/widgets/stars_row.dart';
 import 'package:google_fonts/google_fonts.dart';
 import 'package:share_plus/share_plus.dart';
 
-class ArticleView extends StatelessWidget {
+class ArticleView extends StatefulWidget {
 
   final ArticleModel article;
 
   const ArticleView({Key? key, required this.article}) : super(key: key);
 
   @override
+  _ArticleViewState createState() => _ArticleViewState();
+}
+
+class _ArticleViewState extends State<ArticleView> {
+  ArticleModel? refreshArticle;
+
+  @override
   Widget build(BuildContext context) {
+    if(refreshArticle == null) refreshArticle = widget.article;
+      
     return Scaffold(
       body: getContent(context),
     );
@@ -44,24 +53,36 @@ class ArticleView extends StatelessWidget {
     final historyBloc = BlocProvider.of<HistoryBloc>(context);
     final profileBloc = BlocProvider.of<ProfileBloc>(context);
     final userBloc = BlocProvider.of<UserBloc>(context);
+
     userBloc.getLinkedUser(profileBloc.currentProfile).then((value) {
-      if(value != null) historyBloc.addToHistory(user: value, article: article);
+      if(value != null) historyBloc.addToHistory(user: value, article: refreshArticle!);
     });    
 
-    return CustomScrollView(
-      slivers: [
-        _ArticleAppBar(article: article),
-        SliverList(
-          delegate: SliverChildListDelegate(
-            [
-              _ArticleMainContent(article: article)
-            ]
-          ),
-        )
-      ],
+    return RefreshIndicator(
+      child: CustomScrollView(
+        slivers: [
+          _ArticleAppBar(article: refreshArticle!),
+          SliverList(
+            delegate: SliverChildListDelegate(
+              [
+                _ArticleMainContent(
+                  article: refreshArticle!,
+                  onNewQuestion: () => refreshView(context),
+                )
+              ]
+            ),
+          )
+        ],
+      ),
+      onRefresh: () => refreshView(context)
     );
   }
 
+  Future<void> refreshView(BuildContext context) async { 
+    final articleBloc = BlocProvider.of<ArticleBloc>(context);
+    refreshArticle = await articleBloc.getArticleFromId(refreshArticle!.id);
+    setState(() {});
+  }
 }
 
 class _ArticleAppBar extends StatelessWidget {
@@ -121,7 +142,7 @@ class _ArticleAppBar extends StatelessWidget {
       ),
       stretch: true,
       forceElevated: true,
-      flexibleSpace: FlexibleSpaceBar(
+      flexibleSpace: article.photos.length > 0? FlexibleSpaceBar(
         centerTitle: false,
         stretchModes: const <StretchMode>[
           StretchMode.zoomBackground,
@@ -140,7 +161,7 @@ class _ArticleAppBar extends StatelessWidget {
           ),
           onTap: () => Navigator.push(context, MaterialPageRoute(builder: (__) => ImageView(photos: article.photos, title: article.title,))),
         ),
-      ),
+      ) : null,
     );
   }
 }
@@ -149,22 +170,17 @@ class _ArticleMainContent extends StatelessWidget {
   const _ArticleMainContent({
     Key? key,
     required this.article,
+    required this.onNewQuestion
   }) : super(key: key);
 
   final ArticleModel article;
+  final Function() onNewQuestion;
 
   @override
   Widget build(BuildContext context) {
     return Container(
       decoration: BoxDecoration(
-        //borderRadius: BorderRadius.circular(20.0),
         color: Colors.white,
-        /* boxShadow: [
-          BoxShadow(
-            color: Colors.black.withOpacity(0.25),
-            blurRadius: 20.0
-          )
-        ] */
       ),
       margin: EdgeInsets.only(
         left: 5.0,
@@ -174,7 +190,7 @@ class _ArticleMainContent extends StatelessWidget {
         vertical: 20.0,
       ),
       child: SafeArea(
-        child: _ArticleContent(article: article,),
+        child: _ArticleContent(article: article, onNewQuestion: onNewQuestion,),
         top: false,
       ),
     );
@@ -186,10 +202,11 @@ class _ArticleContent extends StatelessWidget {
   _ArticleContent({
     Key? key,
     required this.article,
+    required this.onNewQuestion
   }) : super(key: key);
 
   final ArticleModel article;
-  
+  final Function() onNewQuestion;
 
   /// Session streams  
   final _storeController = StreamController<StoreModel?>.broadcast();
@@ -336,7 +353,7 @@ class _ArticleContent extends StatelessWidget {
         Divider(thickness: 1,),
         StoreDescriptionSection(article: article, store: article.store!),
         Divider(thickness: 1,),
-        QuestionsSection(article: article)
+        QuestionsSection(article: article, onNewQuestion: onNewQuestion,)
       ]
     );
   }

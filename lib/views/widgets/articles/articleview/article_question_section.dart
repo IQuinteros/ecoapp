@@ -14,10 +14,12 @@ class QuestionsSection extends StatelessWidget {
   QuestionsSection({
     Key? key,
     required this.article,
+    required this.onNewQuestion
   }) : super(key: key);
 
   final ArticleModel article;
   final _formKey = GlobalKey<FormState>();
+  final Function() onNewQuestion;
 
   final TextEditingController questionController = TextEditingController();
 
@@ -113,7 +115,7 @@ class QuestionsSection extends StatelessWidget {
     return questionsWidgets;
   }
 
-  void sendQuestion(BuildContext context){
+  void sendQuestion(BuildContext context) async {
     final articleBloc = BlocProvider.of<ArticleBloc>(context);
     final profileBloc = BlocProvider.of<ProfileBloc>(context);
 
@@ -126,7 +128,7 @@ class QuestionsSection extends StatelessWidget {
       return;
     }
 
-    articleBloc.newQuestionToArticle(
+    final result = await articleBloc.newQuestionToArticle(
       article: article, 
       profile: profileBloc.currentProfile!, 
       question: QuestionModel(
@@ -135,6 +137,22 @@ class QuestionsSection extends StatelessWidget {
         date: DateTime.now()
       )
     );
+
+    if(result){
+      ScaffoldMessenger.of(context).removeCurrentSnackBar();
+      ScaffoldMessenger.of(context).showSnackBar(SnackBar(
+        content: Text('Pregunta enviada'),
+        backgroundColor: EcoAppColors.MAIN_DARK_COLOR,
+      ));
+      onNewQuestion();
+    }
+    else{
+      ScaffoldMessenger.of(context).removeCurrentSnackBar();
+      ScaffoldMessenger.of(context).showSnackBar(SnackBar(
+        content: Text('Ha ocurrido un error inesperado'),
+        backgroundColor: EcoAppColors.MAIN_DARK_COLOR,
+      ));
+    }
   }
 
   void displayProfileMessage(BuildContext context){

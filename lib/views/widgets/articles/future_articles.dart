@@ -78,6 +78,7 @@ class FutureArticles <T> extends StatelessWidget {
               children: snapshot.data!.map<ArticleCard>((e) => ArticleCard(
                 article: e,
                 onLongPress: () => onLongPress?.call(e),
+                extraTag: UniqueKey().toString(),
               )).toList()
             );
           default: return LinearProgressIndicator();

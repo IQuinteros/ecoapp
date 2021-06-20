@@ -128,6 +128,8 @@ class _ChatItem extends StatelessWidget {
       ),
     );
 
+    List<MessageModel> storeMessages = chat.messages.where((element) => element.fromStore).toList();
+
     final info = Container(
       child: Column(
         crossAxisAlignment: CrossAxisAlignment.start,
@@ -140,22 +142,25 @@ class _ChatItem extends StatelessWidget {
             textAlign: TextAlign.start,
           ),
           Text(
-            chat.store?.publicName ?? 'Tienda desconocida',
-            style: GoogleFonts.montserrat(),
+            storeMessages.length > 0? storeMessages.last.message : 'No ha respondido aún',
+            style: GoogleFonts.montserrat(
+              fontStyle: storeMessages.length > 0? FontStyle.normal : FontStyle.italic,
+              fontWeight: storeMessages.length > 0? FontWeight.w400 : FontWeight.w300
+            ),
             textAlign: TextAlign.start,
           ),
         ],
       ),
     );
 
-    final status = Container(
+    final status = storeMessages.length > 0? Container(
       width: 10,
       height: 10,
       decoration: BoxDecoration(
         shape: BoxShape.circle,
         color: EcoAppColors.RED_COLOR
       ),
-    );
+    ) : Container();
 
     return InkWell(
       borderRadius: BorderRadius.circular(20),

@@ -130,6 +130,8 @@ class _CartViewState extends State<CartView> {
                   }//_resetState(),
                 )).toList());
 
+                
+
                 if(snapshot.connectionState == ConnectionState.done && snapshot.data!.length <= 0){
                   cartArticles.add(SizedBox(height: 15.0));
                   cartArticles.add(
