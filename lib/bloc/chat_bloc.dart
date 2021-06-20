@@ -41,7 +41,13 @@ class ChatBloc extends BaseBloc<ChatModel>{
   }
 
   Future<bool> updateLastSeenDate(ChatModel chat) async {
-    return (await chatAPI.update(item: chat, customName: 'update_date')) != null;
+    final result = (await chatAPI.update(item: chat, customName: 'update_date'));
+
+    if(result != null){
+      chat.lastSeenDate = DateTime.now();
+      return true;
+    }
+    return false;
   }
 
   Future<SendMessageResult> sendMessage({

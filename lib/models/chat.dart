@@ -9,6 +9,7 @@ class ChatModel extends BaseModel
 {
   late bool closed;
   late DateTime createdDate;
+  late DateTime lastSeenDate;
   late StoreModel? store;
   late PurchaseModel purchase;
 
@@ -28,6 +29,7 @@ class ChatModel extends BaseModel
     store            = json['store'] != null? StoreModel.fromJsonMap(json['store']) : null;
     messages         = json['messages'].map<MessageModel>((e) => MessageModel.fromJsonMap(e)).toList() ?? const [];
     purchase         = PurchaseModel.fromJsonMap(json['purchase']);
+    lastSeenDate     = DateTime.parse(json['last_seen_date']);
   }
 
   @override

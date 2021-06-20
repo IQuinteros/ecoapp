@@ -153,7 +153,7 @@ class _ChatItem extends StatelessWidget {
       ),
     );
 
-    final status = storeMessages.length > 0? Container(
+    final status = storeMessages.length > 0 && storeMessages.last.date.isAfter(chat.lastSeenDate)? Container(
       width: 10,
       height: 10,
       decoration: BoxDecoration(
