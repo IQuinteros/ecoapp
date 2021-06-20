@@ -141,7 +141,8 @@ class _FutureArticlesState<T> extends State<FutureArticles<T>> {
 
             final refreshingLoading = Container(
               margin: EdgeInsets.only(
-                top: 20.0
+                top: 20.0,
+                bottom: 20.0
               ),
               child: Center(
                 child: CircularProgressIndicator(),

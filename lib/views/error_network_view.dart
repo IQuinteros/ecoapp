@@ -81,6 +81,7 @@ class ErrorNetworkModal extends StatelessWidget {
           mainAxisSize: MainAxisSize.min,
           crossAxisAlignment: CrossAxisAlignment.stretch,
           children: [
+            SizedBox(height: 10.0),
             Text(
               message,
               style: GoogleFonts.montserrat(),
