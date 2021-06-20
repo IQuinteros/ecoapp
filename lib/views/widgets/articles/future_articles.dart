@@ -15,12 +15,14 @@ class FutureArticles <T> extends StatefulWidget {
     this.recommended = false,
     this.onLongPress, 
     this.scrollController,
+    this.clearOnRefresh = false
   }) : super(key: key);
 
   final String notFoundMessage;
   final Function(ArticleModel)? onLongPress;
   final bool recommended;
   final ScrollController? scrollController;
+  final bool clearOnRefresh;
   final Future<List<ArticleModel>> Function(List<ArticleModel>) getFuture;
 
   @override
@@ -54,6 +56,8 @@ class _FutureArticlesState<T> extends State<FutureArticles<T>> {
 
   @override
   Widget build(BuildContext context) {
+
+    if(widget.clearOnRefresh) loadedArticles = [];
 
     final articleBloc = BlocProvider.of<ArticleBloc>(context);
     final profileBloc = BlocProvider.of<ProfileBloc>(context);

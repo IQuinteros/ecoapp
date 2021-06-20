@@ -150,8 +150,9 @@ class _HomeViewState extends State<HomeView> {
       notFoundMessage: '', 
       getFuture: (loaded) => articleBloc.getArticlesFromSearch('', 
         profile: profileBloc.currentProfile,
-        quantity: 5
-      )
+        quantity: 5,
+      ),
+      clearOnRefresh: true,
     );
 
     final column = Column(

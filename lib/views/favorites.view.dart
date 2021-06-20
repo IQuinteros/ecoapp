@@ -15,6 +15,8 @@ class FavoritesView extends StatefulWidget {
 }
 
 class _FavoritesViewState extends State<FavoritesView> {
+  final scrollController = ScrollController();
+
   @override
   Widget build(BuildContext context) {
     return Scaffold(
@@ -47,21 +49,21 @@ class _FavoritesViewState extends State<FavoritesView> {
         ),
         FutureArticles(
           notFoundMessage: 'No tienes artículos en "Favoritos"', 
-          getFuture: (loaded) => profileBloc.getFavoriteArticles()
+          getFuture: (loaded) => profileBloc.getFavoriteArticles(),
+          scrollController: scrollController,
         )
       ],
     );
 
     return RefreshIndicator(
       child: CustomScrollView(
+        physics: AlwaysScrollableScrollPhysics(),
+        controller: scrollController,
         slivers: [
           SliverList(
             delegate: SliverChildListDelegate(
               [
-                SingleChildScrollView(
-                  child: content,
-                  scrollDirection: Axis.vertical,
-                )
+                content
               ]
             ),
           )
