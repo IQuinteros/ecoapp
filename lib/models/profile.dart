@@ -40,7 +40,8 @@ class ProfileModel extends BaseModel
     required this.createdDate,
     required this.lastUpdateDate,
     required this.rut,
-    required this.rutDv
+    required this.rutDv,
+    required this.district
   }) : super(id: id);
 
   ProfileModel.fromJsonMap(Map<String, dynamic> json) : super(id: json['id']){
@@ -68,7 +69,7 @@ class ProfileModel extends BaseModel
     'contact_number'   : this.contactNumber,
     'birthday'         : this.birthday.toString(),
     'terms_checked'    : this.termsChecked,
-    'district'          : this.districtID,
+    'district_id'          : this.district?.id ?? districtID,
     'location'          : this.location,
     'rut'             : this.rut,
     'rut_cd'           : this.rutDv,
@@ -81,6 +82,8 @@ class ProfileModel extends BaseModel
   Map<String, dynamic> toSqliteParams(){
     final json = super.toSqliteParams();
     json['terms_checked'] = termsChecked? 1 : 0;
+    json['district'] = json['district_id'];
+    json.remove('district_id');
     return json;
   }
 }
