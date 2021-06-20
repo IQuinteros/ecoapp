@@ -36,6 +36,10 @@ class ChatBloc extends BaseBloc<ChatModel>{
     }
   );
 
+  Future<bool> deleteMessage(MessageModel message){
+    return messageAPI.delete(item: message);
+  }
+
   Future<SendMessageResult> sendMessage({
     required MessageModel message,
     required ProfileModel profile,

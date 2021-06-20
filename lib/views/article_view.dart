@@ -14,6 +14,7 @@ import 'package:flutter_ecoapp/models/store.dart';
 import 'package:flutter_ecoapp/utils/currency_util.dart';
 import 'package:flutter_ecoapp/views/image_view.dart';
 import 'package:flutter_ecoapp/views/opinions_view.dart';
+import 'package:flutter_ecoapp/views/store_view.dart';
 import 'package:flutter_ecoapp/views/style/colors.dart';
 import 'package:flutter_ecoapp/views/widgets/articles/articleview/article_description_section.dart';
 import 'package:flutter_ecoapp/views/widgets/articles/articleview/article_eco_detail_section.dart';
@@ -29,9 +30,10 @@ import 'package:share_plus/share_plus.dart';
 
 class ArticleView extends StatefulWidget {
 
-  final ArticleModel article;
+  final ArticleModel? article;
+  final int? articleId;
 
-  const ArticleView({Key? key, required this.article}) : super(key: key);
+  const ArticleView({Key? key, required this.article, this.articleId}) : super(key: key);
 
   @override
   _ArticleViewState createState() => _ArticleViewState();
@@ -39,6 +41,7 @@ class ArticleView extends StatefulWidget {
 
 class _ArticleViewState extends State<ArticleView> {
   ArticleModel? refreshArticle;
+  bool firstRefreshing = false;
 
   @override
   Widget build(BuildContext context) {
@@ -53,6 +56,19 @@ class _ArticleViewState extends State<ArticleView> {
     final historyBloc = BlocProvider.of<HistoryBloc>(context);
     final profileBloc = BlocProvider.of<ProfileBloc>(context);
     final userBloc = BlocProvider.of<UserBloc>(context);
+
+    if(refreshArticle == null){
+      if(!firstRefreshing){
+        refreshView(context);
+        firstRefreshing = true;
+        return Center(child: CircularProgressIndicator(),);
+      }else{
+        return Center(child: Text(
+          'No se ha podido cargar el artículo',
+          style: GoogleFonts.montserrat(),
+        ));
+      }
+    }
 
     userBloc.getLinkedUser(profileBloc.currentProfile).then((value) {
       if(value != null) historyBloc.addToHistory(user: value, article: refreshArticle!);
@@ -80,7 +96,7 @@ class _ArticleViewState extends State<ArticleView> {
 
   Future<void> refreshView(BuildContext context) async { 
     final articleBloc = BlocProvider.of<ArticleBloc>(context);
-    refreshArticle = await articleBloc.getArticleFromId(refreshArticle!.id);
+    refreshArticle = await articleBloc.getArticleFromId(refreshArticle?.id ?? widget.articleId!);
     setState(() {});
   }
 }
@@ -299,7 +315,7 @@ class _ArticleContent extends StatelessWidget {
     );
 
     final storeText = InkWell(
-      onTap: () => print('Go to store'), // TODO: Go to store
+      onTap: () => Navigator.push(context, MaterialPageRoute(builder: (__) => StoreView(store: article.store!))), // TODO: Go to store
       child: Padding(
         padding: EdgeInsets.symmetric(
           horizontal: 20.0

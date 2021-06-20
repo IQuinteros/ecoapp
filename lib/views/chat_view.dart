@@ -96,7 +96,24 @@ class _ChatViewState extends State<ChatView> {
           ],
         ), 
         isOwner: !e.fromStore,
-        margin: tempIsOwner == !e.fromStore? 5 : 15
+        margin: tempIsOwner == !e.fromStore? 5 : 15,
+        onLongPress: (){
+          if(!e.fromStore)
+          if(e.date.isAfter(DateTime.now().subtract(Duration(hours: 3)))) messageOptions(context, message: e, chatToUse: chatToUse!);
+          else{
+            ScaffoldMessenger.of(context).removeCurrentSnackBar();
+            ScaffoldMessenger.of(context).showSnackBar(
+              SnackBar(
+                content: Text(
+                  'Los mensajes los puedes eliminar en menos de tres horas después de enviarse', // TODO: Open dialog with little information
+                  style: GoogleFonts.montserrat(),
+                ),
+                backgroundColor: EcoAppColors.MAIN_DARK_COLOR,
+                duration: Duration(seconds: 2),
+              ),
+            );
+          }
+        },
       );
       tempIsOwner = !e.fromStore;
       return message;
@@ -108,6 +125,7 @@ class _ChatViewState extends State<ChatView> {
     final scrollController = ScrollController(initialScrollOffset: messages.length * 80);
 
     final scroll = SingleChildScrollView(
+      clipBehavior: Clip.none,
       dragStartBehavior: DragStartBehavior.down,
       controller: scrollController,
       child: Container(
@@ -215,6 +233,21 @@ class _ChatViewState extends State<ChatView> {
     );
   }
 
+  void messageOptions(BuildContext context, {required MessageModel message, required ChatModel chatToUse}){
+    showModalBottomSheet(
+      context: context, 
+      builder: (BuildContext context){
+        return _ModalMessageOptions(
+          message: message,
+          onDelete: () {
+            updateChat(context, chatToUse);
+            Navigator.pop(context);
+          },
+        );
+      }
+    );
+  }
+
   Future<void> updateChat(BuildContext context, ChatModel? chatToUse, [Function()? onSetState]) async {
     final chatBloc = BlocProvider.of<ChatBloc>(context);
     refreshChat = await chatBloc.getChatFromPurchase(chatToUse?.purchase ?? widget.purchase!);
@@ -269,4 +302,41 @@ class _NoChatView extends StatelessWidget {
   }
 }
 
+class _ModalMessageOptions extends StatelessWidget {
+  const _ModalMessageOptions({ Key? key, required this.message, required this.onDelete }) : super(key: key);
 
+  final MessageModel message;
+  final Function() onDelete;
+
+  @override
+  Widget build(BuildContext context) {
+    final chatBloc = BlocProvider.of<ChatBloc>(context);
+
+    return Container(
+      padding: EdgeInsets.symmetric(
+        horizontal: 20.0,
+        vertical: 20.0
+      ),
+      child: SafeArea(
+        child: Column(
+          mainAxisSize: MainAxisSize.min,
+          crossAxisAlignment: CrossAxisAlignment.stretch,
+          children: [
+            TextButton(
+              onPressed: () async {
+                await chatBloc.deleteMessage(message);
+                onDelete();
+              }, 
+              child: Text(
+                'Eliminar mensaje',
+                style: GoogleFonts.montserrat(
+                  color: EcoAppColors.RED_COLOR
+                ),
+              )
+            )
+          ],
+        ),
+      ),
+    );
+  }
+}

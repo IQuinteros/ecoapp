@@ -12,6 +12,7 @@ import 'package:flutter_ecoapp/utils/currency_util.dart';
 import 'package:flutter_ecoapp/views/chat_view.dart';
 import 'package:flutter_ecoapp/views/new_opinion_view.dart';
 import 'package:flutter_ecoapp/views/opinions_view.dart';
+import 'package:flutter_ecoapp/views/store_view.dart';
 import 'package:flutter_ecoapp/views/style/colors.dart';
 import 'package:flutter_ecoapp/views/style/text_style.dart';
 import 'package:flutter_ecoapp/views/widgets/articles/article_card.dart';
@@ -176,7 +177,7 @@ class _StoreList extends StatelessWidget {
 
     Function()? onTap;
     if(store != null)
-      onTap = () => Navigator.pushNamed(context, 'store', arguments: store);
+      onTap = () => Navigator.push(context, MaterialPageRoute(builder: (__) => StoreView(store: store!)));
 
     return Container(
       child: Column(

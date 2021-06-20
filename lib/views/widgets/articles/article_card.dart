@@ -144,7 +144,6 @@ class _ArticleCardState extends State<ArticleCard> {
       ),
     );
 
-    // TODO: Add quantity
     final card = Card(
       elevation: 0,
       margin: EdgeInsets.zero,
