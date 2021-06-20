@@ -21,7 +21,7 @@ class ErrorNetworkView extends StatelessWidget {
     }
 
     return WillPopScope(
-      onWillPop: () async => true,
+      onWillPop: () async => false,
       child: Scaffold(
         body: Container(
           child: Center(
@@ -90,9 +90,8 @@ class ErrorNetworkModal extends StatelessWidget {
             SizedBox(height: 20.0),
             TextButton(
               onPressed: (){
-                //Navigator.popUntil(context, '/');
                 //Navigator.popAndPushNamed(context, '/');
-                Navigator.pushNamedAndRemoveUntil(context, '/', ModalRoute.withName('/'));
+                Navigator.of(context).pushNamedAndRemoveUntil('/', (Route<dynamic> route) => false);
               }, 
               child: Text(
                 'Reintentar conectar',

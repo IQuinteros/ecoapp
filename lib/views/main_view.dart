@@ -47,18 +47,17 @@ class _MainViewState extends State<MainView> {
           return;
         }
         errorDisplaying = true;
-        // Navigator.popUntil(context, ModalRoute.withName('/'));
-        //Navigator.pushNamedAndRemoveUntil(context, '/', ModalRoute.withName('/'));
 
         await showModalBottomSheet(
           context: context, 
           builder: (BuildContext context){
             return ErrorNetworkModal(reason: reason,);
           },
-          isDismissible: false
+          isDismissible: false,
         );
+        
+         Navigator.of(context).pushNamedAndRemoveUntil('/', (Route<dynamic> route) => false);
 
-        //await Navigator.pushReplacementNamed(context, 'errorNetwork', arguments: reason);
         errorDisplaying = false;
       }
     };
