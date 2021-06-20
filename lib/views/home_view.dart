@@ -77,7 +77,7 @@ class _HomeViewState extends State<HomeView> {
               },
               loop: false,
               viewportFraction: 0.9,
-              scale: 0.9,
+              scale: 0.5,
               autoplay: true,
               pagination: new SwiperPagination(
                 builder: SwiperPagination.rect

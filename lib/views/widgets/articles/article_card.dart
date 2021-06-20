@@ -37,7 +37,7 @@ class _ArticleCardState extends State<ArticleCard> {
     if(widget.article != null)
       widget.article!.tag = 'article-card-${widget.extraTag}';
     
-    ImageProvider<Object> imageData = AssetImage('assets/png/no-image.png');
+    ImageProvider<Object> imageData = AssetImage('assets/png/no-image-bg.png');
     if(widget.article != null && widget.article!.photos.length > 0)
       imageData = NetworkImage(widget.article!.photos[0].photoUrl);
 

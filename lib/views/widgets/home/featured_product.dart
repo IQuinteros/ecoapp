@@ -23,7 +23,7 @@ class _FeaturedProductState extends State<FeaturedProduct> {
   Widget build(BuildContext context) {
     widget.article.tag = 'featured-card';
 
-    ImageProvider<Object> imageData = AssetImage('assets/png/no-image.png');
+    ImageProvider<Object> imageData = AssetImage('assets/png/no-image-bg.png');
 
     if(widget.article.photos.length > 0)
        imageData = NetworkImage(widget.article.photos[0].photoUrl);

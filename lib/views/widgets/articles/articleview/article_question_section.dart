@@ -100,10 +100,10 @@ class QuestionsSection extends StatelessWidget {
           SizedBox(height: 5.0),
           questions,
           SizedBox(height: 15.0),
-          NormalButton(
+          haveQuestions? NormalButton(
             text: 'Ver más preguntas', 
             onPressed: () => Navigator.push(context, MaterialPageRoute(builder: (BuildContext context) => QuestionsView(article: article,)))
-          )
+          ) : Container()
         ],
       ),
     );
