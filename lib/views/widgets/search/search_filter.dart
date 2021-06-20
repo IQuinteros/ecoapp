@@ -34,7 +34,7 @@ class SearchFilter extends StatelessWidget {
       }
     );
 
-    articleBloc.currentSearchFilter = result ?? SearchFilterModel();
+    articleBloc.currentSearchFilter = result ?? articleBloc.currentSearchFilter;
     return articleBloc.currentSearchFilter;
   }
 
@@ -59,7 +59,6 @@ class SearchFilter extends StatelessWidget {
         child: Column(
           crossAxisAlignment: CrossAxisAlignment.stretch,
           mainAxisSize: MainAxisSize.min,
-          // TODO: Create combobox inputs
           children: [
             Text(
               'Filtrar por:',
@@ -76,6 +75,8 @@ class SearchFilter extends StatelessWidget {
               hint: 'Busca por categoría', 
               icon: Icons.category_rounded,
               controller: controllers['category'],
+              readOnly: true,
+              onTap: () async => controllers['category']!.text = await selectCategory(context),
             ),
             SizedBox(height: 10.0),
             DistrictInput(
@@ -136,6 +137,58 @@ class SearchFilter extends StatelessWidget {
           ],
         ),
       ),
+    );
+  }
+
+  Future<String> selectCategory(BuildContext context) async {
+    return await showDialog(
+      context: context, 
+      builder: (__){
+        return Dialog(
+          child: Container(
+            padding: EdgeInsets.symmetric(
+              horizontal: 10.0,
+              vertical: 20.0
+            ),
+            child: Column(
+              mainAxisSize: MainAxisSize.min,
+              children: [
+                Text(
+                  'Escoge una categoría',
+                  style: GoogleFonts.montserrat(),
+                  textAlign: TextAlign.center
+                ),
+                SizedBox(height: 10.0),
+                Column(
+                  children: [
+                    ListTile(
+                      title: Text(
+                        'Hogar',
+                        style: GoogleFonts.montserrat(),
+                      ),
+                      onTap: () => Navigator.pop(context, 'Hogar'),
+                    ),
+                    ListTile(
+                      title: Text(
+                        'Cuidado personal',
+                        style: GoogleFonts.montserrat(),
+                      ),
+                      onTap: () => Navigator.pop(context, 'Cuidado personal'),
+                    ),
+                    ListTile(
+                      title: Text(
+                        'Alimentos',
+                        style: GoogleFonts.montserrat(),
+                      ),
+                      onTap: () => Navigator.pop(context, 'Alimentos'),
+                    )
+                  ],
+                )
+              ],
+            ),
+          ),
+        );
+      }
     );
   }
 }
