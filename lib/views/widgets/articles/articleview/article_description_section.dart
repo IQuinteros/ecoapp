@@ -30,7 +30,8 @@ class DescriptionSection extends StatelessWidget {
           ),
           SizedBox(height: 10.0),
           Text(
-            article.description
+            article.description,
+            style: GoogleFonts.montserrat()
           )
         ],
       )

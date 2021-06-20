@@ -19,19 +19,19 @@ class EcoDetailSection extends StatelessWidget {
       if(article.form.getIndicator().hasRecycledMaterials){
         columnContent.add(_EcoTitle(title: 'Este producto contiene materiales reciclados y/o reutilizados'));
         columnContent.add(SizedBox(height: 10.0));
-        columnContent.add(Text(article.form.recycledMatsDetail));
+        columnContent.add(Text(article.form.recycledMatsDetail, style: GoogleFonts.montserrat()));
         columnContent.add(SizedBox(height: 20.0));
       }
       if(article.form.getIndicator().hasReuseTips){
         columnContent.add(_EcoTitle(title: '¡Reutiliza! Estos son los tips del vendedor'));
         columnContent.add(SizedBox(height: 10.0));
-        columnContent.add(Text(article.form.reuseTips));
+        columnContent.add(Text(article.form.reuseTips, style: GoogleFonts.montserrat()));
         columnContent.add(SizedBox(height: 20.0));
       }
       if(article.form.getIndicator().isRecyclableProduct){
         columnContent.add(_EcoTitle(title: 'Este producto es reciclable'));
         columnContent.add(SizedBox(height: 10.0));
-        columnContent.add(Text(article.form.recycledProdDetail));
+        columnContent.add(Text(article.form.recycledProdDetail, style: GoogleFonts.montserrat()));
         columnContent.add(SizedBox(height: 20.0));
       }
       columnContent.removeLast();
