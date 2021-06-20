@@ -122,7 +122,7 @@ class _FutureArticlesState<T> extends State<FutureArticles<T>> {
           toDefault:
           default: 
             if(loadedArticles.length <= 0) return LinearProgressIndicator();
-            return ListView.builder(
+            final listView = ListView.builder(
               physics: NeverScrollableScrollPhysics(),
               itemCount: loadedArticles.length,
               itemBuilder: (BuildContext context, int index){
@@ -134,7 +134,22 @@ class _FutureArticlesState<T> extends State<FutureArticles<T>> {
               },
               shrinkWrap: true,
             );
-           
+
+            final refreshingLoading = Container(
+              margin: EdgeInsets.only(
+                top: 20.0
+              ),
+              child: Center(
+                child: CircularProgressIndicator(),
+              ),
+            );
+
+            return Column(
+              children: [
+                listView,
+                refreshing? refreshingLoading : Container()
+              ],
+            );
         }
       },
     );
