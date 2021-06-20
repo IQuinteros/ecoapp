@@ -23,6 +23,7 @@ class ResultView extends StatefulWidget {
 }
 
 class _ResultViewState extends State<ResultView> {
+  final scrollController = ScrollController();
   @override
   Widget build(BuildContext context) {
     return Scaffold(
@@ -64,15 +65,22 @@ class _ResultViewState extends State<ResultView> {
           ),
         ),
         FutureArticles(
-          future: articleBloc.getArticlesFromSearch(widget.searching ?? '', profile: profileBloc.currentProfile), 
+          getFuture: (loaded) { print('LOADED: ${loaded.length}'); return articleBloc.getArticlesFromSearch(
+            widget.searching ?? '', 
+            profile: profileBloc.currentProfile,
+            initial: loaded.length
+          );}, 
           notFoundMessage: 'No se han encontrado artículos para tu búsqueda :c',
           recommended: true,
+          scrollController: scrollController,
         )
       ],
     );
 
     return RefreshIndicator(
       child: CustomScrollView(
+        physics: AlwaysScrollableScrollPhysics(),
+        controller: scrollController,
         slivers: [
           IndexAppBar(searching: widget.searching,),
           SliverList(

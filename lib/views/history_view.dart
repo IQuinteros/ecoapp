@@ -22,10 +22,14 @@ class HistoryView extends StatefulWidget {
 }
 
 class _HistoryViewState extends State<HistoryView> {
+  
+  final scrollController = ScrollController();
   @override
   Widget build(BuildContext context) {
     return RefreshIndicator(
       child: CustomScrollView(
+        physics: AlwaysScrollableScrollPhysics(),
+        controller: scrollController,
         slivers: [
           IndexAppBar(),
           SliverList(
@@ -50,21 +54,20 @@ class _HistoryViewState extends State<HistoryView> {
         EcoTitle(
           text: 'Mi Historial',
         ),
-        HistorySection()
+        HistorySection(scrollController: scrollController,)
       ],
     );
 
-    return SingleChildScrollView(
-      child: content,
-      scrollDirection: Axis.vertical,
-    );
+    return content;
   }
 }
 
 class HistorySection extends StatefulWidget {
-  const HistorySection({
-    Key? key,
+  HistorySection({
+    Key? key, this.scrollController,
   }) : super(key: key);
+
+  final ScrollController? scrollController;
 
   @override
   _HistorySectionState createState() => _HistorySectionState();
@@ -84,8 +87,13 @@ class _HistorySectionState extends State<HistorySection> {
           case ConnectionState.done:
             return FutureArticles(
               notFoundMessage: 'No hay artículos en el historial', 
-              future: historyBloc.getHistory(user: snapshot.data!, profile: profileBloc.currentProfile),
+              getFuture: (loaded) => historyBloc.getHistory(
+                user: snapshot.data!, 
+                profile: profileBloc.currentProfile, 
+                initial: loaded.length
+              ),
               onLongPress: (e) => _askDelete(e),
+              scrollController: widget.scrollController,
             );
           default: return LinearProgressIndicator();
         }

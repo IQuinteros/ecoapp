@@ -47,7 +47,7 @@ class _FavoritesViewState extends State<FavoritesView> {
         ),
         FutureArticles(
           notFoundMessage: 'No tienes artículos en "Favoritos"', 
-          future: profileBloc.getFavoriteArticles()
+          getFuture: (loaded) => profileBloc.getFavoriteArticles()
         )
       ],
     );

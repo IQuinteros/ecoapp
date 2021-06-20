@@ -148,7 +148,7 @@ class _HomeViewState extends State<HomeView> {
 
     final favoriteList = FutureArticles(
       notFoundMessage: '', 
-      future: articleBloc.getArticlesFromSearch('', profile: profileBloc.currentProfile)
+      getFuture: (loaded) => articleBloc.getArticlesFromSearch('', profile: profileBloc.currentProfile)
     );
 
     final column = Column(

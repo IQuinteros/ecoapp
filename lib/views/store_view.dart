@@ -59,7 +59,7 @@ class StoreView extends StatelessWidget {
             SizedBox(height: 20.0),
             FutureArticles(
               notFoundMessage: 'La tienda aún no tiene artículos publicados', 
-              future:  articleBloc.getArticlesOfStore(store),
+              getFuture: (loaded) =>  articleBloc.getArticlesOfStore(store),
             )
           ],
         ),

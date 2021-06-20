@@ -23,8 +23,10 @@ class ArticleBloc extends BaseBloc<ArticleModel>{
     return;
   }
 
-  Future<List<ArticleModel>> getArticlesFromSearch(String search, {required ProfileModel? profile}) async => await articleAPI.selectAll(params: {
+  Future<List<ArticleModel>> getArticlesFromSearch(String search, {required ProfileModel? profile, int initial = 0, int quantity = 20}) async => await articleAPI.selectAll(params: {
     'search': search,
+    'initial_number': initial,
+    'quantity': quantity
   }..addAll( profile != null? {'profile_id': profile.id} : {}));
 
   Future<List<ArticleModel>> getArticlesOfStore(StoreModel store) async => await articleAPI.selectAll(params: {

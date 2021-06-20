@@ -17,6 +17,7 @@ abstract class BaseAPI<T extends BaseModel>{
   Map<String, dynamic> Function(T) getJsonParams;
   T Function(Map<String, dynamic>) constructor;
   
+  final bool DEBUG = false;
 
   BaseAPI({required this.baseUrl, required this.getJsonParams, required this.constructor});
 
@@ -24,8 +25,8 @@ abstract class BaseAPI<T extends BaseModel>{
 
   // Process Response
   Future<Map<String, dynamic>> _processResponse(Uri uri, Map<String, dynamic>? params) async{
-    print('processing ${jsonEncode(params)}');
-    print('Uri: $uri');
+    if(DEBUG) print('processing ${jsonEncode(params)}');
+    if(DEBUG) print('Uri: $uri');
     final resp = await http.post(
       uri,
       body: jsonEncode(params),
@@ -33,10 +34,10 @@ abstract class BaseAPI<T extends BaseModel>{
         'Content-Type': 'application/json; charset=UTF-8',
       },
     );
-    print('querying ${resp.body}');
+    if(DEBUG) print('querying ${resp.body}');
     try{
       final decodedData = json.decode(resp.body);
-      print('decoded: $decodedData');
+      if(DEBUG) print('decoded: $decodedData');
       return decodedData;
     }
     catch(e, stacktrace){
@@ -49,7 +50,7 @@ abstract class BaseAPI<T extends BaseModel>{
   // Request
   Future<RequestResult> request(String subUrl, [Map<String, dynamic>? queryParams]) async{
     // HTTP for localhost, HTTPS for hosting
-    print('REQUEST: $subUrl; PARAMS: $queryParams');
+    if(DEBUG) print('REQUEST: $subUrl; PARAMS: $queryParams');
     try{
       final url = Uri.http(_authority, '$_requests/$baseUrl' + '/$subUrl');
       final result = await _processResponse(url, queryParams);

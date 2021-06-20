@@ -17,14 +17,15 @@ class HistoryBloc extends BaseBloc<HistoryModel>{
     return;
   }
   
-  Future<List<ArticleModel>> getHistory({required UserModel user, bool includeDeleted = false, required ProfileModel? profile}) async {
+  Future<List<ArticleModel>> getHistory({required UserModel user, bool includeDeleted = false, required ProfileModel? profile, int initial = 0}) async {
     final histories = await historyAPI.selectAll(params: {
       'user_id': user.id,
     }..addAll(includeDeleted? {} : {'deleted' : 0}));
 
     final articles = await articleAPI.selectAll(
       params: {
-        'id_list': histories.map((e) => e.articleId).toList()
+        'id_list': histories.map((e) => e.articleId).toList(),
+        'initial_number': initial
       }..addAll( profile != null? {'profile_id': profile.id} : {})
     );
 
