@@ -20,13 +20,12 @@ class CartBloc extends BaseBloc<CartArticleModel>{
     await cartLocalAPI.initialize();
   }
 
-  List<CartArticleModel> loadedArticles = [];
+  CartModel loadedCart = CartModel(articles: []);
 
-  Future<List<CartArticleModel>> loadCart({bool onlyLocal = false}) async {
+  Future<CartModel> loadCart({bool onlyLocal = false}) async {
     List<CartArticleModel> articles = await cartLocalAPI.select();
-    await loadRemoteArticles(articles); // TODO: replace for load remote articles
-
-    return loadedArticles;
+    await loadRemoteArticles(articles);
+    return loadedCart;
   }
 
   Future<void> loadRemoteArticles(List<CartArticleModel> cartArticles) async {
@@ -44,7 +43,7 @@ class CartBloc extends BaseBloc<CartArticleModel>{
         }
       });
     });
-    loadedArticles = cartArticles;
+    loadedCart.articles = cartArticles;
   }
 
   Future<List<CartArticleModel>> getCartArticles() async {

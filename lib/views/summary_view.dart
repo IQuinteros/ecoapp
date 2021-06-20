@@ -46,15 +46,11 @@ class SummaryView extends StatelessWidget {
 
   Widget getContent(BuildContext context){
     final cartBloc = BlocProvider.of<CartBloc>(context);
-    final loadedArticles = cartBloc.loadedArticles;
-
-    CartModel cart = CartModel(
-      articles: loadedArticles
-    );
+    final cart = cartBloc.loadedCart;
 
     final profileBloc = BlocProvider.of<ProfileBloc>(context);
 
-    List<Widget> articles = loadedArticles.map<ArticleCard>((e) => ArticleCard(article: e.article)).toList();
+    List<Widget> articles = cart.articles.map<ArticleCard>((e) => ArticleCard(article: e.article)).toList();
 
     final profileData = Column(
       children: [

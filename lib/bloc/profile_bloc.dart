@@ -22,7 +22,7 @@ class ProfileBloc extends BaseBloc<ProfileModel>{
 
   @override
   Future<void> initializeBloc() async{
-    //print(StackTrace.current);
+
     await profileLocalAPI.initialize();
     await userLocalAPI.initialize();
     // Get current getCurrentSession

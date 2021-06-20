@@ -11,7 +11,9 @@ import 'package:flutter_ecoapp/bloc/history_bloc.dart';
 import 'package:flutter_ecoapp/bloc/profile_bloc.dart';
 import 'package:flutter_ecoapp/bloc/purchase_bloc.dart';
 import 'package:flutter_ecoapp/bloc/user_bloc.dart';
+import 'package:flutter_ecoapp/providers/base_api.dart';
 import 'package:flutter_ecoapp/views/categories_view.dart';
+import 'package:flutter_ecoapp/views/error_network_view.dart';
 import 'package:flutter_ecoapp/views/login_view.dart';
 import 'package:flutter_ecoapp/views/main_view.dart';
 import 'package:flutter_ecoapp/views/register_view.dart';
@@ -28,6 +30,7 @@ class MyApp extends StatelessWidget {
   // This widget is the root of your application.
   @override
   Widget build(BuildContext context) {
+
     final content = MultiBlocProvider(
       providers: [
         BlocProvider<ProfileBloc>(
@@ -69,7 +72,8 @@ class MyApp extends StatelessWidget {
             '/': (BuildContext context) => MainView(),
             'login': (BuildContext context) => LoginView(),
             'register': (BuildContext context) => RegisterView(),
-            'categories': (BuildContext context) => CategoriesView()
+            'categories': (BuildContext context) => CategoriesView(),
+            'errorNetwork': (BuildContext context) => ErrorNetworkView()
           },
       ),
     );

@@ -65,7 +65,7 @@ class _CartViewState extends State<CartView> {
                   onPressed: (){
                     _buy(context);
                   },
-                  visible: cartBloc.loadedArticles.length > 0,
+                  visible: cartBloc.loadedCart.articles.length > 0,
                 ),
               ),
             ),
@@ -75,97 +75,88 @@ class _CartViewState extends State<CartView> {
     );
   }
 
-  int loadedElements = 0;
-  int _deletedElements = 0;
   Widget getContent(BuildContext context){
 
     final cartBloc = BlocProvider.of<CartBloc>(context);
-    // TODO: With API change for getCart()
 
-    final column = Column(
-      crossAxisAlignment: CrossAxisAlignment.start,
-      children: [
-        EcoTitle(
-          text: 'Carrito',
-          rightButton: MiniEcoIndicator( // TODO: Only debug indicator
-            ecoIndicator: EcoIndicator(
-              hasRecycledMaterials: true,
-              hasReuseTips: true,
-              isRecyclableProduct: true
-            ),
-          ),
-        ),
-        FutureBuilder(
-          future: cartBloc.loadCart(),
-          initialData: cartBloc.loadedArticles,
-          builder: (BuildContext context, AsyncSnapshot<List<CartArticleModel>> snapshot){
-            List<Widget> cartArticles = [];
-            switch(snapshot.connectionState){
-              case ConnectionState.waiting:
-              case ConnectionState.active:
-                cartArticles.add(LinearProgressIndicator());
-                if(cartBloc.loadedArticles.length <= 0){
-                  cartArticles.add(SizedBox(height: 13.0));
-                  cartArticles.add(
+    final column = FutureBuilder(
+      future: cartBloc.loadCart(),
+      initialData: cartBloc.loadedCart,
+      builder: (BuildContext context, AsyncSnapshot<CartModel> snapshot){
+        List<Widget> cartArticles = [];
+        switch(snapshot.connectionState){
+          case ConnectionState.waiting:
+          case ConnectionState.active:
+            cartArticles.add(EcoTitle(
+              text: 'Carrito',
+            ));
+            cartArticles.add(LinearProgressIndicator());
+            if(cartBloc.loadedCart.articles.length <= 0){
+              cartArticles.add(SizedBox(height: 13.0));
+              cartArticles.add(
+                Text(
+                  'Estamos actualizando tus artículos',
+                  style: GoogleFonts.montserrat(),
+                  textAlign: TextAlign.center,
+                ),  
+              );
+            }
+            cartArticles.add(SizedBox(height: 20.0));
+            cartArticles.addAll(cartBloc.loadedCart.articles.where((article) => article.article != null).map<Widget>((e) => CartArticleCard(
+              key: Key('cart_article${e.id}${e.articleId}'),
+              article: e.article!,
+              initialQuantity: e.quantity,
+              onDelete: () {
+                if(cartBloc.loadedCart.articles.length <= 0) _resetState();
+              }//_resetState(),
+            )).toList());
+            break;
+          case ConnectionState.done:
+
+            cartArticles.add(EcoTitle(
+              text: 'Carrito',
+              rightButton: MiniEcoIndicator(ecoIndicator: cartBloc.loadedCart.summaryEcoIndicator,))
+            );
+            
+            cartArticles.addAll(cartBloc.loadedCart.articles.where((article) => article.article != null).map<Widget>((e) => CartArticleCard(
+              key: Key('cart_article${e.id}${e.articleId}'),
+              article: e.article!,
+              initialQuantity: e.quantity,
+              onDelete: () {
+                if(cartBloc.loadedCart.articles.length <= 0) _resetState();
+              }//_resetState(),
+            )).toList());
+
+
+            if(snapshot.connectionState == ConnectionState.done && snapshot.data!.articles.where((element) => element.article != null).length <= 0){
+              cartArticles.add(SizedBox(height: 15.0));
+              cartArticles.add(
+                Row(
+                  mainAxisSize: MainAxisSize.max,
+                  mainAxisAlignment: MainAxisAlignment.center,
+                  children: [
                     Text(
-                      'Estamos actualizando tus artículos',
+                      'Aún no tienes artículos en tu carrito',
                       style: GoogleFonts.montserrat(),
                       textAlign: TextAlign.center,
-                    ),  
-                  );
-                }
-                cartArticles.add(SizedBox(height: 20.0));
-                continue display;
-              display:
-              case ConnectionState.done:
-
-                loadedElements = cartBloc.loadedArticles.length;
-                
-                cartArticles.addAll(cartBloc.loadedArticles.map<Widget>((e) => CartArticleCard(
-                  key: Key('cart_article${e.id}${e.articleId}'),
-                  article: e.article!,
-                  initialQuantity: e.quantity,
-                  onDelete: () {
-                    if(cartBloc.loadedArticles.length <= 0) _resetState();
-                  }//_resetState(),
-                )).toList());
-
-                
-
-                if(snapshot.connectionState == ConnectionState.done && snapshot.data!.length <= 0){
-                  cartArticles.add(SizedBox(height: 15.0));
-                  cartArticles.add(
-                    Row(
-                      mainAxisSize: MainAxisSize.max,
-                      mainAxisAlignment: MainAxisAlignment.center,
-                      children: [
-                        Text(
-                          'Aún no tienes artículos en tu carrito',
-                          style: GoogleFonts.montserrat(),
-                          textAlign: TextAlign.center,
-                        ),
-                      ],
-                    )
-                  );
-                }
-
-                cartArticles.add(SizedBox(height: 100.0));
-
-                final content = Column(
-                  children: cartArticles
-                );
-                return content;
-              default: return Container();
+                    ),
+                  ],
+                )
+              );
             }
-          }
-        )
-      ],
+
+            cartArticles.add(SizedBox(height: 100.0));
+            break;
+          default: return Container();
+        }
+        final content = Column(
+          children: cartArticles
+        );
+        return content;
+      }
     );
 
-    return SingleChildScrollView(
-      child: column,
-      scrollDirection: Axis.vertical,
-    );
+    return column;
   }
 
   void _resetState() => setState(() {});
@@ -173,7 +164,7 @@ class _CartViewState extends State<CartView> {
   void _buy(BuildContext context){
     final cartBloc = BlocProvider.of<CartBloc>(context);
     
-    if(cartBloc.loadedArticles.length <= 0){
+    if(cartBloc.loadedCart.articles.length <= 0){
       ScaffoldMessenger.of(context).removeCurrentSnackBar();
       ScaffoldMessenger.of(context).showSnackBar(SnackBar(
         content: Text('No hay artículos en el carrito para comprar'),

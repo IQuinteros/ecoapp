@@ -6,6 +6,13 @@ import 'package:dart_ping/dart_ping.dart';
 import 'package:flutter/material.dart';
 import 'package:http/http.dart' as http;
 import 'package:flutter_ecoapp/models/base.dart';
+import 'package:http/http.dart';
+
+enum FailConnectReason{
+  refused,
+  decoding,
+  status
+}
 
 abstract class BaseAPI<T extends BaseModel>{
 
@@ -18,8 +25,12 @@ abstract class BaseAPI<T extends BaseModel>{
   T Function(Map<String, dynamic>) constructor;
   
   final bool DEBUG = true;
+  final bool simulateLag = true;
 
-  BaseAPI({required this.baseUrl, required this.getJsonParams, required this.constructor});
+  final Function(FailConnectReason reason)? onFailConnect;
+  static Function(FailConnectReason reason)? staticOnFailConnect;
+
+  BaseAPI({required this.baseUrl, required this.getJsonParams, required this.constructor, required this.onFailConnect});
 
   String _getRequestUrl(String normalName, String? customName) => customName != null? '${baseUrl}_$customName.php' : '${baseUrl}_$normalName.php'; 
 
@@ -27,13 +38,29 @@ abstract class BaseAPI<T extends BaseModel>{
   Future<Map<String, dynamic>> _processResponse(Uri uri, Map<String, dynamic>? params) async{
     if(DEBUG) print('processing ${jsonEncode(params)}');
     if(DEBUG) print('Uri: $uri');
-    final resp = await http.post(
-      uri,
-      body: jsonEncode(params),
-      headers: <String, String>{
-        'Content-Type': 'application/json; charset=UTF-8',
-      },
-    );
+    Response resp;
+    try{
+      resp = await http.post(
+        uri,
+        body: jsonEncode(params),
+        headers: <String, String>{
+          'Content-Type': 'application/json; charset=UTF-8',
+        },
+      );
+    } catch(e, stacktrace){
+      print(e);
+      print(stacktrace);
+      staticOnFailConnect?.call(FailConnectReason.refused);
+      onFailConnect?.call(FailConnectReason.refused);
+      return {'success': false};
+    }
+
+    if(resp.statusCode != 201 && resp.statusCode != 200){
+      staticOnFailConnect?.call(FailConnectReason.status);
+      onFailConnect?.call(FailConnectReason.status);
+    }
+
+    if(simulateLag) await Future.delayed(Duration(seconds: 3));
     if(DEBUG) print('querying ${resp.body}');
     try{
       final decodedData = json.decode(resp.body);
@@ -43,6 +70,8 @@ abstract class BaseAPI<T extends BaseModel>{
     catch(e, stacktrace){
       print(e);
       print(stacktrace);
+      staticOnFailConnect?.call(FailConnectReason.decoding);
+      onFailConnect?.call(FailConnectReason.decoding);
       return {'success': false};
     }
   }

@@ -3,7 +3,7 @@ import 'package:flutter_ecoapp/models/base.dart';
 
 class CartModel
 {
-  final List<CartArticleModel> articles;
+  List<CartArticleModel> articles;
 
   CartModel({
     this.articles = const [],
