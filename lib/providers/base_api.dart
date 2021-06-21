@@ -4,6 +4,7 @@ import 'dart:convert';
 
 import 'package:dart_ping/dart_ping.dart';
 import 'package:flutter/material.dart';
+import 'package:flutter_ecoapp/views/style/colors.dart';
 import 'package:http/http.dart' as http;
 import 'package:flutter_ecoapp/models/base.dart';
 import 'package:http/http.dart';
@@ -97,12 +98,14 @@ abstract class BaseAPI<T extends BaseModel>{
   // Select items list
   Future<List<T>> selectAll({Map<String, dynamic>? params, String? customName}) async{
     final result = await request(_getRequestUrl('select', customName), params);
+    
     if(!result.success) return [];
 
     List<T> items = [];
     try{
-      if(result.data != null)
+      if(result.data != null){
         result.data!.forEach((value) => items.add(constructor(value)));
+      }
     }
     catch (e, stacktrace){
       print('Exception: $e');

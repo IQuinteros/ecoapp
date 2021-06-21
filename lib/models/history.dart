@@ -15,7 +15,7 @@ class HistoryModel extends BaseModel
   }) : super(id: id);
 
   HistoryModel.fromJsonMap(Map<String, dynamic> json) : super(id: json['id']){
-    createdDate           = json['created_date'];
+    createdDate           = DateTime.parse(json['creation_date']);
     articleId             = json['article_id'];
     deleted               = json['deleted'] != 0;
   }
@@ -24,7 +24,7 @@ class HistoryModel extends BaseModel
   Map<String, dynamic> toJson() => {
     'id'              : id,
     'article_id'      : articleId,
-    'created_date'    : createdDate.toString(),
+    'creation_date'    : createdDate.toString(),
     'deleted'         : deleted
   };
 }
@@ -41,14 +41,14 @@ class HistoryDetailModel extends BaseModel
   }) : super(id: id);
 
   HistoryDetailModel.fromJsonMap(Map<String, dynamic> json) : super(id: json['id']){
-    date           = json['created_date'];
+    date           = DateTime.parse(json['creation_date']);
     history        = json['history_id'];
   }
 
   @override
   Map<String, dynamic> toJson() => {
     'id'      : id,
-    'date'    : date.toString(),
+    'creation_date'    : date.toString(),
     'history_id': history.id
   };
 }

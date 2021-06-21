@@ -292,7 +292,8 @@ class ProfileBloc extends BaseBloc<ProfileModel>{
     if(currentProfile == null) return const [];
     return (await favoriteAPI.selectAll(params: {
       'profile_id': currentProfile!.id,
-      'quantity': quantity
+      'quantity': quantity,
+      //'initial_number': initial // TODO: IN API AND THIS; INCLUDE QUANTITY AND INITIAL NUMBER
     })).map((e) => e.article).toList();
   }
   

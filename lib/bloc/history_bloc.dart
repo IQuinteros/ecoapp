@@ -1,3 +1,4 @@
+import 'package:flutter/material.dart';
 import 'package:flutter_ecoapp/bloc/base_bloc.dart';
 import 'package:flutter_ecoapp/models/article.dart';
 import 'package:flutter_ecoapp/models/history.dart';
@@ -5,6 +6,7 @@ import 'package:flutter_ecoapp/models/profile.dart';
 import 'package:flutter_ecoapp/models/user.dart';
 import 'package:flutter_ecoapp/providers/article_api.dart';
 import 'package:flutter_ecoapp/providers/history_api.dart';
+import 'package:flutter_ecoapp/views/style/colors.dart';
 
 class HistoryBloc extends BaseBloc<HistoryModel>{
 

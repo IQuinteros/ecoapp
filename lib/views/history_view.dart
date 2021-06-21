@@ -87,11 +87,17 @@ class _HistorySectionState extends State<HistorySection> {
           case ConnectionState.done:
             return FutureArticles(
               notFoundMessage: 'No hay artículos en el historial', 
-              getFuture: (loaded) async => snapshot.data != null? await historyBloc.getHistory(
-                user: snapshot.data!, 
-                profile: profileBloc.currentProfile, 
-                initial: loaded.length
-              ) : [],
+              getFuture: (loaded) async { 
+                if(snapshot.data != null){ 
+                  return await historyBloc.getHistory(
+                    user: snapshot.data!, 
+                    profile: profileBloc.currentProfile, 
+                    initial: loaded.length,
+                  );
+                }else{
+                  return [];
+                }
+              },
               onLongPress: (e) => _askDelete(e),
               scrollController: widget.scrollController,
             );
