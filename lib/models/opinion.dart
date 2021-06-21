@@ -1,12 +1,14 @@
 import 'package:flutter_ecoapp/models/article.dart';
 import 'package:flutter_ecoapp/models/base.dart';
 import 'package:flutter_ecoapp/models/category.dart';
+import 'package:flutter_ecoapp/views/article_view.dart';
 
 class OpinionModel extends BaseModel
 {
   late int rating;
   late String title;
   late String content;
+  late int articleId;
 
   late DateTime date;
 
@@ -16,49 +18,14 @@ class OpinionModel extends BaseModel
     required this.title,
     this.content = '',
     required this.date,
-  }) : super(id: id);
-
-  // TODO: Connect with api. Only debug 
-  ArticleModel get article => ArticleModel(
-    id: 202, 
-    title: 'Example', 
-    description: 'HOLAH HOL', 
-    price: 12, 
-    stock: 34, 
-    createdDate: DateTime.now(), 
-    lastUpdateDate: DateTime.now(), 
-    enabled: true, 
-    form: ArticleForm(
-      createdDate: DateTime.now(),
-      id: 1,
-      lastUpdateDate: DateTime.now(),
-      generalDetail: '',
-      recycledMats: '',
-      recycledMatsDetail: '',
-      recycledProd: '',
-      recycledProdDetail: '',
-      reuseTips: ''
-    ), 
-    category: CategoryModel(createdDate: DateTime.now(), id: 1, title: 'Hogar'), 
-    rating: ArticleRating(
-      opinions: [
-        OpinionModel(
-          date: DateTime.now(),
-          id: 2,
-          rating: 3,
-          title: 'Hola hola',
-          content: 'COntent fsdkfsdk'
-        )
-      ]
-    )
-  );
-  
+  }) : super(id: id);  
 
   OpinionModel.fromJsonMap(Map<String, dynamic> json) : super(id: json['id']){
     rating          = json['rating'];
     title           = json['title'];
     content         = json['content'];
-    date            = json['date'];
+    articleId         = json['article_id'];
+    date            = DateTime.parse(json['creation_date']);
   }
 
   @override
@@ -67,7 +34,7 @@ class OpinionModel extends BaseModel
     'rating'    : rating,
     'title'     : title,
     'content'   : content,
-    'date'      : date,
+    'date'      : date.toString(),
   };
 }
 
@@ -82,7 +49,7 @@ class ArticleRating{
   double get avgRating{
     double sum = 0;
     opinions.forEach((element) { sum += element.rating; });
-    return sum/opinions.length;
+    return opinions.length > 0? sum/opinions.length : 0;
   }
 
 }

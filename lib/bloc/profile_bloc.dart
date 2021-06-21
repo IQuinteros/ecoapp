@@ -1,30 +1,33 @@
 import 'dart:async';
-
-import 'package:flutter/widgets.dart';
-import 'package:flutter_bloc/flutter_bloc.dart';
 import 'package:flutter_ecoapp/bloc/base_bloc.dart';
-import 'package:flutter_ecoapp/bloc/district_bloc.dart';
-import 'package:flutter_ecoapp/models/district.dart';
+import 'package:flutter_ecoapp/models/article.dart';
+import 'package:flutter_ecoapp/models/favorite.dart';
 import 'package:flutter_ecoapp/models/profile.dart';
+import 'package:flutter_ecoapp/models/user.dart';
 import 'package:flutter_ecoapp/providers/district_api.dart';
+import 'package:flutter_ecoapp/providers/favorite_api.dart';
 import 'package:flutter_ecoapp/providers/profile_api.dart';
 import 'package:flutter_ecoapp/providers/sqlite/profile_local_api.dart';
-import 'package:path/path.dart';
+import 'package:flutter_ecoapp/providers/sqlite/user_local_api.dart';
+import 'package:flutter_ecoapp/providers/user_api.dart';
 
 class ProfileBloc extends BaseBloc<ProfileModel>{
 
   final ProfileAPI profileAPI = ProfileAPI();
   final ProfileLocalAPI profileLocalAPI = ProfileLocalAPI();
 
-  ProfileBloc() : super(0){
-    initializeBloc();
-  }
+  final Function(ProfileModel?)? onFinishInitializing;
 
-  void initializeBloc() async{
+  ProfileBloc({this.onFinishInitializing});
+
+  @override
+  Future<void> initializeBloc() async{
+
     await profileLocalAPI.initialize();
+    await userLocalAPI.initialize();
     // Get current getCurrentSession
-    await _updateCurrentSession();
     await _updateCurrentSessionFromRemote();
+    if(onFinishInitializing != null) onFinishInitializing!(currentProfile);
   }
 
   /// Session streams  
@@ -51,11 +54,80 @@ class ProfileBloc extends BaseBloc<ProfileModel>{
     _sessionSink(profile);
     currentProfile = profile;
     await loadDistrict();
+    await _checkUserFromCurrentUser();
     //_sessionStreamController.close();
+  }
+
+  final userAPI = UserAPI();
+  final userLocalAPI = UserLocalAPI();
+  /// Check user
+  Future<bool> _checkUserFromCurrentUser() async {
+    if(currentProfile == null) return await _tryCreateNewLocalUser();
+    print('NEW PROFILE: USER - ${currentProfile!.userId}');
+    final users = await userAPI.selectAll(
+      params: {
+        'id': currentProfile!.userId
+      }
+    );
+
+    if(users.length > 0){
+      // Load current profile user
+      currentProfile!.user = users[0];
+      // When currentProfile.user is loaded, widgets have to call to this. Otherwise, call to local user
+      return true;
+    }
+    else{
+      return await _tryCreateNewLocalUser();
+    }
+  }
+
+  Future<bool> _tryCreateNewLocalUser() async {
+    List<UserModel> users = await userLocalAPI.select();
+
+    if(users.length <= 0){
+      final result = await userAPI.insert(
+        item: UserModel(
+          id: 0, 
+          createdDate: DateTime.now()
+        )
+      );
+
+      if(result.object == null) return false;
+      
+      await userLocalAPI.clear();
+      await userLocalAPI.insert(result.object!);
+    }
+    else{
+      // User stored in local database
+      final remoteUser = await userAPI.selectAll(
+        params: {
+          'id': users[0].id
+        }
+      );
+
+      if(remoteUser.length > 0){
+        // Check for users without linked profile
+        if(remoteUser[0].haveProfile != null && remoteUser[0].haveProfile!){
+          await userLocalAPI.clear();
+          return await _tryCreateNewLocalUser();
+        }
+        return true;
+      }
+      else{
+        // TODO: FIRST CHECK IF THERE IS CONNECTION (CAN DELETE LOCAL USER WHEN IS DISCONNECTED)
+        //await userLocalAPI.delete(users[0].id);
+        //userAPI.ping((value) => print);
+        return true;
+      }
+    }
+
+    return true;
+    
   }
 
   /// Update current session with remote data
   Future<void> _updateCurrentSessionFromRemote() async {
+    await _updateCurrentSession();
     if(currentProfile == null) return;
 
     final profiles = await profileAPI.selectAll(params: {'id': currentProfile!.id});
@@ -63,7 +135,6 @@ class ProfileBloc extends BaseBloc<ProfileModel>{
     if(profiles.length > 0){
       await profileLocalAPI.clear();
       await profileLocalAPI.insert(profiles[0]);
-      await _updateCurrentSession();
     }
   }
   
@@ -134,20 +205,28 @@ class ProfileBloc extends BaseBloc<ProfileModel>{
     )) != null;
   }
 
-  /// Register profile
+  /// Register profile (TODO: Check for upload local user) SOLUTION: When user is used, create new
   Future<bool> signup(ProfileModel profile, String newPassword) async {
-    ProfileModel? result = await profileAPI.insert(
+    List<UserModel> users = await userLocalAPI.select();
+
+    if(users.length > 0){
+      profile.userId = users[0].id;
+    }
+
+    final result = await profileAPI.insert(
       item: profile,
-      additionalParams: {'passwords': newPassword}
+      additionalParams: {
+        'passwords': newPassword,
+      }
     );
 
-    if(result != null){
+    if(result.object != null){
       await profileLocalAPI.clear();
-      await profileLocalAPI.insert(result);
+      await profileLocalAPI.insert(result.object!);
       await _updateCurrentSession();
     }
 
-    return result != null;
+    return result.object != null;
 
   }
 
@@ -164,6 +243,60 @@ class ProfileBloc extends BaseBloc<ProfileModel>{
     return result != null;
   }
 
+  final favoriteAPI = FavoriteAPI();
+  Map<ArticleModel, Timer?> _favoriteTimer = {};
+  /// Mark as favorite
+  void setFavoriteArticle(ArticleModel articleModel, bool newState, Function(bool) onReady) {
+    articleModel.favorite = newState;
+
+    if(_favoriteTimer[articleModel] != null && _favoriteTimer[articleModel]!.isActive) _favoriteTimer[articleModel]!.cancel();
+    _favoriteTimer[articleModel] = Timer(Duration(seconds: 1), () {
+      _setFavoriteArticle(articleModel, onReady);
+      _favoriteTimer[articleModel] = null;
+    });
+  }
+
+  Future<void> _setFavoriteArticle(ArticleModel articleModel, Function(bool) onReady) async {
+    if(currentProfile == null) {
+      onReady(false); 
+      return;
+    }
+
+    if(articleModel.favorite){
+      onReady((await favoriteAPI.insert(
+        item: FavoriteModel(
+          id: 0, 
+          articleId: articleModel.id, 
+          createdDate: DateTime.now()
+        ),
+        additionalParams: {
+          'profile_id': currentProfile!.id
+        }
+      )).object != null);
+    }
+    else{
+      onReady(await favoriteAPI.delete(
+        item: FavoriteModel(
+          id: 0, 
+          articleId: articleModel.id, 
+          createdDate: DateTime.now()
+        ),
+        params: {
+          'profile_id': currentProfile!.id
+        }
+      ));
+    }
+  }
+
+  Future<List<ArticleModel>> getFavoriteArticles({int quantity = 5}) async {
+    if(currentProfile == null) return const [];
+    return (await favoriteAPI.selectAll(params: {
+      'profile_id': currentProfile!.id,
+      'quantity': quantity,
+      //'initial_number': initial // TODO: IN API AND THIS; INCLUDE QUANTITY AND INITIAL NUMBER
+    })).map((e) => e.article).toList();
+  }
+  
   @override
   Stream mapEventToState(event) {
     // TODO: implement mapEventToState

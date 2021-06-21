@@ -95,6 +95,7 @@ class _ProfilyModifyPassViewState extends State<ProfilyModifyPassView> {
                 : previousPassValidation,
               isPassword: true,
               onChanged: (value) => previousPassValidation = null,
+              maxLines: 1,
             ),
             NormalInput(
               header: 'Nueva contraseña', 
@@ -107,6 +108,7 @@ class _ProfilyModifyPassViewState extends State<ProfilyModifyPassView> {
                   ? 'Debe tener mínimo 6 caracteres'
                   : null,
               isPassword: true,
+              maxLines: 1,
             ),
             NormalInput(
               header: 'Repetir contraseña', 
@@ -122,6 +124,7 @@ class _ProfilyModifyPassViewState extends State<ProfilyModifyPassView> {
                 
                 return null;
               },
+              maxLines: 1,
               isPassword: true,
             ),
             Container(

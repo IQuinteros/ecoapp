@@ -1,13 +1,16 @@
 import 'package:awesome_dialog/awesome_dialog.dart';
 import 'package:flutter/cupertino.dart';
 import 'package:flutter/material.dart';
+import 'package:flutter/services.dart';
 import 'package:flutter_bloc/flutter_bloc.dart';
 import 'package:flutter_ecoapp/bloc/profile_bloc.dart';
+import 'package:flutter_ecoapp/models/district.dart';
 import 'package:flutter_ecoapp/models/profile.dart';
 import 'package:flutter_ecoapp/utils/email_util.dart';
 import 'package:flutter_ecoapp/views/register_pass_view.dart';
 import 'package:flutter_ecoapp/views/style/colors.dart';
 import 'package:flutter_ecoapp/views/widgets/bottom_nav_bar.dart';
+import 'package:flutter_ecoapp/views/widgets/district_input.dart';
 import 'package:flutter_ecoapp/views/widgets/normal_button.dart';
 import 'package:flutter_ecoapp/views/widgets/normal_input.dart';
 import 'package:google_fonts/google_fonts.dart';
@@ -34,6 +37,10 @@ class _RegisterViewState extends State<RegisterView> {
 
   final birthday = {
     'birthday': DateTime.now()
+  };
+
+  final Map<String, DistrictModel?> selectedDistrict = {
+    'district': null
   };
 
   final _formKey = GlobalKey<FormState>();
@@ -66,11 +73,6 @@ class _RegisterViewState extends State<RegisterView> {
           child: mainContent(context)
         ),
       ),
-      bottomNavigationBar: EcoBottomNavigationBar(
-        currentIndex: 0,
-        onTap: (value){
-        },
-      )
     );
   }
 
@@ -114,7 +116,7 @@ class _RegisterViewState extends State<RegisterView> {
               hint: 'Ingresa tus nombres', 
               icon: Icons.person,
               controller: controllers['name']!,
-              validator: (value) => value!.isEmpty? 'Debe ingresar su nombre' : null,
+              validator: (value) => value!.isEmpty? 'Debe ingresar su nombre' : null, // TODO: Add validation with length
             ),
             NormalInput(
               header: 'Apellidos', 
@@ -132,7 +134,7 @@ class _RegisterViewState extends State<RegisterView> {
               validator: (value) {
                 if(value!.isEmpty) 
                   return 'Debe ingresar su email';
-                if(!EmailUtil.validateEmail(value))
+                if(!TextValidationUtil.validateEmail(value))
                   return 'Debe ser un email válido';
                 
                 return emailValidation;
@@ -145,7 +147,15 @@ class _RegisterViewState extends State<RegisterView> {
               icon: Icons.person,
               type: TextInputType.number,
               controller: controllers['rut']!,
-              validator: (value) => value!.isEmpty? 'Debe ingresar su rut' : null
+              validator: (value) {
+                if(value!.isEmpty) 
+                  return 'Debe ingresar su rut';
+                return null;
+              },
+              inputFormatters: [
+                FilteringTextInputFormatter.digitsOnly,
+              ],
+              maxLength: 10
             ),
             NormalInput(
               header: 'Teléfono - Celular', 
@@ -153,7 +163,11 @@ class _RegisterViewState extends State<RegisterView> {
               icon: Icons.phone,
               type: TextInputType.phone,
               controller: controllers['phone']!,
-              validator: (value) => value!.isEmpty? 'Debe ingresar su número de contacto' : null
+              validator: (value) => value!.isEmpty? 'Debe ingresar su número de contacto' : null,
+              inputFormatters: [
+                FilteringTextInputFormatter.digitsOnly
+              ],
+              maxLength: 9,
             ),
             NormalInput(
               header: 'Fecha de nacimiento', 
@@ -178,24 +192,18 @@ class _RegisterViewState extends State<RegisterView> {
               controller: controllers['date']!,
               validator: (value) => value!.isEmpty? 'Debe ingresar su fecha de nacimiento' : null
             ),
-            /* NormalInput(
-              header: 'Comuna', 
-              hint: 'Ingresa tu comuna', 
-              icon: Icons.location_on,
-              readOnly: false, // TODO: Change to true
-              onTap: (){
-                
-              },
-              controller: controllers['district']!,
-              validator: (value) => value!.isEmpty? 'Debe ingresar su comuna' : null
+            Divider(thickness: 1,),
+            SizedBox(height: 20.0,),
+            DistrictInput(
+              selectedDistrict: (value) => selectedDistrict['district'] = value,
             ),
             NormalInput(
               header: 'Dirección', 
               hint: 'Ingresa tu dirección', 
               icon: Icons.location_on,
               controller: controllers['location']!,
-              validator: (value) => value!.isEmpty? 'Debe ingresar su dirección' : null
-            ), */
+              validator: (value) => value == null || value.isEmpty? 'Debe ingresar su dirección' : null
+            ), 
             Container(
               margin: EdgeInsets.symmetric(
                 horizontal: 40.0
@@ -227,7 +235,9 @@ class _RegisterViewState extends State<RegisterView> {
         birthday: birthday['birthday']!,
         createdDate: DateTime.now(),
         lastUpdateDate: DateTime.now(),
-        termsChecked: true
+        termsChecked: true,
+        location: controllers['location']!.text,
+        district: selectedDistrict['district']
       );
 
       final loading = AwesomeDialog(

@@ -8,12 +8,17 @@ class DistrictBloc extends BaseBloc<DistrictModel>{
 
   final DistrictAPI districtAPI = DistrictAPI();
 
-  DistrictBloc() : super(0){
+  List<DistrictModel> loadedDistricts = [];
+
+  @override
+  Future<void> initializeBloc() async {
+    return;
   }
 
   /// Get districts
   Future<List<DistrictModel>> getDistricts() async {
-    return await districtAPI.selectAll();
+    loadedDistricts = await districtAPI.selectAll();
+    return loadedDistricts;
   }
 
   // Get district by id

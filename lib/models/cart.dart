@@ -1,18 +1,21 @@
 import 'package:flutter_ecoapp/models/article.dart';
 import 'package:flutter_ecoapp/models/base.dart';
 
-class CartModel extends BaseModel
+class CartModel
 {
-  late List<ArticleModel> articles;
+  List<CartArticleModel> articles;
 
   CartModel({
-    required int id,
     this.articles = const [],
-  }) : super(id: id);
+  });
 
   double get totalPrice {
     double total = 0;
-    articles.forEach((element) { total += element.price; });
+    articles.forEach((element) { 
+      if(element.article != null){
+        total += element.article!.price * element.quantity; 
+      }
+    });
     return total;
   }
 
@@ -23,27 +26,41 @@ class CartModel extends BaseModel
       isRecyclableProduct: false
     );
     articles.forEach((element) { 
-      if(element.form.getIndicator().hasRecycledMaterials)
-        toReturn.hasRecycledMaterials = true;
-      if(element.form.getIndicator().hasReuseTips)
-        toReturn.hasReuseTips = true;
-      if(element.form.getIndicator().isRecyclableProduct)
-        toReturn.isRecyclableProduct = true;
+      if(element.article != null){
+        if(element.article!.form.getIndicator().hasRecycledMaterials)
+          toReturn.hasRecycledMaterials = true;
+        if(element.article!.form.getIndicator().hasReuseTips)
+          toReturn.hasReuseTips = true;
+        if(element.article!.form.getIndicator().isRecyclableProduct)
+          toReturn.isRecyclableProduct = true;
+      }
     });
 
     return toReturn;
   }
+}
 
-  CartModel.fromJsonMap(Map<String, dynamic> json) : super(id: json['id']){
-    articles = json['articles'] is List? 
-      json['articles'].map<ArticleModel>((Map<String, dynamic> e) => ArticleModel.fromJsonMap(e)) 
-      : [];
+class CartArticleModel extends BaseModel{
+  late int articleId;
+  late int quantity;
+  ArticleModel? article;
+
+  CartArticleModel({
+    required this.articleId,
+    required this.quantity,
+    this.article
+  }) : super(id: 0);
+
+  CartArticleModel.fromJsonMap(Map<String, dynamic> json) : super(id: json['id']){
+    articleId = json['article_id'];
+    quantity  = json['quantity'];
   }
 
   @override
   Map<String, dynamic> toJson() => {
-    'id'        : id,
-    'articles'  : articles.map<Map<String, dynamic>>((e) => e.toJson()).toList()
+    //'id'            : null,
+    'article_id'    : articleId,
+    'quantity'      : quantity
   };
 
 }

@@ -52,7 +52,7 @@ class EcoAppDebug{
           title: 'Jamón', 
           unitPrice: 123, 
           quantity: 12,
-          article: _articles[0],
+          articleId: 0,
           form: ArticleForm.infoPurchase(
             id: 1,
             generalDetail: '',
@@ -68,7 +68,7 @@ class EcoAppDebug{
           title: 'Jamón', 
           unitPrice: 123, 
           quantity: 12,
-          article: _articles[0],
+          articleId: 0,
           form: ArticleForm.infoPurchase(
             id: 1,
             generalDetail: '',
@@ -85,8 +85,7 @@ class EcoAppDebug{
           title: 'Correa', 
           unitPrice: 432, 
           quantity: 2,
-          article: _articles[1],
-          photoUrl: 'https://picsum.photos/500/400',
+          articleId: 0,
           form: ArticleForm.infoPurchase(
             id: 1,
             generalDetail: '',
@@ -116,8 +115,7 @@ class EcoAppDebug{
           title: 'Correa', 
           unitPrice: 432, 
           quantity: 2,
-          article: _articles[1],
-          photoUrl: 'https://picsum.photos/500/400',
+          articleId: 0,
           form: ArticleForm.infoPurchase(
             id: 1,
             generalDetail: '',
@@ -147,7 +145,6 @@ class EcoAppDebug{
           title: 'Jojo', 
           unitPrice: 12312, 
           quantity: 4,
-          photoUrl: 'https://picsum.photos/500/400',
           form: ArticleForm.infoPurchase(
             id: 1,
             generalDetail: '',
@@ -175,7 +172,7 @@ class EcoAppDebug{
     ArticleModel(
       id: 1,
       title: 'Tìtulo largo',
-      price: 20000.0,
+      price: 20000,
       description: lorem(paragraphs: 2, words: 60),
       stock: 2,
       enabled: true,
@@ -206,7 +203,7 @@ class EcoAppDebug{
     ArticleModel(
       id: 2,
       title: 'Tìtulo largo',
-      price: 234234.0,
+      price: 234234,
       description: lorem(paragraphs: 2, words: 60),
       stock: 2,
       enabled: true,
@@ -253,7 +250,7 @@ class EcoAppDebug{
           article: ArticleModel(
             id: initialId,
             title: 'Tìtulo largo',
-            price: 20000.0,
+            price: 20000,
             description: lorem(paragraphs: 2, words: 60),
             stock: 2,
             enabled: true,
@@ -281,13 +278,12 @@ class EcoAppDebug{
               createdDate: DateTime.now()
             )
           ),
-          favorite: true,
         ),
         ArticleCard(
           article: ArticleModel(
             id: initialId + 1,
             title: 'Tìtulo muy muy largo sdjkfsdffdsjkdfjkssds',
-            price: 20000.0,
+            price: 20000,
             description: lorem(paragraphs: 2, words: 60),
             stock: 2,
             enabled: true,
@@ -313,13 +309,12 @@ class EcoAppDebug{
               createdDate: DateTime.now()
             )
           ),
-          favorite: false,
         ),
         ArticleCard(
           article: ArticleModel(
             id: initialId + 2,
             title: 'Tìtulo largo',
-            price: 9021545.0,
+            price: 9021545,
             description: lorem(paragraphs: 2, words: 60),
             stock: 2,
             enabled: true,
@@ -346,13 +341,12 @@ class EcoAppDebug{
               createdDate: DateTime.now()
             )
           ),
-          favorite: true,
         ),
         ArticleCard(
           article: ArticleModel(
             id: initialId + 3,
             title: 'Tìtulo uy muy largo sdjkfsdffdsjkdfjkssd sdafasdfasdf asdfasdfasds',
-            price: 2000000.0,
+            price: 2000000,
             description: lorem(paragraphs: 2, words: 60),
             stock: 2,
             enabled: true,
@@ -378,13 +372,12 @@ class EcoAppDebug{
               createdDate: DateTime.now()
             )
           ),
-          favorite: false,
         ),
         ArticleCard(
           article: ArticleModel(
             id: initialId + 4,
             title: 'Tìtulo uy muy largo asdf asdfasdfasds',
-            price: 2000000.0,
+            price: 2000000,
             description: lorem(paragraphs: 2, words: 60),
             stock: 2,
             enabled: true,
@@ -407,13 +400,12 @@ class EcoAppDebug{
               createdDate: DateTime.now()
             )
           ),
-          favorite: false,
         ),
         ArticleCard(
           article: ArticleModel(
             id: initialId + 5,
             title: 'Tìtulo uy muy largo asdf asdfasdfasds',
-            price: 90000.0,
+            price: 90000,
             description: lorem(paragraphs: 2, words: 60),
             stock: 4,
             enabled: true,
@@ -438,7 +430,6 @@ class EcoAppDebug{
               createdDate: DateTime.now()
             )
           ),
-          favorite: false,
         ),
       ],
     );
@@ -458,10 +449,10 @@ class EcoAppDebug{
         enabled: true, 
         createdDate: DateTime.now(), 
         lastUpdateDate: DateTime.now(), 
-        district: DistrictModel(
+        /* district: DistrictModel(
           id: 1,
           name: 'Concepción'
-        )
+        ) */
       ),
       StoreModel(
         id: 2, 
@@ -475,10 +466,10 @@ class EcoAppDebug{
         enabled: false, 
         createdDate: DateTime.now(), 
         lastUpdateDate: DateTime.now(), 
-        district: DistrictModel(
+        /* district: DistrictModel(
           id: 1,
           name: 'Penco'
-        )
+        ) */
       ),
       StoreModel(
         id: 3, 
@@ -492,10 +483,10 @@ class EcoAppDebug{
         enabled: true, 
         createdDate: DateTime.now(), 
         lastUpdateDate: DateTime.now(), 
-        district: DistrictModel(
+        /* district: DistrictModel(
           id: 1,
           name: 'Talcahuano'
-        )
+        ) */
       ),
     ];
   }
@@ -505,9 +496,13 @@ class EcoAppDebug{
       children: [
         CartArticleCard(
           article: _articles[0],
+          onDelete: (){},
+          initialQuantity: 1,
         ),
         CartArticleCard(
           article: _articles[1],
+          onDelete: (){},
+          initialQuantity: 1,
         ),
       ],
     );
@@ -518,7 +513,7 @@ class EcoAppDebug{
       article: ArticleModel(
         id: 10 + 2,
         title: 'Tìtulo largo',
-        price: 9021545.0,
+        price: 9021545,
         description: lorem(paragraphs: 2, words: 60),
         stock: 2,
         enabled: true,
@@ -549,7 +544,7 @@ class EcoAppDebug{
       article: ArticleModel(
         id: 10 + 3,
         title: 'Tìtulo largo',
-        price: 9021545.0,
+        price: 9021545,
         description: lorem(paragraphs: 2, words: 60),
         stock: 2,
         enabled: true,
@@ -580,7 +575,7 @@ class EcoAppDebug{
       article: ArticleModel(
         id: 10 + 4,
         title: 'Tìtulo largo',
-        price: 9021545.0,
+        price: 9021545,
         description: lorem(paragraphs: 2, words: 60),
         stock: 2,
         enabled: true,

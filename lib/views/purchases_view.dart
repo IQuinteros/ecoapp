@@ -1,4 +1,7 @@
 import 'package:flutter/material.dart';
+import 'package:flutter_bloc/flutter_bloc.dart';
+import 'package:flutter_ecoapp/bloc/profile_bloc.dart';
+import 'package:flutter_ecoapp/bloc/purchase_bloc.dart';
 import 'package:flutter_ecoapp/models/purchase.dart';
 import 'package:flutter_ecoapp/views/debug/debug.dart';
 import 'package:flutter_ecoapp/views/style/colors.dart';
@@ -13,16 +16,18 @@ class PurchasesView extends StatelessWidget {
       body: SafeArea(child: getContent(context)),
       bottomNavigationBar: EcoBottomNavigationBar(
         currentIndex: 0,
-          onTap: (value){
+        unselected: true,
+        onTap: (value){
+          Navigator.pop(context, value);
         },
       )
     );
   }
 
   Widget getContent(BuildContext context){
-    List<PurchaseModel> purchases = EcoAppDebug.purchases; // Get purchases
+    final purchaseBloc = BlocProvider.of<PurchaseBloc>(context);
+    final profileBloc = BlocProvider.of<ProfileBloc>(context);
 
-    List<Widget> purchasesWidget = purchases.map<Widget>((e) => PurchaseCard(purchase: e)).toList();
 
     final content = Column(
       children: [
@@ -38,7 +43,16 @@ class PurchasesView extends StatelessWidget {
             },
           ),
         ),
-        Column(children: purchasesWidget,)
+        FutureBuilder(
+          future: purchaseBloc.getPurchases(profileBloc.currentProfile!),
+          builder: (context, AsyncSnapshot<List<PurchaseModel>> snapshot){
+            switch(snapshot.connectionState){
+              case ConnectionState.done:
+                return Column(children: snapshot.data!.map<Widget>((e) => PurchaseCard(purchase: e)).toList(),);
+              default: return Center(child: CircularProgressIndicator(),);
+            }
+          }
+        )
       ],
     );
 

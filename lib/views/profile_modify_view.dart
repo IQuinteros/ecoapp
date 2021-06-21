@@ -8,13 +8,16 @@ import 'package:flutter_ecoapp/bloc/district_bloc.dart';
 import 'package:flutter_ecoapp/bloc/profile_bloc.dart';
 import 'package:flutter_ecoapp/models/district.dart';
 import 'package:flutter_ecoapp/models/profile.dart';
+import 'package:flutter_ecoapp/utils/email_util.dart';
 import 'package:flutter_ecoapp/views/profile_modify_pass_view.dart';
 import 'package:flutter_ecoapp/views/style/colors.dart';
+import 'package:flutter_ecoapp/views/widgets/district_input.dart';
 import 'package:flutter_ecoapp/views/widgets/normal_button.dart';
 import 'package:flutter_ecoapp/views/widgets/normal_input.dart';
 import 'package:google_fonts/google_fonts.dart';
 
 class ProfileModifyView extends StatelessWidget {
+  
 
   final controllers = {
     'name': TextEditingController(),
@@ -120,6 +123,7 @@ class ProfileModifyView extends StatelessWidget {
       )..show();
     }
     else{
+      ScaffoldMessenger.of(context).removeCurrentSnackBar();
       ScaffoldMessenger.of(context).showSnackBar(SnackBar(
         content: Text('Ha ocurrido un error al guardar los cambios'),
         backgroundColor: EcoAppColors.LEFT_BAR_COLOR,
@@ -143,14 +147,8 @@ class _ProfileModifyMainContent extends StatelessWidget {
   final Function(BuildContext) updateProfile;
   final Map<String, DistrictModel?> selectedDistrict;
 
-  final Map<String, List<DistrictModel>>districts = {
-    'districts' : []
-  };
-
   @override
   Widget build(BuildContext context) {
-    final districtBloc = BlocProvider.of<DistrictBloc>(context);
-
     final content = SingleChildScrollView(
       child: SafeArea(
         child: Container(
@@ -193,7 +191,14 @@ class _ProfileModifyMainContent extends StatelessWidget {
                 icon: Icons.mail,
                 type: TextInputType.emailAddress,
                 controller: controllers['email']!,
-                validator: (value) => value!.isEmpty? 'Debe ingresar su email' : null
+                validator: (value) {
+                  if(value!.isEmpty) 
+                    return 'Debe ingresar su email';
+                  if(!TextValidationUtil.validateEmail(value))
+                    return 'Debe ser un email válido';
+                  return null;
+                },
+                readOnly: true,
               ),
               NormalInput(
                 header: 'Teléfono - Celular', 
@@ -244,43 +249,16 @@ class _ProfileModifyMainContent extends StatelessWidget {
                 ],
               ),
               SizedBox(height: 20.0,),
-              NormalInput(
-                future: districtBloc.getDistricts(),
-                header: 'Comuna', 
-                hint: 'Ingresa tu comuna', 
-                icon: Icons.location_on,
-                readOnly: true, // TODO: Change to true
-                onTap: () => selectDistrict(
-                  context,
-                  onSelect: (district) {
-                    controllers['district']!.text = district.name;
-                    selectedDistrict['district'] = district;
-                  },
-                  districts: districts['districts']!,
-                ),
-                onDoneSnapshot: (List<DistrictModel>? data){
-                  districts['districts'] = data ?? [];
-                  if(profile.district != null)
-                    controllers['district']!.text = profile.district!.name;
-                  selectedDistrict['district'] = profile.district;
-                },
-                controller: controllers['district']!,
-                validator: (value) {
-                  return (controllers['location']!.text.isNotEmpty && value!.isEmpty)?
-                    'Debe ingresar su comuna' 
-                    : null;
-                }
+              DistrictInput(
+                selectedDistrict: (value) => selectedDistrict['district'] = value,
+                initialDistrict: profile.district,
               ),
               NormalInput(
                 header: 'Dirección', 
                 hint: 'Ingresa tu dirección', 
                 icon: Icons.location_on,
                 controller: controllers['location']!,
-                validator: (value) {
-                  return (controllers['district']!.text.isNotEmpty&& value!.isEmpty)? 
-                    'Debe ingresar su dirección' 
-                    : null;
-                }
+                validator: (value) => value == null || value.isEmpty? 'Debe ingresar su dirección' : null
               ),
               Container(
                 margin: EdgeInsets.symmetric(
@@ -288,7 +266,7 @@ class _ProfileModifyMainContent extends StatelessWidget {
                 ),
                 child: NormalButton(
                   text: 'Guardar cambios', 
-                  onPressed: () => updateProfile(context) // TODO: Save data
+                  onPressed: () => updateProfile(context)
                 ),
               ),
               SizedBox(height: 20.0,),
@@ -304,24 +282,6 @@ class _ProfileModifyMainContent extends StatelessWidget {
                 ),
               ),
               SizedBox(height: 20.0,),
-              Divider(thickness: 1,),
-              Container(
-                margin: EdgeInsets.symmetric(
-                  horizontal: 40.0
-                ),
-                child: NormalButton(
-                  text: 'Cerrar sesión', 
-                  color: EcoAppColors.LEFT_BAR_COLOR,
-                  onPressed: () {
-                    showDialog(
-                      context: context, 
-                      builder: (__){
-                        return _CloseSessionDialog();
-                      }
-                    );
-                  }
-                ),
-              ),
             ],
           ),
         ),
@@ -341,112 +301,5 @@ class _ProfileModifyMainContent extends StatelessWidget {
   }
   
 
-  void selectDistrict(
-    BuildContext context, 
-    {
-      Function(DistrictModel district)? onSelect,
-      List<DistrictModel> districts = const [],
-    }
-  ) async {
-    final districtsTiles = districts.map<_DistrictTile>((element) => _DistrictTile(
-      district: element,
-      onTap: (){
-        if(onSelect != null) onSelect(element);
-        Navigator.pop(context);
-      }
-    )).toList();
-
-    showDialog(
-      context: context, 
-      builder: (__){
-        return Dialog(
-          child: Container(
-            padding: EdgeInsets.symmetric(
-              horizontal: 10.0,
-              vertical: 20.0
-            ),
-            child: Column(
-              mainAxisSize: MainAxisSize.min,
-              children: [
-                Text(
-                  'Escoge una comuna',
-                  style: GoogleFonts.montserrat(),
-                  textAlign: TextAlign.center
-                ),
-                SizedBox(height: 10.0),
-                Column(
-                  children: districtsTiles,
-                )
-              ],
-            ),
-          ),
-        );
-      }
-    );
-  }
-
 }
-
-class _DistrictTile extends StatelessWidget {
-  const _DistrictTile({
-    Key? key,
-    required this.onTap,
-    required this.district
-  }) : super(key: key);
-
-  final Function() onTap;
-  final DistrictModel district;
-
-  @override
-  Widget build(BuildContext context) {
-    return ListTile(
-      title: Text(
-        district.name,
-        style: GoogleFonts.montserrat(),
-      ),
-      onTap: onTap
-    );
-  }
-}
-class _CloseSessionDialog extends StatefulWidget {
-  const _CloseSessionDialog({ Key? key }) : super(key: key);
-
-  @override
-  __CloseSessionDialogState createState() => __CloseSessionDialogState();
-}
-
-class __CloseSessionDialogState extends State<_CloseSessionDialog> {
-  bool working = false;
-
-  @override
-  Widget build(BuildContext context) {
-    return AlertDialog(
-      title: Text('Cerrar sesión'),
-      content: !working? Text('¿Quiere cerrar sesión?')
-        : Center(child: CircularProgressIndicator()),
-      actions: !working? [
-        TextButton(
-          onPressed: () => logout(context), 
-          child: Text('Cerrar sesión'),
-        ),
-        TextButton(
-          style: ButtonStyle(
-            backgroundColor: MaterialStateProperty.all(EcoAppColors.MAIN_COLOR),
-            foregroundColor: MaterialStateProperty.all(Colors.white)
-          ),
-          onPressed: () => Navigator.pop(context),
-          child: Text('Cancelar')
-        ),
-      ] : [],
-    );
-  }
-
-  void logout(BuildContext context){
-    setState(() => working = true);
-    final profileBloc = BlocProvider.of<ProfileBloc>(context);
-    final logout = profileBloc.logout();
-    logout.then((value) => Navigator.popUntil(context, ModalRoute.withName('/')));
-  }
-}
-
 

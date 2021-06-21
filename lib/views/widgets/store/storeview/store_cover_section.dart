@@ -20,15 +20,21 @@ class StoreCoverSection extends StatelessWidget {
       margin: EdgeInsets.symmetric(
         vertical: 20.0
       ),
-      child: Text(
-        store.description,
-        style: GoogleFonts.montserrat(),
+      child: Row(
+        mainAxisSize: MainAxisSize.max,
+        children: [
+          Text(
+            store.description,
+            style: GoogleFonts.montserrat(),
+          ),
+        ],
       )
     );
 
     final rating = Container(
       padding: EdgeInsets.symmetric(
-        horizontal: 60.0
+        horizontal: 60.0,
+        vertical: 10.0
       ),
       child: Column(
         children: [
@@ -43,14 +49,14 @@ class StoreCoverSection extends StatelessWidget {
             mainAxisSize: MainAxisSize.min,
             children: [
               Text(
-                '4.2',
+                store.rating.avgRating.toStringAsPrecision(2),
                 style: GoogleFonts.montserrat(
                   fontWeight: FontWeight.w500,
                   fontSize: 15
                 ),
               ),
               SizedBox(width: 20.0),
-              StarsRow(rating: 4.2,)
+              StarsRow(rating: store.rating.avgRating,)
             ],
           )
         ],
@@ -59,6 +65,7 @@ class StoreCoverSection extends StatelessWidget {
 
     final ratingGesture = InkWell(
       child: rating,
+      borderRadius: BorderRadius.circular(10.0),
       onTap: () => Navigator.push(
         context, 
         MaterialPageRoute(
@@ -83,6 +90,8 @@ class StoreCoverSection extends StatelessWidget {
           SizedBox(height: 10.0),
           Divider(thickness: 1,),
           description,
+          //Divider(),
+          SizedBox(height: 10.0),
           ratingGesture,
         ],
       ),

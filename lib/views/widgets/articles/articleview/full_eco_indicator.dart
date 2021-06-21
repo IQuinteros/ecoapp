@@ -20,7 +20,7 @@ class FullEcoIndicator extends StatelessWidget {
           color: EcoAppColors.BLUE_ACCENT_COLOR, 
           darkenScale: 35,
           title: 'Producto con materiales reciclados',
-          description: lorem(paragraphs: 2, words: 60),
+          description: 'Este producto fue creado a partir de materiales reciclados ya sea total o parcialmente. Con esto ayudas mucho al medio ambiente.',
         )
       );
     if(ecoIndicator.hasReuseTips)
@@ -30,7 +30,7 @@ class FullEcoIndicator extends StatelessWidget {
           color: EcoAppColors.ACCENT_COLOR, 
           darkenScale: 38,
           title: '¡Hay tips de reutilización!',
-          description: lorem(paragraphs: 2, words: 60),
+          description: 'El vendedor incluyó tips de reutilización. Así, cuando creas que la vida útil de tu producto ha llegado a su fin, podrás reutilizar tu producto de otra forma, y así evitar desechar.',
         )
       );
     if(ecoIndicator.isRecyclableProduct)
@@ -39,7 +39,7 @@ class FullEcoIndicator extends StatelessWidget {
           icon: Icons.eco, 
           color: EcoAppColors.MAIN_COLOR,
           title: 'El producto es reciclable',
-          description: lorem(paragraphs: 2, words: 60),
+          description: 'Cuando el producto cumpla con su vida útil, este no será dañino al medio ambiente. Un gran apoyo a nuestro entorno.',
         )
       );
 

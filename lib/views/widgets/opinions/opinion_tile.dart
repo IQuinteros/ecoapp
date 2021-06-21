@@ -46,11 +46,14 @@ class OpinionTile extends StatelessWidget {
             mainAxisAlignment: MainAxisAlignment.spaceBetween,
             children: [
               StarsRow(rating: opinion.rating.toDouble()),
-              displayArticle? Text(
-                'Ver artículo',
-                style: GoogleFonts.montserrat(
-                  color: EcoAppColors.MAIN_COLOR
+              displayArticle? InkWell(
+                child: Text(
+                  'Ver artículo',
+                  style: GoogleFonts.montserrat(
+                    color: EcoAppColors.MAIN_COLOR
+                  ),
                 ),
+                onTap: () => Navigator.push(context, MaterialPageRoute(builder: (__) => ArticleView(article: null, articleId: opinion.articleId,))),
               ) : Container()
             ],
           ),
@@ -81,7 +84,8 @@ class OpinionTile extends StatelessWidget {
       return InkWell(
         borderRadius: BorderRadius.circular(10.0),
         child: container,
-        onTap: () => Navigator.push(context, MaterialPageRoute(builder: (__) => ArticleView(article: opinion.article,)))
+        // TODO: Implement article view (require net load?)
+        //onTap: () => Navigator.push(context, MaterialPageRoute(builder: (__) => ArticleView(article: opinion.article,)))
       );
     }
     else{

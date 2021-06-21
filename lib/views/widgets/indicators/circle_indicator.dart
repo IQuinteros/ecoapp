@@ -69,7 +69,8 @@ class CircleIndicator extends StatelessWidget {
       ),
       SizedBox(height: 20.0),
       Text(
-        description
+        description,
+        style: GoogleFonts.montserrat()
       ),
       Row(
         children: [

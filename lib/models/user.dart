@@ -3,6 +3,7 @@ import 'package:flutter_ecoapp/models/base.dart';
 class UserModel extends BaseModel
 {
   late DateTime createdDate;
+  bool? haveProfile;
 
   UserModel({
     required int id,
@@ -10,12 +11,13 @@ class UserModel extends BaseModel
   }) : super(id: id);
 
   UserModel.fromJsonMap(Map<String, dynamic> json) : super(id: json['id']){
-    createdDate            = json['createdDate'];
+    createdDate            = DateTime.parse(json['creation_date']);
+    haveProfile            = json['have_profile'];
   }
 
   @override
   Map<String, dynamic> toJson() => {
     'id'          : id,
-    'createdDate' : createdDate
+    'creation_date' : createdDate.toString()
   };
 }

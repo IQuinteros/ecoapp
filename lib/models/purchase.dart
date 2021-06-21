@@ -5,10 +5,10 @@ import 'package:flutter_ecoapp/models/store.dart';
 
 class PurchaseModel extends BaseModel
 {
-  late double total;
+  late int total;
   late DateTime createdDate;
 
-  late InfoPurchaseModel info;
+  late InfoPurchaseModel? info;
 
   late List<ArticleToPurchase> articles;
 
@@ -40,19 +40,26 @@ class PurchaseModel extends BaseModel
 
   Map<StoreModel?, List<ArticleToPurchase>> get storeSortedArticles{
     Map<StoreModel?, List<ArticleToPurchase>> toReturn = {};
+    List<StoreModel?> stores = [];
+
+    articles = articles.map((e) {
+      bool found = false;
+      stores.forEach((element) {
+        if(element?.id == e.store?.id){
+          found = true;
+          e.store = element;
+        }
+      });
+      if(!found) stores.add(e.store);
+      return e;
+    }).toList();
+
+
     articles.forEach((element) { 
-      StoreModel? storeToUpdate = element.article != null? element.article!.store : element.store;
+      StoreModel? storeToUpdate = element.store;
       toReturn.update(storeToUpdate, (value) => value + [element], ifAbsent: () => [element]);
     }); 
     return toReturn;
-  }
-
-  ChatModel get chat {  // TODO: Connect with api
-    return ChatModel(
-      id: 1,
-      createdDate: createdDate,
-      closed: false
-    );
   }
 
   double get realTotal => articles.fold<double>(0, (double value, element) => value += (element.unitPrice * element.quantity));
@@ -60,27 +67,27 @@ class PurchaseModel extends BaseModel
 
   PurchaseModel.fromJsonMap(Map<String, dynamic> json) : super(id: json['id']){
     total               = json['total'];
-    createdDate         = json['createdDate'];
-    info                = json['info'];
-    articles            = json['articles'];
+    createdDate         = DateTime.parse(json['creation_date']);
+    info                = json['info_purchase'] != null? InfoPurchaseModel.fromJsonMap(json['info_purchase']) : null;
+    articles            = json['articles'].map<ArticleToPurchase>((e) => ArticleToPurchase.fromJsonMap(e)).toList() ?? const [];
   }
 
   @override
   Map<String, dynamic> toJson() => {
     'id'          : id,
     'total'       : total,
-    'createdDate' : createdDate,
-    'info'        : info,
-    'articles'    : articles
+    'creation_date' : createdDate.toString(),
+    'info'        : info!.toJson(),
+    'articles'    : articles.map((e) => e.toJson()).toList()
   };
 }
 
 class InfoPurchaseModel extends BaseModel
 {
-  String names;
-  String location;
-  String contactNumber;
-  String district;
+  late String names;
+  late String location;
+  late String contactNumber;
+  late String district;
 
   InfoPurchaseModel({
     required int id,
@@ -90,12 +97,19 @@ class InfoPurchaseModel extends BaseModel
     required this.district,
   }) : super(id: id);
 
+  InfoPurchaseModel.fromJsonMap(Map<String, dynamic> json) : super(id: json['id']){
+    names               = json['names'];
+    location            = json['location'];
+    contactNumber       = json['contact_number'].toString();
+    district            = json['district'];
+  }
+
   @override
   Map<String, dynamic> toJson() => {
     'id'            : id,
     'names'         : names,
     'location'      : location,
-    'contactNumber' : contactNumber,
+    'contact_number' : contactNumber,
     'district'      : district
   };
 
@@ -104,19 +118,20 @@ class InfoPurchaseModel extends BaseModel
 class ArticleToPurchase extends BaseModel
 {
   late PurchaseModel purchase;
-  ArticleModel? article;
+  late int? articleId;
   StoreModel? store;
-  String title;
-  double unitPrice;
-  int quantity;
+  late String title;
+  late int unitPrice;
+  late int quantity;
 
   String? photoUrl;
 
-  ArticleForm form;
+  late ArticleForm form;
+  late ArticleModel? article;
 
   ArticleToPurchase({
     required int id,
-    this.article,
+    this.articleId,
     this.store,
     required this.title,
     required this.unitPrice,
@@ -125,18 +140,44 @@ class ArticleToPurchase extends BaseModel
     required this.form
   }) : super(id: id);
 
+  ArticleToPurchase.fromJsonMap(Map<String, dynamic> json) : super(id: json['id']){
+    articleId           = json['article_id'];
+    article             = json['article'] != null? ArticleModel.fromJsonMap(json['article']) : null;
+    store               = StoreModel.fromJsonMap(json['store']);
+    title               = json['title'];
+    unitPrice           = json['unit_price'];
+    quantity            = json['quantity'];
+    photoUrl            = json['photo_url'];
+    
+    form = ArticleForm(
+      id: 0,
+      generalDetail: json['general_detail'] ?? '',
+      recycledMats: json['recycled_mats'] ?? '',
+      recycledMatsDetail: json['recycled_mats_detail'] ?? '',
+      reuseTips: json['reuse_tips'] ?? '',
+      recycledProd: json['recycled_prod'] ?? '',
+      recycledProdDetail: json['recycled_prod_detail'] ?? '',
+      lastUpdateDate: DateTime.now(), // TODO: Same
+      createdDate: DateTime.now() // TODO: Maybe can be null
+    );
+  }
+
   bool get hasPhotoUrl => photoUrl != null && photoUrl!.isNotEmpty;
 
   @override
   Map<String, dynamic> toJson() => {
     'id'        : id,
-    'article'   : article,
-    'store'     : store,
+    'article_id': articleId,
+    'store_id'     : store?.id ?? 0,
     'title'     : title,
-    'unitPrice' : unitPrice,
+    'unit_price' : unitPrice,
     'quantity'  : quantity,
-    'photoUrl'  : photoUrl,
-    'form'      : form,
-
+    'photo_url'  : photoUrl,
+    'general_detail': form.generalDetail,
+    'recycled_mats': form.recycledMats,
+    'recycled_mats_detail': form.recycledMatsDetail,
+    'reuse_tips': form.reuseTips,
+    'recycled_prod': form.recycledProd,
+    'recycled_prod_detail': form.recycledProdDetail,
   };
 }

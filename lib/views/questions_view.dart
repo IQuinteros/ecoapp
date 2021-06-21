@@ -40,6 +40,9 @@ class QuestionsView extends StatelessWidget {
   }
 
   Widget mainContent(BuildContext context){
+    ImageProvider<Object> imageData = AssetImage('assets/png/no-image.png');
+    if(article.photos.length > 0) imageData = NetworkImage(article.photos[0].photoUrl);
+
     return SingleChildScrollView(
       child: Container(
         margin: EdgeInsets.symmetric(
@@ -50,7 +53,7 @@ class QuestionsView extends StatelessWidget {
           child: Column(
             children: [
               EcoCover(
-                image: NetworkImage(article.photos[0].photoUrl),
+                image: imageData,
                 title: article.title,
                 subtitle: '${article.questions.length.toString()} preguntas',
                 size: 80

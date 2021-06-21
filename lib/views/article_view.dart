@@ -1,7 +1,20 @@
+import 'dart:async';
+
+import 'package:flutter/foundation.dart';
 import 'package:flutter/material.dart';
+import 'package:flutter_bloc/flutter_bloc.dart';
+import 'package:flutter_ecoapp/bloc/app_bloc.dart';
+import 'package:flutter_ecoapp/bloc/article_bloc.dart';
+import 'package:flutter_ecoapp/bloc/cart_bloc.dart';
+import 'package:flutter_ecoapp/bloc/history_bloc.dart';
+import 'package:flutter_ecoapp/bloc/profile_bloc.dart';
+import 'package:flutter_ecoapp/bloc/user_bloc.dart';
 import 'package:flutter_ecoapp/models/article.dart';
+import 'package:flutter_ecoapp/models/store.dart';
 import 'package:flutter_ecoapp/utils/currency_util.dart';
+import 'package:flutter_ecoapp/views/image_view.dart';
 import 'package:flutter_ecoapp/views/opinions_view.dart';
+import 'package:flutter_ecoapp/views/store_view.dart';
 import 'package:flutter_ecoapp/views/style/colors.dart';
 import 'package:flutter_ecoapp/views/widgets/articles/articleview/article_description_section.dart';
 import 'package:flutter_ecoapp/views/widgets/articles/articleview/article_eco_detail_section.dart';
@@ -15,34 +28,77 @@ import 'package:flutter_ecoapp/views/widgets/stars_row.dart';
 import 'package:google_fonts/google_fonts.dart';
 import 'package:share_plus/share_plus.dart';
 
-class ArticleView extends StatelessWidget {
+class ArticleView extends StatefulWidget {
 
-  final ArticleModel article;
+  final ArticleModel? article;
+  final int? articleId;
 
-  const ArticleView({Key? key, required this.article}) : super(key: key);
+  const ArticleView({Key? key, required this.article, this.articleId}) : super(key: key);
+
+  @override
+  _ArticleViewState createState() => _ArticleViewState();
+}
+
+class _ArticleViewState extends State<ArticleView> {
+  ArticleModel? refreshArticle;
+  bool firstRefreshing = false;
 
   @override
   Widget build(BuildContext context) {
+    if(refreshArticle == null) refreshArticle = widget.article;
+      
     return Scaffold(
       body: getContent(context),
     );
   }
 
   Widget getContent(BuildContext context){
-    return CustomScrollView(
-      slivers: [
-        _ArticleAppBar(article: article),
-        SliverList(
-          delegate: SliverChildListDelegate(
-            [
-              _ArticleMainContent(article: article)
-            ]
-          ),
-        )
-      ],
+    final historyBloc = BlocProvider.of<HistoryBloc>(context);
+    final profileBloc = BlocProvider.of<ProfileBloc>(context);
+    final userBloc = BlocProvider.of<UserBloc>(context);
+
+    if(refreshArticle == null){
+      if(!firstRefreshing){
+        refreshView(context);
+        firstRefreshing = true;
+        return Center(child: CircularProgressIndicator(),);
+      }else{
+        return Center(child: Text(
+          'No se ha podido cargar el artículo',
+          style: GoogleFonts.montserrat(),
+        ));
+      }
+    }
+
+    userBloc.getLinkedUser(profileBloc.currentProfile).then((value) {
+      if(value != null) historyBloc.addToHistory(user: value, article: refreshArticle!);
+    });    
+
+    return RefreshIndicator(
+      child: CustomScrollView(
+        slivers: [
+          _ArticleAppBar(article: refreshArticle!),
+          SliverList(
+            delegate: SliverChildListDelegate(
+              [
+                _ArticleMainContent(
+                  article: refreshArticle!,
+                  onNewQuestion: () => refreshView(context),
+                )
+              ]
+            ),
+          )
+        ],
+      ),
+      onRefresh: () => refreshView(context)
     );
   }
 
+  Future<void> refreshView(BuildContext context) async { 
+    final articleBloc = BlocProvider.of<ArticleBloc>(context);
+    refreshArticle = await articleBloc.getArticleFromId(refreshArticle?.id ?? widget.articleId!);
+    setState(() {});
+  }
 }
 
 class _ArticleAppBar extends StatelessWidget {
@@ -55,11 +111,12 @@ class _ArticleAppBar extends StatelessWidget {
 
   @override
   Widget build(BuildContext context) {
+    final profileBloc = BlocProvider.of<ProfileBloc>(context);
     return SliverAppBar(
       elevation: 10.0,
       backgroundColor: EcoAppColors.MAIN_DARK_COLOR,
       foregroundColor: Colors.white,
-      expandedHeight: 250.0,
+      expandedHeight: article.photos.length > 0? 250.0 : null,
       floating: false,
       pinned: true,
       leading: IconButton(
@@ -76,10 +133,17 @@ class _ArticleAppBar extends StatelessWidget {
             color: Colors.white,
           ),
           onPressed: (){
-            Share.share('¡Disponible en Ecomercio! ${article.title} a solo \$${CurrencyUtil.formatToCurrencyString(article.price.toInt())}');
+            Share.share(
+              '¡Disponible en Ecomercio! ${article.title} a solo \$${CurrencyUtil.formatToCurrencyString(article.price.toInt())}'
+            );
           },
         ),
-        FavoriteButton(favorite: false, disabledColor: Colors.white,)
+        FavoriteButton(favorite: article.favorite, disabledColor: Colors.white,
+          onChanged: (value){
+            // Add favorite
+            profileBloc.setFavoriteArticle(article, value, (ready) {});
+          },
+        )
       ],
       title: Text(
         article.title,
@@ -94,23 +158,26 @@ class _ArticleAppBar extends StatelessWidget {
       ),
       stretch: true,
       forceElevated: true,
-      flexibleSpace: FlexibleSpaceBar(
+      flexibleSpace: article.photos.length > 0? FlexibleSpaceBar(
         centerTitle: false,
         stretchModes: const <StretchMode>[
           StretchMode.zoomBackground,
           StretchMode.blurBackground,
           StretchMode.fadeTitle,
         ],
-        background: Hero( 
-          tag: article.tag,
-          child: Image(
-            image: NetworkImage(article.photos[0].photoUrl),
-            height: 120,
-            width: 120,
-            fit: BoxFit.cover,
-          )
+        background: GestureDetector(
+          child: Hero( 
+            tag: article.tag,
+            child: Image(
+              image: NetworkImage(article.photos.length > 0? article.photos[0].photoUrl : ''),
+              height: 120,
+              width: 120,
+              fit: BoxFit.cover,
+            )
+          ),
+          onTap: () => Navigator.push(context, MaterialPageRoute(builder: (__) => ImageView(photos: article.photos, title: article.title,))),
         ),
-      ),
+      ) : null,
     );
   }
 }
@@ -119,22 +186,17 @@ class _ArticleMainContent extends StatelessWidget {
   const _ArticleMainContent({
     Key? key,
     required this.article,
+    required this.onNewQuestion
   }) : super(key: key);
 
   final ArticleModel article;
+  final Function() onNewQuestion;
 
   @override
   Widget build(BuildContext context) {
     return Container(
       decoration: BoxDecoration(
-        //borderRadius: BorderRadius.circular(20.0),
         color: Colors.white,
-        /* boxShadow: [
-          BoxShadow(
-            color: Colors.black.withOpacity(0.25),
-            blurRadius: 20.0
-          )
-        ] */
       ),
       margin: EdgeInsets.only(
         left: 5.0,
@@ -144,24 +206,42 @@ class _ArticleMainContent extends StatelessWidget {
         vertical: 20.0,
       ),
       child: SafeArea(
-        child: _ArticleContent(article: article,),
+        child: _ArticleContent(article: article, onNewQuestion: onNewQuestion,),
         top: false,
       ),
     );
   }
 }
 
-
 class _ArticleContent extends StatelessWidget {
-  const _ArticleContent({
+
+  _ArticleContent({
     Key? key,
     required this.article,
+    required this.onNewQuestion
   }) : super(key: key);
 
   final ArticleModel article;
+  final Function() onNewQuestion;
+
+  /// Session streams  
+  final _storeController = StreamController<StoreModel?>.broadcast();
+
+  Function(StoreModel?) get _storeSink => _storeController.sink.add;
+  Stream<StoreModel?> get storeStream => _storeController.stream;
+
+  void disposeStreams(){
+    _storeController.close();
+  }
 
   @override
   Widget build(BuildContext context) {
+    final articleBloc = BlocProvider.of<ArticleBloc>(context);
+
+    articleBloc.getStoreOfArticle(article).then((value) {
+      _storeSink(value);
+      disposeStreams();
+    });
 
     final title = Padding(
       padding: EdgeInsets.symmetric(
@@ -193,7 +273,7 @@ class _ArticleContent extends StatelessWidget {
             StarsRow(rating: article.rating.avgRating),
             SizedBox(width: 10.0),
             Text(
-              '${article.rating.count} opiniones',
+              article.rating.count > 0? '${article.rating.count} ${article.rating.count > 1? 'opiniones' : 'opinión'}' : 'Sin opiniones aún',
               style: GoogleFonts.montserrat(
                 color: EcoAppColors.MAIN_COLOR
               ),
@@ -235,7 +315,7 @@ class _ArticleContent extends StatelessWidget {
     );
 
     final storeText = InkWell(
-      onTap: () => print('Go to store'), // TODO: Go to store
+      onTap: () => Navigator.push(context, MaterialPageRoute(builder: (__) => StoreView(store: article.store!))), // TODO: Go to store
       child: Padding(
         padding: EdgeInsets.symmetric(
           horizontal: 20.0
@@ -252,7 +332,7 @@ class _ArticleContent extends StatelessWidget {
               ),
               children: [
                 TextSpan(
-                  text: '${article.store!.publicName}',
+                  text: article.store!.publicName,//'${article.store!.publicName}',
                   style: GoogleFonts.montserrat(
                     color: EcoAppColors.MAIN_COLOR
                   ),
@@ -264,32 +344,7 @@ class _ArticleContent extends StatelessWidget {
       ),
     );
 
-    final btnAddToCart = Padding(
-      padding: EdgeInsets.symmetric(
-        horizontal: 20.0
-      ),
-      child: NormalButton(
-        text: 'Agregar al Carrito',
-        onPressed: () {
-          // TODO: Add cart system
-          showDialog(
-            context: context, 
-            builder: (BuildContext context){
-              return AlertDialog(
-                title: Text('Añadido al carrito'),
-                content: Text('${article.title} ha sido añadido exitósamente al carrito'),
-                actions: [
-                  TextButton(
-                    onPressed: () => Navigator.pop(context), 
-                    child: Text('Aceptar')
-                  )
-                ],
-              );
-            }
-          );
-        },
-      ),
-    );
+    final btnAddToCart = _AddToCartButton(article: article);
     
     return Column(
       children: [
@@ -312,11 +367,81 @@ class _ArticleContent extends StatelessWidget {
         Divider(thickness: 1,),
         EcoDetailSection(article: article),
         Divider(thickness: 1,),
-        StoreDescriptionSection(article: article),
+        StoreDescriptionSection(article: article, store: article.store!),
         Divider(thickness: 1,),
-        QuestionsSection(article: article)
+        QuestionsSection(article: article, onNewQuestion: onNewQuestion,)
       ]
     );
+  }
+}
+
+class _AddToCartButton extends StatefulWidget {
+  const _AddToCartButton({
+    Key? key,
+    required this.article,
+  }) : super(key: key);
+
+  final ArticleModel article;
+
+  @override
+  __AddToCartButtonState createState() => __AddToCartButtonState();
+}
+
+class __AddToCartButtonState extends State<_AddToCartButton> {
+  @override
+  Widget build(BuildContext context) {
+    final cartBloc = BlocProvider.of<CartBloc>(context);
+    return Padding(
+      padding: EdgeInsets.symmetric(
+        horizontal: 20.0
+      ),
+      child: FutureBuilder(
+        future: cartBloc.articleExistsInCart(widget.article),
+        builder: (BuildContext context, AsyncSnapshot<bool> snapshot) {
+          switch(snapshot.connectionState){
+            case ConnectionState.done: 
+              return NormalButton(
+                text: !snapshot.data!? 'Agregar al Carrito' : 'Ver en carrito',
+                color: !snapshot.data!? EcoAppColors.MAIN_COLOR : Colors.lightGreen.shade50,
+                textColor: !snapshot.data!? Colors.white : EcoAppColors.MAIN_COLOR,
+                onPressed: () async {
+                  !snapshot.data!? await _addToCart(context) : _goToCartView(context);
+                  setState(() {});
+                }
+              );
+            default: return Center(child: CircularProgressIndicator());
+          }
+        }
+      ),
+    );
+  }
+
+  Future<void> _addToCart(BuildContext context) async {
+    final cartBloc = BlocProvider.of<CartBloc>(context);
+    final result = await cartBloc.addArticleToCart(widget.article);
+    if(result != null){
+      print(result.id);
+      print(result.articleId);
+    }
+
+    ScaffoldMessenger.of(context).removeCurrentSnackBar();
+    ScaffoldMessenger.of(context).showSnackBar(SnackBar(
+      content: Text('Producto añadido al carrito'),
+      backgroundColor: EcoAppColors.MAIN_DARK_COLOR,
+      action: SnackBarAction(
+        label: 'Ver carrito',
+        onPressed: () => _goToCartView(context),
+        textColor: EcoAppColors.ACCENT_COLOR,
+      ),
+    ));  
+
+    cartBloc.loadCart();
+  }
+
+  void _goToCartView(BuildContext context){
+    final appBloc = BlocProvider.of<AppBloc>(context);
+    Navigator.popUntil(context, ModalRoute.withName('/'));
+    appBloc.mainEcoNavBar.onTap(1);
   }
 }
 

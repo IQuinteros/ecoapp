@@ -23,7 +23,11 @@ class _FeaturedProductState extends State<FeaturedProduct> {
   Widget build(BuildContext context) {
     widget.article.tag = 'featured-card';
 
-    print(widget.article.tag);
+    ImageProvider<Object> imageData = AssetImage('assets/png/no-image-bg.png');
+
+    if(widget.article.photos.length > 0)
+       imageData = NetworkImage(widget.article.photos[0].photoUrl);
+
     final image = Hero(
       tag: widget.article.tag,
       child: Container(
@@ -42,7 +46,7 @@ class _FeaturedProductState extends State<FeaturedProduct> {
           bottom: 0.0
         ),
         child: Image(
-          image: NetworkImage(widget.article.photos[0].photoUrl),
+          image: imageData,
           width: MediaQuery.of(context).size.width,
           height: 200.0,
           fit: BoxFit.cover,
@@ -59,11 +63,7 @@ class _FeaturedProductState extends State<FeaturedProduct> {
     );
 
     final ecoIndicator = MiniEcoIndicator(
-      ecoIndicator: EcoIndicator(
-        hasRecycledMaterials: Random().nextBool(),
-        hasReuseTips: Random().nextBool(),
-        isRecyclableProduct: Random().nextBool()
-      ),
+      ecoIndicator: widget.article.form.getIndicator()
     );
 
     final titleText = Text(

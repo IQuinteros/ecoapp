@@ -1,6 +1,9 @@
 import 'dart:math';
 
+import 'package:awesome_dialog/awesome_dialog.dart';
 import 'package:flutter/material.dart';
+import 'package:flutter_bloc/flutter_bloc.dart';
+import 'package:flutter_ecoapp/bloc/cart_bloc.dart';
 import 'package:flutter_ecoapp/models/article.dart';
 import 'package:flutter_ecoapp/utils/currency_util.dart';
 import 'package:flutter_ecoapp/views/article_view.dart';
@@ -12,8 +15,10 @@ import 'package:numberpicker/numberpicker.dart';
 class CartArticleCard extends StatefulWidget {
 
   final ArticleModel article;
+  final Function() onDelete;
+  final int initialQuantity;
 
-  const CartArticleCard({Key? key, required this.article}) : super(key: key);
+  const CartArticleCard({Key? key, required this.article, required this.onDelete, required this.initialQuantity}) : super(key: key);
 
   @override
   _CartArticleCardState createState() => _CartArticleCardState();
@@ -21,12 +26,20 @@ class CartArticleCard extends StatefulWidget {
 
 class _CartArticleCardState extends State<CartArticleCard> {
 
-  int quantity = 1;
+  int? _quantity;
+  bool _deleted = false;
 
   @override
   Widget build(BuildContext context) {
+    
+    if(_quantity == null) _quantity = widget.initialQuantity;
+    
+    ImageProvider<Object> imageData = AssetImage('assets/png/no-image-bg.png');
+    if(widget.article.photos.length > 0)
+      imageData = NetworkImage(widget.article.photos[0].photoUrl);
+
     final image = Image(
-      image: NetworkImage('https://picsum.photos/500/300'),
+      image: imageData,
       height: 120,
       width: 120,
       fit: BoxFit.cover,
@@ -47,11 +60,7 @@ class _CartArticleCardState extends State<CartArticleCard> {
 
 
     final ecoIndicator = MiniEcoIndicator(
-      ecoIndicator: EcoIndicator(
-        hasRecycledMaterials: Random().nextBool(),
-        hasReuseTips: Random().nextBool(),
-        isRecyclableProduct: Random().nextBool()
-      ),
+      ecoIndicator: widget.article.form.getIndicator()
     );
 
     final title = Text(
@@ -103,7 +112,24 @@ class _CartArticleCardState extends State<CartArticleCard> {
         foregroundColor: MaterialStateProperty.all(Colors.black54),
         textStyle: MaterialStateProperty.all(GoogleFonts.montserrat())
       ),
-      onPressed: () {},
+      onPressed: () {
+        AwesomeDialog(
+          title: 'Eliminar artículo del carrito',
+          desc: 'Se eliminará este artículo del carrito. Lo puedes volver a agregar cuando quieras',
+          dialogType: DialogType.INFO, 
+          animType: AnimType.BOTTOMSLIDE,
+          context: context,
+          btnOkText: 'Volver',
+          btnCancelText: 'Eliminar',
+          btnOkOnPress: () {},
+          btnOkColor: Colors.black26,
+          //btnCancelColor: Colors.black26,
+          btnCancelOnPress: () {
+            _deleteArticleFromCart(context);
+          },
+          padding: EdgeInsets.symmetric(horizontal: 20.0, vertical: 10.0)
+        )..show();
+      },
     );
 
     final quantitySelector = Container(
@@ -119,7 +145,7 @@ class _CartArticleCardState extends State<CartArticleCard> {
             children: [
               Expanded(child: Container()),
               Text(
-                quantity.toString(),
+                _quantity.toString(),
                 style: GoogleFonts.montserrat(),
                 textAlign: TextAlign.end,
               ),
@@ -169,30 +195,49 @@ class _CartArticleCardState extends State<CartArticleCard> {
       }
     );
 
-    return Container(
-      margin: EdgeInsets.symmetric(
-        horizontal: 10.0
-      ),
-      child: InkWell(
-        child: layout,
-        borderRadius: BorderRadius.circular(20.0),
-        onTap: () => Navigator.push(context, MaterialPageRoute(builder: (__) => ArticleView(article: widget.article))),
+    return Visibility(
+      visible: !_deleted,
+      child: Container(
+        margin: EdgeInsets.symmetric(
+          horizontal: 10.0
+        ),
+        child: InkWell(
+          child: layout,
+          borderRadius: BorderRadius.circular(20.0),
+          onTap: () => Navigator.push(context, MaterialPageRoute(builder: (__) => ArticleView(article: widget.article))),
+        ),
       ),
     );
   }
 
+  int _tempQuantity = 1;
   void selectQuantity(BuildContext context) async {
     await showModalBottomSheet(
       context: context,
       builder: (BuildContext context){
         return _QuantitySelector(
-          onChanged: (value) => setState(() => quantity = value),
-          initialValue: quantity,
+          onChanged: (value) {
+            _tempQuantity = value;
+          },
+          initialValue: _quantity!,
         );
       },
       elevation: 10,
       enableDrag: false
     );
+    
+    final cartBloc = BlocProvider.of<CartBloc>(context);
+    await cartBloc.updateArticleToCart(widget.article, _tempQuantity);
+    setState(() => _quantity = _tempQuantity);
+  }
+
+  void _deleteArticleFromCart(BuildContext context) async {
+    final cartBloc = BlocProvider.of<CartBloc>(context);
+    setState(() {
+      _deleted = true;
+    }); 
+    await cartBloc.removeArticleToCart(widget.article);
+    widget.onDelete();
   }
 }
 

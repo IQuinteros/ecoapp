@@ -1,4 +1,6 @@
 import 'package:flutter/material.dart';
+import 'package:flutter_bloc/flutter_bloc.dart';
+import 'package:flutter_ecoapp/bloc/app_bloc.dart';
 import 'package:flutter_ecoapp/models/category.dart';
 import 'package:flutter_ecoapp/views/result_view.dart';
 import 'package:google_fonts/google_fonts.dart';
@@ -13,6 +15,8 @@ class CategoryBox extends StatelessWidget {
 
   @override
   Widget build(BuildContext context) {
+    AppBloc appBloc = BlocProvider.of<AppBloc>(context);
+
     final icon = Icon(
       category.getIcon(),
       size: 50.0,
@@ -59,7 +63,10 @@ class CategoryBox extends StatelessWidget {
         child: MaterialButton(
           child: card,
           padding: EdgeInsets.all(0),
-          onPressed: () => Navigator.push(context, MaterialPageRoute(builder: (__) => ResultView(searching: category.toString(),))),
+          onPressed: () async {
+            var value = await Navigator.push(context, MaterialPageRoute(builder: (__) => ResultView(searching: category.toString(),)));
+            if(value != null) appBloc.mainEcoNavBar.onTap(value);
+          }
         ),
       ),
     );

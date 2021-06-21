@@ -4,23 +4,25 @@ import 'package:flutter_ecoapp/models/base.dart';
 class FavoriteModel extends BaseModel
 {
   late DateTime createdDate;
+  late int articleId;
   late ArticleModel article;
 
   FavoriteModel({
     required int id,
-    required this.article,
+    required this.articleId,
     required this.createdDate,
   }) : super(id: id);
 
   FavoriteModel.fromJsonMap(Map<String, dynamic> json) : super(id: json['id']){
-    createdDate           = json['createdDate'];
-    article               = json['article'];
+    createdDate           = DateTime.parse(json['creation_date']);
+    articleId               = json['article_id'];
+    article               = ArticleModel.fromJsonMap(json['article'])..favorite = true;
   }
 
   @override
   Map<String, dynamic> toJson() => {
     'id'          : id,
-    'article'     : article,
-    'createdDate' : createdDate
+    'article_id'     : articleId,
+    'creation_date' : createdDate.toString()
   };
 }

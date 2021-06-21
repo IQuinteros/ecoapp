@@ -1,21 +1,23 @@
 import 'package:flutter/material.dart';
+import 'package:flutter_ecoapp/models/chat.dart';
 import 'package:flutter_ecoapp/models/purchase.dart';
+import 'package:flutter_ecoapp/views/purchase_detail_view.dart';
 import 'package:flutter_ecoapp/views/widgets/chat/chatview/message_item.dart';
 import 'package:google_fonts/google_fonts.dart';
 
 class PurchaseMessageItem extends StatelessWidget {
   const PurchaseMessageItem({
     Key? key,
-    required this.purchase,
+    required this.chat,
   }) : super(key: key);
 
-  final PurchaseModel purchase;
+  final ChatModel chat;
 
   @override
   Widget build(BuildContext context) {
     ImageProvider<Object> imgData;
-    if(purchase.articles[0].hasPhotoUrl){
-      imgData = NetworkImage(purchase.articles[0].photoUrl!);
+    if(chat.store != null){
+      imgData = NetworkImage(chat.store!.photoUrl);
     }
     else{
       imgData = AssetImage('assets/png/no-image.png');
@@ -44,14 +46,14 @@ class PurchaseMessageItem extends StatelessWidget {
         crossAxisAlignment: CrossAxisAlignment.start,
         children: [
           Text(
-            '${purchase.articles.length} artículos',
+            '${chat.purchase.articles.length} artículos',
             style: GoogleFonts.montserrat(
               fontWeight: FontWeight.w500
             ),
             textAlign: TextAlign.start
           ),
           Text(
-            'Comprado: ${purchase.createdDate.day}/${purchase.createdDate.month}/${purchase.createdDate.year}',
+            'Comprado: ${chat.purchase.createdDate.day}/${chat.purchase.createdDate.month}/${chat.purchase.createdDate.year}',
             style: GoogleFonts.montserrat(
               fontWeight: FontWeight.w300,
               fontSize: 12
@@ -70,7 +72,8 @@ class PurchaseMessageItem extends StatelessWidget {
           info
         ],
       ),
-      isOwner: false
+      isOwner: false,
+      onTap: () => Navigator.push(context, MaterialPageRoute(builder: (__) => PurchaseDetailView(purchase: chat.purchase,))),
     );
   }
 }

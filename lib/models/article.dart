@@ -9,12 +9,13 @@ class ArticleModel extends BaseModel with TagModel
 {
   late String title;
   late String description;
-  late double price;
-  double? pastPrice;
+  late int price;
+  int? pastPrice;
   late int stock;
   late DateTime createdDate;
   late DateTime lastUpdateDate;
   late bool enabled;
+  late int storeId;
 
   late CategoryModel category;
   late List<PhotoModel> photos;
@@ -22,6 +23,8 @@ class ArticleModel extends BaseModel with TagModel
   StoreModel? store;
   late List<QuestionModel> questions;
   late ArticleRating rating;
+
+  bool favorite = false;
 
   String _tag = '';
   set tag(String newTag) => _tag = this.id.toString() + this.title + newTag;
@@ -51,17 +54,22 @@ class ArticleModel extends BaseModel with TagModel
     title           = json['title'];
     description     = json['description'];
     price           = json['price'];
-    pastPrice       = json['pastPrice'];
+    pastPrice       = json['past_price'];
     stock           = json['stock'];
-    createdDate     = json['createdDate'];
-    lastUpdateDate  = json['lastUpdateDate'];
+    createdDate     = DateTime.parse(json['creation_date']);
+    lastUpdateDate  = DateTime.parse(json['last_update_date']);
     enabled         = json['enabled'];
-    photos          = json['photos'];
-    form            = json['form'];
-    category        = json['category'];
-    store           = json['store'];
-    questions       = json['questions'];
-    rating          = json['rating'];
+    photos          = json['photos'].map<PhotoModel>((e) => PhotoModel.fromJsonMap(e)).toList() ?? const [];
+    category        = CategoryModel.fromJsonMap(json['category']);
+    store           = StoreModel.fromJsonMap(json['store']);
+    favorite        = json['favorite'] ?? false;
+
+    // Create questions
+    questions       = json['questions'].map<QuestionModel>((e) => QuestionModel.fromJsonMap(e)).toList() ?? const [];
+    rating          = ArticleRating(opinions: json['opinions'].map<OpinionModel>((e) => OpinionModel.fromJsonMap(e)).toList());
+    storeId         = json['store_id'];
+    form            = ArticleForm.fromJsonMap(json['form']);
+    initTagging(newID: this.id, newTitle: this.title);
   }
 
   @override
@@ -79,18 +87,23 @@ class ArticleModel extends BaseModel with TagModel
     'rating'          : this.rating,
     'createdDate'     : this.createdDate,
     'lastUpdateDate'  : this.lastUpdateDate,
+    'store_id'        : this.storeId
   };
   
 }
 
 class PhotoModel extends BaseModel
 {
-  String photoUrl;
+  late String photoUrl;
 
   PhotoModel({
     required int id,
     required this.photoUrl,
   }) : super(id: id);
+
+  PhotoModel.fromJsonMap(Map<String, dynamic> json) : super(id: json['id']){
+    photoUrl          = json['photo'];
+  }
 
   @override
   Map<String, dynamic> toJson() => {
@@ -118,12 +131,12 @@ class EcoIndicator{
 
 class ArticleForm extends BaseModel
 {
-  String recycledMats;
-  String recycledMatsDetail;
-  String reuseTips;
-  String recycledProd;
-  String recycledProdDetail;
-  String generalDetail;
+  late String recycledMats;
+  late String recycledMatsDetail;
+  late String reuseTips;
+  late String recycledProd;
+  late String recycledProdDetail;
+  late String generalDetail;
   DateTime? createdDate;
   DateTime? lastUpdateDate;
 
@@ -153,6 +166,17 @@ class ArticleForm extends BaseModel
     this.recycledProdDetail = '',
     this.generalDetail = '',
   }): super(id: id);
+
+  ArticleForm.fromJsonMap(Map<String, dynamic> json) : super(id: json['id']){
+    recycledMats          = json['recycled_mats'] ?? '';
+    recycledMatsDetail    = json['recycled_mats_detail'] ?? '';
+    reuseTips             = json['reuse_tips'] ?? '';
+    recycledProd          = json['recycled_prod'] ?? '';
+    recycledProdDetail    = json['recycled_prod_detail'] ?? '';
+    createdDate           = DateTime.parse(json['creation_date']);
+    lastUpdateDate        = DateTime.parse(json['last_update_date']);
+    generalDetail         = json['general_detail'] ?? '';
+  }
 
   EcoIndicator getIndicator(){
     bool hasRecycledMats = recycledMats.isNotEmpty;

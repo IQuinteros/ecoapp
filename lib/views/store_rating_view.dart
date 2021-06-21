@@ -60,7 +60,7 @@ class StoreRatingView extends StatelessWidget {
               SizedBox(height: 10.0,),
               Divider(thickness: 1,),
               EcoItemsList<OpinionModel>(
-                elements: store.allOpinions,
+                elements: store.rating.opinions,
                 forEachElementWidget: (value) => OpinionTile(opinion: value, displayArticle: true)
               ) 
             ],

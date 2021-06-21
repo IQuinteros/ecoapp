@@ -1,5 +1,10 @@
 import 'package:flutter/material.dart';
+import 'package:flutter_bloc/flutter_bloc.dart';
+import 'package:flutter_ecoapp/bloc/chat_bloc.dart';
+import 'package:flutter_ecoapp/bloc/profile_bloc.dart';
+import 'package:flutter_ecoapp/bloc/purchase_bloc.dart';
 import 'package:flutter_ecoapp/models/chat.dart';
+import 'package:flutter_ecoapp/models/purchase.dart';
 import 'package:flutter_ecoapp/views/chat_view.dart';
 import 'package:flutter_ecoapp/views/style/colors.dart';
 import 'package:flutter_ecoapp/views/widgets/bottom_nav_bar.dart';
@@ -33,7 +38,9 @@ class ChatsView extends StatelessWidget {
       body: SafeArea(child: mainContent(context)),
       bottomNavigationBar: EcoBottomNavigationBar(
         currentIndex: 0,
-          onTap: (value){
+        unselected: true,
+        onTap: (value){
+          Navigator.pop(context, value);
         },
       )
     );
@@ -58,6 +65,9 @@ class _ChatList extends StatelessWidget {
 
   @override
   Widget build(BuildContext context) {
+    final profileBloc = BlocProvider.of<ProfileBloc>(context);
+    final chatBloc = BlocProvider.of<ChatBloc>(context);
+
     return Container(
       decoration: BoxDecoration(
         color: Colors.white,
@@ -73,12 +83,20 @@ class _ChatList extends StatelessWidget {
         vertical: 20.0,
         horizontal: 10
       ),
-      child: Column(
-        children: [
-          _ChatItem(chat: ChatModel(id: 1, closed: false, createdDate: DateTime.now())),
-          Divider(thickness: 1),
-          _ChatItem(chat: ChatModel(id: 1, closed: false, createdDate: DateTime.now()))
-        ],
+      child: FutureBuilder(
+        future: chatBloc.getProfileChats(profileBloc.currentProfile!),
+        builder: (context, AsyncSnapshot<List<ChatModel>> snapshot){
+          switch(snapshot.connectionState){
+            case ConnectionState.done:
+              return Column(
+                children: snapshot.data!.map<_ChatItem>((e) => _ChatItem(chat: e)).toList()
+              );
+            default: return Container(
+              padding: EdgeInsets.symmetric(vertical: 10.0),
+              child: Center(child: CircularProgressIndicator())
+            );
+          }
+        }
       ),
     );
   }
@@ -108,39 +126,44 @@ class _ChatItem extends StatelessWidget {
         ]
       ),
       child: Image(
-        image: NetworkImage(chat.store.photoUrl),
+        image: (NetworkImage(chat.store?.photoUrl??'')), // TODO: 
         fit: BoxFit.cover,
       ),
     );
+
+    List<MessageModel> storeMessages = chat.messages.where((element) => element.fromStore).toList();
 
     final info = Container(
       child: Column(
         crossAxisAlignment: CrossAxisAlignment.start,
         children: [
           Text(
-            chat.store.publicName,
+            chat.store?.publicName ?? 'Tienda desconocida',
             style: GoogleFonts.montserrat(
               fontWeight: FontWeight.w500
             ),
             textAlign: TextAlign.start,
           ),
           Text(
-            chat.store.publicName,
-            style: GoogleFonts.montserrat(),
+            storeMessages.length > 0? storeMessages.last.message : 'No ha respondido aún',
+            style: GoogleFonts.montserrat(
+              fontStyle: storeMessages.length > 0? FontStyle.normal : FontStyle.italic,
+              fontWeight: storeMessages.length > 0? FontWeight.w400 : FontWeight.w300
+            ),
             textAlign: TextAlign.start,
           ),
         ],
       ),
     );
 
-    final status = Container(
+    final status = storeMessages.length > 0 && storeMessages.last.date.isAfter(chat.lastSeenDate)? Container(
       width: 10,
       height: 10,
       decoration: BoxDecoration(
         shape: BoxShape.circle,
         color: EcoAppColors.RED_COLOR
       ),
-    );
+    ) : Container();
 
     return InkWell(
       borderRadius: BorderRadius.circular(20),

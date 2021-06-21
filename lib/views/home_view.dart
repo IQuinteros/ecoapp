@@ -1,41 +1,97 @@
+import 'dart:async';
+
 import 'package:flutter/material.dart';
+import 'package:flutter_bloc/flutter_bloc.dart';
+import 'package:flutter_ecoapp/bloc/app_bloc.dart';
+import 'package:flutter_ecoapp/bloc/article_bloc.dart';
+import 'package:flutter_ecoapp/bloc/profile_bloc.dart';
+import 'package:flutter_ecoapp/bloc/user_bloc.dart';
+import 'package:flutter_ecoapp/models/article.dart';
 import 'package:flutter_ecoapp/views/debug/debug.dart';
 import 'package:flutter_ecoapp/views/favorites.view.dart';
+import 'package:flutter_ecoapp/views/history_view.dart';
+import 'package:flutter_ecoapp/views/style/colors.dart';
 import 'package:flutter_ecoapp/views/style/text_style.dart';
+import 'package:flutter_ecoapp/views/widgets/articles/article_card.dart';
+import 'package:flutter_ecoapp/views/widgets/articles/future_articles.dart';
 import 'package:flutter_ecoapp/views/widgets/categories/category_box.dart';
 import 'package:flutter_ecoapp/views/widgets/categories/category_list_item.dart';
+import 'package:flutter_ecoapp/views/widgets/home/featured_product.dart';
+import 'package:flutter_ecoapp/views/widgets/index_app_bar.dart';
 
 import 'package:flutter_ecoapp/views/widgets/mini_button.dart';
 import 'package:flutter_ecoapp/views/widgets/search_bar.dart';
 import 'package:flutter_swiper_null_safety/flutter_swiper_null_safety.dart';
 
 
-class HomeView extends StatelessWidget {
+class HomeView extends StatefulWidget {
 
   @override
+  _HomeViewState createState() => _HomeViewState();
+}
+
+class _HomeViewState extends State<HomeView> {
+  @override
   Widget build(BuildContext context) {
-    return getContent(context);
+    return RefreshIndicator(
+      child: CustomScrollView(
+        slivers: [
+          IndexAppBar(),
+          SliverList(
+            delegate: SliverChildListDelegate(
+              [
+                getContent(context)
+              ]
+            ),
+          )
+        ],
+      ),
+      onRefresh: () => Future.delayed(Duration(milliseconds: 100), () => setState(() {})),
+    );
+    
   }
 
   Widget getContent(BuildContext context){
-    final featuredProducts = EcoAppDebug.getFeaturedProducts();
+    final articleBloc = BlocProvider.of<ArticleBloc>(context);
+    final profileBloc = BlocProvider.of<ProfileBloc>(context);
+    final appBloc = BlocProvider.of<AppBloc>(context);
 
-    final scrollable = Container(
+    final futureScrollable = FutureBuilder(
+      future: articleBloc.getArticlesFromSearch("", profile: profileBloc.currentProfile),
+      initialData: <ArticleModel>[],
+      builder: (BuildContext context, AsyncSnapshot<List<ArticleModel>> snapshot) {
+        switch(snapshot.connectionState){
+          case ConnectionState.done:
+            if(!snapshot.hasData) return Icon(Icons.error);
+            return Swiper(
+              itemCount: snapshot.data!.length,
+              itemBuilder: (BuildContext context, int index){
+                try{
+                  final product = FeaturedProduct(article: snapshot.data![index]);
+                  return product;
+                }catch(e, stacktrace){
+                  print(e);
+                  print(stacktrace);
+                }
+                return Container();
+              },
+              loop: false,
+              viewportFraction: 0.9,
+              scale: 0.5,
+              autoplay: true,
+              pagination: new SwiperPagination(
+                builder: SwiperPagination.rect
+              ),
+            );
+          default: return Center(child: CircularProgressIndicator());
+        }
+      },
+    );
+
+    final futureContainer = Container(
       width: MediaQuery.of(context).size.width,
       height: 290.0,
-      child: Swiper(
-        itemCount: featuredProducts.length,
-        itemBuilder: (BuildContext context, int index){
-          return featuredProducts[index];
-        },
-        loop: false,
-        viewportFraction: 0.9,
-        scale: 0.9,
-        autoplay: true,
-        pagination: new SwiperPagination(
-          builder: SwiperPagination.rect
-        ),
-      ),
+      child: futureScrollable,
       margin: EdgeInsets.only(
         top: 20.0
       ),
@@ -90,15 +146,28 @@ class HomeView extends StatelessWidget {
       }
     );
 
-    final historyList = EcoAppDebug.getArticleItems(initialId: 1);
-    final favoriteList = EcoAppDebug.getArticleItems(initialId: 5);
+    final favoritesList = FutureArticles(
+      notFoundMessage: 'No tienes artículos en "Favoritos"', 
+      getFuture: (loaded) => profileBloc.getFavoriteArticles(
+        quantity: 5
+      ),
+      clearOnRefresh: true,
+    );
+
+    final mainListArticles = FutureArticles(
+      notFoundMessage: '', 
+      getFuture: (loaded) => articleBloc.getArticlesFromSearch('', 
+        profile: profileBloc.currentProfile,
+        quantity: 5,
+      ),
+      clearOnRefresh: true,
+    );
 
     final column = Column(
       crossAxisAlignment: CrossAxisAlignment.start,
       children: [
-        SearchBar(),
         EcoTitle(text: 'Productos Destacados'),
-        scrollable,
+        futureContainer,
         EcoTitle(
           text: 'Categorías',
           rightButton: MiniButton(
@@ -108,21 +177,21 @@ class HomeView extends StatelessWidget {
         ),
         categoryView,
         EcoTitle(
+          text: 'Novedades',
+        ),
+        mainListArticles,
+        profileBloc.currentProfile != null? EcoTitle(
           text: 'Favoritos',
           rightButton: MiniButton(
             text: 'Ver mas',
-            action: () => Navigator.push(context, MaterialPageRoute(builder: (__) => FavoritesView())),
+            action: () async {
+              var value = await Navigator.push(context, MaterialPageRoute(builder: (__) => FavoritesView()));
+              if(value != null) appBloc.mainEcoNavBar.onTap(value);
+            },
           )
-        ),
-        favoriteList,
-        EcoTitle(
-          text: 'Historial',
-          rightButton: MiniButton(
-            text: 'Ver mas',
-            action: (){},
-          )
-        ),
-        historyList
+        ) : Container(),
+        profileBloc.currentProfile != null? favoritesList : Container(),
+        SizedBox(height: 40.0)
       ],
     );
 

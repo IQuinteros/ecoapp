@@ -1,4 +1,5 @@
 import 'package:flutter/material.dart';
+import 'package:flutter/services.dart';
 import 'package:google_fonts/google_fonts.dart';
 
 class NormalInput <T> extends StatelessWidget {
@@ -15,7 +16,11 @@ class NormalInput <T> extends StatelessWidget {
     this.validator, 
     this.isPassword = false,
     this.future,
-    this.onDoneSnapshot
+    this.onDoneSnapshot,
+    this.inputFormatters,
+    this.maxLength,
+    this.maxLines,
+    this.initialData
   }) : super(key: key);
 
   final String header;
@@ -29,7 +34,11 @@ class NormalInput <T> extends StatelessWidget {
   final TextEditingController? controller;
   final String? Function(String?)? validator;
   final Future<T>? future;
-  final Function(T?)? onDoneSnapshot;
+  final Function(T?, bool stillLoading)? onDoneSnapshot;
+  final List<TextInputFormatter>? inputFormatters;
+  final int? maxLength;
+  final int? maxLines;
+  final T? initialData;
 
   @override
   Widget build(BuildContext context) {
@@ -37,10 +46,14 @@ class NormalInput <T> extends StatelessWidget {
     if(future != null){
       return FutureBuilder(
         future: future,
+        initialData: initialData,
         builder: (BuildContext context, AsyncSnapshot<T> snapshot){
           if(snapshot.connectionState == ConnectionState.done){
-            print(snapshot.data);
-            if(onDoneSnapshot != null) onDoneSnapshot!(snapshot.data);
+            onDoneSnapshot?.call(snapshot.data, false);
+          }
+
+          if(snapshot.connectionState == ConnectionState.waiting && initialData != null){
+            onDoneSnapshot?.call(snapshot.data, true);
           }
 
           return _InputContent(
@@ -49,12 +62,15 @@ class NormalInput <T> extends StatelessWidget {
             readOnly: readOnly, 
             validator: validator, 
             isPassword: isPassword, 
-            hint: snapshot.connectionState == ConnectionState.done? hint : 'Cargando', 
+            hint: initialData != null? hint : snapshot.connectionState == ConnectionState.done? hint : 'Cargando', 
             header: snapshot.connectionState == ConnectionState.done? header : 'Cargando',
             icon: icon, 
             onTap: onTap, 
+            inputFormatters: inputFormatters,
             onChanged: onChanged,
-            enabled: snapshot.connectionState == ConnectionState.done,
+            enabled: initialData != null? true : snapshot.connectionState == ConnectionState.done,
+            maxLength: maxLength,
+            maxLines: maxLines
           );
         }
       );
@@ -71,7 +87,10 @@ class NormalInput <T> extends StatelessWidget {
         header: header, 
         icon: icon, 
         onTap: onTap, 
-        onChanged: onChanged
+        inputFormatters: inputFormatters,
+        onChanged: onChanged,
+        maxLength: maxLength,
+        maxLines: maxLines
       );
     }
   }
@@ -90,7 +109,10 @@ class _InputContent extends StatelessWidget {
     required this.icon,
     required this.onTap,
     required this.onChanged,
-    required this.enabled
+    required this.enabled,
+    required this.inputFormatters,
+    required this.maxLength,
+    required this.maxLines
   }) : super(key: key);
 
   final TextEditingController? controller;
@@ -104,6 +126,9 @@ class _InputContent extends StatelessWidget {
   final Function()? onTap;
   final Function(String)? onChanged;
   final bool? enabled;
+  final List<TextInputFormatter>? inputFormatters;
+  final int? maxLength;
+  final int? maxLines;
 
   @override
   Widget build(BuildContext context) {
@@ -113,6 +138,8 @@ class _InputContent extends StatelessWidget {
       ),
       child: TextFormField(
         controller: controller,
+        inputFormatters: inputFormatters,
+        maxLength: maxLength,
         keyboardType: type,
         style: GoogleFonts.montserrat(),
         readOnly: readOnly,
@@ -126,14 +153,15 @@ class _InputContent extends StatelessWidget {
           hintText: hint,
           contentPadding: EdgeInsets.symmetric(
             horizontal: 20.0,
-            vertical: 5.0
+            vertical: 15.0
           ),
           floatingLabelBehavior: FloatingLabelBehavior.auto,
           labelText: header,
-          prefixIcon: Icon(icon)
+          prefixIcon: Icon(icon),
         ),
         onTap: onTap,
         onChanged: onChanged,
+        maxLines: maxLines,
       ),
     );
   }

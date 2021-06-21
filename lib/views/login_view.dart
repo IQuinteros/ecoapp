@@ -2,6 +2,7 @@ import 'package:awesome_dialog/awesome_dialog.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter_bloc/flutter_bloc.dart';
 import 'package:flutter_ecoapp/bloc/profile_bloc.dart';
+import 'package:flutter_ecoapp/bloc/user_bloc.dart';
 import 'package:flutter_ecoapp/models/profile.dart';
 import 'package:flutter_ecoapp/views/style/colors.dart';
 import 'package:flutter_ecoapp/views/widgets/bottom_nav_bar.dart';
@@ -42,12 +43,7 @@ class LoginView extends StatelessWidget {
           },
         ),
       ),
-      body: SafeArea(child: Form(key: _formKey, child: mainContent(context))),
-      bottomNavigationBar: EcoBottomNavigationBar(
-        currentIndex: 0,
-          onTap: (value){
-        },
-      )
+      body: SafeArea(child: Center(child: Form(key: _formKey, child: mainContent(context)))),
     );
   }
 
@@ -60,6 +56,20 @@ class LoginView extends StatelessWidget {
         ),
         child: Column(
           children: [
+            Text(
+              '¡Bienvenido!',
+              style: GoogleFonts.montserrat(
+                fontSize: 20.0,
+                fontWeight: FontWeight.w600
+              ),
+            ),
+            SizedBox(height: 20.0),
+            Text(
+              'Inicia sesión y disfruta la experiencia completa de comprar en ECOmercio',
+              style: GoogleFonts.montserrat(),
+              textAlign: TextAlign.center
+            ),
+            SizedBox(height: 20.0),
             NormalInput(
               header: 'Email', 
               hint: 'Ingresa tu email', 
@@ -79,6 +89,7 @@ class LoginView extends StatelessWidget {
                 ? 'Debe ingresar su contraseña'
                 : null,
               isPassword: true,
+              maxLines: 1,
             ),
             Container(
               margin: EdgeInsets.symmetric(
@@ -148,6 +159,9 @@ class LoginView extends StatelessWidget {
         )..show();
       }
       else{
+        final userBloc = BlocProvider.of<UserBloc>(context);
+        userBloc.clearSearchs();
+
         Navigator.pop(context);
         ScaffoldMessenger.of(context).showSnackBar(SnackBar(
           backgroundColor: EcoAppColors.MAIN_DARK_COLOR,

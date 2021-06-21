@@ -1,4 +1,6 @@
 import 'package:flutter/material.dart';
+import 'package:flutter_bloc/flutter_bloc.dart';
+import 'package:flutter_ecoapp/bloc/profile_bloc.dart';
 import 'package:flutter_ecoapp/models/article.dart';
 import 'package:flutter_ecoapp/utils/currency_util.dart';
 import 'package:flutter_ecoapp/views/article_view.dart';
@@ -12,13 +14,13 @@ class ArticleCard extends StatefulWidget {
   final String? title;
   final EcoIndicator? ecoIndicator;
   final double? price;
+  final Function()? onLongPress;
 
-  final bool favorite;
   final String extraTag;
 
-  const ArticleCard({Key? key, required this.article, this.favorite = false, this.ecoIndicator, this.price, this.title, this.extraTag = ''}) : super(key: key);
+  const ArticleCard({Key? key, required this.article, this.ecoIndicator, this.price, this.title, this.onLongPress, this.extraTag = ''}) : super(key: key);
 
-  const ArticleCard.fromPurchase({Key? key, this.article, this.favorite = false, required this.title, required this.ecoIndicator, required this.price, this.extraTag = ''}): super(key: key);
+  const ArticleCard.fromPurchase({Key? key, this.article, required this.title, this.onLongPress, required this.ecoIndicator, required this.price, this.extraTag = ''}): super(key: key);
 
   @override
   _ArticleCardState createState() => _ArticleCardState();
@@ -30,12 +32,13 @@ class _ArticleCardState extends State<ArticleCard> {
   double shadowOpacity = 0.20;
   @override
   Widget build(BuildContext context) {
+    final profileBloc = BlocProvider.of<ProfileBloc>(context);
 
     if(widget.article != null)
       widget.article!.tag = 'article-card-${widget.extraTag}';
     
-    ImageProvider<Object> imageData = AssetImage('assets/png/no-image.png');
-    if(widget.article != null)
+    ImageProvider<Object> imageData = AssetImage('assets/png/no-image-bg.png');
+    if(widget.article != null && widget.article!.photos.length > 0)
       imageData = NetworkImage(widget.article!.photos[0].photoUrl);
 
     final image = Image(
@@ -78,8 +81,8 @@ class _ArticleCardState extends State<ArticleCard> {
             maxLines: 3,
           ),
         ),
-        FavoriteButton(
-          favorite: widget.favorite,
+        widget.article != null? FavoriteButton(
+          favorite: widget.article!.favorite,
           canChangeState: () {
             if(widget.article == null){
               ScaffoldMessenger.of(context).removeCurrentSnackBar();
@@ -93,7 +96,13 @@ class _ArticleCardState extends State<ArticleCard> {
               return true;
             }
           },
-        )
+          onChanged: (value){
+            // Add favorite
+            if(widget.article != null){
+              profileBloc.setFavoriteArticle(widget.article!, value, (ready) {});
+            }
+          },
+        ) : Container()
       ],
     );
 
@@ -135,9 +144,10 @@ class _ArticleCardState extends State<ArticleCard> {
       ),
     );
 
-    // TODO: Add quantity
     final card = Card(
+      elevation: 0,
       margin: EdgeInsets.zero,
+      color: Colors.transparent,
       clipBehavior: Clip.antiAlias,
       shape: RoundedRectangleBorder(
         borderRadius: BorderRadius.circular(20.0)
@@ -158,42 +168,50 @@ class _ArticleCardState extends State<ArticleCard> {
       duration: Duration(milliseconds: 100),
       decoration: BoxDecoration(
         borderRadius: BorderRadius.circular(20.0),
-        boxShadow: [
+         boxShadow: [
           BoxShadow(
             offset: Offset(0, 1),
             blurRadius: blurRadius,
             spreadRadius: 2.0,
             color: Colors.black.withOpacity(shadowOpacity)
           ),
-        ]
+        ] 
       ),
+      clipBehavior: Clip.antiAlias,
       margin: EdgeInsets.only(
         left: 10.0,
         right: 10.0,
         bottom: 8.0
       ),
-      child: InkWell(
-        child: card,
-        borderRadius: BorderRadius.circular(20.0),
-        onTap: (){
-          if(widget.article != null)
-            Navigator.push(context, MaterialPageRoute(builder: (__) => ArticleView(article: widget.article!,)));
-          else
-          {
-            ScaffoldMessenger.of(context).removeCurrentSnackBar();
-            ScaffoldMessenger.of(context).showSnackBar(
-              SnackBar(
-                content: Text(
-                  'El artículo no ha sido encontrado', // TODO: Open dialog with little information
-                  style: GoogleFonts.montserrat(),
-                ),
-                backgroundColor: EcoAppColors.MAIN_COLOR,
-                duration: Duration(seconds: 2),
-              ),
-            );
-          }
-        },
-        onHover: onHover
+      child: Container(
+        color: Colors.white,
+        child: Material(
+          color: Colors.transparent,
+          child: InkWell(
+            child: card,
+            borderRadius: BorderRadius.circular(20.0),
+            onLongPress: widget.onLongPress,
+            onTap: (){
+              if(widget.article != null)
+                Navigator.push(context, MaterialPageRoute(builder: (__) => ArticleView(article: widget.article!,)));
+              else
+              {
+                ScaffoldMessenger.of(context).removeCurrentSnackBar();
+                ScaffoldMessenger.of(context).showSnackBar(
+                  SnackBar(
+                    content: Text(
+                      'El artículo no está disponible', // TODO: Open dialog with little information
+                      style: GoogleFonts.montserrat(),
+                    ),
+                    backgroundColor: EcoAppColors.MAIN_DARK_COLOR,
+                    duration: Duration(seconds: 2),
+                  ),
+                );
+              }
+            },
+            onHover: onHover
+          ),
+        ),
       ),
     );
   }
