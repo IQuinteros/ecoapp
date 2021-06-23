@@ -4,6 +4,7 @@ import 'package:flutter_ecoapp/bloc/article_bloc.dart';
 import 'package:flutter_ecoapp/bloc/profile_bloc.dart';
 import 'package:flutter_ecoapp/bloc/user_bloc.dart';
 import 'package:flutter_ecoapp/models/article.dart';
+import 'package:flutter_ecoapp/models/store.dart';
 import 'package:flutter_ecoapp/views/debug/debug.dart';
 import 'package:flutter_ecoapp/views/widgets/articles/article_card.dart';
 import 'package:flutter_ecoapp/views/widgets/articles/future_articles.dart';
@@ -15,8 +16,9 @@ import 'package:google_fonts/google_fonts.dart';
 class ResultView extends StatefulWidget {
 
   final String? searching;
+  final StoreModel? storeFilter;
 
-  const ResultView({Key? key, this.searching}) : super(key: key);
+  const ResultView({Key? key, this.searching, this.storeFilter}) : super(key: key);
 
   @override
   _ResultViewState createState() => _ResultViewState();
@@ -55,7 +57,8 @@ class _ResultViewState extends State<ResultView> {
             children: [
               Expanded(
                 child: Text(
-                  "Resultados de la búsqueda: '${widget.searching}'",
+                  (widget.searching != null || widget.searching!.isEmpty? "Resultados de búsqueda" : "Resultados de la búsqueda: '${widget.searching}'")
+                  + ((widget.storeFilter != null)? " en la tienda '${widget.storeFilter!.publicName}'" : ''),
                   style: GoogleFonts.montserrat(
                     fontWeight: FontWeight.w300
                   ),
@@ -70,6 +73,7 @@ class _ResultViewState extends State<ResultView> {
             widget.searching ?? '', 
             profile: profileBloc.currentProfile,
             initial: loaded.length,
+            store: widget.storeFilter,
             useFilter: true
           );}, 
           notFoundMessage: 'No se han encontrado artículos para tu búsqueda :c',
