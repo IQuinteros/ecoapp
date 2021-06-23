@@ -46,7 +46,7 @@ class _ArticleViewState extends State<ArticleView> {
   @override
   Widget build(BuildContext context) {
     if(refreshArticle == null) refreshArticle = widget.article;
-      
+
     return Scaffold(
       body: getContent(context),
     );
@@ -186,7 +186,7 @@ class _ArticleMainContent extends StatelessWidget {
   const _ArticleMainContent({
     Key? key,
     required this.article,
-    required this.onNewQuestion
+    required this.onNewQuestion,
   }) : super(key: key);
 
   final ArticleModel article;
@@ -218,7 +218,7 @@ class _ArticleContent extends StatelessWidget {
   _ArticleContent({
     Key? key,
     required this.article,
-    required this.onNewQuestion
+    required this.onNewQuestion,
   }) : super(key: key);
 
   final ArticleModel article;
@@ -281,10 +281,13 @@ class _ArticleContent extends StatelessWidget {
           ],
         ),
       ),
-      onTap: () => Navigator.push(
-        context, 
-        MaterialPageRoute(builder: (__) => OpinionsView(article: article,))
-      )
+      onTap: () {
+        FocusScope.of(context).unfocus();
+        Navigator.push(
+          context, 
+          MaterialPageRoute(builder: (__) => OpinionsView(article: article,))
+        );
+      }
     );
 
     // Only display when past price is higher than 0, and is higher than the current price
@@ -315,7 +318,10 @@ class _ArticleContent extends StatelessWidget {
     );
 
     final storeText = InkWell(
-      onTap: () => Navigator.push(context, MaterialPageRoute(builder: (__) => StoreView(store: article.store!))), // TODO: Go to store
+      onTap: () {
+        FocusScope.of(context).unfocus();
+        Navigator.push(context, MaterialPageRoute(builder: (__) => StoreView(store: article.store!)));
+      },
       child: Padding(
         padding: EdgeInsets.symmetric(
           horizontal: 20.0
@@ -369,7 +375,7 @@ class _ArticleContent extends StatelessWidget {
         Divider(thickness: 1,),
         StoreDescriptionSection(article: article, store: article.store!),
         Divider(thickness: 1,),
-        QuestionsSection(article: article, onNewQuestion: onNewQuestion,)
+        QuestionsSection(article: article, onNewQuestion: onNewQuestion)
       ]
     );
   }

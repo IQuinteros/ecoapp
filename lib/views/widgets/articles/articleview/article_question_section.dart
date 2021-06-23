@@ -14,12 +14,13 @@ class QuestionsSection extends StatelessWidget {
   QuestionsSection({
     Key? key,
     required this.article,
-    required this.onNewQuestion
+    required this.onNewQuestion,
   }) : super(key: key);
 
   final ArticleModel article;
   final _formKey = GlobalKey<FormState>();
   final Function() onNewQuestion;
+  final FocusNode questionInputFocus = FocusNode();
 
   final TextEditingController questionController = TextEditingController();
 
@@ -54,11 +55,9 @@ class QuestionsSection extends StatelessWidget {
             fontSize: 14
           )
         ),
-        readOnly: false,
         controller: questionController,
-        onTap: (){
-          // TODO: Open dialog
-        },
+        focusNode: questionInputFocus,
+        maxLength: 150,
         validator: (value) => value == null || value.isEmpty? 'Escribe la pregunta' : null,
       ),
     );

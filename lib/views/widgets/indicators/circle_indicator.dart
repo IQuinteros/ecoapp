@@ -43,7 +43,7 @@ class CircleIndicator extends StatelessWidget {
   }
 
   showIndicatorDialog(BuildContext context){
-
+    FocusScope.of(context).unfocus();
     final upContainer = Container(
       width: double.infinity,
       height: 50.0,
