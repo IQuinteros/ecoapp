@@ -66,7 +66,8 @@ class _MainViewState extends State<MainView> {
     appBloc.mainEcoNavBar = bottomNavBar;
 
     CartBloc cartBloc = BlocProvider.of<CartBloc>(context);
-    cartBloc.loadCart();
+    final profileBloc = BlocProvider.of<ProfileBloc>(context);
+    cartBloc.loadCart(profile: profileBloc.currentProfile);
 
     return Scaffold(
       body: SafeArea(child: getContent(context)),

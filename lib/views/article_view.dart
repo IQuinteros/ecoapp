@@ -424,6 +424,7 @@ class __AddToCartButtonState extends State<_AddToCartButton> {
 
   Future<void> _addToCart(BuildContext context) async {
     final cartBloc = BlocProvider.of<CartBloc>(context);
+    final profileBloc = BlocProvider.of<ProfileBloc>(context);
     final result = await cartBloc.addArticleToCart(widget.article);
     if(result != null){
       print(result.id);
@@ -441,7 +442,7 @@ class __AddToCartButtonState extends State<_AddToCartButton> {
       ),
     ));  
 
-    cartBloc.loadCart();
+    cartBloc.loadCart(profile: profileBloc.currentProfile);
   }
 
   void _goToCartView(BuildContext context){

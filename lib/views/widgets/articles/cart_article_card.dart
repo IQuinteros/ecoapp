@@ -4,6 +4,7 @@ import 'package:awesome_dialog/awesome_dialog.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter_bloc/flutter_bloc.dart';
 import 'package:flutter_ecoapp/bloc/cart_bloc.dart';
+import 'package:flutter_ecoapp/bloc/profile_bloc.dart';
 import 'package:flutter_ecoapp/models/article.dart';
 import 'package:flutter_ecoapp/utils/currency_util.dart';
 import 'package:flutter_ecoapp/views/article_view.dart';
@@ -226,17 +227,19 @@ class _CartArticleCardState extends State<CartArticleCard> {
       enableDrag: false
     );
     
+    final profileBloc = BlocProvider.of<ProfileBloc>(context);
     final cartBloc = BlocProvider.of<CartBloc>(context);
-    await cartBloc.updateArticleToCart(widget.article, _tempQuantity);
+    await cartBloc.updateArticleToCart(widget.article, _tempQuantity, profile: profileBloc.currentProfile);
     setState(() => _quantity = _tempQuantity);
   }
 
   void _deleteArticleFromCart(BuildContext context) async {
+    final profileBloc = BlocProvider.of<ProfileBloc>(context);
     final cartBloc = BlocProvider.of<CartBloc>(context);
     setState(() {
       _deleted = true;
     }); 
-    await cartBloc.removeArticleToCart(widget.article);
+    await cartBloc.removeArticleToCart(widget.article, profile: profileBloc.currentProfile);
     widget.onDelete();
   }
 }

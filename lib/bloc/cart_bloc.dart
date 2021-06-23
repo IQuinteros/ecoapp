@@ -6,6 +6,7 @@ import 'package:flutter_ecoapp/models/cart.dart';
 import 'package:flutter_ecoapp/models/category.dart';
 import 'package:flutter_ecoapp/models/district.dart';
 import 'package:flutter_ecoapp/models/opinion.dart';
+import 'package:flutter_ecoapp/models/profile.dart';
 import 'package:flutter_ecoapp/models/store.dart';
 import 'package:flutter_ecoapp/providers/article_api.dart';
 import 'package:flutter_ecoapp/providers/sqlite/cart_local_api.dart';
@@ -22,17 +23,17 @@ class CartBloc extends BaseBloc<CartArticleModel>{
 
   CartModel loadedCart = CartModel(articles: []);
 
-  Future<CartModel> loadCart({bool onlyLocal = false}) async {
+  Future<CartModel> loadCart({bool onlyLocal = false, required ProfileModel? profile}) async {
     List<CartArticleModel> articles = await cartLocalAPI.select();
-    await loadRemoteArticles(articles);
+    if(articles.length > 0) await loadRemoteArticles(articles, profile);
     return loadedCart;
   }
 
-  Future<void> loadRemoteArticles(List<CartArticleModel> cartArticles) async {
+  Future<void> loadRemoteArticles(List<CartArticleModel> cartArticles, ProfileModel? profile) async {
     List<ArticleModel> articleModels = await articleAPI.selectAll(
       params: {
-        'id_list': _getIdsFromArticles(cartArticles)
-      }
+        'id_list': _getIdsFromArticles(cartArticles),
+      }..addAll(profile != null? {'profile_id': profile.id} : {})
     );
 
     // Update articles
@@ -68,16 +69,16 @@ class CartBloc extends BaseBloc<CartArticleModel>{
   }
 
   Map<ArticleModel, Timer?> _updateArticleTimer = {};
-  Future<CartArticleModel?> updateArticleToCartTimer(ArticleModel article, int newQuantity) async {
+  Future<CartArticleModel?> updateArticleToCartTimer(ArticleModel article, int newQuantity, {required ProfileModel? profile}) async {
     if(_updateArticleTimer[article] != null && _updateArticleTimer[article]!.isActive) _updateArticleTimer[article]!.cancel();
 
     _updateArticleTimer[article] = Timer(Duration(milliseconds: 100), () {
-      updateArticleToCart(article, newQuantity);
+      updateArticleToCart(article, newQuantity, profile: profile);
       _updateArticleTimer[article] = null;
     });
   }
 
-  Future<void> updateArticleToCart(ArticleModel article, int quantity) async {
+  Future<void> updateArticleToCart(ArticleModel article, int quantity, {required ProfileModel? profile}) async {
     final list = (await cartLocalAPI.select()).where((element) => element.articleId == article.id).toList();
     if(list.length <= 0) return;
     final item = list[0];
@@ -85,22 +86,22 @@ class CartBloc extends BaseBloc<CartArticleModel>{
     await cartLocalAPI.update(
       item..quantity = quantity
     );
-    await loadCart(onlyLocal: true);
+    await loadCart(onlyLocal: true, profile: profile);
   }
 
   Future<bool> articleExistsInCart(ArticleModel article) async => (await cartLocalAPI.select()).where((element) => element.articleId == article.id).length > 0;
 
-  Future<void> removeArticleToCart(ArticleModel article) async {
+  Future<void> removeArticleToCart(ArticleModel article, {required ProfileModel? profile}) async {
     final list = (await cartLocalAPI.select()).where((element) => element.articleId == article.id).toList();
     if(list.length <= 0) return;
     final item = list[0];
     await cartLocalAPI.delete(item.id);
-    await loadCart(onlyLocal: true);
+    await loadCart(onlyLocal: true, profile: profile);
   }
 
   Future<void> clearCart() async{
     await cartLocalAPI.clear();
-    await loadCart();
+    await loadCart(profile: null);
   }
 
   List<int> _getIdsFromArticles(List<CartArticleModel> articles) => articles.map<int>((e) => e.articleId).toList();
