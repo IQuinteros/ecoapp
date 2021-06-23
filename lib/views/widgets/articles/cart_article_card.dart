@@ -307,7 +307,7 @@ class __QuantitySelectorState extends State<_QuantitySelector> {
       ],
     );
 
-    final lowSize = Column(
+    final lowSize = ([bool includeBackBtn = true]) => Column(
       mainAxisSize: MainAxisSize.min,
       crossAxisAlignment: CrossAxisAlignment.stretch,
       children: [
@@ -317,8 +317,8 @@ class __QuantitySelectorState extends State<_QuantitySelector> {
           mainAxisSize: MainAxisSize.max,
           children: [
             Expanded(child: numberPicker, flex: 2),
-            SizedBox(height: 20.0,),
-            Expanded(child: backBtn)
+            includeBackBtn? SizedBox(height: 20.0,) : Container(),
+            includeBackBtn? Expanded(child: backBtn) : Container()
           ],
         )
       ],
@@ -332,7 +332,7 @@ class __QuantitySelectorState extends State<_QuantitySelector> {
         ),
         child: LayoutBuilder(
           builder: (context, constraints){
-            if(constraints.maxHeight <= 250) return lowSize;
+            if(constraints.maxHeight <= 250) return lowSize(constraints.maxWidth > 380);
             else return maxSize;
           },
         ),
