@@ -47,6 +47,12 @@ class _ChatViewState extends State<ChatView> {
   }
 
   @override
+  void dispose() {
+    updateTimer?.cancel();
+    super.dispose();
+  }
+
+  @override
   Widget build(BuildContext context) {
 
     final chatBloc = BlocProvider.of<ChatBloc>(context);
@@ -280,6 +286,9 @@ class _ChatViewState extends State<ChatView> {
         return _ModalMessageOptions(
           message: message,
           onDelete: () {
+            setState(() {
+              displayLoading = true;
+            });
             updateChat(context, chatToUse);
             Navigator.pop(context);
           },
