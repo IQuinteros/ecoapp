@@ -158,7 +158,7 @@ class QuestionsSection extends StatelessWidget {
   void displayProfileMessage(BuildContext context){
     ScaffoldMessenger.of(context).removeCurrentSnackBar();
     ScaffoldMessenger.of(context).showSnackBar(SnackBar(
-      content: Text('Debe iniciar sesión para reservar el pedido'),
+      content: Text('Debe iniciar sesión para enviar una pregunta'),
       backgroundColor: EcoAppColors.MAIN_DARK_COLOR,
       action: SnackBarAction(
         label: "Iniciar sesión",
