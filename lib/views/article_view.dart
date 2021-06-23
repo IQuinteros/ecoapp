@@ -46,9 +46,12 @@ class _ArticleViewState extends State<ArticleView> {
   @override
   Widget build(BuildContext context) {
     if(refreshArticle == null) refreshArticle = widget.article;
-
-    return Scaffold(
-      body: getContent(context),
+    return Stack(
+      children: [
+        Scaffold(
+          body: getContent(context),
+        ),
+      ],
     );
   }
 
@@ -116,66 +119,107 @@ class _ArticleAppBar extends StatelessWidget {
       elevation: 10.0,
       backgroundColor: EcoAppColors.MAIN_DARK_COLOR,
       foregroundColor: Colors.white,
-      expandedHeight: article.photos.length > 0? 250.0 : null,
+      expandedHeight: article.photos.length > 0? 300.0 : null,
       floating: false,
       pinned: true,
-      leading: IconButton(
-        icon: Icon(
-          Icons.arrow_back_ios_rounded,
-          color: Colors.white,
-        ),
-        onPressed: () => Navigator.pop(context),
-      ),
-      actions: [
-        IconButton(
+      leading: Container(
+        child: IconButton(
           icon: Icon(
-            Icons.share,
+            Icons.arrow_back_ios_rounded,
             color: Colors.white,
           ),
-          onPressed: (){
-            Share.share(
-              '¡Disponible en Ecomercio! ${article.title} a solo \$${CurrencyUtil.formatToCurrencyString(article.price.toInt())}'
-            );
-          },
+          onPressed: () => Navigator.pop(context),
         ),
-        FavoriteButton(favorite: article.favorite, disabledColor: Colors.white,
-          onChanged: (value){
-            // Add favorite
-            profileBloc.setFavoriteArticle(article, value, (ready) {});
-          },
-        )
-      ],
+      ),
       title: Text(
         article.title,
         style: TextStyle(
+          fontSize: 17,
           color: Colors.white,
           shadows: [
             Shadow(
               color: Colors.black,
+              blurRadius: 0
             )
-          ]
+          ],
         ),
+        overflow: TextOverflow.ellipsis,
       ),
+      actions: [
+        Container(
+          child: IconButton(
+            icon: Icon(
+              Icons.share,
+              color: Colors.white,
+            ),
+            onPressed: (){
+              Share.share(
+                '¡Disponible en Ecomercio! ${article.title} a solo \$${CurrencyUtil.formatToCurrencyString(article.price.toInt())}'
+              );
+            },
+          ),
+        ),
+        Container(
+          child: FavoriteButton(favorite: article.favorite, disabledColor: Colors.white,
+            onChanged: (value){
+              // Add favorite
+              profileBloc.setFavoriteArticle(article, value, (ready) {});
+            },
+          ),
+        )
+      ],
       stretch: true,
       forceElevated: true,
-      flexibleSpace: article.photos.length > 0? FlexibleSpaceBar(
-        centerTitle: false,
-        stretchModes: const <StretchMode>[
-          StretchMode.zoomBackground,
-          StretchMode.blurBackground,
-          StretchMode.fadeTitle,
-        ],
-        background: GestureDetector(
-          child: Hero( 
-            tag: article.tag,
-            child: Image(
-              image: NetworkImage(article.photos.length > 0? article.photos[0].photoUrl : ''),
-              height: 120,
-              width: 120,
-              fit: BoxFit.cover,
-            )
-          ),
-          onTap: () => Navigator.push(context, MaterialPageRoute(builder: (__) => ImageView(photos: article.photos, title: article.title,))),
+      flexibleSpace: article.photos.length > 0? Container(
+        clipBehavior: Clip.hardEdge,
+        decoration: BoxDecoration(),
+        child: Stack(
+          children: [
+            Expanded(
+              child: Container(
+                margin: EdgeInsets.only(
+                  top: 103
+                ),
+                child: FlexibleSpaceBar(
+                  collapseMode: CollapseMode.parallax,
+                  centerTitle: false,
+                  stretchModes: const <StretchMode>[
+                    StretchMode.zoomBackground,
+                    StretchMode.blurBackground,
+                    StretchMode.fadeTitle,
+                  ],
+                  background: Container(
+                    child: GestureDetector(
+                      child: Hero( 
+                        tag: article.tag,
+                        child: Image(
+                          image: NetworkImage(article.photos.length > 0? article.photos[0].photoUrl : ''),
+                          height: 120,
+                          width: 120,
+                          fit: BoxFit.cover,
+                        )
+                      ),
+                      onTap: () => Navigator.push(context, MaterialPageRoute(builder: (__) => ImageView(photos: article.photos, title: article.title,))),
+                    ),
+                  ),
+                ),
+              ),
+            ),
+            Container(
+              decoration: BoxDecoration(
+                color: EcoAppColors.MAIN_DARK_COLOR,
+                boxShadow: [
+                  BoxShadow(
+                    color: Colors.black.withOpacity(0.25),
+                    blurRadius: 3,
+                    spreadRadius: 3,
+                    offset: Offset(0, 3)
+                  )
+                ]
+              ),
+              height: 103,
+            ),
+          ],
         ),
       ) : null,
     );
