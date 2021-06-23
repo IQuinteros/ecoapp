@@ -195,6 +195,8 @@ class _ChatViewState extends State<ChatView> {
                     widget.messageController.text = '';
                     if(message.isEmpty) return;
 
+                    // TODO: Display loading
+
                     final result = await chatBloc.sendMessage(
                       message: MessageModel(
                         message: message,

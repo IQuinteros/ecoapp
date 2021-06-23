@@ -314,12 +314,14 @@ class _ModalArticleOptions extends StatelessWidget {
           children: [
             Row(
               children: [
-                Text(
-                  articlePurchase.title,
-                  style: GoogleFonts.montserrat(
-                    fontWeight: FontWeight.w500,
-                    fontSize: 18
-                  )
+                Expanded(
+                  child: Text(
+                    articlePurchase.title,
+                    style: GoogleFonts.montserrat(
+                      fontWeight: FontWeight.w500,
+                      fontSize: 18
+                    )
+                  ),
                 ),
               ],
             ),

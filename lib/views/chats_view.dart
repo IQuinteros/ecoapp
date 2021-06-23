@@ -69,27 +69,48 @@ class _ChatList extends StatelessWidget {
     final chatBloc = BlocProvider.of<ChatBloc>(context);
 
     return Container(
-      decoration: BoxDecoration(
-        color: Colors.white,
-        borderRadius: BorderRadius.circular(20.0),
-        boxShadow: [
-          BoxShadow(
-            color: Colors.black.withOpacity(0.3),
-            blurRadius: 3
-          )
-        ]
-      ),
-      margin: EdgeInsets.symmetric(
-        vertical: 20.0,
-        horizontal: 10
-      ),
       child: FutureBuilder(
         future: chatBloc.getProfileChats(profileBloc.currentProfile!),
         builder: (context, AsyncSnapshot<List<ChatModel>> snapshot){
           switch(snapshot.connectionState){
             case ConnectionState.done:
-              return Column(
-                children: snapshot.data!.map<_ChatItem>((e) => _ChatItem(chat: e)).toList()
+              if(!snapshot.hasData || snapshot.data!.length <= 0){
+                return Container(
+                  margin: EdgeInsets.only(
+                    top: 20.0
+                  ),
+                  child: Row(
+                    mainAxisSize: MainAxisSize.max,
+                    children: [
+                      Spacer(),
+                      Text(
+                        'No se han encontrado chats',
+                        style: GoogleFonts.montserrat(),
+                        textAlign: TextAlign.center,
+                      ),
+                      Spacer(),
+                    ],
+                  ),
+                );
+              }
+              return Container(
+                decoration: BoxDecoration(
+                  color: Colors.white,
+                  borderRadius: BorderRadius.circular(20.0),
+                  boxShadow: [
+                    BoxShadow(
+                      color: Colors.black.withOpacity(0.3),
+                      blurRadius: 3
+                    )
+                  ]
+                ),
+                margin: EdgeInsets.symmetric(
+                  vertical: 20.0,
+                  horizontal: 10
+                ),
+                child: Column(
+                  children: snapshot.data!.map<_ChatItem>((e) => _ChatItem(chat: e)).toList()
+                ),
               );
             default: return Container(
               padding: EdgeInsets.symmetric(vertical: 10.0),
