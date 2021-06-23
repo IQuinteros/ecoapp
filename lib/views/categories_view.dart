@@ -55,6 +55,8 @@ class CategoriesView extends StatelessWidget {
         _CategoryTile(context: context, category: CategoryModel(id: 1, title: 'Cuidado personal', createdDate: DateTime.now())),
         SizedBox(height: 20),
         _CategoryTile(context: context, category: CategoryModel(id: 1, title: 'Alimentos', createdDate: DateTime.now())),
+        SizedBox(height: 20),
+        _CategoryTile(context: context, category: CategoryModel(id: 1, title: 'Ropa', createdDate: DateTime.now())),
       ],
     );
 

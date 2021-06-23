@@ -21,9 +21,12 @@ class CategoryModel extends BaseModel
       case 'Hogar':
         return Icons.home;
       case 'Cuidado Personal':
+      case 'Cuidado personal':
         return Icons.person;
       case 'Alimentos':
         return Icons.food_bank;
+      case 'Ropa':
+        return Icons.checkroom_rounded;
       default: return Icons.ac_unit;
     }
   }
