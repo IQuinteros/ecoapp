@@ -162,30 +162,47 @@ class SearchFilter extends StatelessWidget {
                   textAlign: TextAlign.center
                 ),
                 SizedBox(height: 10.0),
-                Column(
-                  children: [
-                    ListTile(
-                      title: Text(
-                        'Hogar',
-                        style: GoogleFonts.montserrat(),
+                SingleChildScrollView(
+                  scrollDirection: Axis.vertical,
+                  child: Column(
+                    children: [
+                      ListTile(
+                        title: Text(
+                          'Sin seleccionar',
+                          style: GoogleFonts.montserrat(),
+                        ),
+                        onTap: () => Navigator.pop(context, ''),
                       ),
-                      onTap: () => Navigator.pop(context, 'Hogar'),
-                    ),
-                    ListTile(
-                      title: Text(
-                        'Cuidado personal',
-                        style: GoogleFonts.montserrat(),
+                      ListTile(
+                        title: Text(
+                          'Hogar',
+                          style: GoogleFonts.montserrat(),
+                        ),
+                        onTap: () => Navigator.pop(context, 'Hogar'),
                       ),
-                      onTap: () => Navigator.pop(context, 'Cuidado personal'),
-                    ),
-                    ListTile(
-                      title: Text(
-                        'Alimentos',
-                        style: GoogleFonts.montserrat(),
+                      ListTile(
+                        title: Text(
+                          'Cuidado personal',
+                          style: GoogleFonts.montserrat(),
+                        ),
+                        onTap: () => Navigator.pop(context, 'Cuidado personal'),
                       ),
-                      onTap: () => Navigator.pop(context, 'Alimentos'),
-                    )
-                  ],
+                      ListTile(
+                        title: Text(
+                          'Alimentos',
+                          style: GoogleFonts.montserrat(),
+                        ),
+                        onTap: () => Navigator.pop(context, 'Alimentos'),
+                      ),
+                      ListTile(
+                        title: Text(
+                          'Ropa',
+                          style: GoogleFonts.montserrat(),
+                        ),
+                        onTap: () => Navigator.pop(context, 'Ropa'),
+                      )
+                    ],
+                  ),
                 )
               ],
             ),
