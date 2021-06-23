@@ -11,8 +11,9 @@ import 'package:google_fonts/google_fonts.dart';
 class SearchBar extends StatelessWidget {
 
   final String? searching;
+  final Function()? onCloseFilter;
 
-  const SearchBar({Key? key, this.searching}) : super(key: key);
+  const SearchBar({Key? key, this.searching, this.onCloseFilter}) : super(key: key);
 
   @override
   Widget build(BuildContext context) {
@@ -51,6 +52,7 @@ class SearchBar extends StatelessWidget {
       icon: Icon(Icons.filter_list_outlined), 
       onPressed: () async {
         await SearchFilter.openSearchFilter(context: context);
+        onCloseFilter?.call();
       }
     );
     

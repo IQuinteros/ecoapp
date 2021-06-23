@@ -11,6 +11,8 @@ import 'package:google_fonts/google_fonts.dart';
 
 class SearchFilter extends StatelessWidget {
   SearchFilter({ Key? key}) : super(key: key);
+
+
   final Map<String, TextEditingController> controllers = {
     'category': TextEditingController(),
     'minPrice': TextEditingController(),
