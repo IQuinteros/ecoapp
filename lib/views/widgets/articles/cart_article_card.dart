@@ -262,48 +262,79 @@ class __QuantitySelectorState extends State<_QuantitySelector> {
   @override
   Widget build(BuildContext context) {
     if(first) quantity = widget.initialValue;
+
+    final numberPicker = Container(
+      child: NumberPicker(
+        value: quantity,
+        minValue: 1,
+        maxValue: 100,
+        itemCount: 3,
+        decoration: BoxDecoration(
+          borderRadius: BorderRadius.circular(20.0),
+        ),
+        
+        textMapper: (value) => '$value ' + (value != '1'? 'unidades' : 'unidad'),
+        onChanged: (value) {
+          setState(() {
+            first = false;
+            quantity = value;
+          });
+          widget.onChanged(value);
+        }
+      ),
+    );
+
+    final title = ([TextAlign textAlign = TextAlign.center]) => Text(
+      'Escoge la cantidad para este artículo',
+      style: GoogleFonts.montserrat(),
+      textAlign: textAlign,
+    );
+
+    final backBtn = NormalButton(
+      text: 'Volver', 
+      onPressed: () => Navigator.pop(context)
+    );
+
+    final maxSize = Column(
+      mainAxisSize: MainAxisSize.min,
+      crossAxisAlignment: CrossAxisAlignment.stretch,
+      children: [
+        title(),
+        SizedBox(height: 20.0,),
+        numberPicker,
+        SizedBox(height: 20.0,),
+        backBtn
+      ],
+    );
+
+    final lowSize = Column(
+      mainAxisSize: MainAxisSize.min,
+      crossAxisAlignment: CrossAxisAlignment.stretch,
+      children: [
+        title(TextAlign.start),
+        SizedBox(height: 10.0,),
+        Row(
+          mainAxisSize: MainAxisSize.max,
+          children: [
+            Expanded(child: numberPicker, flex: 2),
+            SizedBox(height: 20.0,),
+            Expanded(child: backBtn)
+          ],
+        )
+      ],
+    );
+
     return SafeArea(
       child: Container(
         padding: EdgeInsets.symmetric(
           horizontal: 20.0,
           vertical: 20.0
         ),
-        child: Column(
-          mainAxisSize: MainAxisSize.min,
-          crossAxisAlignment: CrossAxisAlignment.stretch,
-          children: [
-            Text(
-              'Escoge la cantidad para este artículo',
-              style: GoogleFonts.montserrat(),
-              textAlign: TextAlign.center,
-            ),
-            SizedBox(height: 20.0,),
-            Container(
-              child: NumberPicker(
-                value: quantity,
-                minValue: 1,
-                maxValue: 100,
-                itemCount: 5,
-                decoration: BoxDecoration(
-                  borderRadius: BorderRadius.circular(20.0),
-                ),
-                
-                textMapper: (value) => '$value ' + (value != '1'? 'unidades' : 'unidad'),
-                onChanged: (value) {
-                  setState(() {
-                    first = false;
-                    quantity = value;
-                  });
-                  widget.onChanged(value);
-                }
-              ),
-            ),
-            SizedBox(height: 20.0,),
-            NormalButton(
-              text: 'Volver', 
-              onPressed: () => Navigator.pop(context)
-            )
-          ],
+        child: LayoutBuilder(
+          builder: (context, constraints){
+            if(constraints.maxHeight <= 250) return lowSize;
+            else return maxSize;
+          },
         ),
       )
     );
