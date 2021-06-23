@@ -8,6 +8,7 @@ import 'package:flutter_ecoapp/bloc/profile_bloc.dart';
 import 'package:flutter_ecoapp/models/article.dart';
 import 'package:flutter_ecoapp/utils/currency_util.dart';
 import 'package:flutter_ecoapp/views/article_view.dart';
+import 'package:flutter_ecoapp/views/style/colors.dart';
 import 'package:flutter_ecoapp/views/widgets/articles/mini_eco_indicator.dart';
 import 'package:flutter_ecoapp/views/widgets/normal_button.dart';
 import 'package:google_fonts/google_fonts.dart';
@@ -213,6 +214,14 @@ class _CartArticleCardState extends State<CartArticleCard> {
 
   int _tempQuantity = 1;
   void selectQuantity(BuildContext context) async {
+    if(widget.article.stock <= 0){
+      ScaffoldMessenger.of(context).removeCurrentSnackBar();
+      ScaffoldMessenger.of(context).showSnackBar(SnackBar(
+        content: Text('No hay stock para este artículo'),
+        backgroundColor: EcoAppColors.MAIN_DARK_COLOR,
+      ));
+      return;
+    }
     await showModalBottomSheet(
       context: context,
       builder: (BuildContext context){
@@ -221,6 +230,7 @@ class _CartArticleCardState extends State<CartArticleCard> {
             _tempQuantity = value;
           },
           initialValue: _quantity!,
+          maxValue: widget.article.stock,
         );
       },
       elevation: 10,
@@ -248,11 +258,13 @@ class _QuantitySelector extends StatefulWidget {
   const _QuantitySelector({
     Key? key,
     required this.onChanged,
+    required this.maxValue,
     this.initialValue = 1
   }) : super(key: key);
 
   final Function(int) onChanged;
   final int initialValue;
+  final int maxValue;
 
   @override
   __QuantitySelectorState createState() => __QuantitySelectorState();
@@ -264,13 +276,16 @@ class __QuantitySelectorState extends State<_QuantitySelector> {
 
   @override
   Widget build(BuildContext context) {
-    if(first) quantity = widget.initialValue;
+    if(first) {
+      quantity = widget.initialValue;
+      widget.onChanged(quantity);
+    }
 
     final numberPicker = Container(
       child: NumberPicker(
         value: quantity,
         minValue: 1,
-        maxValue: 100,
+        maxValue: widget.maxValue,
         itemCount: 3,
         decoration: BoxDecoration(
           borderRadius: BorderRadius.circular(20.0),
@@ -288,7 +303,7 @@ class __QuantitySelectorState extends State<_QuantitySelector> {
     );
 
     final title = ([TextAlign textAlign = TextAlign.center]) => Text(
-      'Escoge la cantidad para este artículo',
+      'Escoge la cantidad para este artículo (Stock: ${widget.maxValue})',
       style: GoogleFonts.montserrat(),
       textAlign: textAlign,
     );

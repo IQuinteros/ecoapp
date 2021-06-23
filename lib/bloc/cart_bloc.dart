@@ -41,6 +41,7 @@ class CartBloc extends BaseBloc<CartArticleModel>{
       cartArticles.forEach((loadedArticle) {
         if(remoteArticle.id == loadedArticle.articleId){
           loadedArticle.article = remoteArticle;
+          loadedArticle.quantity = loadedArticle.quantity.clamp(0, remoteArticle.stock).toInt();
         }
       });
     });
