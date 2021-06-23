@@ -351,6 +351,20 @@ class _ArticleContent extends StatelessWidget {
     );
 
     final btnAddToCart = _AddToCartButton(article: article);
+
+    final stockText = Container(
+      margin: EdgeInsets.symmetric(
+        horizontal: 20.0
+      ),
+      child: Row(
+        children: [
+          Text(
+            'Stock: ${article.stock} ' + (article.stock == 1? 'disponible' : 'disponibles'),
+            style: GoogleFonts.montserrat(),
+          )
+        ],
+      ),
+    );
     
     return Column(
       children: [
@@ -367,6 +381,8 @@ class _ArticleContent extends StatelessWidget {
         storeText,
         SizedBox(height: 20.0),
         btnAddToCart,
+        SizedBox(height: 20.0,),
+        stockText,
         SizedBox(height: 15.0,),
         Divider(thickness: 1,),
         DescriptionSection(article: article),

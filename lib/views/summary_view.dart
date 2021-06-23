@@ -276,7 +276,8 @@ class SummaryView extends StatelessWidget {
           margin: EdgeInsets.symmetric(
             horizontal: 20.0
           ),
-        )
+        ),
+        SizedBox(height: 20.0),
       ],
     );
 
