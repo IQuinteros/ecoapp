@@ -22,6 +22,7 @@ class ChatView extends StatefulWidget {
   final PurchaseModel? purchase;
 
   final TextEditingController messageController = TextEditingController();
+  final scrollController = ScrollController();
 
   ChatView({Key? key, required this.chat, this.store, this.purchase}) : super(key: key);
 
@@ -33,6 +34,17 @@ class _ChatViewState extends State<ChatView> {
 
   ChatModel? refreshChat;
   bool firstRun = false;
+  bool displayLoading = false;
+
+  Timer? updateTimer;
+
+  @override
+  void initState() { 
+    super.initState();
+    if(refreshChat != null){
+      widget.scrollController.animateTo(refreshChat!.messages.length * 60, duration: Duration(milliseconds: 500), curve: Curves.easeInOut);
+    }
+  }
 
   @override
   Widget build(BuildContext context) {
@@ -42,7 +54,10 @@ class _ChatViewState extends State<ChatView> {
     ChatModel? chatToUse = refreshChat ?? widget.chat;
 
     if(chatToUse != null){
-      Timer(Duration(seconds: 8), () async {
+      if(updateTimer != null){
+        updateTimer!.cancel();
+      }
+      updateTimer = Timer(Duration(seconds: 8), () async {
         await updateChat(context, chatToUse);
       });
 
@@ -126,12 +141,12 @@ class _ChatViewState extends State<ChatView> {
     if(chatToUse != null) messagesWidget.insert(0, PurchaseMessageItem(chat: chatToUse));
     messagesWidget.add(SizedBox(height: 90,));
 
-    final scrollController = ScrollController(initialScrollOffset: messages.length * 80);
+    
 
     final scroll = SingleChildScrollView(
       clipBehavior: Clip.none,
       dragStartBehavior: DragStartBehavior.down,
-      controller: scrollController,
+      controller: widget.scrollController,
       child: Container(
         margin: EdgeInsets.symmetric(
           horizontal: 10
@@ -196,6 +211,7 @@ class _ChatViewState extends State<ChatView> {
                     if(message.isEmpty) return;
 
                     // TODO: Display loading
+                    setState(() => displayLoading = true);
 
                     final result = await chatBloc.sendMessage(
                       message: MessageModel(
@@ -214,7 +230,11 @@ class _ChatViewState extends State<ChatView> {
                         await updateChat(context, chatToUse, (){});
                       }
                       else{
-                        await updateChat(context, chatToUse, () => scrollController.jumpTo(messages.length * 50));
+                        await updateChat(context, chatToUse, () => widget.scrollController.animateTo(
+                          messages.length * 50,
+                          duration: Duration(milliseconds: 500),
+                          curve: Curves.easeInOut
+                        ));
                       }
                     }
                     else{
@@ -239,7 +259,15 @@ class _ChatViewState extends State<ChatView> {
         ),
         Align(
           alignment: Alignment.bottomCenter,
-          child: sendMessage,
+          child: Container(
+            child: Column(
+              mainAxisSize: MainAxisSize.min,
+              children: [
+                displayLoading? LinearProgressIndicator() : Container(),
+                sendMessage,
+              ],
+            )
+          ),
         )
       ],
     );
@@ -269,7 +297,10 @@ class _ChatViewState extends State<ChatView> {
     }
 
     setState(() {
-      onSetState?.call();
+      try{
+        onSetState?.call();
+      } catch(e, stacktrace) {print(e); print(stacktrace);}
+      displayLoading = false;
     });
   }
 }
