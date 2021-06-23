@@ -407,10 +407,12 @@ class __AddToCartButtonState extends State<_AddToCartButton> {
           switch(snapshot.connectionState){
             case ConnectionState.done: 
               return NormalButton(
-                text: !snapshot.data!? 'Agregar al Carrito' : 'Ver en carrito',
-                color: !snapshot.data!? EcoAppColors.MAIN_COLOR : Colors.lightGreen.shade50,
-                textColor: !snapshot.data!? Colors.white : EcoAppColors.MAIN_COLOR,
+                text: !snapshot.data!? widget.article.stock <= 0? 'Sin stock' : 'Agregar al Carrito' : 'Ver en carrito',
+                color: !snapshot.data! && widget.article.stock > 0? EcoAppColors.MAIN_COLOR : Colors.lightGreen.shade50,
+                textColor: !snapshot.data! && widget.article.stock > 0? Colors.white : EcoAppColors.MAIN_COLOR,
+                opacity: widget.article.stock > 0? 1.0 : 0.4,
                 onPressed: () async {
+                  if(widget.article.stock <= 0) return;
                   !snapshot.data!? await _addToCart(context) : _goToCartView(context);
                   setState(() {});
                 }
