@@ -25,7 +25,12 @@ class CartBloc extends BaseBloc<CartArticleModel>{
 
   Future<CartModel> loadCart({bool onlyLocal = false, required ProfileModel? profile}) async {
     List<CartArticleModel> articles = await cartLocalAPI.select();
-    if(articles.length > 0) await loadRemoteArticles(articles, profile);
+    if(articles.length > 0) {
+      await loadRemoteArticles(articles, profile);
+    }
+    else{
+      loadedCart.articles = [];
+    }
     return loadedCart;
   }
 
@@ -93,10 +98,7 @@ class CartBloc extends BaseBloc<CartArticleModel>{
   Future<bool> articleExistsInCart(ArticleModel article) async => (await cartLocalAPI.select()).where((element) => element.articleId == article.id).length > 0;
 
   Future<void> removeArticleToCart(ArticleModel article, {required ProfileModel? profile}) async {
-    final list = (await cartLocalAPI.select()).where((element) => element.articleId == article.id).toList();
-    if(list.length <= 0) return;
-    final item = list[0];
-    await cartLocalAPI.delete(item.id);
+    await cartLocalAPI.delete(0, custom: { 'article_id': article.id });
     await loadCart(onlyLocal: true, profile: profile);
   }
 
