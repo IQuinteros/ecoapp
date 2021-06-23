@@ -43,7 +43,7 @@ class CartBloc extends BaseBloc<CartArticleModel>{
         }
       });
     });
-    loadedCart.articles = cartArticles;
+    loadedCart.articles = cartArticles.where((element) => element.article != null).toList();
   }
 
   Future<List<CartArticleModel>> getCartArticles() async {

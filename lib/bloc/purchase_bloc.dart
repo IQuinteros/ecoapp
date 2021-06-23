@@ -16,13 +16,13 @@ class PurchaseBloc extends BaseBloc<PurchaseModel>{
   }
 
   Future<List<PurchaseModel>> getPurchases(ProfileModel profile) async => await purchaseAPI.selectAll(params: {
-    'profile': profile.id
+    'profile_id': profile.id
   });
 
 
   Future<List<ArticleToPurchase>> getArticlesFromPurchase(PurchaseModel purchase) async => await articlePurchaseAPI.selectAll(
     params: {
-      'purchase': purchase.id
+      'purchase_id': purchase.id
     }
   );
 

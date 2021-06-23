@@ -75,7 +75,7 @@ class _ArticleCardState extends State<ArticleCard> {
       children: [
         Flexible(
           child: Text(
-            widget.title != null? widget.title! : widget.article!.title,
+            widget.title != null? widget.title! : widget.article != null? widget.article!.title : '',
             style: GoogleFonts.montserrat(),
             textAlign: TextAlign.left,
             maxLines: 3,
@@ -107,7 +107,7 @@ class _ArticleCardState extends State<ArticleCard> {
     );
 
     final ecoIndicator = MiniEcoIndicator(
-      ecoIndicator: widget.ecoIndicator != null? widget.ecoIndicator! : widget.article!.form.getIndicator()
+      ecoIndicator: widget.ecoIndicator != null? widget.ecoIndicator! : widget.article != null? widget.article!.form.getIndicator() : EcoIndicator()
     );
 
     final secondRow = Container(
@@ -119,7 +119,7 @@ class _ArticleCardState extends State<ArticleCard> {
         mainAxisSize: MainAxisSize.max,
         children: [
           Text(
-            '\$ ' + CurrencyUtil.formatToCurrencyString(widget.price != null? widget.price!.round() : widget.article!.price.round()),
+            '\$ ' + CurrencyUtil.formatToCurrencyString(widget.price != null? widget.price!.round() : widget.article != null? widget.article!.price.round() : 0),
             style: GoogleFonts.montserrat(
               fontSize: 16,
               fontWeight: FontWeight.w500
