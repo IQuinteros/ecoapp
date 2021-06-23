@@ -56,85 +56,88 @@ class SearchFilter extends StatelessWidget {
       ),
       child: Form(
         key: _formKey,
-        child: Column(
-          crossAxisAlignment: CrossAxisAlignment.stretch,
-          mainAxisSize: MainAxisSize.min,
-          children: [
-            Text(
-              'Filtrar por:',
-              style: GoogleFonts.montserrat(
-                fontSize: 18.0
+        child: SingleChildScrollView(
+          scrollDirection: Axis.vertical,
+          child: Column(
+            crossAxisAlignment: CrossAxisAlignment.stretch,
+            mainAxisSize: MainAxisSize.min,
+            children: [
+              Text(
+                'Filtrar por:',
+                style: GoogleFonts.montserrat(
+                  fontSize: 18.0
+                ),
+                textAlign: TextAlign.start,
               ),
-              textAlign: TextAlign.start,
-            ),
-            SizedBox(height: 10.0),
-            Divider(thickness: 1,),
-            SizedBox(height: 10.0),
-            NormalInput(
-              header: 'Categoría', 
-              hint: 'Busca por categoría', 
-              icon: Icons.category_rounded,
-              controller: controllers['category'],
-              readOnly: true,
-              onTap: () async => controllers['category']!.text = await selectCategory(context),
-            ),
-            SizedBox(height: 10.0),
-            DistrictInput(
-              selectedDistrict: (value) => selectedDistrict['district'] = value,
-              validate: false,
-              initialDistrict: selectedDistrict['district'],
-              optional: true,
-              hint: 'Sin seleccionar',
-            ),
-            SizedBox(height: 10.0),
-            NormalInput(
-              header: 'Precio mínimo', 
-              hint: 'Desde', 
-              icon: Icons.payments_rounded,
-              inputFormatters: [
-                FilteringTextInputFormatter.digitsOnly
-              ],
-              type: TextInputType.number,
-              controller: controllers['minPrice'],
-              validator: (value){
-                if(value != null && value.isNotEmpty && controllers['maxPrice']!.text.isNotEmpty){
-                  if(int.parse(controllers['minPrice']!.text.toString()) > int.parse(controllers['maxPrice']!.text.toString())){
-                    return 'El valor mínimo no puede ser mayor';
+              SizedBox(height: 10.0),
+              Divider(thickness: 1,),
+              SizedBox(height: 10.0),
+              NormalInput(
+                header: 'Categoría', 
+                hint: 'Busca por categoría', 
+                icon: Icons.category_rounded,
+                controller: controllers['category'],
+                readOnly: true,
+                onTap: () async => controllers['category']!.text = await selectCategory(context),
+              ),
+              SizedBox(height: 10.0),
+              DistrictInput(
+                selectedDistrict: (value) => selectedDistrict['district'] = value,
+                validate: false,
+                initialDistrict: selectedDistrict['district'],
+                optional: true,
+                hint: 'Sin seleccionar',
+              ),
+              SizedBox(height: 10.0),
+              NormalInput(
+                header: 'Precio mínimo', 
+                hint: 'Desde', 
+                icon: Icons.payments_rounded,
+                inputFormatters: [
+                  FilteringTextInputFormatter.digitsOnly
+                ],
+                type: TextInputType.number,
+                controller: controllers['minPrice'],
+                validator: (value){
+                  if(value != null && value.isNotEmpty && controllers['maxPrice']!.text.isNotEmpty){
+                    if(int.parse(controllers['minPrice']!.text.toString()) > int.parse(controllers['maxPrice']!.text.toString())){
+                      return 'El valor mínimo no puede ser mayor';
+                    }
                   }
-                }
-              },
-            ),
-            SizedBox(height: 10.0),
-            NormalInput(
-              header: 'Precio máximo', 
-              hint: 'Hasta', 
-              icon: Icons.payments_rounded,
-              inputFormatters: [
-                FilteringTextInputFormatter.digitsOnly
-              ],
-              type: TextInputType.number,
-              controller: controllers['maxPrice'],
-              validator: (value){
-                if(value != null && value.isNotEmpty && controllers['minPrice']!.text.isNotEmpty){
-                  if(int.parse(controllers['minPrice']!.text.toString()) > int.parse(controllers['maxPrice']!.text.toString())){
-                    return 'El valor máximo no puede ser menor';
+                },
+              ),
+              SizedBox(height: 10.0),
+              NormalInput(
+                header: 'Precio máximo', 
+                hint: 'Hasta', 
+                icon: Icons.payments_rounded,
+                inputFormatters: [
+                  FilteringTextInputFormatter.digitsOnly
+                ],
+                type: TextInputType.number,
+                controller: controllers['maxPrice'],
+                validator: (value){
+                  if(value != null && value.isNotEmpty && controllers['minPrice']!.text.isNotEmpty){
+                    if(int.parse(controllers['minPrice']!.text.toString()) > int.parse(controllers['maxPrice']!.text.toString())){
+                      return 'El valor máximo no puede ser menor';
+                    }
                   }
+                },
+              ),
+              NormalButton(
+                text: 'Aplicar filtros', 
+                onPressed: () {
+                  if(!_formKey.currentState!.validate()) return;
+                  Navigator.pop(context, SearchFilterModel(
+                    category: controllers['category']!.text.isEmpty? null : controllers['category']!.text,
+                    district: selectedDistrict['district'],
+                    minPrice: int.tryParse(controllers['minPrice']!.text),
+                    maxPrice: int.tryParse(controllers['maxPrice']!.text),
+                  ));
                 }
-              },
-            ),
-            NormalButton(
-              text: 'Aplicar filtros', 
-              onPressed: () {
-                if(!_formKey.currentState!.validate()) return;
-                Navigator.pop(context, SearchFilterModel(
-                  category: controllers['category']!.text.isEmpty? null : controllers['category']!.text,
-                  district: selectedDistrict['district'],
-                  minPrice: int.tryParse(controllers['minPrice']!.text),
-                  maxPrice: int.tryParse(controllers['maxPrice']!.text),
-                ));
-              }
-            )
-          ],
+              )
+            ],
+          ),
         ),
       ),
     );

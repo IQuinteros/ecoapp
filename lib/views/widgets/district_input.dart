@@ -88,19 +88,22 @@ class DistrictInput extends StatelessWidget {
               horizontal: 10.0,
               vertical: 20.0
             ),
-            child: Column(
-              mainAxisSize: MainAxisSize.min,
-              children: [
-                Text(
-                  'Escoge una comuna',
-                  style: GoogleFonts.montserrat(),
-                  textAlign: TextAlign.center
-                ),
-                SizedBox(height: 10.0),
-                Column(
-                  children: districtsTiles,
-                )
-              ],
+            child: SingleChildScrollView(
+              scrollDirection: Axis.vertical,
+              child: Column(
+                mainAxisSize: MainAxisSize.min,
+                children: [
+                  Text(
+                    'Escoge una comuna',
+                    style: GoogleFonts.montserrat(),
+                    textAlign: TextAlign.center
+                  ),
+                  SizedBox(height: 10.0),
+                  Column(
+                    children: districtsTiles,
+                  )
+                ],
+              ),
             ),
           ),
         );
