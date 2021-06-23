@@ -135,6 +135,14 @@ class SearchFilter extends StatelessWidget {
                     maxPrice: int.tryParse(controllers['maxPrice']!.text),
                   ));
                 }
+              ),
+              SizedBox(height: 10.0),
+              NormalButton(
+                text: 'Quitar filtros', 
+                onPressed: () {
+                  if(!_formKey.currentState!.validate()) return;
+                  Navigator.pop(context, SearchFilterModel());
+                }
               )
             ],
           ),
