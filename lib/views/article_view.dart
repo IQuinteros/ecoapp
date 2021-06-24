@@ -46,9 +46,12 @@ class _ArticleViewState extends State<ArticleView> {
   @override
   Widget build(BuildContext context) {
     if(refreshArticle == null) refreshArticle = widget.article;
-      
-    return Scaffold(
-      body: getContent(context),
+    return Stack(
+      children: [
+        Scaffold(
+          body: getContent(context),
+        ),
+      ],
     );
   }
 
@@ -116,66 +119,105 @@ class _ArticleAppBar extends StatelessWidget {
       elevation: 10.0,
       backgroundColor: EcoAppColors.MAIN_DARK_COLOR,
       foregroundColor: Colors.white,
-      expandedHeight: article.photos.length > 0? 250.0 : null,
+      expandedHeight: article.photos.length > 0? 300.0 : null,
       floating: false,
       pinned: true,
-      leading: IconButton(
-        icon: Icon(
-          Icons.arrow_back_ios_rounded,
-          color: Colors.white,
-        ),
-        onPressed: () => Navigator.pop(context),
-      ),
-      actions: [
-        IconButton(
+      leading: Container(
+        child: IconButton(
           icon: Icon(
-            Icons.share,
+            Icons.arrow_back_ios_rounded,
             color: Colors.white,
           ),
-          onPressed: (){
-            Share.share(
-              '¡Disponible en Ecomercio! ${article.title} a solo \$${CurrencyUtil.formatToCurrencyString(article.price.toInt())}'
-            );
-          },
+          onPressed: () => Navigator.pop(context),
         ),
-        FavoriteButton(favorite: article.favorite, disabledColor: Colors.white,
-          onChanged: (value){
-            // Add favorite
-            profileBloc.setFavoriteArticle(article, value, (ready) {});
-          },
-        )
-      ],
+      ),
       title: Text(
         article.title,
         style: TextStyle(
+          fontSize: 17,
           color: Colors.white,
           shadows: [
             Shadow(
               color: Colors.black,
+              blurRadius: 0
             )
-          ]
+          ],
         ),
+        overflow: TextOverflow.ellipsis,
       ),
+      actions: [
+        Container(
+          child: IconButton(
+            icon: Icon(
+              Icons.share,
+              color: Colors.white,
+            ),
+            onPressed: (){
+              Share.share(
+                '¡Disponible en Ecomercio! ${article.title} a solo \$${CurrencyUtil.formatToCurrencyString(article.price.toInt())}'
+              );
+            },
+          ),
+        ),
+        Container(
+          child: FavoriteButton(favorite: article.favorite, disabledColor: Colors.white,
+            onChanged: (value){
+              // Add favorite
+              profileBloc.setFavoriteArticle(article, value, (ready) {});
+            },
+          ),
+        )
+      ],
       stretch: true,
       forceElevated: true,
-      flexibleSpace: article.photos.length > 0? FlexibleSpaceBar(
-        centerTitle: false,
-        stretchModes: const <StretchMode>[
-          StretchMode.zoomBackground,
-          StretchMode.blurBackground,
-          StretchMode.fadeTitle,
-        ],
-        background: GestureDetector(
-          child: Hero( 
-            tag: article.tag,
-            child: Image(
-              image: NetworkImage(article.photos.length > 0? article.photos[0].photoUrl : ''),
-              height: 120,
-              width: 120,
-              fit: BoxFit.cover,
-            )
-          ),
-          onTap: () => Navigator.push(context, MaterialPageRoute(builder: (__) => ImageView(photos: article.photos, title: article.title,))),
+      flexibleSpace: article.photos.length > 0? Container(
+        clipBehavior: Clip.hardEdge,
+        decoration: BoxDecoration(),
+        child: Stack(
+          children: [
+            Container(
+              margin: EdgeInsets.only(
+                top: 80
+              ),
+              child: FlexibleSpaceBar(
+                collapseMode: CollapseMode.parallax,
+                centerTitle: false,
+                stretchModes: const <StretchMode>[
+                  StretchMode.zoomBackground,
+                  StretchMode.blurBackground,
+                  StretchMode.fadeTitle,
+                ],
+                background: Container(
+                  child: GestureDetector(
+                    child: Hero( 
+                      tag: article.tag,
+                      child: Image(
+                        image: NetworkImage(article.photos.length > 0? article.photos[0].photoUrl : ''),
+                        height: 120,
+                        width: 120,
+                        fit: BoxFit.cover,
+                      )
+                    ),
+                    onTap: () => Navigator.push(context, MaterialPageRoute(builder: (__) => ImageView(photos: article.photos, title: article.title,))),
+                  ),
+                ),
+              ),
+            ),
+            Container(
+              decoration: BoxDecoration(
+                color: EcoAppColors.MAIN_DARK_COLOR,
+                boxShadow: [
+                  BoxShadow(
+                    color: Colors.black.withOpacity(0.25),
+                    blurRadius: 3,
+                    spreadRadius: 3,
+                    offset: Offset(0, 3)
+                  )
+                ]
+              ),
+              height: 80,
+            ),
+          ],
         ),
       ) : null,
     );
@@ -186,7 +228,7 @@ class _ArticleMainContent extends StatelessWidget {
   const _ArticleMainContent({
     Key? key,
     required this.article,
-    required this.onNewQuestion
+    required this.onNewQuestion,
   }) : super(key: key);
 
   final ArticleModel article;
@@ -218,7 +260,7 @@ class _ArticleContent extends StatelessWidget {
   _ArticleContent({
     Key? key,
     required this.article,
-    required this.onNewQuestion
+    required this.onNewQuestion,
   }) : super(key: key);
 
   final ArticleModel article;
@@ -281,10 +323,13 @@ class _ArticleContent extends StatelessWidget {
           ],
         ),
       ),
-      onTap: () => Navigator.push(
-        context, 
-        MaterialPageRoute(builder: (__) => OpinionsView(article: article,))
-      )
+      onTap: () {
+        FocusScope.of(context).unfocus();
+        Navigator.push(
+          context, 
+          MaterialPageRoute(builder: (__) => OpinionsView(article: article,))
+        );
+      }
     );
 
     // Only display when past price is higher than 0, and is higher than the current price
@@ -315,7 +360,10 @@ class _ArticleContent extends StatelessWidget {
     );
 
     final storeText = InkWell(
-      onTap: () => Navigator.push(context, MaterialPageRoute(builder: (__) => StoreView(store: article.store!))), // TODO: Go to store
+      onTap: () {
+        FocusScope.of(context).unfocus();
+        Navigator.push(context, MaterialPageRoute(builder: (__) => StoreView(store: article.store!)));
+      },
       child: Padding(
         padding: EdgeInsets.symmetric(
           horizontal: 20.0
@@ -345,6 +393,20 @@ class _ArticleContent extends StatelessWidget {
     );
 
     final btnAddToCart = _AddToCartButton(article: article);
+
+    final stockText = Container(
+      margin: EdgeInsets.symmetric(
+        horizontal: 20.0
+      ),
+      child: Row(
+        children: [
+          Text(
+            'Stock: ${article.stock} ' + (article.stock == 1? 'disponible' : 'disponibles'),
+            style: GoogleFonts.montserrat(),
+          )
+        ],
+      ),
+    );
     
     return Column(
       children: [
@@ -361,6 +423,8 @@ class _ArticleContent extends StatelessWidget {
         storeText,
         SizedBox(height: 20.0),
         btnAddToCart,
+        SizedBox(height: 20.0,),
+        stockText,
         SizedBox(height: 15.0,),
         Divider(thickness: 1,),
         DescriptionSection(article: article),
@@ -369,7 +433,7 @@ class _ArticleContent extends StatelessWidget {
         Divider(thickness: 1,),
         StoreDescriptionSection(article: article, store: article.store!),
         Divider(thickness: 1,),
-        QuestionsSection(article: article, onNewQuestion: onNewQuestion,)
+        QuestionsSection(article: article, onNewQuestion: onNewQuestion)
       ]
     );
   }
@@ -401,10 +465,12 @@ class __AddToCartButtonState extends State<_AddToCartButton> {
           switch(snapshot.connectionState){
             case ConnectionState.done: 
               return NormalButton(
-                text: !snapshot.data!? 'Agregar al Carrito' : 'Ver en carrito',
-                color: !snapshot.data!? EcoAppColors.MAIN_COLOR : Colors.lightGreen.shade50,
-                textColor: !snapshot.data!? Colors.white : EcoAppColors.MAIN_COLOR,
+                text: !snapshot.data!? widget.article.stock <= 0? 'Sin stock' : 'Agregar al Carrito' : 'Ver en carrito',
+                color: !snapshot.data! && widget.article.stock > 0? EcoAppColors.MAIN_COLOR : Colors.lightGreen.shade50,
+                textColor: !snapshot.data! && widget.article.stock > 0? Colors.white : EcoAppColors.MAIN_COLOR,
+                opacity: widget.article.stock > 0? 1.0 : 0.4,
                 onPressed: () async {
+                  if(widget.article.stock <= 0) return;
                   !snapshot.data!? await _addToCart(context) : _goToCartView(context);
                   setState(() {});
                 }
@@ -418,6 +484,7 @@ class __AddToCartButtonState extends State<_AddToCartButton> {
 
   Future<void> _addToCart(BuildContext context) async {
     final cartBloc = BlocProvider.of<CartBloc>(context);
+    final profileBloc = BlocProvider.of<ProfileBloc>(context);
     final result = await cartBloc.addArticleToCart(widget.article);
     if(result != null){
       print(result.id);
@@ -435,7 +502,7 @@ class __AddToCartButtonState extends State<_AddToCartButton> {
       ),
     ));  
 
-    cartBloc.loadCart();
+    cartBloc.loadCart(profile: profileBloc.currentProfile);
   }
 
   void _goToCartView(BuildContext context){

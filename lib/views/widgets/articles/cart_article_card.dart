@@ -4,9 +4,11 @@ import 'package:awesome_dialog/awesome_dialog.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter_bloc/flutter_bloc.dart';
 import 'package:flutter_ecoapp/bloc/cart_bloc.dart';
+import 'package:flutter_ecoapp/bloc/profile_bloc.dart';
 import 'package:flutter_ecoapp/models/article.dart';
 import 'package:flutter_ecoapp/utils/currency_util.dart';
 import 'package:flutter_ecoapp/views/article_view.dart';
+import 'package:flutter_ecoapp/views/style/colors.dart';
 import 'package:flutter_ecoapp/views/widgets/articles/mini_eco_indicator.dart';
 import 'package:flutter_ecoapp/views/widgets/normal_button.dart';
 import 'package:google_fonts/google_fonts.dart';
@@ -212,6 +214,14 @@ class _CartArticleCardState extends State<CartArticleCard> {
 
   int _tempQuantity = 1;
   void selectQuantity(BuildContext context) async {
+    if(widget.article.stock <= 0){
+      ScaffoldMessenger.of(context).removeCurrentSnackBar();
+      ScaffoldMessenger.of(context).showSnackBar(SnackBar(
+        content: Text('No hay stock para este artículo'),
+        backgroundColor: EcoAppColors.MAIN_DARK_COLOR,
+      ));
+      return;
+    }
     await showModalBottomSheet(
       context: context,
       builder: (BuildContext context){
@@ -220,23 +230,26 @@ class _CartArticleCardState extends State<CartArticleCard> {
             _tempQuantity = value;
           },
           initialValue: _quantity!,
+          maxValue: widget.article.stock,
         );
       },
       elevation: 10,
       enableDrag: false
     );
     
+    final profileBloc = BlocProvider.of<ProfileBloc>(context);
     final cartBloc = BlocProvider.of<CartBloc>(context);
-    await cartBloc.updateArticleToCart(widget.article, _tempQuantity);
+    await cartBloc.updateArticleToCart(widget.article, _tempQuantity, profile: profileBloc.currentProfile);
     setState(() => _quantity = _tempQuantity);
   }
 
   void _deleteArticleFromCart(BuildContext context) async {
+    final profileBloc = BlocProvider.of<ProfileBloc>(context);
     final cartBloc = BlocProvider.of<CartBloc>(context);
     setState(() {
       _deleted = true;
     }); 
-    await cartBloc.removeArticleToCart(widget.article);
+    await cartBloc.removeArticleToCart(widget.article, profile: profileBloc.currentProfile);
     widget.onDelete();
   }
 }
@@ -245,11 +258,13 @@ class _QuantitySelector extends StatefulWidget {
   const _QuantitySelector({
     Key? key,
     required this.onChanged,
+    required this.maxValue,
     this.initialValue = 1
   }) : super(key: key);
 
   final Function(int) onChanged;
   final int initialValue;
+  final int maxValue;
 
   @override
   __QuantitySelectorState createState() => __QuantitySelectorState();
@@ -261,49 +276,83 @@ class __QuantitySelectorState extends State<_QuantitySelector> {
 
   @override
   Widget build(BuildContext context) {
-    if(first) quantity = widget.initialValue;
+    if(first) {
+      quantity = widget.initialValue;
+      widget.onChanged(quantity);
+    }
+
+    final numberPicker = Container(
+      child: NumberPicker(
+        value: quantity,
+        minValue: 1,
+        maxValue: widget.maxValue,
+        itemCount: 3,
+        decoration: BoxDecoration(
+          borderRadius: BorderRadius.circular(20.0),
+        ),
+        
+        textMapper: (value) => '$value ' + (value != '1'? 'unidades' : 'unidad'),
+        onChanged: (value) {
+          setState(() {
+            first = false;
+            quantity = value;
+          });
+          widget.onChanged(value);
+        }
+      ),
+    );
+
+    final title = ([TextAlign textAlign = TextAlign.center]) => Text(
+      'Escoge la cantidad para este artículo (Stock: ${widget.maxValue})',
+      style: GoogleFonts.montserrat(),
+      textAlign: textAlign,
+    );
+
+    final backBtn = NormalButton(
+      text: 'Volver', 
+      onPressed: () => Navigator.pop(context)
+    );
+
+    final maxSize = Column(
+      mainAxisSize: MainAxisSize.min,
+      crossAxisAlignment: CrossAxisAlignment.stretch,
+      children: [
+        title(),
+        SizedBox(height: 20.0,),
+        numberPicker,
+        SizedBox(height: 20.0,),
+        backBtn
+      ],
+    );
+
+    final lowSize = ([bool includeBackBtn = true]) => Column(
+      mainAxisSize: MainAxisSize.min,
+      crossAxisAlignment: CrossAxisAlignment.stretch,
+      children: [
+        title(TextAlign.start),
+        SizedBox(height: 10.0,),
+        Row(
+          mainAxisSize: MainAxisSize.max,
+          children: [
+            Expanded(child: numberPicker, flex: 2),
+            includeBackBtn? SizedBox(height: 20.0,) : Container(),
+            includeBackBtn? Expanded(child: backBtn) : Container()
+          ],
+        )
+      ],
+    );
+
     return SafeArea(
       child: Container(
         padding: EdgeInsets.symmetric(
           horizontal: 20.0,
           vertical: 20.0
         ),
-        child: Column(
-          mainAxisSize: MainAxisSize.min,
-          crossAxisAlignment: CrossAxisAlignment.stretch,
-          children: [
-            Text(
-              'Escoge la cantidad para este artículo',
-              style: GoogleFonts.montserrat(),
-              textAlign: TextAlign.center,
-            ),
-            SizedBox(height: 20.0,),
-            Container(
-              child: NumberPicker(
-                value: quantity,
-                minValue: 1,
-                maxValue: 100,
-                itemCount: 5,
-                decoration: BoxDecoration(
-                  borderRadius: BorderRadius.circular(20.0),
-                ),
-                
-                textMapper: (value) => '$value ' + (value != '1'? 'unidades' : 'unidad'),
-                onChanged: (value) {
-                  setState(() {
-                    first = false;
-                    quantity = value;
-                  });
-                  widget.onChanged(value);
-                }
-              ),
-            ),
-            SizedBox(height: 20.0,),
-            NormalButton(
-              text: 'Volver', 
-              onPressed: () => Navigator.pop(context)
-            )
-          ],
+        child: LayoutBuilder(
+          builder: (context, constraints){
+            if(constraints.maxHeight <= 250) return lowSize(constraints.maxWidth > 380);
+            else return maxSize;
+          },
         ),
       )
     );

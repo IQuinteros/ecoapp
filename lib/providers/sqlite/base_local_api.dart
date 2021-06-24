@@ -63,15 +63,17 @@ abstract class BaseLocalAPI <T extends BaseModel>{
     items.forEach((element) async => delete(element.id));
   }
 
-  Future<void> delete(int id) async {
+  Future<void> delete(int id, {Map<String, dynamic> custom = const {}}) async {
     if(database == null) await initialize();
     final db = await database!;
 
     try{
+      String whereStr = '';
+      if(custom.entries.length > 0) custom.keys.forEach((element) { whereStr = whereStr + element + ' = ? AND';});
       await db.delete(
         tableName,
-        where: 'id = ?',
-        whereArgs: [id],
+        where: custom.entries.length > 0? whereStr.substring(0, whereStr.length - 3) : 'id = ?',
+        whereArgs: (custom.entries.length > 0)? custom.values.toList() : [id]
       );
     } catch(e, stacktrace){
       print(e);

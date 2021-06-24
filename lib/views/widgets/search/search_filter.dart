@@ -11,6 +11,8 @@ import 'package:google_fonts/google_fonts.dart';
 
 class SearchFilter extends StatelessWidget {
   SearchFilter({ Key? key}) : super(key: key);
+
+
   final Map<String, TextEditingController> controllers = {
     'category': TextEditingController(),
     'minPrice': TextEditingController(),
@@ -56,85 +58,96 @@ class SearchFilter extends StatelessWidget {
       ),
       child: Form(
         key: _formKey,
-        child: Column(
-          crossAxisAlignment: CrossAxisAlignment.stretch,
-          mainAxisSize: MainAxisSize.min,
-          children: [
-            Text(
-              'Filtrar por:',
-              style: GoogleFonts.montserrat(
-                fontSize: 18.0
+        child: SingleChildScrollView(
+          scrollDirection: Axis.vertical,
+          child: Column(
+            crossAxisAlignment: CrossAxisAlignment.stretch,
+            mainAxisSize: MainAxisSize.min,
+            children: [
+              Text(
+                'Filtrar por:',
+                style: GoogleFonts.montserrat(
+                  fontSize: 18.0
+                ),
+                textAlign: TextAlign.start,
               ),
-              textAlign: TextAlign.start,
-            ),
-            SizedBox(height: 10.0),
-            Divider(thickness: 1,),
-            SizedBox(height: 10.0),
-            NormalInput(
-              header: 'Categoría', 
-              hint: 'Busca por categoría', 
-              icon: Icons.category_rounded,
-              controller: controllers['category'],
-              readOnly: true,
-              onTap: () async => controllers['category']!.text = await selectCategory(context),
-            ),
-            SizedBox(height: 10.0),
-            DistrictInput(
-              selectedDistrict: (value) => selectedDistrict['district'] = value,
-              validate: false,
-              initialDistrict: selectedDistrict['district'],
-              optional: true,
-              hint: 'Sin seleccionar',
-            ),
-            SizedBox(height: 10.0),
-            NormalInput(
-              header: 'Precio mínimo', 
-              hint: 'Desde', 
-              icon: Icons.payments_rounded,
-              inputFormatters: [
-                FilteringTextInputFormatter.digitsOnly
-              ],
-              type: TextInputType.number,
-              controller: controllers['minPrice'],
-              validator: (value){
-                if(value != null && value.isNotEmpty && controllers['maxPrice']!.text.isNotEmpty){
-                  if(int.parse(controllers['minPrice']!.text.toString()) > int.parse(controllers['maxPrice']!.text.toString())){
-                    return 'El valor mínimo no puede ser mayor';
+              SizedBox(height: 10.0),
+              Divider(thickness: 1,),
+              SizedBox(height: 10.0),
+              NormalInput(
+                header: 'Categoría', 
+                hint: 'Busca por categoría', 
+                icon: Icons.category_rounded,
+                controller: controllers['category'],
+                readOnly: true,
+                onTap: () async => controllers['category']!.text = await selectCategory(context),
+              ),
+              SizedBox(height: 10.0),
+              DistrictInput(
+                selectedDistrict: (value) => selectedDistrict['district'] = value,
+                validate: false,
+                initialDistrict: selectedDistrict['district'],
+                optional: true,
+                hint: 'Sin seleccionar',
+              ),
+              SizedBox(height: 10.0),
+              NormalInput(
+                header: 'Precio mínimo', 
+                hint: 'Desde', 
+                icon: Icons.payments_rounded,
+                inputFormatters: [
+                  FilteringTextInputFormatter.digitsOnly
+                ],
+                type: TextInputType.number,
+                controller: controllers['minPrice'],
+                validator: (value){
+                  if(value != null && value.isNotEmpty && controllers['maxPrice']!.text.isNotEmpty){
+                    if(int.parse(controllers['minPrice']!.text.toString()) > int.parse(controllers['maxPrice']!.text.toString())){
+                      return 'El valor mínimo no puede ser mayor';
+                    }
                   }
-                }
-              },
-            ),
-            SizedBox(height: 10.0),
-            NormalInput(
-              header: 'Precio máximo', 
-              hint: 'Hasta', 
-              icon: Icons.payments_rounded,
-              inputFormatters: [
-                FilteringTextInputFormatter.digitsOnly
-              ],
-              type: TextInputType.number,
-              controller: controllers['maxPrice'],
-              validator: (value){
-                if(value != null && value.isNotEmpty && controllers['minPrice']!.text.isNotEmpty){
-                  if(int.parse(controllers['minPrice']!.text.toString()) > int.parse(controllers['maxPrice']!.text.toString())){
-                    return 'El valor máximo no puede ser menor';
+                },
+              ),
+              SizedBox(height: 10.0),
+              NormalInput(
+                header: 'Precio máximo', 
+                hint: 'Hasta', 
+                icon: Icons.payments_rounded,
+                inputFormatters: [
+                  FilteringTextInputFormatter.digitsOnly
+                ],
+                type: TextInputType.number,
+                controller: controllers['maxPrice'],
+                validator: (value){
+                  if(value != null && value.isNotEmpty && controllers['minPrice']!.text.isNotEmpty){
+                    if(int.parse(controllers['minPrice']!.text.toString()) > int.parse(controllers['maxPrice']!.text.toString())){
+                      return 'El valor máximo no puede ser menor';
+                    }
                   }
+                },
+              ),
+              NormalButton(
+                text: 'Aplicar filtros', 
+                onPressed: () {
+                  if(!_formKey.currentState!.validate()) return;
+                  Navigator.pop(context, SearchFilterModel(
+                    category: controllers['category']!.text.isEmpty? null : controllers['category']!.text,
+                    district: selectedDistrict['district'],
+                    minPrice: int.tryParse(controllers['minPrice']!.text),
+                    maxPrice: int.tryParse(controllers['maxPrice']!.text),
+                  ));
                 }
-              },
-            ),
-            NormalButton(
-              text: 'Aplicar filtros', 
-              onPressed: () {
-                if(!_formKey.currentState!.validate()) return;
-                Navigator.pop(context, SearchFilterModel(
-                  category: controllers['category']!.text.isEmpty? null : controllers['category']!.text,
-                  district: selectedDistrict['district'],
-                  minPrice: int.tryParse(controllers['minPrice']!.text),
-                  maxPrice: int.tryParse(controllers['maxPrice']!.text),
-                ));
-              }
-            )
-          ],
+              ),
+              SizedBox(height: 10.0),
+              NormalButton(
+                text: 'Quitar filtros', 
+                onPressed: () {
+                  if(!_formKey.currentState!.validate()) return;
+                  Navigator.pop(context, SearchFilterModel());
+                }
+              )
+            ],
+          ),
         ),
       ),
     );
@@ -159,30 +172,47 @@ class SearchFilter extends StatelessWidget {
                   textAlign: TextAlign.center
                 ),
                 SizedBox(height: 10.0),
-                Column(
-                  children: [
-                    ListTile(
-                      title: Text(
-                        'Hogar',
-                        style: GoogleFonts.montserrat(),
+                SingleChildScrollView(
+                  scrollDirection: Axis.vertical,
+                  child: Column(
+                    children: [
+                      ListTile(
+                        title: Text(
+                          'Sin seleccionar',
+                          style: GoogleFonts.montserrat(),
+                        ),
+                        onTap: () => Navigator.pop(context, ''),
                       ),
-                      onTap: () => Navigator.pop(context, 'Hogar'),
-                    ),
-                    ListTile(
-                      title: Text(
-                        'Cuidado personal',
-                        style: GoogleFonts.montserrat(),
+                      ListTile(
+                        title: Text(
+                          'Hogar',
+                          style: GoogleFonts.montserrat(),
+                        ),
+                        onTap: () => Navigator.pop(context, 'Hogar'),
                       ),
-                      onTap: () => Navigator.pop(context, 'Cuidado personal'),
-                    ),
-                    ListTile(
-                      title: Text(
-                        'Alimentos',
-                        style: GoogleFonts.montserrat(),
+                      ListTile(
+                        title: Text(
+                          'Cuidado personal',
+                          style: GoogleFonts.montserrat(),
+                        ),
+                        onTap: () => Navigator.pop(context, 'Cuidado personal'),
                       ),
-                      onTap: () => Navigator.pop(context, 'Alimentos'),
-                    )
-                  ],
+                      ListTile(
+                        title: Text(
+                          'Alimentos',
+                          style: GoogleFonts.montserrat(),
+                        ),
+                        onTap: () => Navigator.pop(context, 'Alimentos'),
+                      ),
+                      ListTile(
+                        title: Text(
+                          'Ropa',
+                          style: GoogleFonts.montserrat(),
+                        ),
+                        onTap: () => Navigator.pop(context, 'Ropa'),
+                      )
+                    ],
+                  ),
                 )
               ],
             ),

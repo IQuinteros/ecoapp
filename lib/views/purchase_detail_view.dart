@@ -1,3 +1,4 @@
+import 'package:flutter/cupertino.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter_bloc/flutter_bloc.dart';
 import 'package:flutter_ecoapp/bloc/article_bloc.dart';
@@ -54,6 +55,37 @@ class PurchaseDetailView extends StatelessWidget {
             iconSize: 40,
             onPressed: (){
               Navigator.pop(context);
+            },
+          ),
+          rightButton: IconButton(
+            icon: Icon(Icons.info_outline_rounded),
+            color: EcoAppColors.MAIN_COLOR,
+            iconSize: 30,
+            onPressed: (){
+              showModalBottomSheet(
+                context: context, 
+                builder: (BuildContext context){
+                  return Container(
+                    padding: EdgeInsets.symmetric(
+                      horizontal: 20.0,
+                      vertical: 20.0
+                    ),
+                    child: SafeArea(
+                      child: Row(
+                        children: [
+                          Expanded(
+                            child: Text(
+                              'Añade reseñas a tus artículos comprados, manteniendo presionada la tarjeta de cada artículo y luego presionando "Añadir reseña"',
+                              style: GoogleFonts.montserrat(),
+                              textAlign: TextAlign.center
+                            ),
+                          ),
+                        ],
+                      ),
+                    ),
+                  );
+                }
+              );
             },
           ),
         ),
@@ -314,12 +346,14 @@ class _ModalArticleOptions extends StatelessWidget {
           children: [
             Row(
               children: [
-                Text(
-                  articlePurchase.title,
-                  style: GoogleFonts.montserrat(
-                    fontWeight: FontWeight.w500,
-                    fontSize: 18
-                  )
+                Expanded(
+                  child: Text(
+                    articlePurchase.title,
+                    style: GoogleFonts.montserrat(
+                      fontWeight: FontWeight.w500,
+                      fontSize: 18
+                    )
+                  ),
                 ),
               ],
             ),

@@ -3,6 +3,7 @@ import 'package:flutter_bloc/flutter_bloc.dart';
 import 'package:flutter_ecoapp/bloc/app_bloc.dart';
 import 'package:flutter_ecoapp/bloc/profile_bloc.dart';
 import 'package:flutter_ecoapp/bloc/user_bloc.dart';
+import 'package:flutter_ecoapp/models/store.dart';
 import 'package:flutter_ecoapp/views/result_view.dart';
 import 'package:flutter_ecoapp/views/widgets/search/search_delegate.dart';
 import 'package:flutter_ecoapp/views/widgets/search/search_filter.dart';
@@ -11,8 +12,10 @@ import 'package:google_fonts/google_fonts.dart';
 class SearchBar extends StatelessWidget {
 
   final String? searching;
+  final Function()? onCloseFilter;
+  final StoreModel? storeFilter;
 
-  const SearchBar({Key? key, this.searching}) : super(key: key);
+  const SearchBar({Key? key, this.searching, this.onCloseFilter, this.storeFilter}) : super(key: key);
 
   @override
   Widget build(BuildContext context) {
@@ -42,7 +45,7 @@ class SearchBar extends StatelessWidget {
         uploadSearch(context, result);
         AppBloc appBloc = BlocProvider.of<AppBloc>(context);
         Navigator.popUntil(context, ModalRoute.withName('/'));
-        var value = await Navigator.push(context, MaterialPageRoute(builder: (__) => ResultView(searching: result,)));
+        var value = await Navigator.push(context, MaterialPageRoute(builder: (__) => ResultView(searching: result, storeFilter: storeFilter)));
         if(value != null) appBloc.mainEcoNavBar.onTap(value);
       },
     );
@@ -51,6 +54,7 @@ class SearchBar extends StatelessWidget {
       icon: Icon(Icons.filter_list_outlined), 
       onPressed: () async {
         await SearchFilter.openSearchFilter(context: context);
+        onCloseFilter?.call();
       }
     );
     

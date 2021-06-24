@@ -26,13 +26,19 @@ class ArticleBloc extends BaseBloc<ArticleModel>{
 
   SearchFilterModel currentSearchFilter = SearchFilterModel();
 
-  Future<List<ArticleModel>> getArticlesFromSearch(String search, {required ProfileModel? profile, int initial = 0, int quantity = 20, bool useFilter = false}) async => await articleAPI.selectAll(params: {
+  Future<List<ArticleModel>> getArticlesFromSearch(
+  String search, 
+  {required ProfileModel? profile, 
+  int initial = 0, 
+  int quantity = 20, 
+  bool useFilter = false,
+  StoreModel? store}) async => await articleAPI.selectAll(params: {
     'search': search,
     'initial_number': initial,
     'quantity': quantity
   }..addAll( profile != null? {'profile_id': profile.id} : {})..addAll(
     useFilter? currentSearchFilter.toMap() : {}
-  ));
+  )..addAll( store != null? {'id_store': store.id} : {}));
 
   Future<List<ArticleModel>> getArticlesOfStore(StoreModel store) async => await articleAPI.selectAll(params: {
     'id_store': store.id

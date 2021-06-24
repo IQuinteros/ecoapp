@@ -76,11 +76,11 @@ class _CartViewState extends State<CartView> {
   }
 
   Widget getContent(BuildContext context){
-
+    final profileBloc = BlocProvider.of<ProfileBloc>(context);
     final cartBloc = BlocProvider.of<CartBloc>(context);
 
     final column = FutureBuilder(
-      future: cartBloc.loadCart(),
+      future: cartBloc.loadCart(profile: profileBloc.currentProfile),
       initialData: cartBloc.loadedCart,
       builder: (BuildContext context, AsyncSnapshot<CartModel> snapshot){
         List<Widget> cartArticles = [];

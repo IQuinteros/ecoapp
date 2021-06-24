@@ -8,6 +8,7 @@ import 'package:flutter_ecoapp/views/style/colors.dart';
 import 'package:flutter_ecoapp/views/style/text_style.dart';
 import 'package:flutter_ecoapp/views/widgets/bottom_nav_bar.dart';
 import 'package:flutter_ecoapp/views/widgets/purchases/purchase_card.dart';
+import 'package:google_fonts/google_fonts.dart';
 
 class PurchasesView extends StatelessWidget {
   @override
@@ -48,6 +49,18 @@ class PurchasesView extends StatelessWidget {
           builder: (context, AsyncSnapshot<List<PurchaseModel>> snapshot){
             switch(snapshot.connectionState){
               case ConnectionState.done:
+                if(!snapshot.hasData || snapshot.data!.length <= 0){
+                  return Container(
+                    margin: EdgeInsets.only(
+                      top: 20.0
+                    ),
+                    child: Text(
+                      'No se han encontrado compras realizadas',
+                      style: GoogleFonts.montserrat(),
+                      textAlign: TextAlign.center,
+                    ),
+                  );
+                }
                 return Column(children: snapshot.data!.map<Widget>((e) => PurchaseCard(purchase: e)).toList(),);
               default: return Center(child: CircularProgressIndicator(),);
             }

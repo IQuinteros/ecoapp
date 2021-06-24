@@ -143,7 +143,7 @@ class _RegisterViewState extends State<RegisterView> {
             ),
             NormalInput(
               header: 'Rut', 
-              hint: 'Ingresa tu rut', 
+              hint: 'Sin puntos ni dígito verificador', 
               icon: Icons.person,
               type: TextInputType.number,
               controller: controllers['rut']!,
@@ -159,7 +159,7 @@ class _RegisterViewState extends State<RegisterView> {
             ),
             NormalInput(
               header: 'Teléfono - Celular', 
-              hint: 'Ingresa tu número de contacto', 
+              hint: '912345678', 
               icon: Icons.phone,
               type: TextInputType.phone,
               controller: controllers['phone']!,

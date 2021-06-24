@@ -54,12 +54,15 @@ class StoreView extends StatelessWidget {
               margin: EdgeInsets.symmetric(
                 horizontal: 10.0
               ),
-              child: SearchBar()
+              child: SearchBar(
+                storeFilter: store,
+              )
             ),
             SizedBox(height: 20.0),
             FutureArticles(
               notFoundMessage: 'La tienda aún no tiene artículos publicados', 
               getFuture: (loaded) =>  articleBloc.getArticlesOfStore(store),
+              clearOnRefresh: true,
             )
           ],
         ),

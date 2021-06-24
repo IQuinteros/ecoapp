@@ -198,7 +198,6 @@ class _ProfileModifyMainContent extends StatelessWidget {
                     return 'Debe ser un email válido';
                   return null;
                 },
-                readOnly: true,
               ),
               NormalInput(
                 header: 'Teléfono - Celular', 
