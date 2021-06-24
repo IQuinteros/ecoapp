@@ -175,32 +175,30 @@ class _ArticleAppBar extends StatelessWidget {
         decoration: BoxDecoration(),
         child: Stack(
           children: [
-            Expanded(
-              child: Container(
-                margin: EdgeInsets.only(
-                  top: 103
-                ),
-                child: FlexibleSpaceBar(
-                  collapseMode: CollapseMode.parallax,
-                  centerTitle: false,
-                  stretchModes: const <StretchMode>[
-                    StretchMode.zoomBackground,
-                    StretchMode.blurBackground,
-                    StretchMode.fadeTitle,
-                  ],
-                  background: Container(
-                    child: GestureDetector(
-                      child: Hero( 
-                        tag: article.tag,
-                        child: Image(
-                          image: NetworkImage(article.photos.length > 0? article.photos[0].photoUrl : ''),
-                          height: 120,
-                          width: 120,
-                          fit: BoxFit.cover,
-                        )
-                      ),
-                      onTap: () => Navigator.push(context, MaterialPageRoute(builder: (__) => ImageView(photos: article.photos, title: article.title,))),
+            Container(
+              margin: EdgeInsets.only(
+                top: 80
+              ),
+              child: FlexibleSpaceBar(
+                collapseMode: CollapseMode.parallax,
+                centerTitle: false,
+                stretchModes: const <StretchMode>[
+                  StretchMode.zoomBackground,
+                  StretchMode.blurBackground,
+                  StretchMode.fadeTitle,
+                ],
+                background: Container(
+                  child: GestureDetector(
+                    child: Hero( 
+                      tag: article.tag,
+                      child: Image(
+                        image: NetworkImage(article.photos.length > 0? article.photos[0].photoUrl : ''),
+                        height: 120,
+                        width: 120,
+                        fit: BoxFit.cover,
+                      )
                     ),
+                    onTap: () => Navigator.push(context, MaterialPageRoute(builder: (__) => ImageView(photos: article.photos, title: article.title,))),
                   ),
                 ),
               ),
@@ -217,7 +215,7 @@ class _ArticleAppBar extends StatelessWidget {
                   )
                 ]
               ),
-              height: 103,
+              height: 80,
             ),
           ],
         ),
