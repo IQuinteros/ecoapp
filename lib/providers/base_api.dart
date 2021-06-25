@@ -20,6 +20,7 @@ abstract class BaseAPI<T extends BaseModel>{
   // Hosting: ecomercioweb.000webhostapp.com
   static const String _authority = 'ecomercioweb.000webhostapp.com';//'localhost:8888';
   static const String _requests = 'api/requests';
+  static const String _apiKey = 'iyinF635EHL7SF8cmYY6rR9en4uRQjA1';
 
   final String baseUrl;
   Map<String, dynamic> Function(T) getJsonParams;
@@ -43,7 +44,7 @@ abstract class BaseAPI<T extends BaseModel>{
     try{
       resp = await http.post(
         uri,
-        body: jsonEncode(params),
+        body: jsonEncode(params?..addAll({'C8AEA': _apiKey})),
         headers: <String, String>{
           'Content-Type': 'application/json; charset=UTF-8',
         },

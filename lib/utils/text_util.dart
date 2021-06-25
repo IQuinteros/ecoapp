@@ -21,6 +21,21 @@ class TextValidationUtil{
     return preRut;
   }
 
+  static int? getNumRutValue(String rut){
+    if(rut.isEmpty) return null;
+    if(rut.split('-').length < 2) return null;
+    final numberDotsString = rut.split('-')[0];
+    final numberString = numberDotsString.split('.').join();
+    print(numberString);
+    return int.tryParse(numberString);
+  }
+
+  static String? getDvRutValue(String rut){
+    if(rut.isEmpty) return null;
+    if(rut.split('-').length < 2) return null;
+    return rut.split('-')[1];
+  }
+
   static bool _validRutDv(String rut){
     if(rut.isEmpty) return false;
     if(rut.split('-').length < 2) return false;
