@@ -25,7 +25,7 @@ class TextValidationUtil{
     if(rut.isEmpty) return false;
     if(rut.split('-').length < 2) return false;
     final numberDotsString = rut.split('-')[0];
-    final numberRevString = numberDotsString.split('.').reversed.join();
+    final numberRevString = numberDotsString.split('.').join().split('').reversed.join();
     List<int> results = [];
     for (var i = 0; i < numberRevString.length; i++) {
       int? number = int.tryParse(numberRevString[i]);
@@ -35,7 +35,7 @@ class TextValidationUtil{
     }
     final sum = results.reduce((value, element) => value + element);
     final remainder = sum % 11;
-    final dv = (remainder) == 10? 'k' : (remainder) == 11? '0' : (remainder).toString();
+    final dv = (11 - remainder) == 10? 'k' : (11 - remainder) == 11? '0' : (11 - remainder).toString();
     return rut.split('-')[1].toLowerCase() == dv;
   }
 }
