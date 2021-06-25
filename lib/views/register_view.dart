@@ -6,13 +6,14 @@ import 'package:flutter_bloc/flutter_bloc.dart';
 import 'package:flutter_ecoapp/bloc/profile_bloc.dart';
 import 'package:flutter_ecoapp/models/district.dart';
 import 'package:flutter_ecoapp/models/profile.dart';
-import 'package:flutter_ecoapp/utils/email_util.dart';
+import 'package:flutter_ecoapp/utils/text_util.dart';
 import 'package:flutter_ecoapp/views/register_pass_view.dart';
 import 'package:flutter_ecoapp/views/style/colors.dart';
 import 'package:flutter_ecoapp/views/widgets/bottom_nav_bar.dart';
 import 'package:flutter_ecoapp/views/widgets/district_input.dart';
 import 'package:flutter_ecoapp/views/widgets/normal_button.dart';
 import 'package:flutter_ecoapp/views/widgets/normal_input.dart';
+import 'package:flutter_svg/flutter_svg.dart';
 import 'package:google_fonts/google_fonts.dart';
 
 class RegisterView extends StatefulWidget {
@@ -143,27 +144,43 @@ class _RegisterViewState extends State<RegisterView> {
             ),
             NormalInput(
               header: 'Rut', 
-              hint: 'Sin puntos ni dígito verificador', 
+              hint: 'Solo números y dígito verificador', 
               icon: Icons.person,
-              type: TextInputType.number,
+              type: TextInputType.text,
               controller: controllers['rut']!,
               validator: (value) {
                 if(value!.isEmpty) 
                   return 'Debe ingresar su rut';
+                if(value.length < 10)
+                  return 'Debe tener más de 7 dígitos';
+                if(!TextValidationUtil.validateRut(value))
+                  return 'El rut no es válido';
                 return null;
               },
               inputFormatters: [
-                FilteringTextInputFormatter.digitsOnly,
+                FilteringTextInputFormatter.allow(RegExp(r'[0-9kK]')),
               ],
-              maxLength: 10
+              onChanged: (value){
+                String newValue = TextValidationUtil.stringToRut(value);
+                controllers['rut']!.text = newValue;
+                controllers['rut']!.selection = TextSelection.fromPosition(TextPosition(offset: newValue.length));
+              },
             ),
             NormalInput(
-              header: 'Teléfono - Celular', 
+              header: 'Celular', 
               hint: '912345678', 
               icon: Icons.phone,
               type: TextInputType.phone,
               controller: controllers['phone']!,
-              validator: (value) => value!.isEmpty? 'Debe ingresar su número de contacto' : null,
+              validator: (value) {
+                if(value!.isEmpty) 
+                  return 'Debe ingresar su número de contacto';
+                if(value.length < 9)
+                  return 'El número de contacto no es válido';
+                if(!value.startsWith('9'))
+                  return 'El número debe comenzar con 9';
+                return null;
+              },
               inputFormatters: [
                 FilteringTextInputFormatter.digitsOnly
               ],

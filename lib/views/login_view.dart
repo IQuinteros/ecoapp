@@ -100,14 +100,14 @@ class LoginView extends StatelessWidget {
                 onPressed: () => _tryLogin(context)
               ),
             ),
-            Container(
+            /* Container(
               margin: EdgeInsets.only(
                 left: 40.0,
                 right: 40.0,
                 top: 20.0
               ),
               child: GoogleButton(),
-            ),
+            ), */
             SizedBox(height: 10.0,),
             Divider(thickness: 1,),
             Container(
