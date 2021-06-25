@@ -230,6 +230,7 @@ class _StoreList extends StatelessWidget {
       price: e.unitPrice.toDouble(),
       title: e.title,
       extraTag: 'purchase-list-${e.id}',
+      requestRefresh: true,
       onLongPress: (){
         if(e.article != null){
           showModalBottomSheet(

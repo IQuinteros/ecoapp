@@ -17,10 +17,11 @@ class ArticleCard extends StatefulWidget {
   final Function()? onLongPress;
 
   final String extraTag;
+  final bool requestRefresh;
 
-  const ArticleCard({Key? key, required this.article, this.ecoIndicator, this.price, this.title, this.onLongPress, this.extraTag = ''}) : super(key: key);
+  const ArticleCard({Key? key, required this.article, this.ecoIndicator, this.price, this.title, this.onLongPress, this.extraTag = '', this.requestRefresh = false}) : super(key: key);
 
-  const ArticleCard.fromPurchase({Key? key, this.article, required this.title, this.onLongPress, required this.ecoIndicator, required this.price, this.extraTag = ''}): super(key: key);
+  const ArticleCard.fromPurchase({Key? key, this.article, required this.title, this.onLongPress, required this.ecoIndicator, required this.price, this.extraTag = '', this.requestRefresh = false}): super(key: key);
 
   @override
   _ArticleCardState createState() => _ArticleCardState();
@@ -193,7 +194,10 @@ class _ArticleCardState extends State<ArticleCard> {
             onLongPress: widget.onLongPress,
             onTap: (){
               if(widget.article != null)
-                Navigator.push(context, MaterialPageRoute(builder: (__) => ArticleView(article: widget.article!,)));
+                Navigator.push(context, MaterialPageRoute(builder: (__) => ArticleView(
+                  article: widget.requestRefresh? null : widget.article!,
+                  articleId: widget.requestRefresh? widget.article!.id : null,
+                )));
               else
               {
                 ScaffoldMessenger.of(context).removeCurrentSnackBar();

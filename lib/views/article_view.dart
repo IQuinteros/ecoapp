@@ -215,7 +215,11 @@ class _ArticleAppBar extends StatelessWidget {
                   )
                 ]
               ),
-              height: 80,
+              child: SafeArea(
+                child: Container(
+                  height: 60
+                ),
+              ),
             ),
           ],
         ),
