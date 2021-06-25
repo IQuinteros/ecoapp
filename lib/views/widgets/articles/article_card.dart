@@ -44,7 +44,6 @@ class _ArticleCardState extends State<ArticleCard> {
 
     final image = Image(
       image: imageData,
-      height: 120,
       width: 120,
       fit: BoxFit.cover,
     );
@@ -54,10 +53,11 @@ class _ArticleCardState extends State<ArticleCard> {
     if(widget.article != null)
       heroImage = Hero(
         tag: widget.article!.tag,
-        child: image
+        child: image,
       );
 
     final imageContainer = Container(
+      constraints: BoxConstraints(minHeight: 120, maxHeight: double.infinity),
       child: heroImage,
       decoration: BoxDecoration(
         boxShadow: <BoxShadow>[
@@ -132,16 +132,22 @@ class _ArticleCardState extends State<ArticleCard> {
     );
 
     var column = Expanded(
-      child: Column(
-        mainAxisAlignment: MainAxisAlignment.spaceBetween,
-        mainAxisSize: MainAxisSize.max,
-        children: [
-          SizedBox(width: 10.0),
-          firstRow,
-          SizedBox(height: 20),
-          secondRow,
-          SizedBox(width: 10.0)
-        ],
+      flex: 2,
+      child: Container(
+        padding: EdgeInsets.symmetric(
+          vertical: 10
+        ),
+        child: Column(
+          mainAxisAlignment: MainAxisAlignment.spaceBetween,
+          mainAxisSize: MainAxisSize.max,
+          children: [
+            SizedBox(width: 10.0),
+            firstRow,
+            SizedBox(height: 20),
+            secondRow,
+            SizedBox(width: 10.0)
+          ],
+        ),
       ),
     );
 
@@ -157,7 +163,7 @@ class _ArticleCardState extends State<ArticleCard> {
         crossAxisAlignment: CrossAxisAlignment.center,
         mainAxisSize: MainAxisSize.max,
         children: [
-          imageContainer,
+          Expanded(child: imageContainer),
           SizedBox(width: 20.0),
           column,
           SizedBox(width: 10.0)

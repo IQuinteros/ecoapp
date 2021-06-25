@@ -285,6 +285,7 @@ class _ArticleContent extends StatelessWidget {
     final articleBloc = BlocProvider.of<ArticleBloc>(context);
 
     articleBloc.getStoreOfArticle(article).then((value) {
+      if(_storeController.isClosed) return;
       _storeSink(value);
       disposeStreams();
     });
