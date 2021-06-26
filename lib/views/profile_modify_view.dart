@@ -3,12 +3,13 @@ import 'dart:convert';
 import 'package:awesome_dialog/awesome_dialog.dart';
 import 'package:flutter/cupertino.dart';
 import 'package:flutter/material.dart';
+import 'package:flutter/services.dart';
 import 'package:flutter_bloc/flutter_bloc.dart';
 import 'package:flutter_ecoapp/bloc/district_bloc.dart';
 import 'package:flutter_ecoapp/bloc/profile_bloc.dart';
 import 'package:flutter_ecoapp/models/district.dart';
 import 'package:flutter_ecoapp/models/profile.dart';
-import 'package:flutter_ecoapp/utils/email_util.dart';
+import 'package:flutter_ecoapp/utils/text_util.dart';
 import 'package:flutter_ecoapp/views/profile_modify_pass_view.dart';
 import 'package:flutter_ecoapp/views/style/colors.dart';
 import 'package:flutter_ecoapp/views/widgets/district_input.dart';
@@ -200,12 +201,24 @@ class _ProfileModifyMainContent extends StatelessWidget {
                 },
               ),
               NormalInput(
-                header: 'Teléfono - Celular', 
-                hint: 'Ingresa tu número de contacto', 
+                header: 'Celular', 
+                hint: '912345678', 
                 icon: Icons.phone,
                 type: TextInputType.phone,
                 controller: controllers['phone']!,
-                validator: (value) => value!.isEmpty? 'Debe ingresar su número de contacto' : null
+                validator: (value) {
+                  if(value!.isEmpty) 
+                    return 'Debe ingresar su número de contacto';
+                  if(value.length < 9)
+                    return 'El número de contacto no es válido';
+                  if(!value.startsWith('9'))
+                    return 'El número debe comenzar con 9';
+                  return null;
+                },
+                inputFormatters: [
+                  FilteringTextInputFormatter.digitsOnly
+                ],
+                maxLength: 9, 
               ),
               NormalInput(
                 header: 'Fecha de nacimiento', 

@@ -135,11 +135,15 @@ class _CartViewState extends State<CartView> {
                   mainAxisSize: MainAxisSize.max,
                   mainAxisAlignment: MainAxisAlignment.center,
                   children: [
-                    Text(
-                      'Aún no tienes artículos en tu carrito',
-                      style: GoogleFonts.montserrat(),
-                      textAlign: TextAlign.center,
+                    SizedBox(width: 20.0,),
+                    Expanded(
+                      child: Text(
+                        'Aún no tienes artículos en tu carrito',
+                        style: GoogleFonts.montserrat(),
+                        textAlign: TextAlign.center,
+                      ),
                     ),
+                    SizedBox(width: 20.0,),
                   ],
                 )
               );

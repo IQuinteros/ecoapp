@@ -26,7 +26,6 @@ class ResultView extends StatefulWidget {
 
 class _ResultViewState extends State<ResultView> {
   final scrollController = ScrollController();
-  bool reset = true;
   @override
   Widget build(BuildContext context) {
     return Scaffold(
@@ -79,12 +78,10 @@ class _ResultViewState extends State<ResultView> {
           notFoundMessage: 'No se han encontrado artículos para tu búsqueda :c',
           recommended: true,
           scrollController: scrollController,
-          clearOnRefresh: reset,
+          clearOnRefresh: true,
         )
       ],
     );
-
-    reset = false;
 
     return RefreshIndicator(
       child: CustomScrollView(
@@ -93,7 +90,7 @@ class _ResultViewState extends State<ResultView> {
         slivers: [
           IndexAppBar(
             searching: widget.searching,
-            onCloseFilter: () => setState(() => reset = true), 
+            onCloseFilter: () => setState((){}), 
           ),
           SliverList(
             delegate: SliverChildListDelegate(
@@ -107,7 +104,7 @@ class _ResultViewState extends State<ResultView> {
           )
         ],
       ),
-      onRefresh: () => Future.delayed(Duration(milliseconds: 100), () => setState(() {})),
+      onRefresh: () => Future.delayed(Duration(milliseconds: 100), () => setState(() { })),
     );
 
   }

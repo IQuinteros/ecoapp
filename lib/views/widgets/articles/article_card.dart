@@ -17,10 +17,11 @@ class ArticleCard extends StatefulWidget {
   final Function()? onLongPress;
 
   final String extraTag;
+  final bool requestRefresh;
 
-  const ArticleCard({Key? key, required this.article, this.ecoIndicator, this.price, this.title, this.onLongPress, this.extraTag = ''}) : super(key: key);
+  const ArticleCard({Key? key, required this.article, this.ecoIndicator, this.price, this.title, this.onLongPress, this.extraTag = '', this.requestRefresh = false}) : super(key: key);
 
-  const ArticleCard.fromPurchase({Key? key, this.article, required this.title, this.onLongPress, required this.ecoIndicator, required this.price, this.extraTag = ''}): super(key: key);
+  const ArticleCard.fromPurchase({Key? key, this.article, required this.title, this.onLongPress, required this.ecoIndicator, required this.price, this.extraTag = '', this.requestRefresh = false}): super(key: key);
 
   @override
   _ArticleCardState createState() => _ArticleCardState();
@@ -43,7 +44,6 @@ class _ArticleCardState extends State<ArticleCard> {
 
     final image = Image(
       image: imageData,
-      height: 120,
       width: 120,
       fit: BoxFit.cover,
     );
@@ -53,10 +53,11 @@ class _ArticleCardState extends State<ArticleCard> {
     if(widget.article != null)
       heroImage = Hero(
         tag: widget.article!.tag,
-        child: image
+        child: image,
       );
 
     final imageContainer = Container(
+      constraints: BoxConstraints(minHeight: 120, maxHeight: double.infinity),
       child: heroImage,
       decoration: BoxDecoration(
         boxShadow: <BoxShadow>[
@@ -131,16 +132,22 @@ class _ArticleCardState extends State<ArticleCard> {
     );
 
     var column = Expanded(
-      child: Column(
-        mainAxisAlignment: MainAxisAlignment.spaceBetween,
-        mainAxisSize: MainAxisSize.max,
-        children: [
-          SizedBox(width: 10.0),
-          firstRow,
-          SizedBox(height: 20),
-          secondRow,
-          SizedBox(width: 10.0)
-        ],
+      flex: 2,
+      child: Container(
+        padding: EdgeInsets.symmetric(
+          vertical: 10
+        ),
+        child: Column(
+          mainAxisAlignment: MainAxisAlignment.spaceBetween,
+          mainAxisSize: MainAxisSize.max,
+          children: [
+            SizedBox(width: 10.0),
+            firstRow,
+            SizedBox(height: 20),
+            secondRow,
+            SizedBox(width: 10.0)
+          ],
+        ),
       ),
     );
 
@@ -156,7 +163,7 @@ class _ArticleCardState extends State<ArticleCard> {
         crossAxisAlignment: CrossAxisAlignment.center,
         mainAxisSize: MainAxisSize.max,
         children: [
-          imageContainer,
+          Expanded(child: imageContainer),
           SizedBox(width: 20.0),
           column,
           SizedBox(width: 10.0)
@@ -193,7 +200,10 @@ class _ArticleCardState extends State<ArticleCard> {
             onLongPress: widget.onLongPress,
             onTap: (){
               if(widget.article != null)
-                Navigator.push(context, MaterialPageRoute(builder: (__) => ArticleView(article: widget.article!,)));
+                Navigator.push(context, MaterialPageRoute(builder: (__) => ArticleView(
+                  article: widget.requestRefresh? null : widget.article!,
+                  articleId: widget.requestRefresh? widget.article!.id : null,
+                )));
               else
               {
                 ScaffoldMessenger.of(context).removeCurrentSnackBar();

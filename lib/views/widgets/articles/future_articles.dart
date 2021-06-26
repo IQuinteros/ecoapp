@@ -15,7 +15,8 @@ class FutureArticles <T> extends StatefulWidget {
     this.recommended = false,
     this.onLongPress, 
     this.scrollController,
-    this.clearOnRefresh = false
+    this.clearOnRefresh = false,
+    this.onLoad
   }) : super(key: key);
 
   final String notFoundMessage;
@@ -24,6 +25,7 @@ class FutureArticles <T> extends StatefulWidget {
   final ScrollController? scrollController;
   final bool clearOnRefresh;
   final Future<List<ArticleModel>> Function(List<ArticleModel>) getFuture;
+  final Function()? onLoad;
 
   @override
   _FutureArticlesState<T> createState() => _FutureArticlesState<T>();
@@ -35,6 +37,7 @@ class _FutureArticlesState<T> extends State<FutureArticles<T>> {
 
   bool refreshing = false;
   bool hasMoreArticles = false;
+  bool refreshingForScroll = false;
 
   @override
   void initState() { 
@@ -47,7 +50,7 @@ class _FutureArticlesState<T> extends State<FutureArticles<T>> {
       }
       if(widget.scrollController!.position.pixels >= widget.scrollController!.position.maxScrollExtent - 200){
         if(!refreshing && hasMoreArticles){
-          setState(() {});
+          setState(() { refreshingForScroll = true; });
         }
       }
 
@@ -56,8 +59,9 @@ class _FutureArticlesState<T> extends State<FutureArticles<T>> {
 
   @override
   Widget build(BuildContext context) {
-
-    if(widget.clearOnRefresh) loadedArticles = [];
+    
+    if(widget.clearOnRefresh && !refreshingForScroll) loadedArticles = [];
+    refreshingForScroll = false;
 
     final articleBloc = BlocProvider.of<ArticleBloc>(context);
     final profileBloc = BlocProvider.of<ProfileBloc>(context);
@@ -67,6 +71,7 @@ class _FutureArticlesState<T> extends State<FutureArticles<T>> {
       builder: (BuildContext context, AsyncSnapshot<List<ArticleModel>> snapshot){
         switch(snapshot.connectionState){
           case ConnectionState.done:
+            widget.onLoad?.call();
             refreshing = false;
             if(!snapshot.hasData) return Container();
             loadedArticles.addAll(snapshot.data!);

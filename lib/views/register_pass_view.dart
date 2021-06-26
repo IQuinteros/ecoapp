@@ -10,8 +10,17 @@ import 'package:flutter_ecoapp/views/widgets/normal_button.dart';
 import 'package:flutter_ecoapp/views/widgets/normal_input.dart';
 import 'package:google_fonts/google_fonts.dart';
 
-class RegisterPassView extends StatelessWidget {
+class RegisterPassView extends StatefulWidget {
 
+  final ProfileModel tempProfile;
+
+  RegisterPassView({Key? key, required this.tempProfile}) : super(key: key);
+
+  @override
+  _RegisterPassViewState createState() => _RegisterPassViewState();
+}
+
+class _RegisterPassViewState extends State<RegisterPassView> {
   final controllers = {
     'pass': TextEditingController(),
     'confirm': TextEditingController(),
@@ -19,9 +28,7 @@ class RegisterPassView extends StatelessWidget {
 
   final _formKey = GlobalKey<FormState>();
 
-  final ProfileModel tempProfile;
-
-  RegisterPassView({Key? key, required this.tempProfile}) : super(key: key);
+  bool checked = false;
 
   @override
   Widget build(BuildContext context) {
@@ -112,6 +119,20 @@ class RegisterPassView extends StatelessWidget {
               maxLines: 1,
               isPassword: true,
             ),
+            SizedBox(height: 30),
+            CheckboxListTile(
+              value: checked,
+              title: Text(
+                'Acepta los términos y condiciones de ECOmercio',
+                style: GoogleFonts.montserrat(
+                  fontSize: 14
+                ),
+              ),
+              selectedTileColor: EcoAppColors.MAIN_COLOR,
+              onChanged: (value) => setState(() => value != null? checked = value : checked = false)
+
+            ),
+            SizedBox(height: 30),
             Container(
               margin: EdgeInsets.symmetric(
                 horizontal: 40.0
@@ -130,6 +151,17 @@ class RegisterPassView extends StatelessWidget {
   void createAccount(BuildContext context) async {
     if(_formKey.currentState!.validate()){
 
+      if(!checked){
+        ScaffoldMessenger.of(context).removeCurrentSnackBar();
+        ScaffoldMessenger.of(context).showSnackBar(
+          SnackBar(
+            content: Text('Debe aceptar los términos y condiciones de ECOmercio'),
+            backgroundColor: EcoAppColors.MAIN_DARK_COLOR,
+          )
+        );
+        return;
+      }
+
       final profileBloc = BlocProvider.of<ProfileBloc>(context);
 
       final loading = AwesomeDialog(
@@ -143,7 +175,7 @@ class RegisterPassView extends StatelessWidget {
         padding: EdgeInsets.symmetric(horizontal: 20.0, vertical: 10.0)
       )..show();
 
-      bool result = await profileBloc.signup(tempProfile, controllers['pass']!.text);
+      bool result = await profileBloc.signup(widget.tempProfile, controllers['pass']!.text);
 
       loading.dismiss();
 
@@ -172,7 +204,6 @@ class RegisterPassView extends StatelessWidget {
     }
     
   }
-
 }
 
 

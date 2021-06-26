@@ -56,12 +56,13 @@ class StoreDescriptionSection extends StatelessWidget {
           style: GoogleFonts.montserrat(
             color: EcoAppColors.MAIN_DARK_COLOR
           ),
+          textAlign: TextAlign.center,
         )
       ],
     );
 
-    final storeInformation = Column(
-      crossAxisAlignment: CrossAxisAlignment.end,
+    final storeInformation = ([bool alignCenter = false]) => Column(
+      crossAxisAlignment: alignCenter? CrossAxisAlignment.center: CrossAxisAlignment.end,
       mainAxisAlignment: MainAxisAlignment.spaceBetween,
       children: [
         Text(
@@ -70,17 +71,17 @@ class StoreDescriptionSection extends StatelessWidget {
             fontSize: 16,
             fontWeight: FontWeight.w500
           ),
-          textAlign: TextAlign.end,
+          textAlign: alignCenter? TextAlign.center : TextAlign.end
         ),
         SizedBox(height: 10.0),
         Text(
           'Media de reseña de clientes',
           style: GoogleFonts.montserrat(),
-          textAlign: TextAlign.end,
+          textAlign: alignCenter? TextAlign.center : TextAlign.end
         ),
         SizedBox(height: 10.0),
         Row(
-          mainAxisAlignment: MainAxisAlignment.end,
+          mainAxisAlignment: alignCenter? MainAxisAlignment.center : MainAxisAlignment.end,
           children: [
             Text(store.rating.avgRating.toStringAsPrecision(2), style: GoogleFonts.montserrat(), textAlign: TextAlign.end,), // TODO: Add rating view
             StarsRow(rating: store.rating.avgRating,)
@@ -92,17 +93,31 @@ class StoreDescriptionSection extends StatelessWidget {
           style: GoogleFonts.montserrat(
             fontWeight: FontWeight.w500
           ),
-          textAlign: TextAlign.end,
+          textAlign: alignCenter? TextAlign.center : TextAlign.end
         )
       ],
     );
 
-    final rowContent = Row(
-      children: [
-        storeLogo,
-        SizedBox(width: 20.0),
-        Expanded(child: storeInformation)
-      ],
+    final content = ([bool expanded = true, bool alignCenter = false]) => [
+      expanded? Expanded(child: storeLogo) : storeLogo,
+      SizedBox(width: 20.0),
+      expanded? Expanded(child: storeInformation(alignCenter), flex: 2) : storeInformation(alignCenter)
+    ];
+
+    final layoutBuilder = LayoutBuilder(
+      builder: (context, constraints){
+        print('Constraints: ${constraints.maxWidth}');
+        if(MediaQuery.of(context).textScaleFactor > 1.35 || constraints.maxWidth <= 300){
+          return Column(
+            children: content(false, true),
+          );
+        }
+        else{
+          return Row(
+            children: content(),
+          );
+        }
+      }
     );
 
     return Container(
@@ -112,7 +127,7 @@ class StoreDescriptionSection extends StatelessWidget {
       ),
       child: Column(
         children: [
-          rowContent,
+          layoutBuilder,
           SizedBox(height: 20.0),
           NormalButton(
             text: 'Ver más datos del vendedor', 

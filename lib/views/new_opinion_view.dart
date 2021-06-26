@@ -59,74 +59,76 @@ class _NewOpinionViewState extends State<NewOpinionView> {
               horizontal: 20.0,
               vertical: 20.0
             ),
-            child: Column(
-              crossAxisAlignment: CrossAxisAlignment.stretch,
-              children: [
-                _CoverOpinionInfo(articlePurchase: widget.articlePurchase),
-                SizedBox(height: 10.0),
-                Divider(thickness: 1,),
-                SizedBox(height: 20.0),
-                Text(
-                  'Califica con estrellas',
-                  style: GoogleFonts.montserrat(
-                    fontWeight: FontWeight.w400,
-                    fontSize: 18
-                  ),
-                  textAlign: TextAlign.center,
-                ),
-                SizedBox(height: 10.0),
-                Row(
-                  children: [
-                    Spacer(),
-                    StarsRow(
-                      rating: 0, 
-                      editable: true,
-                      onEdit: (value) => stars = value.toInt(),
+            child: SingleChildScrollView(
+              child: Column(
+                crossAxisAlignment: CrossAxisAlignment.stretch,
+                children: [
+                  _CoverOpinionInfo(articlePurchase: widget.articlePurchase),
+                  SizedBox(height: 10.0),
+                  Divider(thickness: 1,),
+                  SizedBox(height: 20.0),
+                  Text(
+                    'Califica con estrellas',
+                    style: GoogleFonts.montserrat(
+                      fontWeight: FontWeight.w400,
+                      fontSize: 18
                     ),
-                    Spacer(),
-                  ],
-                ),
-                SizedBox(height: 10.0),
-                Divider(thickness: 1,),
-                SizedBox(height: 20.0),
-                NormalInput(
-                  header: '¿Qué te pareció el producto?', 
-                  hint: 'En pocas palabras', 
-                  icon: Icons.comment,
-                  controller: titleController,
-                  type: TextInputType.text,
-                  maxLength: 50,
-                  validator: (value) => value == null || value.isEmpty? 'Tu reseña necesita una pequeña opinión' : null,
-                ),
-                NormalInput(
-                  header: 'Detalles (opcional)', 
-                  hint: '', 
-                  icon: Icons.comment,
-                  controller: commentController,
-                  type: TextInputType.multiline,
-                  maxLines: 5,
-                  maxLength: 250,
-                ),
-                SizedBox(height: 20.0),
-                NormalButton(
-                  text: 'Enviar reseña', 
-                  onPressed: (){
-                    final validate = _formKey.currentState!.validate();
-                    if(stars <= 0){
-                      ScaffoldMessenger.of(context).removeCurrentSnackBar();
-                      ScaffoldMessenger.of(context).showSnackBar(SnackBar(
-                        content: Text('Antes, califica con estrellas por favor'),
-                        backgroundColor: EcoAppColors.MAIN_DARK_COLOR,
-                      ));
-                      return;
-                    }
-                    if(!validate) return;
-                    
+                    textAlign: TextAlign.center,
+                  ),
+                  SizedBox(height: 10.0),
+                  Row(
+                    children: [
+                      Spacer(),
+                      StarsRow(
+                        rating: 0, 
+                        editable: true,
+                        onEdit: (value) => stars = value.toInt(),
+                      ),
+                      Spacer(),
+                    ],
+                  ),
+                  SizedBox(height: 10.0),
+                  Divider(thickness: 1,),
+                  SizedBox(height: 20.0),
+                  NormalInput(
+                    header: '¿Qué te pareció el producto?', 
+                    hint: 'En pocas palabras', 
+                    icon: Icons.comment,
+                    controller: titleController,
+                    type: TextInputType.text,
+                    maxLength: 50,
+                    validator: (value) => value == null || value.isEmpty? 'Tu reseña necesita una pequeña opinión' : null,
+                  ),
+                  NormalInput(
+                    header: 'Detalles (opcional)', 
+                    hint: '', 
+                    icon: Icons.comment,
+                    controller: commentController,
+                    type: TextInputType.multiline,
+                    maxLines: 5,
+                    maxLength: 250,
+                  ),
+                  SizedBox(height: 20.0),
+                  NormalButton(
+                    text: 'Enviar reseña', 
+                    onPressed: (){
+                      final validate = _formKey.currentState!.validate();
+                      if(stars <= 0){
+                        ScaffoldMessenger.of(context).removeCurrentSnackBar();
+                        ScaffoldMessenger.of(context).showSnackBar(SnackBar(
+                          content: Text('Antes, califica con estrellas por favor'),
+                          backgroundColor: EcoAppColors.MAIN_DARK_COLOR,
+                        ));
+                        return;
+                      }
+                      if(!validate) return;
+                      
 
-                    sendOpinion(context);
-                  }
-                )
-              ],
+                      sendOpinion(context);
+                    }
+                  )
+                ],
+              ),
             ),
           )
         ),
