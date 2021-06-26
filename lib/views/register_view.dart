@@ -45,6 +45,7 @@ class _RegisterViewState extends State<RegisterView> {
   };
 
   final _formKey = GlobalKey<FormState>();
+  final rutFocusNode = FocusNode();
 
   @override
   Widget build(BuildContext context) {
@@ -162,9 +163,13 @@ class _RegisterViewState extends State<RegisterView> {
               ],
               onChanged: (value){
                 String newValue = TextValidationUtil.stringToRut(value);
-                controllers['rut']!.text = newValue;
-                controllers['rut']!.selection = TextSelection.fromPosition(TextPosition(offset: newValue.length));
+                controllers['rut']!.value = TextEditingValue(
+                  text: newValue,
+                  selection: TextSelection.fromPosition(TextPosition(offset: newValue.length)),
+                  composing: TextRange.empty
+                );
               },
+              focusNode: rutFocusNode
             ),
             NormalInput(
               header: 'Celular', 

@@ -26,7 +26,7 @@ abstract class BaseAPI<T extends BaseModel>{
   Map<String, dynamic> Function(T) getJsonParams;
   T Function(Map<String, dynamic>) constructor;
   
-  final bool DEBUG = false;
+  final bool DEBUG = true;
   final bool simulateLag = false;
 
   final Function(FailConnectReason reason)? onFailConnect;
@@ -41,10 +41,13 @@ abstract class BaseAPI<T extends BaseModel>{
     if(DEBUG) print('processing ${jsonEncode(params)}');
     if(DEBUG) print('Uri: $uri');
     Response resp;
+
+    if(params == null) params = {};
+
     try{
       resp = await http.post(
         uri,
-        body: jsonEncode(params?..addAll({'C8AEA': _apiKey})),
+        body: jsonEncode(params..addAll({'C8AEA': _apiKey})),
         headers: <String, String>{
           'Content-Type': 'application/json; charset=UTF-8',
         },

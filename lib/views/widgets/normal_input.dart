@@ -20,7 +20,8 @@ class NormalInput <T> extends StatelessWidget {
     this.inputFormatters,
     this.maxLength,
     this.maxLines,
-    this.initialData
+    this.initialData,
+    this.focusNode
   }) : super(key: key);
 
   final String header;
@@ -39,6 +40,7 @@ class NormalInput <T> extends StatelessWidget {
   final int? maxLength;
   final int? maxLines;
   final T? initialData;
+  final FocusNode? focusNode;
 
   @override
   Widget build(BuildContext context) {
@@ -70,7 +72,8 @@ class NormalInput <T> extends StatelessWidget {
             onChanged: onChanged,
             enabled: initialData != null? true : snapshot.connectionState == ConnectionState.done,
             maxLength: maxLength,
-            maxLines: maxLines
+            maxLines: maxLines,
+            focusNode: focusNode
           );
         }
       );
@@ -90,7 +93,8 @@ class NormalInput <T> extends StatelessWidget {
         inputFormatters: inputFormatters,
         onChanged: onChanged,
         maxLength: maxLength,
-        maxLines: maxLines
+        maxLines: maxLines,
+        focusNode: focusNode,
       );
     }
   }
@@ -112,7 +116,8 @@ class _InputContent extends StatelessWidget {
     required this.enabled,
     required this.inputFormatters,
     required this.maxLength,
-    required this.maxLines
+    required this.maxLines,
+    required this.focusNode
   }) : super(key: key);
 
   final TextEditingController? controller;
@@ -129,6 +134,7 @@ class _InputContent extends StatelessWidget {
   final List<TextInputFormatter>? inputFormatters;
   final int? maxLength;
   final int? maxLines;
+  final FocusNode? focusNode;
 
   @override
   Widget build(BuildContext context) {
@@ -162,6 +168,7 @@ class _InputContent extends StatelessWidget {
         onTap: onTap,
         onChanged: onChanged,
         maxLines: maxLines,
+        focusNode: focusNode,
       ),
     );
   }
