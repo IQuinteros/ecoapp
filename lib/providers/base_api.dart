@@ -26,7 +26,7 @@ abstract class BaseAPI<T extends BaseModel>{
   Map<String, dynamic> Function(T) getJsonParams;
   T Function(Map<String, dynamic>) constructor;
   
-  final bool DEBUG = true;
+  final bool DEBUG = false;
   final bool simulateLag = false;
 
   final Function(FailConnectReason reason)? onFailConnect;

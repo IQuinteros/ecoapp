@@ -17,6 +17,7 @@ class StoreView extends StatelessWidget {
 
   @override
   Widget build(BuildContext context) {    
+    FocusScope.of(context).unfocus();
     return Scaffold(
       appBar: AppBar(
         backgroundColor: Colors.transparent,

@@ -329,7 +329,6 @@ class _ArticleContent extends StatelessWidget {
         ),
       ),
       onTap: () {
-        FocusScope.of(context).unfocus();
         Navigator.push(
           context, 
           MaterialPageRoute(builder: (__) => OpinionsView(article: article,))
@@ -366,7 +365,6 @@ class _ArticleContent extends StatelessWidget {
 
     final storeText = InkWell(
       onTap: () {
-        FocusScope.of(context).unfocus();
         Navigator.push(context, MaterialPageRoute(builder: (__) => StoreView(store: article.store!)));
       },
       child: Padding(
