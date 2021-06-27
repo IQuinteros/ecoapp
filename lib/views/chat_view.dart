@@ -299,8 +299,10 @@ class _ChatViewState extends State<ChatView> {
 
   Future<void> updateChat(BuildContext context, ChatModel? chatToUse, [Function()? onSetState]) async {
     final chatBloc = BlocProvider.of<ChatBloc>(context);
-    refreshChat = await chatBloc.getChatFromPurchase(chatToUse?.purchase ?? widget.purchase!);
+    final result = await chatBloc.getChatsFromPurchase(chatToUse?.purchase ?? widget.purchase!);
 
+    final chatLoadedList = result.where((element) => element.store?.id == (chatToUse?.store?.id ?? widget.store?.id)).toList();
+    refreshChat = chatLoadedList.length > 0? chatLoadedList[0] : null;
     if(widget.chat != null && refreshChat != null){
       widget.chat!.messages = refreshChat!.messages;
     }
