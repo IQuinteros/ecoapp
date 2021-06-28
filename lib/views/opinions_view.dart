@@ -10,8 +10,9 @@ import 'package:google_fonts/google_fonts.dart';
 class OpinionsView extends StatelessWidget {
 
   final ArticleModel article;
+  final bool profileOpinion;
 
-  const OpinionsView({Key? key, required this.article}) : super(key: key);
+  const OpinionsView({Key? key, required this.article, this.profileOpinion = false}) : super(key: key);
 
   @override
   Widget build(BuildContext context) {
@@ -56,7 +57,7 @@ class OpinionsView extends StatelessWidget {
               EcoCover(
                 image: imageData,
                 title: article.title,
-                subtitle: '${article.rating.count.toString()} opiniones',
+                subtitle: profileOpinion? 'Tu reseña' : '${article.rating.count.toString()} opiniones',
                 size: 80
               ),
               SizedBox(height: 10.0,),

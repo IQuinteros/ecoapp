@@ -94,7 +94,6 @@ class _PurchaseDetailViewState extends State<PurchaseDetailView> {
           ),
         ),
         Divider(thickness: 1,),
-        
         FutureBuilder(
           future: chatBloc.getChatsFromPurchase(widget.purchase),
           builder: (context, AsyncSnapshot<List<ChatModel>> snapshot){
@@ -129,7 +128,8 @@ class _PurchaseDetailViewState extends State<PurchaseDetailView> {
           }
         ),
         Divider(thickness: 1),
-        _SummaryItem(purchase: widget.purchase)
+        _SummaryItem(purchase: widget.purchase),
+        SizedBox(height: 20.0),
       ],
     );
 
@@ -399,11 +399,12 @@ class _ModalArticleOptions extends StatelessWidget {
                 switch(snapshot.connectionState){
                   case ConnectionState.done:
                     bool found = snapshot.data!.length > 0;
+                    articlePurchase.article?.rating.opinions = snapshot.data!;
                     return NormalButton(
                       text: found? 'Ver reseña' : 'Añadir reseña', 
                       onPressed: (){
                         if(found){
-                          Navigator.push(context, MaterialPageRoute(builder: (__) => OpinionsView(article: articlePurchase.article!)));
+                          Navigator.push(context, MaterialPageRoute(builder: (__) => OpinionsView(article: articlePurchase.article!, profileOpinion: true,)));
                         }
                         else{
                           Navigator.push(context, MaterialPageRoute(builder: (__) => NewOpinionView(articlePurchase: articlePurchase)));

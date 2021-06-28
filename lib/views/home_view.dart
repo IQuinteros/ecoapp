@@ -172,7 +172,11 @@ class _HomeViewState extends State<HomeView> {
           text: 'Categorías',
           rightButton: MiniButton(
             text: 'Ver mas',
-            action: () => Navigator.pushNamed(context, 'categories'),
+            action: () async {
+              var value = await Navigator.pushNamed(context, 'categories');
+              int? intValue = int.tryParse(value.toString());
+              if(intValue != null) appBloc.mainEcoNavBar.onTap(intValue);
+            }
           )
         ),
         categoryView,
