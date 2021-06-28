@@ -399,11 +399,12 @@ class _ModalArticleOptions extends StatelessWidget {
                 switch(snapshot.connectionState){
                   case ConnectionState.done:
                     bool found = snapshot.data!.length > 0;
+                    articlePurchase.article?.rating.opinions = snapshot.data!;
                     return NormalButton(
                       text: found? 'Ver reseña' : 'Añadir reseña', 
                       onPressed: (){
                         if(found){
-                          Navigator.push(context, MaterialPageRoute(builder: (__) => OpinionsView(article: articlePurchase.article!)));
+                          Navigator.push(context, MaterialPageRoute(builder: (__) => OpinionsView(article: articlePurchase.article!, profileOpinion: true,)));
                         }
                         else{
                           Navigator.push(context, MaterialPageRoute(builder: (__) => NewOpinionView(articlePurchase: articlePurchase)));
