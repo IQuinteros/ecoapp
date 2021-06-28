@@ -94,7 +94,6 @@ class _PurchaseDetailViewState extends State<PurchaseDetailView> {
           ),
         ),
         Divider(thickness: 1,),
-        
         FutureBuilder(
           future: chatBloc.getChatsFromPurchase(widget.purchase),
           builder: (context, AsyncSnapshot<List<ChatModel>> snapshot){
@@ -129,7 +128,8 @@ class _PurchaseDetailViewState extends State<PurchaseDetailView> {
           }
         ),
         Divider(thickness: 1),
-        _SummaryItem(purchase: widget.purchase)
+        _SummaryItem(purchase: widget.purchase),
+        SizedBox(height: 20.0),
       ],
     );
 
