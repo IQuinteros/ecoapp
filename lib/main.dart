@@ -12,6 +12,7 @@ import 'package:flutter_ecoapp/bloc/profile_bloc.dart';
 import 'package:flutter_ecoapp/bloc/purchase_bloc.dart';
 import 'package:flutter_ecoapp/bloc/user_bloc.dart';
 import 'package:flutter_ecoapp/providers/base_api.dart';
+import 'package:flutter_ecoapp/splash.dart';
 import 'package:flutter_ecoapp/views/categories_view.dart';
 import 'package:flutter_ecoapp/views/error_network_view.dart';
 import 'package:flutter_ecoapp/views/login_view.dart';
@@ -79,5 +80,30 @@ class MyApp extends StatelessWidget {
     );
 
     return content;
+
+    /* return FutureBuilder(
+      future: Future.delayed(Duration(milliseconds: 2000)),
+      builder: (BuildContext context, AsyncSnapshot snapshot) {
+        Widget child;
+        switch(snapshot.connectionState){
+          case ConnectionState.done:
+            child = content;
+            break;
+          default:
+            child = MaterialApp(
+              home: Splash(),
+              debugShowCheckedModeBanner: false,
+            );
+        }
+
+        return AnimatedSwitcher(
+          duration: Duration(milliseconds: 800),
+          child: child,
+          transitionBuilder: (child, animation) {
+            return FadeTransition(opacity: animation, child: child,);
+          },
+        );
+      },
+    ); */
   }
 }

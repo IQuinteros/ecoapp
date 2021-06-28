@@ -49,7 +49,7 @@ class _FavoritesViewState extends State<FavoritesView> {
         ),
         FutureArticles(
           notFoundMessage: 'No tienes artículos en "Favoritos"', 
-          getFuture: (loaded) => profileBloc.getFavoriteArticles(),
+          getFuture: (loaded) => profileBloc.getFavoriteArticles(quantity: 20, initial: loaded.length),
           scrollController: scrollController,
           clearOnRefresh: true,
         )

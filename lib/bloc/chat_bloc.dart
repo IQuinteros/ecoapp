@@ -17,17 +17,14 @@ class ChatBloc extends BaseBloc<ChatModel>{
     return;
   }
 
-  Future<ChatModel?> getChatFromPurchase(PurchaseModel purchase) async {
+  Future<List<ChatModel>> getChatsFromPurchase(PurchaseModel purchase) async {
     final chats = await chatAPI.selectAll(
       params: {
         'purchase_id': purchase.id
       }
     );
 
-    if(chats.length > 0)
-      return chats[0];
-
-    return null;
+    return chats;
   }
 
   Future<List<MessageModel>> getMessagesFromChat(ChatModel chat) async => await messageAPI.selectAll(
@@ -56,13 +53,14 @@ class ChatBloc extends BaseBloc<ChatModel>{
     required PurchaseModel purchase,
     StoreModel? store,
   }) async {
-    final chat = await getChatFromPurchase(purchase);
+    List<ChatModel> chats = await getChatsFromPurchase(purchase);
+    chats = chats.where((element) => element.store?.id == store?.id).toList();
 
-    if(chat != null){
+    if(chats.length > 0){
       return SendMessageResult(result: (await messageAPI.insert(
         item: message,
         additionalParams: {
-          'chat_id': chat.id
+          'chat_id': chats[0].id
         }
       )).object != null, isNewChat: false);
     }

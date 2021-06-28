@@ -21,11 +21,16 @@ import 'package:flutter_ecoapp/views/widgets/bottom_nav_bar.dart';
 import 'package:flutter_ecoapp/views/widgets/normal_button.dart';
 import 'package:google_fonts/google_fonts.dart';
 
-class PurchaseDetailView extends StatelessWidget {
+class PurchaseDetailView extends StatefulWidget {
   final PurchaseModel purchase;
 
   const PurchaseDetailView({Key? key, required this.purchase}) : super(key: key);
 
+  @override
+  _PurchaseDetailViewState createState() => _PurchaseDetailViewState();
+}
+
+class _PurchaseDetailViewState extends State<PurchaseDetailView> {
   @override
   Widget build(BuildContext context) {
     return Scaffold(
@@ -41,14 +46,13 @@ class PurchaseDetailView extends StatelessWidget {
   }
 
   Widget getContent(BuildContext context){
-    List<Widget> storeSections = [];
-    purchase.storeSortedArticles.forEach((key, value) => storeSections.add(_StoreList(store: key, articles: value, purchase: purchase,)));
+    final chatBloc = BlocProvider.of<ChatBloc>(context);
 
     final content = Column(
       children: [
         //SearchBar(),
         EcoTitle(
-          text: 'Compra #${purchase.id}',
+          text: 'Compra #${widget.purchase.id}',
           leftButton: IconButton(
             icon: Icon(Icons.keyboard_arrow_left_rounded),
             color: EcoAppColors.MAIN_COLOR,
@@ -90,12 +94,42 @@ class PurchaseDetailView extends StatelessWidget {
           ),
         ),
         Divider(thickness: 1,),
-        Column(
-          crossAxisAlignment: CrossAxisAlignment.stretch,
-          children: storeSections
+        
+        FutureBuilder(
+          future: chatBloc.getChatsFromPurchase(widget.purchase),
+          builder: (context, AsyncSnapshot<List<ChatModel>> snapshot){
+            switch(snapshot.connectionState){
+              case ConnectionState.done:
+                List<Widget> storeSections = [];
+
+                widget.purchase.storeSortedArticles.forEach((key, value) {
+                  final chatList = snapshot.data!.where((element) => element.store?.id == key?.id).toList();
+                  storeSections.add(
+                    _StoreList(
+                      store: key, 
+                      articles: value, 
+                      purchase: widget.purchase,
+                      chat: chatList.length > 0? chatList[0] : null,
+                      onExitFromChatView: () => setState(() {}),
+                    )
+                  );
+                });
+                return Column(
+                  crossAxisAlignment: CrossAxisAlignment.stretch,
+                  children: storeSections
+                );
+              default: return Container(
+                margin: EdgeInsets.symmetric(
+                  horizontal: 20.0,
+                  vertical: 20.0
+                ),
+                child: CircularProgressIndicator()
+              );
+            }
+          }
         ),
         Divider(thickness: 1),
-        _SummaryItem(purchase: purchase)
+        _SummaryItem(purchase: widget.purchase)
       ],
     );
 
@@ -212,17 +246,19 @@ class _StoreList extends StatelessWidget {
     Key? key,
     required this.store,
     required this.articles,
-    required this.purchase
+    required this.purchase,
+    this.chat,
+    required this.onExitFromChatView
   }) : super(key: key);
 
   final StoreModel? store;
   final List<ArticleToPurchase> articles;
   final PurchaseModel purchase;
+  final ChatModel? chat;
+  final Function()? onExitFromChatView;
 
   @override
   Widget build(BuildContext context) {
-
-    final chatBloc = BlocProvider.of<ChatBloc>(context);
 
     List<Widget> articlesToDisplay = articles.map<Widget>((e) => ArticleCard.fromPurchase(
       article: e.article,
@@ -286,30 +322,23 @@ class _StoreList extends StatelessWidget {
                   ),
                 ),
                 Expanded(child: Container()),
-                store != null? FutureBuilder(
-                  future: chatBloc.getChatFromPurchase(purchase),
-                  builder: (context, AsyncSnapshot<ChatModel?> snapshot){
-                    switch(snapshot.connectionState){
-                      case ConnectionState.done:
-                        return IconButton(
-                          icon: Icon(
-                            Icons.sms_rounded,
-                            color: EcoAppColors.MAIN_COLOR,
-                          ), 
-                          onPressed: () => Navigator.push(
-                              context, 
-                              MaterialPageRoute(
-                                builder: (__) => ChatView(
-                                  chat: snapshot.data,
-                                  store: snapshot.data != null? null : store,
-                                  purchase: snapshot.data != null? null : purchase,
-                                )
-                              )
-                          ) 
-                        );
-                      default: return CircularProgressIndicator();
-                    }
-                    
+                store != null? IconButton(
+                icon: Icon(
+                    Icons.sms_rounded,
+                    color: EcoAppColors.MAIN_COLOR,
+                  ), 
+                  onPressed: () async {
+                    await Navigator.push(
+                      context, 
+                      MaterialPageRoute(
+                        builder: (__) => ChatView(
+                          chat: chat,
+                          store: chat != null? null : store,
+                          purchase: chat != null? null : purchase,
+                        )
+                      )
+                    ); 
+                    onExitFromChatView?.call();
                   }
                 ) : Container()
               ],

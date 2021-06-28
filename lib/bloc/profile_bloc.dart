@@ -288,12 +288,12 @@ class ProfileBloc extends BaseBloc<ProfileModel>{
     }
   }
 
-  Future<List<ArticleModel>> getFavoriteArticles({int quantity = 5}) async {
+  Future<List<ArticleModel>> getFavoriteArticles({int quantity = 5, int initial = 0}) async {
     if(currentProfile == null) return const [];
     return (await favoriteAPI.selectAll(params: {
       'profile_id': currentProfile!.id,
       'quantity': quantity,
-      //'initial_number': initial // TODO: IN API AND THIS; INCLUDE QUANTITY AND INITIAL NUMBER
+      'initial_number': initial // TODO: IN API AND THIS; INCLUDE QUANTITY AND INITIAL NUMBER
     })).map((e) => e.article).toList();
   }
   
