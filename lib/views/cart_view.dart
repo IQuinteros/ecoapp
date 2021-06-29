@@ -108,7 +108,8 @@ class _CartViewState extends State<CartView> {
               initialQuantity: e.quantity,
               onDelete: () {
                 if(cartBloc.loadedCart.articles.length <= 0) _resetState();
-              }//_resetState(),
+              },//_resetState(),
+              onUpdateQuantity: () => _resetState(),
             )).toList());
             break;
           case ConnectionState.done:
@@ -124,7 +125,8 @@ class _CartViewState extends State<CartView> {
               initialQuantity: e.quantity,
               onDelete: () {
                 if(cartBloc.loadedCart.articles.length <= 0) _resetState();
-              }//_resetState(),
+              },//_resetState(),
+              onUpdateQuantity: () => _resetState(),
             )).toList());
 
 

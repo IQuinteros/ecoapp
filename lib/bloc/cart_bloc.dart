@@ -92,7 +92,7 @@ class CartBloc extends BaseBloc<CartArticleModel>{
     await cartLocalAPI.update(
       item..quantity = quantity
     );
-    await loadCart(onlyLocal: true, profile: profile);
+    //await loadCart(onlyLocal: true, profile: profile);
   }
 
   Future<bool> articleExistsInCart(ArticleModel article) async => (await cartLocalAPI.select()).where((element) => element.articleId == article.id).length > 0;
