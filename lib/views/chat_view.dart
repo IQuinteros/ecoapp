@@ -152,6 +152,7 @@ class _ChatViewState extends State<ChatView> {
     final scroll = SingleChildScrollView(
       clipBehavior: Clip.none,
       dragStartBehavior: DragStartBehavior.down,
+      physics: AlwaysScrollableScrollPhysics(),
       controller: widget.scrollController,
       child: Container(
         margin: EdgeInsets.symmetric(
@@ -159,6 +160,7 @@ class _ChatViewState extends State<ChatView> {
         ),
         child: Column(
           crossAxisAlignment: CrossAxisAlignment.stretch,
+          mainAxisSize: MainAxisSize.max,
           children: messagesWidget,
         ),
       ),
@@ -259,7 +261,12 @@ class _ChatViewState extends State<ChatView> {
       children: [
         SafeArea(
           child: chatToUse != null? RefreshIndicator(
-            child: scroll,
+            child: Container(
+              child: scroll,
+              constraints: BoxConstraints(
+                minHeight: MediaQuery.of(context).size.height
+              ),
+            ),
             onRefresh: () async => await updateChat(context, chatToUse)
           ) : _NoChatView(store: widget.store, purchase: widget.purchase,)
         ),
