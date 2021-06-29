@@ -18,9 +18,10 @@ class CartArticleCard extends StatefulWidget {
 
   final ArticleModel article;
   final Function() onDelete;
+  final Function() onUpdateQuantity;
   final int initialQuantity;
 
-  const CartArticleCard({Key? key, required this.article, required this.onDelete, required this.initialQuantity}) : super(key: key);
+  const CartArticleCard({Key? key, required this.article, required this.onDelete, required this.initialQuantity, required this.onUpdateQuantity}) : super(key: key);
 
   @override
   _CartArticleCardState createState() => _CartArticleCardState();
@@ -241,6 +242,7 @@ class _CartArticleCardState extends State<CartArticleCard> {
     final cartBloc = BlocProvider.of<CartBloc>(context);
     await cartBloc.updateArticleToCart(widget.article, _tempQuantity, profile: profileBloc.currentProfile);
     setState(() => _quantity = _tempQuantity);
+    widget.onUpdateQuantity();
   }
 
   void _deleteArticleFromCart(BuildContext context) async {
